@@ -12,7 +12,7 @@ using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow
 {
-    static class ObjectConverter
+    public static class ObjectConverter
     {
         public static object ToCrmObject(string entityName, string attributeName, string value, CrmTestingContext context)
         {
@@ -36,6 +36,20 @@ namespace Vermaat.Crm.Specflow
                 Status = new OptionSetValue(optionMd.Value.Value),
             };
         }
+
+        public static string ToLogicalAttributeName(string entityName, string displayName, CrmTestingContext context)
+        {
+            var entityMd = context.Metadata.GetEntityMetadata(entityName);
+
+            var attributeMd = entityMd.Attributes.Where(a => a.DisplayName.IsLabel(context.LanguageCode, displayName) || a.LogicalName.Equals(displayName)).FirstOrDefault();
+
+            if (attributeMd == null)
+                throw new ArgumentException(string.Format("Attribute {0} not found for entity {1}", displayName, entityName));
+
+            return attributeMd.LogicalName;
+
+        }
+
 
         private static object ToCrmObject(string entityName, string attributeName, string value, CrmTestingContext context, bool primitive)
         {
@@ -78,21 +92,6 @@ namespace Vermaat.Crm.Specflow
                 default: throw new NotImplementedException(string.Format("Type {0} not implemented", metadata.AttributeType));
             }
         }
-
-
-        public static string ToLogicalAttributeName(string entityName, string displayName, CrmTestingContext context)
-        {
-            var entityMd = context.Metadata.GetEntityMetadata(entityName);
-
-            var attributeMd = entityMd.Attributes.Where(a => a.DisplayName.IsLabel(context.LanguageCode, displayName) || a.LogicalName.Equals(displayName)).FirstOrDefault();
-
-            if (attributeMd == null)
-                throw new ArgumentException(string.Format("Attribute {0} not found for entity {1}", displayName, entityName));
-
-            return attributeMd.LogicalName;
-
-        }
-
 
         private static EntityReference GetLookupValue(AttributeMetadata metadata, string alias, CrmTestingContext context)
         {
