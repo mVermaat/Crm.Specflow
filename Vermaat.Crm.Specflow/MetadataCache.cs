@@ -21,15 +21,28 @@ namespace Vermaat.Crm.Specflow
             _cache = new Dictionary<string, EntityMetadata>();
         }
 
-        public AttributeMetadata GetAttributeMetadata(string entityName, string attributeName)
+        public AttributeMetadata GetAttributeMetadata(string entityName, string logicalName)
         {
             var entityData = GetEntityMetadata(entityName);
 
-            var md = entityData.Attributes.Where(a => a.LogicalName.Equals(attributeName)).FirstOrDefault();
+            var md = entityData.Attributes.Where(a => a.LogicalName.Equals(logicalName)).FirstOrDefault();
             
-            Assert.IsNotNull(md, string.Format("Can't find attribute {0} on entity {1}", attributeName, entityName));
+            Assert.IsNotNull(md, string.Format("Can't find attribute {0} on entity {1}", logicalName, entityName));
 
             return md;
+        }
+
+        public AttributeMetadata GetAttributeMetadata(string entityName, string displayName, int languageCode)
+        {
+            var entityMd = GetEntityMetadata(entityName);
+
+            var attributeMd = entityMd.Attributes.Where(a => a.DisplayName.IsLabel(languageCode, displayName) || a.LogicalName.Equals(displayName)).FirstOrDefault();
+
+            if (attributeMd == null)
+                throw new ArgumentException(string.Format("Attribute {0} not found for entity {1}", displayName, entityName));
+
+            return attributeMd;
+
         }
 
         public EntityMetadata GetEntityMetadata(string entityName)

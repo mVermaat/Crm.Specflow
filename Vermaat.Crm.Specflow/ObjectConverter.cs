@@ -37,18 +37,7 @@ namespace Vermaat.Crm.Specflow
             };
         }
 
-        public static AttributeMetadata GetAttributeMetadata(string entityName, string displayName, CrmTestingContext context)
-        {
-            var entityMd = context.Metadata.GetEntityMetadata(entityName);
 
-            var attributeMd = entityMd.Attributes.Where(a => a.DisplayName.IsLabel(context.LanguageCode, displayName) || a.LogicalName.Equals(displayName)).FirstOrDefault();
-
-            if (attributeMd == null)
-                throw new ArgumentException(string.Format("Attribute {0} not found for entity {1}", displayName, entityName));
-
-            return attributeMd;
-
-        }
 
 
         private static object ToCrmObject(string entityName, string attributeName, string value, CrmTestingContext context, bool primitive)
