@@ -37,7 +37,7 @@ namespace Vermaat.Crm.Specflow
             };
         }
 
-        public static string ToLogicalAttributeName(string entityName, string displayName, CrmTestingContext context)
+        public static AttributeMetadata GetAttributeMetadata(string entityName, string displayName, CrmTestingContext context)
         {
             var entityMd = context.Metadata.GetEntityMetadata(entityName);
 
@@ -46,7 +46,7 @@ namespace Vermaat.Crm.Specflow
             if (attributeMd == null)
                 throw new ArgumentException(string.Format("Attribute {0} not found for entity {1}", displayName, entityName));
 
-            return attributeMd.LogicalName;
+            return attributeMd;
 
         }
 
