@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Xrm.Sdk;
 
@@ -25,6 +26,24 @@ namespace Vermaat.Crm.Specflow
             return name.Equals(label.GetLabelInLanguage(lcid), StringComparison.CurrentCultureIgnoreCase);
         }
 
+        public static T ExecuteWithRetry<T>(int retryCount, int sleepTime, Func<T> action)
+        {
+            try
+            {
+                return action();
+            }
+            catch
+            {
+                if (retryCount > 0)
+                {
+                    Thread.Sleep(sleepTime);
+                    return ExecuteWithRetry(retryCount - 1, sleepTime, action);
+                }
+                else
+                    throw;
+            }
+        }
+
         private static string GetLabelInLanguage(this Label label, int lcid)
         {
             string result = label.LocalizedLabels.Where(l => l.LanguageCode == lcid).FirstOrDefault()?.Label;
@@ -34,5 +53,7 @@ namespace Vermaat.Crm.Specflow
 
             return result;
         }
+
+
     }
 }

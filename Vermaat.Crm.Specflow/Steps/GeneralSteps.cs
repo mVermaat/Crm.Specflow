@@ -162,7 +162,7 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
 
             var query = QueryHelper.CreateQueryExpressionFromTable(entityName, criteria, _crmContext);
-            var records = _crmContext.Service.RetrieveMultiple(query);
+            var records = HelperMethods.ExecuteWithRetry(10, 500, () => _crmContext.Service.RetrieveMultiple(query));
 
             Assert.AreEqual(1, records.Entities.Count, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Entities.Count));
 
