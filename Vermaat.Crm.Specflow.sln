@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow", "Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj", "{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow.EasyRepro", "Vermaat.Crm.Specflow.EasyRepro\Vermaat.Crm.Specflow.EasyRepro.csproj", "{53945E21-B687-402A-B263-626FA73BCEDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53945E21-B687-402A-B263-626FA73BCEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53945E21-B687-402A-B263-626FA73BCEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53945E21-B687-402A-B263-626FA73BCEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53945E21-B687-402A-B263-626FA73BCEDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
