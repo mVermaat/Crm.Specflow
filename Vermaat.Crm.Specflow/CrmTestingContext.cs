@@ -24,7 +24,7 @@ namespace Vermaat.Crm.Specflow
 
         public CrmTestingContext()
         {
-            ConnectionInfo = new CrmConnectionString();
+            ConnectionInfo = CrmConnectionString.CreateFromAppConfig();
             RecordCache = new AliasedRecordCache();
             Service = CrmConnectionFactory.CreateCrmConnection(ConnectionInfo, RecordCache);
             Metadata = new MetadataCache(Service);
