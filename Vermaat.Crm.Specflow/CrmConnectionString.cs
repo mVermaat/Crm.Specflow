@@ -17,14 +17,21 @@ namespace Vermaat.Crm.Specflow
         public CrmConnectionString()
         {
             Url = HelperMethods.GetAppSettingsValue("Url");
-            Username = HelperMethods.GetAppSettingsValue("Username");
-            Password = HelperMethods.GetAppSettingsValue("Password");
+            Username = HelperMethods.GetAppSettingsValue("Username", true);
+            Password = HelperMethods.GetAppSettingsValue("Password", true);
             AuthType = HelperMethods.GetAppSettingsValue("AuthType");
         }
 
         public string ToCrmClientString()
         {
-            return string.Format("AuthType={0};Username={1};Password={2};Url={3}", AuthType, Username, Password, Url);
+            var builder = new StringBuilder($"AuthType={AuthType};Url={Url}");
+
+            if (!string.IsNullOrWhiteSpace(Username))
+                builder.Append($";Username={Username}");
+            if(!string.IsNullOrWhiteSpace(Password))
+                builder.Append($";Password={Password}");
+
+            return builder.ToString();
         }
     }
 }
