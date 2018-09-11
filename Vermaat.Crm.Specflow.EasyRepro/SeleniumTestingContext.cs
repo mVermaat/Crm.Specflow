@@ -15,9 +15,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public Browser Browser => _browser.Value;
         public BrowserOptions BrowserOptions { get; private set; }
+        public ButtonTexts ButtonTexts { get; set; }
 
         public SeleniumTestingContext()
         {
+            ButtonTexts = new ButtonTexts();
             BrowserOptions = new BrowserOptions()
             {
                 CleanSession = true,
