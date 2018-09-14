@@ -110,7 +110,7 @@ namespace Vermaat.Crm.Specflow
 
             var option = optionMd.OptionSet.Options.Where(o => o.Label.IsLabel(context.LanguageCode, value)).FirstOrDefault();
 
-            Assert.IsNotNull(option);
+            Assert.IsNotNull(option, $"Option {value} not found. AvailaleOptions: { string.Join(", ", optionMd.OptionSet.Options.Select(o => o.Label?.UserLocalizedLabel?.Label))}");
             Assert.IsTrue(option.Value.HasValue);
 
             return new OptionSetValue(option.Value.Value);
