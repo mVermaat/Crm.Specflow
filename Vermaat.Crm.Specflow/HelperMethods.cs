@@ -44,7 +44,7 @@ namespace Vermaat.Crm.Specflow
             }
         }
 
-        private static string GetLabelInLanguage(this Label label, int lcid)
+        public static string GetLabelInLanguage(this Label label, int lcid)
         {
             string result = label.LocalizedLabels.Where(l => l.LanguageCode == lcid).FirstOrDefault()?.Label;
 
