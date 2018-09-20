@@ -114,7 +114,17 @@
     <Compile Include="CrmService.cs" />
     <Compile Include="CrmTestingContext.cs" />
     <Compile Include="HelperMethods.cs" />
+    <Compile Include="Processors\BusinessProcessFlowProcessor.cs" />
+    <Compile Include="Processors\CrmStepProcessor.cs" />
+    <Compile Include="Processors\IBusinessProcessFlowProcessor.cs" />
+    <Compile Include="Processors\ICrmStepProcessor.cs" />
+    <Compile Include="Processors\ILeadProcessor.cs" />
+    <Compile Include="Processors\LeadProcessor.cs" />
+    <Compile Include="ProcessStage.cs" />
     <Compile Include="QueryHelper.cs" />
+    <Compile Include="ScenarioContextExtensions.cs" />
+    <Compile Include="StepProcessor.cs" />
+    <Compile Include="StepProcessorSetup.cs" />
     <Compile Include="Steps\GeneralSteps.cs" />
     <Compile Include="Steps\LeadSteps.cs" />
     <Compile Include="TableConverter.cs" />

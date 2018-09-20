@@ -41,7 +41,7 @@ namespace Vermaat.Crm.Specflow
             return lcid;
         }
 
-        [AfterScenario("Crm")]
+        [AfterScenario("Cleanup")]
         public void Cleanup()
         {
             RecordCache.DeleteAllCachedRecords(Service);

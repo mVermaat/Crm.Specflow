@@ -27,11 +27,11 @@ namespace Vermaat.Crm.Specflow
             return response.Processes.Entities.FirstOrDefault();
         }
 
-        public static Entity GetStageByName(EntityReference processId, string name, CrmService service)
+        public static Entity GetStageByName(Guid processId, string name, CrmService service)
         {
             QueryExpression qe = new QueryExpression("processstage");
             qe.ColumnSet = new ColumnSet(true);
-            qe.Criteria.AddCondition("processid", ConditionOperator.Equal, processId.Id);
+            qe.Criteria.AddCondition("processid", ConditionOperator.Equal, processId);
             qe.Criteria.AddCondition("stagename", ConditionOperator.Equal, name);
             qe.TopCount = 1;
 
