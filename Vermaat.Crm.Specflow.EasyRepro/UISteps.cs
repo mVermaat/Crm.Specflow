@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro.Extensions;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -22,64 +23,26 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _seleniumContext = seleniumContext;
         }
 
-        [When("I login to CRM")]
-        public void Login()
+        [Then("(.*)'s form has the following fields (in)visible on the form")]
+        public void ThenFieldsAreVisibleOnForm(string alias, Table table)
         {
-            _seleniumContext.Browser.LoginPage.Login(new Uri(
-                _crmContext.ConnectionInfo.Url),
-                _crmContext.ConnectionInfo.Username.ToSecureString(),
-                _crmContext.ConnectionInfo.Password.ToSecureString());
-        }
+            var aliasRef = _crmContext.RecordCache[alias];
+            NavigationHelper.OpenRecord(_seleniumContext.Browser, aliasRef);
 
-        [When(@"I open ([^\s]+)")]
-        public void OpenRecordViaUrl(string alias)
-        {
-            var record = _crmContext.RecordCache[alias];
-            _seleniumContext.Browser.Entity.OpenEntity(record.LogicalName, record.Id);
-        }
+            var errors = new List<string>();
+            foreach(var row in table.Rows)
+            {
+                var expectedVisible = Boolean.Parse(row["Visible"];
+                if (_seleniumContext.Browser.Entity.IsElementVisible(row["Field"]) != expectedVisible)
+                {
+                    errors.Add(string.Format("{0} was expected to be {1}visible but it is {2}visible",
+                        row["Field"], expectedVisible ? "" : "in", expectedVisible ? "in" : ""));
+                }
 
-        [When(@"I enter the following data in the form")]
-        public void FillForm(Table dataTable)
-        {
-            // Getting this field switches the context to the form frame and allows Xrm.Page functions
-            var entityFunctions = _seleniumContext.Browser.Entity;
-            FormHelper.FillForm(_crmContext, entityFunctions,
-                FormHelper.GetEntityName(_seleniumContext.Browser.Driver), dataTable);
-        }
+                throw new NotImplementedException(); // nuget not working without internet
+                //Assert.AreEqual(0, errors.Count, string.Join(", ", errors));
+            }
 
-        [When(@"I save the record")]
-        public void SaveForm()
-        {
-            var entity = _seleniumContext.Browser.Entity;
-            entity.Save();
-            _seleniumContext.Browser.Dialogs.DuplicateDetection(true);
-            entity.SwitchToContentFrame();
-        }
-
-        [When(@"I save the record and name it (.*)")]
-        public void SaveFormWithAlias(string alias)
-        {
-            SaveForm();
-            FormHelper.AddAlias(_crmContext, _seleniumContext.Browser.Driver, alias);
-        }
-
-        [When(@"I save and close the record")]
-        public void SaveAndCloseForm()
-        {
-            _seleniumContext.Browser.CommandBar.ClickCommand(_seleniumContext.ButtonTexts.SaveAndClose);
-            _seleniumContext.Browser.Dialogs.DuplicateDetection(true);
-        }
-
-        [When("I navigate to '(.*)' and '(.*)'")]
-        public void NavigateToArea(string area, string subArea)
-        {
-            _seleniumContext.Browser.Navigation.OpenSubArea(area, subArea);
-        }
-
-        [When("I open the new record form")]
-        public void CreateNewRecord()
-        {
-            _seleniumContext.Browser.CommandBar.ClickCommand(_seleniumContext.ButtonTexts.New);
         }
     }
 }

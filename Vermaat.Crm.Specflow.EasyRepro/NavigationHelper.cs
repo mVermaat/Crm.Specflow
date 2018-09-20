@@ -1,4 +1,5 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api;
+using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             var currentUri = new Uri(browser.Driver.Url);
             var newRecordFormUri = new Uri($"{currentUri.Scheme}://{currentUri.Authority}/main.aspx?etn={entityName}&pagetype=entityrecord");
             browser.Entity.OpenEntity(newRecordFormUri);
+        }
+
+        public static void OpenRecord(Browser browser, EntityReference crmRecord)
+        {
+            browser.Entity.OpenEntity(crmRecord.LogicalName, crmRecord.Id);
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿Feature: AccountTests
+﻿# Check if field is visible on the form
+# What if tab is collapsed?
+
+Feature: AccountTests
 	Some tests involving the account entity
 
 @API @Chrome @Cleanup

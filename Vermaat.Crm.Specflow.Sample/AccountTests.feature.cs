@@ -17,7 +17,7 @@ namespace Vermaat.Crm.Specflow.Sample
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.4.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [TechTalk.SpecRun.FeatureAttribute("AccountTests", Description="\tSome tests involving the account entity", SourceFile="AccountTests.feature", SourceLine=0)]
+    [TechTalk.SpecRun.FeatureAttribute("AccountTests", Description="\tSome tests involving the account entity", SourceFile="AccountTests.feature", SourceLine=3)]
     public partial class AccountTestsFeature
     {
         
@@ -69,14 +69,14 @@ namespace Vermaat.Crm.Specflow.Sample
         [TechTalk.SpecRun.ScenarioAttribute("Create a new Account", new string[] {
                 "API",
                 "Chrome",
-                "Cleanup"}, SourceLine=4)]
+                "Cleanup"}, SourceLine=7)]
         public virtual void CreateANewAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new Account", null, new string[] {
                         "API",
                         "Chrome",
                         "Cleanup"});
-#line 5
+#line 8
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -95,7 +95,7 @@ this.ScenarioInitialize(scenarioInfo);
             table1.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 6
+#line 9
 testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table1, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -113,7 +113,7 @@ testRunner.When("an account named TestAccount is created with the following valu
             table2.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 12
+#line 15
 testRunner.Then("TestAccount has the following values", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -122,14 +122,14 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table2
         [TechTalk.SpecRun.ScenarioAttribute("Update an existing Account", new string[] {
                 "API",
                 "Chrome",
-                "Cleanup"}, SourceLine=19)]
+                "Cleanup"}, SourceLine=22)]
         public virtual void UpdateAnExistingAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update an existing Account", null, new string[] {
                         "API",
                         "Chrome",
                         "Cleanup"});
-#line 20
+#line 23
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -148,7 +148,7 @@ this.ScenarioInitialize(scenarioInfo);
             table3.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 21
+#line 24
 testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table3, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -160,7 +160,7 @@ testRunner.Given("an account named TestAccount with the following values", ((str
             table4.AddRow(new string[] {
                         "Main Phone",
                         "06987654321"});
-#line 27
+#line 30
 testRunner.When("TestAccount is updated with the following values", ((string)(null)), table4, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -178,7 +178,7 @@ testRunner.When("TestAccount is updated with the following values", ((string)(nu
             table5.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 31
+#line 34
 testRunner.Then("TestAccount has the following values", ((string)(null)), table5, "Then ");
 #line hidden
             this.ScenarioCleanup();
