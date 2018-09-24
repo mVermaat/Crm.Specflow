@@ -1,4 +1,5 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,25 +24,24 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _seleniumContext = seleniumContext;
         }
 
-        [Then("(.*)'s form has the following fields (in)visible on the form")]
+        [Then("(.*)'s form has the following visbility")]
         public void ThenFieldsAreVisibleOnForm(string alias, Table table)
         {
             var aliasRef = _crmContext.RecordCache[alias];
             NavigationHelper.OpenRecord(_seleniumContext.Browser, aliasRef);
 
+            _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, table);
             var errors = new List<string>();
             foreach(var row in table.Rows)
             {
-                var expectedVisible = Boolean.Parse(row["Visible"];
-                if (_seleniumContext.Browser.Entity.IsElementVisible(row["Field"]) != expectedVisible)
+                var expectedVisible = Boolean.Parse(row["Visible"]);
+                if (_seleniumContext.Browser.Entity.IsElementVisible(row["Property"]) != expectedVisible)
                 {
                     errors.Add(string.Format("{0} was expected to be {1}visible but it is {2}visible",
-                        row["Field"], expectedVisible ? "" : "in", expectedVisible ? "in" : ""));
+                        row["Property"], expectedVisible ? "" : "in", expectedVisible ? "in" : ""));
                 }
-
-                throw new NotImplementedException(); // nuget not working without internet
-                //Assert.AreEqual(0, errors.Count, string.Join(", ", errors));
             }
+            Assert.AreEqual(0, errors.Count, string.Join(", ", errors));
 
         }
     }

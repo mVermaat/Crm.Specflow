@@ -160,6 +160,9 @@ testRunner.Given("an account named TestAccount with the following values", ((str
             table4.AddRow(new string[] {
                         "Main Phone",
                         "06987654321"});
+            table4.AddRow(new string[] {
+                        "Fax",
+                        "4839432324"});
 #line 30
 testRunner.When("TestAccount is updated with the following values", ((string)(null)), table4, "When ");
 #line hidden
@@ -178,8 +181,53 @@ testRunner.When("TestAccount is updated with the following values", ((string)(nu
             table5.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 34
+#line 35
 testRunner.Then("TestAccount has the following values", ((string)(null)), table5, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Check visiblity of form items", new string[] {
+                "Chrome",
+                "Cleanupd"}, SourceLine=43)]
+        public virtual void CheckVisiblityOfFormItems()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check visiblity of form items", null, new string[] {
+                        "Chrome",
+                        "Cleanupd"});
+#line 44
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table6.AddRow(new string[] {
+                        "Account Name",
+                        "DynamicHands"});
+            table6.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+            table6.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+            table6.AddRow(new string[] {
+                        "Industry",
+                        "Consulting"});
+#line 45
+testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table6, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Visible"});
+            table7.AddRow(new string[] {
+                        "SIC Code",
+                        "True"});
+            table7.AddRow(new string[] {
+                        "Ownership",
+                        "False"});
+#line 51
+testRunner.Then("TestAccount\'s form has the following visbility", ((string)(null)), table7, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

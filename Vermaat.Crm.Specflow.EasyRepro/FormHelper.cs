@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow;
+using Vermaat.Crm.Specflow.EasyRepro.Extensions;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -40,7 +41,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         entity.SetValue(new OptionSet { Name = row["Property"], Value = row["Value"] });
                         break;
                     default:
-                        entity.SetValue(row["Property"], row["Value"]);
+                        entity.SetValueFix(row["Property"], row["Value"] + Keys.Tab, true);
+                        entity.SetValueFix(row["Property"], Keys.Tab, false);
                         break;
                 }
             }
