@@ -98,6 +98,9 @@
       <LastGenOutput>AccountTests.feature.cs</LastGenOutput>
     </None>
     <None Include="app.config" />
+    <None Include="appsettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Default.srprofile" />
     <None Include="packages.config" />
     <None Include="runtests.cmd" />
