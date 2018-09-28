@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xrm.Sdk;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro.Extensions;
 using Vermaat.Crm.Specflow.Processors;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -22,11 +23,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public override void CreateAliasedRecord(string entityLogicalName, Table table, string alias)
         {
             NavigationHelper.OpenNewForm(_seleniumContext.Browser, entityLogicalName);
-            var entity = _seleniumContext.Browser.Entity;
-            FormHelper.FillForm(CrmContext, entity, entityLogicalName, table);
-            entity.Save();
-            _seleniumContext.Browser.Dialogs.DuplicateDetection(true);
-            entity.SwitchToContentFrame();
+            FormHelper.FillForm(CrmContext, _seleniumContext.Browser, entityLogicalName, table);
+            FormHelper.SaveRecord(_seleniumContext, true);
             FormHelper.AddAlias(CrmContext, _seleniumContext.Browser.Driver, alias);
         }
 
@@ -40,14 +38,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public override void UpdateRecord(EntityReference crmRecord, Table table)
         {
             _seleniumContext.Browser.Entity.OpenEntity(crmRecord.LogicalName, crmRecord.Id);
-
-            var entity = _seleniumContext.Browser.Entity;
-            FormHelper.FillForm(CrmContext, entity, crmRecord.LogicalName, table);
-            entity.Save();
-            _seleniumContext.Browser.Dialogs.DuplicateDetection(true);
-            entity.SwitchToContentFrame();
+            FormHelper.FillForm(CrmContext, _seleniumContext.Browser, crmRecord.LogicalName, table);
+            FormHelper.SaveRecord(_seleniumContext, true);
         }
-
-
     }
 }

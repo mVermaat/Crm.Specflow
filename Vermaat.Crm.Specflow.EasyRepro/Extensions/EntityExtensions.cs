@@ -28,7 +28,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Extensions
         public static BrowserCommandResult<bool> SetValueFix(this Entity entity, string field, string value, bool clear)
         {
             //return this.Execute($"Set Value: {field}", SetValue, field, value);
-            var returnval = entity.Execute(GetOptions($"Set Value: {field}"), driver =>
+            var returnval = entity.Execute(BrowserOptionHelper.GetOptions($"Set Value: {field}"), driver =>
             {
                 if (driver.HasElement(By.Id(field)))
                 {
@@ -79,16 +79,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Extensions
             return returnval;
         }
 
-
-        private static BrowserCommandOptions GetOptions(string commandName)
-        {
-            return new BrowserCommandOptions("BrowserAutomation",
-                commandName,
-                0,
-                0,
-                null,
-                true,
-                typeof(NoSuchElementException), typeof(StaleElementReferenceException));
-        }
+        
     }
 }

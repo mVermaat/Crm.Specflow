@@ -91,7 +91,9 @@
     <Compile Include="BrowserHooks.cs" />
     <Compile Include="ButtonTexts.cs" />
     <Compile Include="CrmStepUIProcessor.cs" />
+    <Compile Include="Extensions\BrowserOptionHelper.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
+    <Compile Include="Extensions\LoginExtensions.cs" />
     <Compile Include="FormHelper.cs" />
     <Compile Include="FormType.cs" />
     <Compile Include="NavigationHelper.cs" />
