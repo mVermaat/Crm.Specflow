@@ -11,7 +11,7 @@
   </TestAssemblyPaths>
   <DeploymentTransformation>
     <Steps>
-      <ConfigFileTransformation configFile="App.config" >
+      <ConfigFileTransformation configFile="app.config" >
         <Transformation>
           <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 							<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">

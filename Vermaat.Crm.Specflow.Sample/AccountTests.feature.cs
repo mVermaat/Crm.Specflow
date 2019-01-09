@@ -189,12 +189,12 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table5
         
         [TechTalk.SpecRun.ScenarioAttribute("Check visiblity of form items", new string[] {
                 "Chrome",
-                "Cleanupd"}, SourceLine=43)]
+                "Cleanup"}, SourceLine=43)]
         public virtual void CheckVisiblityOfFormItems()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check visiblity of form items", null, new string[] {
                         "Chrome",
-                        "Cleanupd"});
+                        "Cleanup"});
 #line 44
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();

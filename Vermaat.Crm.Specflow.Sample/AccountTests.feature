@@ -1,5 +1,5 @@
-﻿# Check if field is visible on the form
-# What if tab is collapsed?
+﻿# Sometimes lookup fails to select, possibly error in EasyRepro
+
 
 Feature: AccountTests
 	Some tests involving the account entity
@@ -40,7 +40,7 @@ Then TestAccount has the following values
 	| Industry     | Consulting              |
 
 
-@Chrome @Cleanupd
+@Chrome @Cleanup
 Scenario: Check visiblity of form items
 When an account named TestAccount is created with the following values
 	| Property     | Value                   |
