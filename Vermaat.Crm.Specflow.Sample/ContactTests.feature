@@ -4,7 +4,7 @@ Used to show tests that use unusual fields like the address and composite fields
 
 @API @Cleanup
 Scenario: Basic contact test
-Given an existing contact named TestContact with the following values
+Given a contact named TestContact with the following values
 	| Property   | Value |
 	| First Name | John  |
 	| Last Name  | Smith |

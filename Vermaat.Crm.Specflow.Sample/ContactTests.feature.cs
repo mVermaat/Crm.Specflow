@@ -93,7 +93,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Job Title",
                         "CLO"});
 #line 7
-testRunner.Given("an existing contact named TestContact with the following values", ((string)(null)), table1, "Given ");
+testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table1, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
