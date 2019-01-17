@@ -6,7 +6,7 @@ namespace Vermaat.Crm.Specflow.Processors
     public interface IBusinessProcessFlowProcessor
     {
         ProcessStage GetCurrentStage(EntityReference aliasRef);
-        Guid GetStageByName(Guid processId, string stageName);
+        Guid? GetStageByName(Guid processId, string stageName);
         void MoveNext(EntityReference crmRecord);
         void MoveToStage(EntityReference crmRecord, string stageName);
     }

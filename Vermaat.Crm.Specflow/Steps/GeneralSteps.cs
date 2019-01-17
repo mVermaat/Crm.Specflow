@@ -133,10 +133,7 @@ namespace Vermaat.Crm.Specflow.Steps
             var aliasRef = _crmContext.RecordCache[alias];
             _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, criteria);
 
-            var columns = new ColumnSet(criteria.Rows.Select(r => r["Property"]).ToArray());
-            var record = _crmContext.Service.Retrieve(aliasRef, columns);
-
-            AssertHelper.HasProperties(record, criteria, _crmContext);
+            _stepProcessor.GeneralCrm.AssertRecordHasValues(aliasRef, criteria);
         }
 
         [Then(@"a (.*) exists with the following values")]
@@ -144,13 +141,11 @@ namespace Vermaat.Crm.Specflow.Steps
         public Entity ThenRecordExists(string entityName, Table criteria)
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
+            var records = _stepProcessor.GeneralCrm.GetRecords(entityName, criteria);
 
-            var query = QueryHelper.CreateQueryExpressionFromTable(entityName, criteria, _crmContext);
-            var records = HelperMethods.ExecuteWithRetry(20, 500, () => _crmContext.Service.RetrieveMultiple(query));
+            Assert.AreEqual(1, records.Count, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Count));
 
-            Assert.AreEqual(1, records.Entities.Count, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Entities.Count));
-
-            return records.Entities[0];
+            return records[0];
         }
 
 

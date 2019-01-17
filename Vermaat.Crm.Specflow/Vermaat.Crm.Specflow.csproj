@@ -107,7 +107,6 @@
   <ItemGroup>
     <Compile Include="AliasedRecordCache.cs" />
     <Compile Include="AssertHelper.cs" />
-    <Compile Include="BusinessProcessHelper.cs" />
     <Compile Include="CrmConnectionFactory.cs" />
     <Compile Include="CrmConnectionString.cs" />
     <Compile Include="Constants.cs" />
