@@ -54,6 +54,6 @@ namespace Vermaat.Crm.Specflow
             return result;
         }
 
-
+        
     }
 }

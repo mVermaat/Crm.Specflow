@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow", "Ver
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow.EasyRepro", "Vermaat.Crm.Specflow.EasyRepro\Vermaat.Crm.Specflow.EasyRepro.csproj", "{53945E21-B687-402A-B263-626FA73BCEDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow.Test", "Vermaat.Crm.Specflow.Test\Vermaat.Crm.Specflow.Test.csproj", "{323821B0-6461-4DF1-BFD2-DEA035C030C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow.Sample", "Vermaat.Crm.Specflow.Sample\Vermaat.Crm.Specflow.Sample.csproj", "{40155862-3830-401C-945A-70E57B35F7A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{53945E21-B687-402A-B263-626FA73BCEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53945E21-B687-402A-B263-626FA73BCEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53945E21-B687-402A-B263-626FA73BCEDE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{323821B0-6461-4DF1-BFD2-DEA035C030C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{323821B0-6461-4DF1-BFD2-DEA035C030C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{323821B0-6461-4DF1-BFD2-DEA035C030C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{323821B0-6461-4DF1-BFD2-DEA035C030C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40155862-3830-401C-945A-70E57B35F7A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40155862-3830-401C-945A-70E57B35F7A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40155862-3830-401C-945A-70E57B35F7A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40155862-3830-401C-945A-70E57B35F7A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
