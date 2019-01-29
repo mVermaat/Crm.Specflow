@@ -12,41 +12,17 @@ namespace Vermaat.Crm.Specflow
         {
             public const string TABLE_KEY = "Property";
             public const string TABLE_VALUE = "Value";
+
+            public const string TARGET_API = "API";
+            public const string TARGET_Chrome = "Chrome";
+            public const string TARGET_Firefox = "Firefox";
+            public const string TARGET_InternetExplorer = "IE";
+            public const string TARGET_Edge = "Edge";
         }
 
-        public class EntityNames
+        public class CRM
         {
-            public const string SITEMAP = "sitemap";
-            public const string SYSTEMUSER = "systemuser";
-            public const string TEAM = "team";
-        }
-
-        public class General
-        {
-            public const string STATECODE = "statecode";
             public const string STATUSCODE = "statuscode";
-            public const string CURRENCY = "transactioncurrencyid";
-            public const string OWNERID = "ownerid";
         }
-
-        public class Lead : General
-        {
-            public const string CUSTOMER = "customerid";
-            public const string SOURCE_CAMPAIGN = "campaignid";
-
-            public const int QUALIFIED_VALUE = 3;
-        }
-
-        public class SiteMap : General
-        {
-            public const string XML = "sitemapxml";
-        }
-
-        public class SystemUser : General
-        {
-            public const string USERNAME = "";
-        }
-
-        
     }
 }

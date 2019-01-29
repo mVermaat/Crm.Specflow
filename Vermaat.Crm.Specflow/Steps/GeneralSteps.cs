@@ -1,15 +1,8 @@
-﻿using Microsoft.Crm.Sdk.Messages;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
-using Vermaat.Crm.Specflow;
+using Vermaat.Crm.Specflow.Commands;
 
 namespace Vermaat.Crm.Specflow.Steps
 {
@@ -17,13 +10,13 @@ namespace Vermaat.Crm.Specflow.Steps
     [DeploymentItem("DefaultData.xml")]
     public class GeneralSteps
     {
-        private CrmTestingContext _crmContext;
-        private StepProcessor _stepProcessor;
+        private readonly CrmTestingContext _crmContext;
+        private readonly SeleniumTestingContext _seleniumContext;
 
-        public GeneralSteps(CrmTestingContext crmContext, StepProcessor stepProcessor)
+        public GeneralSteps(CrmTestingContext crmContext, SeleniumTestingContext seleniumContext)
         {
             _crmContext = crmContext;
-            _stepProcessor = stepProcessor;
+            _seleniumContext = seleniumContext;
         }
 
 
@@ -32,8 +25,7 @@ namespace Vermaat.Crm.Specflow.Steps
         [Given(@"an existing ([^\s]+) named (.*) with the following values")]
         public void GivenExistingWithValues(string entityName, string alias, Table criteria)
         {
-            _crmContext.TableConverter.ConvertTable(entityName, criteria);
-            var entity = ThenRecordExists(entityName, criteria);
+            Entity entity = ThenRecordExists(entityName, criteria);
             _crmContext.RecordCache.Add(alias, entity);
         }
 
@@ -44,15 +36,14 @@ namespace Vermaat.Crm.Specflow.Steps
         public void GivenEntityWithValues(string entityName, string alias, Table criteria)
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
-            _stepProcessor.GeneralCrm.CreateAliasedRecord(entityName, criteria, alias);
+            _crmContext.CommandProcessor.Execute(new CreateRecordCommand(_crmContext, _seleniumContext, entityName, criteria, alias));
         }
 
         [Given(@"(.*) has the process stage (.*)")]
         [When(@"the process stage of (.*) is changed to (.*)")]
         public void SetProcessStage(string alias, string stageName)
         {
-            var aliasRef = _crmContext.RecordCache[alias];
-            _stepProcessor.BusinessProcessFlow.MoveToStage(aliasRef, stageName);
+            _crmContext.CommandProcessor.Execute(new MoveToBusinessProcessStageCommand(_crmContext, alias, stageName));
         }
 
 
@@ -63,52 +54,39 @@ namespace Vermaat.Crm.Specflow.Steps
         [When(@"(.*) is moved to the next process stage")]
         public void MoveToNextStage(string alias)
         {
-            var aliasRef = _crmContext.RecordCache[alias];
-            _stepProcessor.BusinessProcessFlow.MoveNext(aliasRef);
+            _crmContext.CommandProcessor.Execute(new MoveToNextBusinessProcessStageCommand(_crmContext, alias));
         }
 
         [When(@"(.*) is updated with the following values")]
         public void WhenAliasIsUpdated(string alias, Table criteria)
         {
-            var aliasRef = _crmContext.RecordCache[alias];
+            EntityReference aliasRef = _crmContext.RecordCache[alias];
             _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, criteria);
-            _stepProcessor.GeneralCrm.UpdateRecord(aliasRef, criteria);
+            _crmContext.CommandProcessor.Execute(new UpdateRecordCommand(_crmContext, _seleniumContext, aliasRef, criteria));
         }
 
         [When(@"all asynchronous processes for (.*) are finished")]
         public void WhenAsyncJobsFinished(string alias)
         {
-            var aliasRef = _crmContext.RecordCache[alias];
-
-            int tryCount = 0;
-            while (tryCount < 15 && QueryHelper.HasOpenSystemJobs(aliasRef.Id, _crmContext.Service))
-            {
-                Thread.Sleep(2000);
-                tryCount++;
-            }
-
-            Assert.AreNotEqual(15, tryCount, "Not all system jobs were finished on time");
+            _crmContext.CommandProcessor.Execute(new WaitForAsyncJobsCommand(_crmContext, alias));
         }
 
         [When(@"the status of (.*) is changed to (.*)")]
         public void WhenStatusChanges(string alias, string newStatus)
         {
-            var aliasRef = _crmContext.RecordCache[alias];
-            _stepProcessor.GeneralCrm.UpdateStatus(aliasRef, newStatus);
+            _crmContext.CommandProcessor.Execute(new UpdateStatusCommand(_crmContext, alias, newStatus));
         }
 
         [When(@"(.*) is deleted")]
         public void WhenAliasIsDeleted(string alias)
         {
-            var aliasRef = _crmContext.RecordCache[alias];
-            _stepProcessor.GeneralCrm.DeleteRecord(aliasRef);
-            _crmContext.RecordCache.Remove(alias);
+            _crmContext.CommandProcessor.Execute(new DeleteRecordCommand(_crmContext, _seleniumContext, alias));
         }
 
         [When(@"(.*) is assigned to (.*)")]
         public void WhenAliasIsAssignedToAlias(string aliasToAssign, string aliasToAssignTo)
         {
-            _stepProcessor.GeneralCrm.AssignRecord(_crmContext.RecordCache[aliasToAssignTo], _crmContext.RecordCache[aliasToAssign]);
+            _crmContext.CommandProcessor.Execute(new AssignRecordCommand(_crmContext, aliasToAssign, aliasToAssignTo));
         }
 
         #endregion
@@ -119,21 +97,16 @@ namespace Vermaat.Crm.Specflow.Steps
         [Then(@"the process stage of (.*) is (.*)")]
         public void AssertProcessStage(string alias, string stageName)
         {
-            var aliasRef = _crmContext.RecordCache[alias];
-
-            var actualStage = _stepProcessor.BusinessProcessFlow.GetCurrentStage(aliasRef);
-            var expectedStage = _stepProcessor.BusinessProcessFlow.GetStageByName(actualStage.ProcessId, stageName);
-
-            Assert.AreEqual(expectedStage, actualStage.StageId);
+            _crmContext.CommandProcessor.Execute(new AssertBusinessProcessStageCommand(_crmContext, alias, stageName));
         }
 
         [Then(@"(.*) has the following values")]
         public void ThenAliasHasValues(string alias, Table criteria)
         {
-            var aliasRef = _crmContext.RecordCache[alias];
+            EntityReference aliasRef = _crmContext.RecordCache[alias];
             _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, criteria);
 
-            _stepProcessor.GeneralCrm.AssertRecordHasValues(aliasRef, criteria);
+            _crmContext.CommandProcessor.Execute(new AssertCrmRecordCommand(_crmContext, aliasRef, criteria));
         }
 
         [Then(@"a (.*) exists with the following values")]
@@ -141,8 +114,7 @@ namespace Vermaat.Crm.Specflow.Steps
         public Entity ThenRecordExists(string entityName, Table criteria)
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
-            var records = _stepProcessor.GeneralCrm.GetRecords(entityName, criteria);
-
+            DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_crmContext, entityName, criteria));
             Assert.AreEqual(1, records.Count, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Count));
 
             return records[0];

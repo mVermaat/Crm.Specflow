@@ -20,6 +20,8 @@ namespace Vermaat.Crm.Specflow
         public AliasedRecordCache RecordCache { get; set; }
         public TableConverter TableConverter { get; set; }
 
+        public CommandProcessor CommandProcessor { get; set; }
+
         public int LanguageCode { get; set; }
 
         public CrmTestingContext()
@@ -31,6 +33,7 @@ namespace Vermaat.Crm.Specflow
             RecordBuilder = new RecordBuilder(this);
             TableConverter = new TableConverter(this);
             LanguageCode = GetLanguageCode();
+            CommandProcessor = new CommandProcessor();
         }
 
         private int GetLanguageCode()

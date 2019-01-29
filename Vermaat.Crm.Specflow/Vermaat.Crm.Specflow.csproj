@@ -37,7 +37,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.4\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamics365.UIAutomation.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.0.2.6\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamics365.UIAutomation.Api.UCI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.0.2.6\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.UCI.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamics365.UIAutomation.Browser, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.0.2.6\lib\net46\Microsoft.Dynamics365.UIAutomation.Browser.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.6.1.7600.16394\lib\net35\Microsoft.IdentityModel.dll</HintPath>
@@ -50,28 +59,28 @@
       <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.22.302111727\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.0.2.4\lib\net452\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.0.2.7\lib\net452\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
+      <HintPath>..\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
+      <HintPath>..\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.4\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk.Deployment, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.Deployment.9.0.2.4\lib\net452\Microsoft.Xrm.Sdk.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.Deployment.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.Workflow.9.0.2.4\lib\net452\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.Workflow.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xrm.Tooling.Connector, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.0.2.4\lib\net452\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.0.2.7\lib\net452\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -81,6 +90,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -101,31 +111,60 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="TechTalk.SpecFlow, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.2.4.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
+      <HintPath>..\packages\SpecFlow.2.4.1\lib\net45\TechTalk.SpecFlow.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AliasedRecordCache.cs" />
     <Compile Include="AssertHelper.cs" />
+    <Compile Include="BusinessProcessFlowHelper.cs" />
+    <Compile Include="EasyRepro\ButtonTexts.cs" />
+    <Compile Include="CommandProcessor.cs" />
+    <Compile Include="Commands\AssertBusinessProcessStageCommand.cs" />
+    <Compile Include="Commands\AssertCrmRecordCommand.cs" />
+    <Compile Include="Commands\AssertFormVisiblityCommand.cs" />
+    <Compile Include="Commands\AssignRecordCommand.cs" />
+    <Compile Include="Commands\BrowserCommand.cs" />
+    <Compile Include="Commands\BrowserOnlyCommand.cs" />
+    <Compile Include="Commands\CreateRecordCommand.cs" />
+    <Compile Include="Commands\DeleteRecordCommand.cs" />
+    <Compile Include="Commands\GetRecordsCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ICommandFunc.cs" />
+    <Compile Include="Commands\ApiOnlyCommand.cs" />
+    <Compile Include="Commands\MoveToBusinessProcessStageCommand.cs" />
+    <Compile Include="Commands\MoveToNextBusinessProcessStageCommand.cs" />
+    <Compile Include="Commands\QualifyLeadCommand.cs" />
+    <Compile Include="Commands\UpdateRecordCommand.cs" />
+    <Compile Include="Commands\UpdateStatusCommand.cs" />
+    <Compile Include="Commands\WaitForAsyncJobsCommand.cs" />
     <Compile Include="CrmConnectionFactory.cs" />
     <Compile Include="CrmConnectionString.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CrmService.cs" />
     <Compile Include="CrmTestingContext.cs" />
+    <Compile Include="EasyRepro\BrowserOptionHelper.cs" />
+    <Compile Include="EasyRepro\EntityExtensions.cs" />
+    <Compile Include="EasyRepro\FormHelper.cs" />
+    <Compile Include="EasyRepro\FormType.cs" />
+    <Compile Include="EasyRepro\NavigationHelper.cs" />
+    <Compile Include="Entities\Entities.cs" />
+    <Compile Include="Entities\OptionSets.cs" />
     <Compile Include="HelperMethods.cs" />
-    <Compile Include="Processors\BusinessProcessFlowProcessor.cs" />
-    <Compile Include="Processors\CrmStepProcessor.cs" />
-    <Compile Include="Processors\IBusinessProcessFlowProcessor.cs" />
-    <Compile Include="Processors\ICrmStepProcessor.cs" />
-    <Compile Include="Processors\ILeadProcessor.cs" />
-    <Compile Include="Processors\LeadProcessor.cs" />
+    <Compile Include="Hooks.cs" />
     <Compile Include="ProcessStage.cs" />
     <Compile Include="QueryHelper.cs" />
     <Compile Include="ScenarioContextExtensions.cs" />
-    <Compile Include="StepProcessor.cs" />
-    <Compile Include="StepProcessorSetup.cs" />
+    <Compile Include="SeleniumTestingContext.cs" />
     <Compile Include="Steps\GeneralSteps.cs" />
     <Compile Include="Steps\LeadSteps.cs" />
+    <Compile Include="Steps\UISteps.cs" />
     <Compile Include="TableConverter.cs" />
     <Compile Include="Xml\DefaultDataXmlClasses.cs" />
     <Compile Include="MetadataCache.cs" />
@@ -143,11 +182,13 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\SpecFlow.2.4.0\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.2.4.0\build\SpecFlow.targets')" />
+  <Import Project="..\packages\SpecFlow.2.4.1\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.2.4.1\build\SpecFlow.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\SpecFlow.2.4.0\build\SpecFlow.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.2.4.0\build\SpecFlow.targets'))" />
+    <Error Condition="!Exists('..\packages\SpecFlow.2.4.1\build\SpecFlow.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.2.4.1\build\SpecFlow.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets'))" />
   </Target>
+  <Import Project="..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets')" />
 </Project>

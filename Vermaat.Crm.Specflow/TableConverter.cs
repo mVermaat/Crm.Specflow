@@ -31,7 +31,7 @@ namespace Vermaat.Crm.Specflow
             {
                 OnRowProcessing?.Invoke(this, new TableRowEventArgs(entityName, row));
 
-                row["Property"] = _context.Metadata.GetAttributeMetadata(entityName, row["Property"], _context.LanguageCode).LogicalName;
+                row[Constants.SpecFlow.TABLE_KEY] = _context.Metadata.GetAttributeMetadata(entityName, row[Constants.SpecFlow.TABLE_KEY], _context.LanguageCode).LogicalName;
 
                 OnRowProcessed?.Invoke(this, new TableRowEventArgs(entityName, row));
             }

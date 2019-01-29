@@ -21,7 +21,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Extensions
         /// <param name="password">The Password to login to CRM application</param>
         /// <param name="redirectAction">The RedirectAction</param>
         /// <example>xrmBrowser.LoginPage.Login(_xrmUri, _username, _password, ADFSLogin);</example>
-        public static BrowserCommandResult<LoginResult> CustomCZLogin(this LoginDialog login, Uri uri, SecureString username, SecureString password)
+        public static BrowserCommandResult<LoginResult> CustomLogin(this LoginDialog login, Uri uri, SecureString username, SecureString password)
         {
             return login.Execute(BrowserOptionHelper.GetOptions("Custom CZ login"), CustomCZLogin, uri, username, password, default(Action<LoginRedirectEventArgs>));
         }

@@ -26,7 +26,7 @@ namespace Vermaat.Crm.Specflow
 
         public static SetStateRequest ToSetStateRequest(EntityReference target, string desiredstatus, CrmTestingContext context)
         {
-            var attributeMd = context.Metadata.GetAttributeMetadata(target.LogicalName, Constants.General.STATUSCODE) as StatusAttributeMetadata;
+            var attributeMd = context.Metadata.GetAttributeMetadata(target.LogicalName, Constants.CRM.STATUSCODE) as StatusAttributeMetadata;
             var optionMd = attributeMd.OptionSet.Options.Where(o => o.Label.IsLabel(context.LanguageCode, desiredstatus)).FirstOrDefault() as StatusOptionMetadata;
 
             return new SetStateRequest()
