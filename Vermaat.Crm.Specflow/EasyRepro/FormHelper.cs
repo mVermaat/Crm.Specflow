@@ -22,7 +22,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             foreach (var row in dataTable.Rows)
             {
                 var metadata = crmContext.Metadata.GetAttributeMetadata(entityName, row[Constants.SpecFlow.TABLE_KEY]);
-                var crmObject = ObjectConverter.ToCrmObject(entityName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], crmContext);
+                var crmObject = ObjectConverter.ToCrmObject(entityName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], crmContext, ConvertedObjectType.UserInterface);
 
                 if (!IsOnForm(browser.Driver, row[Constants.SpecFlow.TABLE_KEY]))
                 {
@@ -35,12 +35,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 switch (metadata.AttributeType.Value)
                 {
-
                     case AttributeTypeCode.Boolean:
-                        entity.SetValue(row[Constants.SpecFlow.TABLE_KEY], (bool)crmObject);
+                        entity.SetValue(new TwoOption() { Name = row[Constants.SpecFlow.TABLE_KEY], Value = crmObject.ToString() });
                         break;
                     case AttributeTypeCode.DateTime:
-                        entity.SetValue(row[Constants.SpecFlow.TABLE_KEY], (DateTime)crmObject);
+                        entity.SetValue(new DateTimeControl() { Name = row[Constants.SpecFlow.TABLE_KEY], Value = (DateTime)crmObject});
                         break;
                     case AttributeTypeCode.Lookup:
                         entity.SetValue(new LookupItem { Name = row[Constants.SpecFlow.TABLE_KEY], Value = row[Constants.SpecFlow.TABLE_VALUE] });
@@ -49,8 +48,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         entity.SetValue(new OptionSet { Name = row[Constants.SpecFlow.TABLE_KEY], Value = row[Constants.SpecFlow.TABLE_VALUE] });
                         break;
                     default:
-                        entity.SetValueFix(row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE] + Keys.Tab, true);
-                        entity.SetValueFix(row[Constants.SpecFlow.TABLE_KEY], Keys.Tab, false);
+                        entity.SetValue(row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE]);
                         break;
                 }
             }
@@ -58,7 +56,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         internal static void SaveRecord(SeleniumTestingContext seleniumContext, bool saveIfDuplicate)
         {
-            seleniumContext.Browser.Entity.Save();
+            seleniumContext.Browser.CommandBar.ClickCommand("SAVE");
             // ThinkTime before call to DuplicateDetection, frame must be visible before the method call in order to succeed
             seleniumContext.Browser.ThinkTime(2000);
             seleniumContext.Browser.Dialogs.DuplicateDetection(saveIfDuplicate);

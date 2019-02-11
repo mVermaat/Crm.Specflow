@@ -40,13 +40,10 @@
       <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics365.UIAutomation.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.0.2.6\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Dynamics365.UIAutomation.Api.UCI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.0.2.6\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.UCI.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Dynamics365.UIAutomation.Api.9.1.20-beta\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics365.UIAutomation.Browser, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.0.2.6\lib\net46\Microsoft.Dynamics365.UIAutomation.Browser.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Dynamics365.UIAutomation.Browser.9.1.20-beta\lib\net46\Microsoft.Dynamics365.UIAutomation.Browser.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.6.1.7600.16394\lib\net35\Microsoft.IdentityModel.dll</HintPath>
@@ -124,6 +121,7 @@
     <Compile Include="AliasedRecordCache.cs" />
     <Compile Include="AssertHelper.cs" />
     <Compile Include="BusinessProcessFlowHelper.cs" />
+    <Compile Include="ConvertedObjectType.cs" />
     <Compile Include="EasyRepro\ButtonTexts.cs" />
     <Compile Include="CommandProcessor.cs" />
     <Compile Include="Commands\AssertBusinessProcessStageCommand.cs" />

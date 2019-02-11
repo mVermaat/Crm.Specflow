@@ -22,11 +22,11 @@ Then TestAccount has the following values
 @API @Chrome @Cleanup
 Scenario: Update an existing Account
 Given an account named TestAccount with the following values
-	| Property     | Value                   |
-	| Account Name | DynamicHands            |
-	| Main Phone   | 0612345678              |
-	| Website      | https://dynamichands.nl |
-	| Industry     | Consulting              |
+	| Property              | Value                   |
+	| Account Name          | DynamicHands            |
+	| Main Phone            | 0612345678              |
+	| Website               | https://dynamichands.nl |
+	| Industry              | Consulting              |
 When TestAccount is updated with the following values
 	| Property     | Value             |
 	| Account Name | DynamicHands B.V. |
