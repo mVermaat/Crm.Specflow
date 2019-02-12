@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using System;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.Commands;
@@ -50,6 +51,20 @@ namespace Vermaat.Crm.Specflow.Steps
         #endregion
 
         #region When
+
+        [When("Testing")]
+        public void Test()
+        {
+            var metadata = _crmContext.Metadata.GetEntityMetadata("lead");
+            var md2 = _crmContext.Metadata.GetEntityMetadata("systemform");
+
+            var query = new QueryExpression("systemform");
+            query.ColumnSet.AllColumns = true;
+            query.Criteria.AddCondition("objecttypecode", ConditionOperator.Equal, "lead");
+            var results = _crmContext.Service.RetrieveMultiple(query);
+
+            var entities = results.Entities;
+        }
 
         [When(@"(.*) is moved to the next process stage")]
         public void MoveToNextStage(string alias)
