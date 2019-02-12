@@ -52,20 +52,6 @@ namespace Vermaat.Crm.Specflow.Steps
 
         #region When
 
-        [When("Testing")]
-        public void Test()
-        {
-            var metadata = _crmContext.Metadata.GetEntityMetadata("lead");
-            var md2 = _crmContext.Metadata.GetEntityMetadata("systemform");
-
-            var query = new QueryExpression("systemform");
-            query.ColumnSet.AllColumns = true;
-            query.Criteria.AddCondition("objecttypecode", ConditionOperator.Equal, "lead");
-            var results = _crmContext.Service.RetrieveMultiple(query);
-
-            var entities = results.Entities;
-        }
-
         [When(@"(.*) is moved to the next process stage")]
         public void MoveToNextStage(string alias)
         {

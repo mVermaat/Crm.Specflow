@@ -38,6 +38,8 @@ namespace Vermaat.Crm.Specflow
                     var optionSet = GetOptionSetValue(metadata, value, context);
                     if (objectType == ConvertedObjectType.Primitive)
                         return optionSet.Value;
+                    else if (objectType == ConvertedObjectType.UserInterface)
+                        return value;
                     else
                         return optionSet;
 

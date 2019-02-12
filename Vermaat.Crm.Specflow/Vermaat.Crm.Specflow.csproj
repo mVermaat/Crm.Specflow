@@ -148,9 +148,14 @@
     <Compile Include="CrmService.cs" />
     <Compile Include="CrmTestingContext.cs" />
     <Compile Include="EasyRepro\BrowserOptionHelper.cs" />
+    <Compile Include="EasyRepro\CompositeFields.cs" />
+    <Compile Include="EasyRepro\CompositeFormField.cs" />
     <Compile Include="EasyRepro\EntityExtensions.cs" />
+    <Compile Include="EasyRepro\FormData.cs" />
     <Compile Include="EasyRepro\FormHelper.cs" />
+    <Compile Include="EasyRepro\FormField.cs" />
     <Compile Include="EasyRepro\FormType.cs" />
+    <Compile Include="EasyRepro\IFormField.cs" />
     <Compile Include="EasyRepro\NavigationHelper.cs" />
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Entities\OptionSets.cs" />

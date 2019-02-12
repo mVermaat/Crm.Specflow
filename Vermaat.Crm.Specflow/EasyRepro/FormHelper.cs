@@ -4,10 +4,6 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -16,43 +12,58 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         public static void FillForm(CrmTestingContext crmContext, Browser browser, string entityName, Table dataTable)
         {
-            crmContext.TableConverter.ConvertTable(entityName, dataTable);
-
             var entity = browser.Entity;
-            foreach (var row in dataTable.Rows)
+            var formData = new FormData(crmContext, entityName, dataTable);
+            foreach (var field in formData.Fields)
             {
-                var metadata = crmContext.Metadata.GetAttributeMetadata(entityName, row[Constants.SpecFlow.TABLE_KEY]);
-                var crmObject = ObjectConverter.ToCrmObject(entityName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], crmContext, ConvertedObjectType.UserInterface);
-
-                if (!IsOnForm(browser.Driver, row[Constants.SpecFlow.TABLE_KEY]))
+                if(!field.IsOnForm(browser.Driver))
                 {
-                    throw new InvalidOperationException($"Field {row[Constants.SpecFlow.TABLE_KEY]} is not on the form");
+                    throw new InvalidOperationException($"Field {field.FieldName} is not on the form");
                 }
-                if (!IsTabOfFieldExpanded(browser.Driver, row[Constants.SpecFlow.TABLE_KEY]))
+                if (!IsTabOfFieldExpanded(browser.Driver, field.FieldName))
                 {
-                    ExpandTabThatContainsField(browser, row[Constants.SpecFlow.TABLE_KEY]);
+                    ExpandTabThatContainsField(browser, field.FieldName);
                 }
-
-                switch (metadata.AttributeType.Value)
-                {
-                    case AttributeTypeCode.Boolean:
-                        entity.SetValue(new TwoOption() { Name = row[Constants.SpecFlow.TABLE_KEY], Value = crmObject.ToString() });
-                        break;
-                    case AttributeTypeCode.DateTime:
-                        entity.SetValue(new DateTimeControl() { Name = row[Constants.SpecFlow.TABLE_KEY], Value = (DateTime)crmObject});
-                        break;
-                    case AttributeTypeCode.Lookup:
-                        entity.SetValue(new LookupItem { Name = row[Constants.SpecFlow.TABLE_KEY], Value = row[Constants.SpecFlow.TABLE_VALUE] });
-                        break;
-                    case AttributeTypeCode.Picklist:
-                        entity.SetValue(new OptionSet { Name = row[Constants.SpecFlow.TABLE_KEY], Value = row[Constants.SpecFlow.TABLE_VALUE] });
-                        break;
-                    default:
-                        entity.SetValue(row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE]);
-                        break;
-                }
+                field.EnterOnForm(entity);
             }
         }
+
+        //public static void FillForm(CrmTestingContext crmContext, Browser browser, string entityName, Table dataTable)
+        //{
+        //    var entity = browser.Entity;
+        //    foreach (TableRow row in dataTable.Rows)
+        //    {
+        //        AttributeMetadata metadata = crmContext.Metadata.GetAttributeMetadata(entityName, row[Constants.SpecFlow.TABLE_KEY]);
+        //        object crmObject = ObjectConverter.ToCrmObject(entityName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], crmContext, ConvertedObjectType.UserInterface);
+
+        //        if (!IsOnForm(browser.Driver, row[Constants.SpecFlow.TABLE_KEY]))
+        //        {
+        //            throw new InvalidOperationException($"Field {row[Constants.SpecFlow.TABLE_KEY]} is not on the form");
+        //        }
+        //        if (!IsTabOfFieldExpanded(browser.Driver, row[Constants.SpecFlow.TABLE_KEY]))
+        //        {
+        //            ExpandTabThatContainsField(browser, row[Constants.SpecFlow.TABLE_KEY]);
+        //        }
+        //        switch (metadata.AttributeType.Value)
+        //        {
+        //            case AttributeTypeCode.Boolean:
+        //                entity.SetValue(new TwoOption() { Name = row[Constants.SpecFlow.TABLE_KEY], Value = crmObject.ToString() });
+        //                break;
+        //            case AttributeTypeCode.DateTime:
+        //                entity.SetValue(new DateTimeControl() { Name = row[Constants.SpecFlow.TABLE_KEY], Value = (DateTime)crmObject });
+        //                break;
+        //            case AttributeTypeCode.Lookup:
+        //                entity.SetValue(new LookupItem { Name = row[Constants.SpecFlow.TABLE_KEY], Value = row[Constants.SpecFlow.TABLE_VALUE] });
+        //                break;
+        //            case AttributeTypeCode.Picklist:
+        //                entity.SetValue(new OptionSet { Name = row[Constants.SpecFlow.TABLE_KEY], Value = row[Constants.SpecFlow.TABLE_VALUE] });
+        //                break;
+        //            default:
+        //                entity.SetValue(row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE]);
+        //                break;
+        //        }
+        //    }
+        //}
 
         internal static void SaveRecord(SeleniumTestingContext seleniumContext, bool saveIfDuplicate)
         {
@@ -67,7 +78,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public static string GetSubgridName(string entityName, IWebDriver driver)
         {
-            var result = driver.ExecuteScript($"return Xrm.Page.ui.controls.getAll().filter(t => {{ return t.getControlType() === 'subgrid' && t.getEntityName() === '{entityName}' }})[0].getName()");
+            object result = driver.ExecuteScript($"return Xrm.Page.ui.controls.getAll().filter(t => {{ return t.getControlType() === 'subgrid' && t.getEntityName() === '{entityName}' }})[0].getName()");
 
             return result.ToString();
         }
@@ -79,7 +90,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public static EntityReference AddAlias(CrmTestingContext crmContext, IWebDriver driver, string alias)
         {
-            var entity = GetEntityReference(driver);
+            EntityReference entity = GetEntityReference(driver);
             crmContext.RecordCache.Add(alias, entity);
             return entity;
         }
@@ -107,13 +118,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public static bool IsTabOfFieldExpanded(IWebDriver driver, string fieldLogicalName)
         {
-            var result = driver.ExecuteScript($"return Xrm.Page.getControl('{fieldLogicalName}').getParent().getParent().getDisplayState()")?.ToString();
+            string result = driver.ExecuteScript($"return Xrm.Page.getControl('{fieldLogicalName}').getParent().getParent().getDisplayState()")?.ToString();
             return "expanded".Equals(result, StringComparison.CurrentCultureIgnoreCase);
         }
 
         private static void ExpandTabThatContainsField(Browser browser, string fieldLogicalName)
         {
-            var tabName = browser.Driver.ExecuteScript($"return Xrm.Page.getControl('{fieldLogicalName}').getParent().getParent().getLabel()")?.ToString();
+            string tabName = browser.Driver.ExecuteScript($"return Xrm.Page.getControl('{fieldLogicalName}').getParent().getParent().getLabel()")?.ToString();
             browser.Entity.SelectTab(tabName);
         }
     }

@@ -68,11 +68,15 @@ namespace Vermaat.Crm.Specflow.Sample
             testRunner.CollectScenarioErrors();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Lead Qualification", SourceLine=3)]
+        [TechTalk.SpecRun.ScenarioAttribute("Lead Qualification", new string[] {
+                "API",
+                "Chrome"}, SourceLine=4)]
         public virtual void LeadQualification()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Lead Qualification", null, ((string[])(null)));
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Lead Qualification", null, new string[] {
+                        "API",
+                        "Chrome"});
+#line 5
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -80,12 +84,18 @@ this.ScenarioInitialize(scenarioInfo);
                         "Property",
                         "Value"});
             table1.AddRow(new string[] {
+                        "First Name",
+                        "Qualify"});
+            table1.AddRow(new string[] {
+                        "Last Name",
+                        "Test"});
+            table1.AddRow(new string[] {
                         "Topic",
                         "Qualification Test"});
             table1.AddRow(new string[] {
-                        "Name",
-                        "Qualify"});
-#line 5
+                        "Company Name",
+                        "Qualify Account"});
+#line 6
 testRunner.Given("a lead named ToQualify with the following values", ((string)(null)), table1, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -96,8 +106,47 @@ testRunner.Given("a lead named ToQualify with the following values", ((string)(n
                         "true",
                         "true",
                         "true"});
-#line 9
+#line 12
 testRunner.When("ToQualify is qualified to a", ((string)(null)), table2, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table3.AddRow(new string[] {
+                        "Originating Lead",
+                        "ToQualify"});
+            table3.AddRow(new string[] {
+                        "Account Name",
+                        "Qualify Account"});
+#line 15
+testRunner.Then("an account exists with the following values", ((string)(null)), table3, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table4.AddRow(new string[] {
+                        "Originating Lead",
+                        "ToQualify"});
+            table4.AddRow(new string[] {
+                        "First Name",
+                        "Qualify"});
+            table4.AddRow(new string[] {
+                        "Last Name",
+                        "Test"});
+#line 19
+testRunner.And("a contact exists with the following values", ((string)(null)), table4, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table5.AddRow(new string[] {
+                        "Originating Lead",
+                        "ToQualify"});
+            table5.AddRow(new string[] {
+                        "Topic",
+                        "Qualification Test"});
+#line 24
+testRunner.And("an opportunity exists with the following values", ((string)(null)), table5, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

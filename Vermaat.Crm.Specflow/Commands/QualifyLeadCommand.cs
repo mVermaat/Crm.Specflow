@@ -36,6 +36,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 SourceCampaignId = lead.GetAttributeValue<EntityReference>(Lead.Fields.CampaignId),
                 Status = new OptionSetValue((int)Lead_StatusCode.Qualified)
             };
+            req.Parameters.Add("SuppressDuplicateDetection", true);
 
             return _crmContext.Service.Execute<QualifyLeadResponse>(req).CreatedEntities;
         }
