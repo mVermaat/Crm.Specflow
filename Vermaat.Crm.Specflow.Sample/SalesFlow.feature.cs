@@ -68,6 +68,40 @@ namespace Vermaat.Crm.Specflow.Sample
             testRunner.CollectScenarioErrors();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Lead Qualification", SourceLine=3)]
+        public virtual void LeadQualification()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Lead Qualification", null, ((string[])(null)));
+#line 4
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table1.AddRow(new string[] {
+                        "Topic",
+                        "Qualification Test"});
+            table1.AddRow(new string[] {
+                        "Name",
+                        "Qualify"});
+#line 5
+testRunner.Given("a lead named ToQualify with the following values", ((string)(null)), table1, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Account",
+                        "Opportunity",
+                        "Contact"});
+            table2.AddRow(new string[] {
+                        "true",
+                        "true",
+                        "true"});
+#line 9
+testRunner.When("ToQualify is qualified to a", ((string)(null)), table2, "When ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {
