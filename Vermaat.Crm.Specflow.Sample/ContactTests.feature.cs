@@ -79,8 +79,6 @@ namespace Vermaat.Crm.Specflow.Sample
 #line 6
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 7
-testRunner.When("Testing", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
@@ -94,7 +92,7 @@ testRunner.When("Testing", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), 
             table1.AddRow(new string[] {
                         "Job Title",
                         "CLO"});
-#line 8
+#line 7
 testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table1, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -106,7 +104,7 @@ testRunner.Given("a contact named TestContact with the following values", ((stri
             table2.AddRow(new string[] {
                         "Job Title",
                         "Chief Lazyness Officer"});
-#line 13
+#line 12
 testRunner.When("TestContact is updated with the following values", ((string)(null)), table2, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -121,7 +119,7 @@ testRunner.When("TestContact is updated with the following values", ((string)(nu
             table3.AddRow(new string[] {
                         "Job Title",
                         "Chief Lazyness Officer"});
-#line 17
+#line 16
 testRunner.Then("TestContact has the following values", ((string)(null)), table3, "Then ");
 #line hidden
             this.ScenarioCleanup();

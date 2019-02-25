@@ -50,7 +50,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     entity.SetValue(new OptionSet { Name = FieldName, Value = (string)FieldValue });
                     break;
                 default:
-                    entity.SetValue(FieldName,(string)FieldValue);
+                    entity.SetValueFix(FieldName,(string)FieldValue);
                     break;
             }
         }

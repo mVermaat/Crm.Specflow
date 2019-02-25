@@ -17,6 +17,87 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 return driver.WaitUntilVisible(By.Id(field), TimeSpan.FromSeconds(5));
             });
-        }        
+        }
+
+        /// <summary>
+        /// Sets the value of a Text/Description field on an Entity form.
+        /// </summary>
+        /// <param name="field">The field id.</param>
+        /// <param name="value">The value.</param>
+        /// <example>xrmBrowser.Entity.SetValue("name", "Test API Account");</example>
+        public static BrowserCommandResult<bool> SetValueFix(this Entity entity, string field, string value)
+        {
+            BrowserCommandResult<bool> returnval = entity.Execute(BrowserOptionHelper.GetOptions($"Set Text Field Value: {field}"), driver =>
+            {
+                if (driver.HasElement(By.Id(field)))
+                {
+                    driver.WaitUntilVisible(By.Id(field));
+
+                    IWebElement fieldElement = driver.FindElement(By.Id(field));
+                    if (fieldElement.IsVisible(By.TagName("a")))
+                    {
+                        IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+                        IWebElement element = fieldElement.FindElement(By.TagName("a"));
+                        js.ExecuteScript("arguments[0].setAttribute('style', 'pointer-events: none; cursor: default')", element);
+                    }
+                    fieldElement.Click();
+
+                    try
+                    {
+                        //Check to see if focus is on field already
+                        if (fieldElement.FindElement(By.ClassName(Elements.CssClass[Reference.SetValue.EditClass])) != null)
+                            fieldElement.FindElement(By.ClassName(Elements.CssClass[Reference.SetValue.EditClass])).Click();
+                        else
+                            fieldElement.FindElement(By.ClassName(Elements.CssClass[Reference.SetValue.ValueClass])).Click();
+                    }
+                    catch (NoSuchElementException) { }
+
+                    if (fieldElement.FindElements(By.TagName("textarea")).Count > 0)
+                    {
+                        fieldElement.FindElement(By.TagName("textarea")).Clear();
+                        fieldElement.FindElement(By.TagName("textarea")).SendKeys(value);
+                    }
+                    else if (fieldElement.TagName == "textarea")
+                    {
+                        fieldElement.Clear();
+                        fieldElement.SendKeys(value);
+                        fieldElement.SendKeys(Keys.Tab);
+                    }
+                    else
+                    {
+                        //BugFix - Setvalue -The value is getting erased even after setting the value ,might be due to recent CSS changes.
+                        //driver.ExecuteScript("Xrm.Page.getAttribute('" + field + "').setValue('')");
+                        IWebElement input = fieldElement.FindElement(By.TagName("input"));
+                        if (HasValue(fieldElement))
+                        {
+                            input.Clear();
+                            fieldElement.Click();
+                            input.SendKeys(value + Keys.Tab);
+                            fieldElement.Click();
+                        }
+                        else
+                        {
+                            input.SendKeys(value);
+                        }
+                    }
+                }
+                else
+                    throw new InvalidOperationException($"Field: {field} Does not exist");
+
+                return true;
+            });
+            return returnval;
+        }
+
+        private static bool HasValue(IWebElement fieldElement)
+        {
+            IWebElement label = fieldElement.FindElement(By.TagName("label"));
+            var labelText = label.GetAttribute("innerText");
+
+            IWebElement labelDiv = label.FindElement(By.TagName("div"));
+            var labelDivText = labelDiv.GetAttribute("innerText");
+
+            return labelText != labelDivText;
+        }
     }
 }
