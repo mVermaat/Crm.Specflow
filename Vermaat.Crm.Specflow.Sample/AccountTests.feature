@@ -1,7 +1,4 @@
-﻿# Sometimes lookup fails to select, possibly error in EasyRepro
-
-
-Feature: AccountTests
+﻿Feature: AccountTests
 	Some tests involving the account entity
 
 @API @Chrome @Cleanup
