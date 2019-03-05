@@ -15,6 +15,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         { "firstname", "fullname" },
                         { "lastname", "fullname" }
                     }
+                },
+                { "contact", new Dictionary<string, string>()
+                    {
+                        { "firstname", "fullname" },
+                        { "lastname", "fullname" }
+                    }
                 }
             };
         }
