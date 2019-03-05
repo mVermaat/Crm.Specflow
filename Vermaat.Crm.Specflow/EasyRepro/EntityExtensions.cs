@@ -89,6 +89,44 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return returnval;
         }
 
+        /// <summary>
+        /// Sets the value of a TwoOption / Checkbox field on an Entity form.
+        /// </summary>
+        /// <param name="option">Field name or ID.</param>
+        /// <example>xrmBrowser.Entity.SetValue(new TwoOption{ Name = "creditonhold"});</example>
+        public static BrowserCommandResult<bool> SetValueFix(this Entity entity, TwoOption option)
+        {
+            return entity.Execute(BrowserOptionHelper.GetOptions($"Set TwoOption Value: {option.Name}"), driver =>
+            {
+                if (driver.HasElement(By.XPath(Elements.Xpath[Reference.Entity.CheckboxFieldContainer].Replace("[NAME]", option.Name.ToLower()))))
+                {
+                    var fieldElement = driver.WaitUntilAvailable(By.XPath(Elements.Xpath[Reference.Entity.CheckboxFieldContainer].Replace("[NAME]", option.Name.ToLower())));
+
+                    if (fieldElement.FindElements(By.TagName("label")).Count > 0)
+                    {
+                        var label = fieldElement.FindElement(By.TagName("label"));
+
+                        if (label.Text != option.Value)
+                        {
+                            try
+                            {
+                                var input = fieldElement.FindElement(By.TagName("input"));
+                                input.Click(true);
+                            }
+                            catch (NoSuchElementException)
+                            {
+                                fieldElement.Click(true);
+                            }
+                        }
+                    }
+                }
+                else
+                    throw new InvalidOperationException($"Field: {option.Name} Does not exist");
+
+                return true;
+            });
+        }
+
         private static bool HasValue(IWebElement fieldElement)
         {
             IWebElement label = fieldElement.FindElement(By.TagName("label"));

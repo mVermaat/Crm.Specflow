@@ -38,7 +38,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             switch (_fieldMetadata.AttributeType.Value)
             {
                 case AttributeTypeCode.Boolean:
-                    entity.SetValue(new TwoOption() { Name = FieldName, Value = (string)FieldValue });
+                    entity.SetValueFix(new TwoOption() { Name = FieldName, Value = (string)FieldValue });
                     break;
                 case AttributeTypeCode.DateTime:
                     entity.SetValue(new DateTimeControl() { Name = FieldName, Value = (DateTime)FieldValue });
