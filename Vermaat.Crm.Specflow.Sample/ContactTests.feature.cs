@@ -125,6 +125,93 @@ testRunner.Then("TestContact has the following values", ((string)(null)), table3
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Lookup with multiple results tests", new string[] {
+                "Chrome",
+                "Cleanup"}, SourceLine=22)]
+        public virtual void LookupWithMultipleResultsTests()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Lookup with multiple results tests", null, new string[] {
+                        "Chrome",
+                        "Cleanup"});
+#line 23
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table4.AddRow(new string[] {
+                        "Account Name",
+                        "DynamicHands"});
+            table4.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+            table4.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+            table4.AddRow(new string[] {
+                        "Industry",
+                        "Consulting"});
+#line 24
+testRunner.Given("an account named FirstAccount with the following values", ((string)(null)), table4, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table5.AddRow(new string[] {
+                        "Account Name",
+                        "DynamicHands"});
+            table5.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+            table5.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+            table5.AddRow(new string[] {
+                        "Industry",
+                        "Consulting"});
+#line 30
+testRunner.And("an account named SecondAccount with the following values", ((string)(null)), table5, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table6.AddRow(new string[] {
+                        "First Name",
+                        "Jerry"});
+            table6.AddRow(new string[] {
+                        "Last Name",
+                        "Smith"});
+            table6.AddRow(new string[] {
+                        "Company Name",
+                        "SecondAccount"});
+            table6.AddRow(new string[] {
+                        "Email",
+                        "someone@test.com"});
+#line 36
+testRunner.When("a contact named TestLookup is created with the following values", ((string)(null)), table6, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table7.AddRow(new string[] {
+                        "First Name",
+                        "Jerry"});
+            table7.AddRow(new string[] {
+                        "Last Name",
+                        "Smith"});
+            table7.AddRow(new string[] {
+                        "Company Name",
+                        "SecondAccount"});
+            table7.AddRow(new string[] {
+                        "Email",
+                        "someone@test.com"});
+#line 42
+testRunner.Then("TestLookup has the following values", ((string)(null)), table7, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

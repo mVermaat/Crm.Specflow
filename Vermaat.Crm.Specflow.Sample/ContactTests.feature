@@ -19,3 +19,29 @@ Then TestContact has the following values
 	| Last Name  | Smith                  |
 	| Job Title  | Chief Lazyness Officer |
 
+@Chrome @Cleanup
+Scenario: Lookup with multiple results tests
+Given an account named FirstAccount with the following values
+	| Property     | Value                   |
+	| Account Name | DynamicHands            |
+	| Main Phone   | 0612345678              |
+	| Website      | https://dynamichands.nl |
+	| Industry     | Consulting              |
+And an account named SecondAccount with the following values
+	| Property     | Value                   |
+	| Account Name | DynamicHands            |
+	| Main Phone   | 0612345678              |
+	| Website      | https://dynamichands.nl |
+	| Industry     | Consulting              |
+When a contact named TestLookup is created with the following values
+	| Property     | Value            |
+	| First Name   | Jerry            |
+	| Last Name    | Smith            |
+	| Company Name | SecondAccount    |
+	| Email        | someone@test.com |
+Then TestLookup has the following values
+	| Property     | Value            |
+	| First Name   | Jerry            |
+	| Last Name    | Smith            |
+	| Company Name | SecondAccount    |
+	| Email        | someone@test.com |

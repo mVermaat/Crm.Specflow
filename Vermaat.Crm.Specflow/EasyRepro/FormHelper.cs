@@ -24,7 +24,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 {
                     ExpandTabThatContainsField(browser, field.FieldName);
                 }
-                field.EnterOnForm(entity);
+                field.EnterOnForm(browser, entity);
             }
         }
 
@@ -36,7 +36,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             seleniumContext.Browser.Dialogs.DuplicateDetection(saveIfDuplicate);
             seleniumContext.Browser.ThinkTime(2000);
             seleniumContext.Browser.Entity.SwitchToContentFrame();
-
         }
 
         public static string GetSubgridName(string entityName, IWebDriver driver)
