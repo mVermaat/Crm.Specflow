@@ -66,7 +66,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (!string.IsNullOrEmpty(value.Name))
                 lookup.Search(value.Name);
 
-            var index = FindGridItemIndex(value, lookup);
+            var index = FindGridItemIndex(value, lookup, 1);
 
             if (index == null)
                 throw new ArgumentException($"Lookup not found. Was looking for Entity: {value.Id} ({value.Name}) of type {value.LogicalName}");
@@ -76,11 +76,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             entity.SwitchToContentFrame();
         }
 
-        private int? FindGridItemIndex(EntityReference value, Lookup lookup)
+        private int? FindGridItemIndex(EntityReference value, Lookup lookup, int page)
         {
             var gridItems = lookup.GetGridItems();
 
-            for(int i = 0; i < gridItems.Value.Count; i++)
+            if (gridItems.Value.Count == 0)
+                throw new ArgumentException($"Searching for lookup {value.Name} with ID {value.Id} and LogicalName {value.LogicalName} has 0 results on page {page}");
+
+
+            for (int i = 0; i < gridItems.Value.Count; i++)
             {
                 if (gridItems.Value[i].Id == value.Id)
                     return i;
@@ -89,7 +93,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             var next = lookup.NextPage();
 
             if (next.Success.GetValueOrDefault())
-                return FindGridItemIndex(value, lookup);
+                return FindGridItemIndex(value, lookup, page + 1);
             else
                 return null;
 
