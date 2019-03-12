@@ -85,13 +85,13 @@ namespace Vermaat.Crm.Specflow
 
             QueryExpression qe = new QueryExpression(targetEntity)
             {
-                ColumnSet = new ColumnSet(false)
+                ColumnSet = new ColumnSet(targetMd.PrimaryNameAttribute)
             };
             qe.Criteria.AddCondition(targetMd.PrimaryNameAttribute, ConditionOperator.Equal, alias);
             var col = context.Service.RetrieveMultiple(qe);
 
             Assert.AreEqual(1, col.Entities.Count);
-            return col.Entities.First().ToEntityReference();
+            return col.Entities.First().ToEntityReference(targetMd.PrimaryNameAttribute);
         }
 
         private static OptionSetValue GetOptionSetValue(AttributeMetadata metadata, string value, CrmTestingContext context)

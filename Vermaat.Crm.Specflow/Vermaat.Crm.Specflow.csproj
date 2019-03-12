@@ -162,6 +162,7 @@
     <Compile Include="EasyRepro\NavigationHelper.cs" />
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Entities\OptionSets.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="HelperMethods.cs" />
     <Compile Include="Hooks.cs" />
     <Compile Include="ProcessStage.cs" />
