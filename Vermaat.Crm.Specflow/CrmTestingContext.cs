@@ -27,9 +27,9 @@ namespace Vermaat.Crm.Specflow
         public CrmTestingContext()
         {
             ConnectionInfo = CrmConnectionString.CreateFromAppConfig();
-            RecordCache = new AliasedRecordCache();
             Service = CrmConnectionFactory.CreateCrmConnection(ConnectionInfo, RecordCache);
             Metadata = new MetadataCache(Service);
+            RecordCache = new AliasedRecordCache(Service, Metadata);
             RecordBuilder = new RecordBuilder(this);
             TableConverter = new TableConverter(this);
             LanguageCode = GetLanguageCode();

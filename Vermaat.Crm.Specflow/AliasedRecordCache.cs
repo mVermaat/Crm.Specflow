@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,16 @@ namespace Vermaat.Crm.Specflow
         private Dictionary<string, EntityReference> _aliasedRecords;
         private List<string> _entitiesToIgnore;
         private List<string> _aliasesToIgnore;
+        private readonly CrmService _service;
+        private readonly MetadataCache _metadataCache;
 
-
-        internal AliasedRecordCache()
+        internal AliasedRecordCache(CrmService service, MetadataCache metadataCache)
         {
             _aliasedRecords = new Dictionary<string, EntityReference>();
             _entitiesToIgnore = new List<string>();
             _aliasesToIgnore = new List<string>();
+            _service = service;
+            _metadataCache = metadataCache;
         }
 
         /// <summary>
@@ -32,6 +36,13 @@ namespace Vermaat.Crm.Specflow
         /// <param name="reference">EntityReference of the record</param>
         public void Add(string alias, EntityReference reference)
         {
+            if(string.IsNullOrEmpty(reference.Name))
+            {
+                var md = _metadataCache.GetEntityMetadata(reference.LogicalName);
+                var entity = _service.Retrieve(reference, new ColumnSet(md.PrimaryNameAttribute));
+                reference.Name = entity.GetAttributeValue<string>(md.PrimaryNameAttribute);
+            }
+
             _aliasedRecords.Add(alias, reference);
         }
 
@@ -42,7 +53,8 @@ namespace Vermaat.Crm.Specflow
         /// <param name="entity">The record to add</param>
         public void Add(string alias, Entity entity)
         {
-            Add(alias, entity.ToEntityReference());
+            var md = _metadataCache.GetEntityMetadata(entity.LogicalName);
+            Add(alias, entity.ToEntityReference(md.PrimaryNameAttribute));
         }
 
         /// <summary>

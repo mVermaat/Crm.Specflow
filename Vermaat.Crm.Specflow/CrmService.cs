@@ -25,7 +25,7 @@ namespace Vermaat.Crm.Specflow
         public void Create(Entity entity, string alias)
         {
             entity.Id = CreateRecord(entity);
-            _cache.Add(alias, entity);
+            _cache.Add(alias, entity.ToEntityReference());
         }
 
         public void Associate(string entityName, Guid entityId, Relationship relationship, EntityReferenceCollection relatedEntities)
