@@ -66,22 +66,24 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (!string.IsNullOrEmpty(value.Name))
                 lookup.Search(value.Name);
 
-            var index = FindGridItemIndex(value, lookup, 1);
+            var index = FindGridItemIndex(value, lookup);
 
             if (index == null)
                 throw new ArgumentException($"Lookup not found. Was looking for Entity: {value.Id} ({value.Name}) of type {value.LogicalName}");
 
-            lookup.SelectItem(index.Value);
+            if(index != 0) // First item is automatically selected
+                lookup.SelectItem(index.Value);
+
             lookup.Add();
             entity.SwitchToContentFrame();
         }
 
-        private int? FindGridItemIndex(EntityReference value, Lookup lookup, int page)
+        private int? FindGridItemIndex(EntityReference value, Lookup lookup)
         {
             var gridItems = lookup.GetGridItems();
 
             if (gridItems.Value.Count == 0)
-                throw new ArgumentException($"Searching for lookup {value.Name} with ID {value.Id} and LogicalName {value.LogicalName} has 0 results on page {page}");
+                return null;
 
 
             for (int i = 0; i < gridItems.Value.Count; i++)
@@ -93,7 +95,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             var next = lookup.NextPage();
 
             if (next.Success.GetValueOrDefault())
-                return FindGridItemIndex(value, lookup, page + 1);
+                return FindGridItemIndex(value, lookup);
             else
                 return null;
 
