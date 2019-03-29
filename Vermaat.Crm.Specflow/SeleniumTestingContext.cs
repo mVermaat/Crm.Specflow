@@ -6,27 +6,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro;
+using Vermaat.Crm.Specflow.EasyRepro.UCI;
+using Vermaat.Crm.Specflow.EasyRepro.Web;
 
 namespace Vermaat.Crm.Specflow
 {
     public class SeleniumTestingContext : IDisposable
     {
-        private readonly Lazy<Browser> _browser;
+        private readonly Lazy<IBrowser> _browser;
+        private readonly bool _uci;
 
-        public Browser Browser => _browser.Value;
-        public BrowserOptions BrowserOptions { get; private set; }
+        public IBrowser Browser => _browser.Value;
+        public BrowserOptions BrowserOptions { get; }
         public ButtonTexts ButtonTexts { get; set; }
 
         public SeleniumTestingContext()
         {
+            _uci = bool.Parse(HelperMethods.GetAppSettingsValue("UCI"));
             ButtonTexts = new ButtonTexts();
             BrowserOptions = new BrowserOptions()
             {
                 CleanSession = true,
-
             };
 
-            _browser = new Lazy<Browser>(() => new Browser(BrowserOptions));
+            _browser = new Lazy<IBrowser>(() => _uci ? new UCIBrowser(BrowserOptions, ButtonTexts) as IBrowser : new WebBrowser(BrowserOptions, ButtonTexts));
         }
 
         public void Dispose()

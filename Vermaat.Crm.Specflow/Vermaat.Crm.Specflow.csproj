@@ -40,13 +40,13 @@
       <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics365.UIAutomation.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.dll</HintPath>
+      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0.1\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics365.UIAutomation.Api.UCI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.UCI.dll</HintPath>
+      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0.1\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.UCI.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics365.UIAutomation.Browser, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0\lib\net46\Microsoft.Dynamics365.UIAutomation.Browser.dll</HintPath>
+      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0.1\lib\net46\Microsoft.Dynamics365.UIAutomation.Browser.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.6.1.7600.16394\lib\net35\Microsoft.IdentityModel.dll</HintPath>
@@ -125,6 +125,7 @@
     <Compile Include="AssertHelper.cs" />
     <Compile Include="BusinessProcessFlowHelper.cs" />
     <Compile Include="ConvertedObjectType.cs" />
+    <Compile Include="EasyRepro\BaseBrowserEntity.cs" />
     <Compile Include="EasyRepro\ButtonTexts.cs" />
     <Compile Include="CommandProcessor.cs" />
     <Compile Include="Commands\AssertBusinessProcessStageCommand.cs" />
@@ -155,11 +156,17 @@
     <Compile Include="EasyRepro\CompositeFormField.cs" />
     <Compile Include="EasyRepro\EntityExtensions.cs" />
     <Compile Include="EasyRepro\FormData.cs" />
-    <Compile Include="EasyRepro\FormHelper.cs" />
     <Compile Include="EasyRepro\FormField.cs" />
-    <Compile Include="EasyRepro\FormType.cs" />
+    <Compile Include="EasyRepro\IBrowser.cs" />
     <Compile Include="EasyRepro\IFormField.cs" />
-    <Compile Include="EasyRepro\NavigationHelper.cs" />
+    <Compile Include="EasyRepro\IBrowserEntity.cs" />
+    <Compile Include="EasyRepro\IFormFiller.cs" />
+    <Compile Include="EasyRepro\UCI\UCIBrowser.cs" />
+    <Compile Include="EasyRepro\UCI\UCIBrowserEntity.cs" />
+    <Compile Include="EasyRepro\UCI\UCIFormFiller.cs" />
+    <Compile Include="EasyRepro\Web\WebBrowser.cs" />
+    <Compile Include="EasyRepro\Web\WebBrowserEntity.cs" />
+    <Compile Include="EasyRepro\Web\WebFormFiller.cs" />
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Entities\OptionSets.cs" />
     <Compile Include="ExtensionMethods.cs" />

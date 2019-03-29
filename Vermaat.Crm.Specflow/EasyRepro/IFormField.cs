@@ -8,6 +8,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         string FieldName { get; }
 
         bool IsOnForm(IWebDriver driver);
-        void EnterOnForm(Browser browser, Entity entity);
+        void EnterOnForm(IBrowser browser, IFormFiller formFiller);
     }
 }

@@ -31,15 +31,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return Convert.ToBoolean(driver.ExecuteScript($"return Xrm.Page.getControl('{FieldName}') != null"));
         }
 
-        public void EnterOnForm(Browser browser, Entity entity)
+        public void EnterOnForm(IBrowser browser, IFormFiller formFiller)
         {
-            var composite = new CompositeControl
-            {
-                Id = FieldName,
-                Fields = _fields.Select(f => new Field { Id = f.FieldName, Value = (string)f.FieldValue }).ToList()
-            };
-            entity.SetValue(composite, true);
-            entity.SwitchToContentFrame();
+            formFiller.SetCompositeField(FieldName, _fields.Select(f => ( f.FieldName, (string)f.FieldValue) ));
         }
     }
 }

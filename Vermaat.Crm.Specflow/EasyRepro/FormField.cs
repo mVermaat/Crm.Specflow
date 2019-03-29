@@ -34,65 +34,27 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return Convert.ToBoolean(driver.ExecuteScript($"return Xrm.Page.getControl('{FieldName}') != null"));
         }
 
-        public void EnterOnForm(Browser browser, Microsoft.Dynamics365.UIAutomation.Api.Entity entity)
+        public void EnterOnForm(IBrowser browser, IFormFiller formFiller)
         {
             switch (_fieldMetadata.AttributeType.Value)
             {
                 case AttributeTypeCode.Boolean:
-                    entity.SetValueFix(new TwoOption() { Name = FieldName, Value = (string)FieldValue });
+                    formFiller.SetTwoOptionField(FieldName, (bool)FieldValue);
                     break;
                 case AttributeTypeCode.DateTime:
-                    entity.SetValue(new DateTimeControl() { Name = FieldName, Value = (DateTime)FieldValue });
+                    formFiller.SetDateTimeField(FieldName, (DateTime)FieldValue);
                     break;
                 case AttributeTypeCode.Customer:
                 case AttributeTypeCode.Lookup:
-                    SetLookupValue(browser, entity, (EntityReference)FieldValue);
-                    //entity.SetValue(new LookupEntityReference { FieldName = FieldName, Value = (EntityReference)FieldValue });
+                    formFiller.SetLookupValue(FieldName, (EntityReference)FieldValue);
                     break;
                 case AttributeTypeCode.Picklist:
-                    entity.SetValue(new OptionSet { Name = FieldName, Value = (string)FieldValue });
+                    formFiller.SetOptionSetField(FieldName, (string)FieldValue);
                     break;
                 default:
-                    entity.SetValueFix(FieldName,(string)FieldValue);
+                    formFiller.SetTextField(FieldName, (string)FieldValue);
                     break;
             }
-        }
-
-        private void SetLookupValue(Browser browser, Microsoft.Dynamics365.UIAutomation.Api.Entity entity, EntityReference value)
-        {
-            entity.SelectLookup(new LookupItem { Name = FieldName });
-
-            var lookup = browser.Lookup;
-            if (!string.IsNullOrEmpty(value.Name))
-                lookup.Search(value.Name);
-
-            var index = FindGridItemIndex(value, lookup);
-
-            if (index == null)
-                throw new ArgumentException($"Lookup not found. Was looking for Entity: {value.Id} ({value.Name}) of type {value.LogicalName}");
-
-            lookup.SelectItem(index.Value);
-            lookup.Add();
-            entity.SwitchToContentFrame();
-        }
-
-        private int? FindGridItemIndex(EntityReference value, Lookup lookup)
-        {
-            var gridItems = lookup.GetGridItems();
-
-            for(int i = 0; i < gridItems.Value.Count; i++)
-            {
-                if (gridItems.Value[i].Id == value.Id)
-                    return i;
-            }
-
-            var next = lookup.NextPage();
-
-            if (next.Success.GetValueOrDefault())
-                return FindGridItemIndex(value, lookup);
-            else
-                return null;
-
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Vermaat.Crm.Specflow
             if (ScenarioContext.Current.IsTagTargetted("Chrome"))
             {
                 _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.Chrome;
-                Login();
+                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Vermaat.Crm.Specflow
             if (ScenarioContext.Current.IsTagTargetted("Edge"))
             {
                 _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.Edge;
-                Login();
+                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
             }
         }
 
@@ -52,7 +52,7 @@ namespace Vermaat.Crm.Specflow
             if (ScenarioContext.Current.IsTagTargetted("Firefox"))
             {
                 _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.Firefox;
-                Login();
+                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
             }
         }
 
@@ -62,19 +62,8 @@ namespace Vermaat.Crm.Specflow
             if (ScenarioContext.Current.IsTagTargetted("IE"))
             {
                 _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.IE;
-                Login();
+                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
             }
-        }
-
-
-        private void Login()
-        {
-            _seleniumTestingContext.Browser.LoginPage.Login(new Uri(
-                _crmContext.ConnectionInfo.Url),
-                _crmContext.ConnectionInfo.Username.ToSecureString(),
-                _crmContext.ConnectionInfo.Password.ToSecureString());
-        }
-
-       
+        }       
     }
 }

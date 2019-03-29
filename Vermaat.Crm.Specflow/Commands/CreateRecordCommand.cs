@@ -28,10 +28,13 @@ namespace Vermaat.Crm.Specflow.Commands
 
         protected override EntityReference ExecuteBrowser()
         {
-            NavigationHelper.OpenNewForm(_seleniumContext.Browser, _entityLogicalName);
-            FormHelper.FillForm(_crmContext, _seleniumContext.Browser, _entityLogicalName, _criteria);
-            FormHelper.SaveRecord(_seleniumContext, true);
-            return FormHelper.AddAlias(_crmContext, _seleniumContext.Browser.Driver, _alias);
+            _seleniumContext.Browser.OpenNewForm(_entityLogicalName);
+            _seleniumContext.Browser.Entity.FillForm(_crmContext, _entityLogicalName, _criteria);
+            _seleniumContext.Browser.Entity.SaveRecord(true);
+
+            var record = new EntityReference(_entityLogicalName, _seleniumContext.Browser.Entity.GetId());
+            _crmContext.RecordCache.Add(_alias, record);
+            return record;
         }
     }
 }
