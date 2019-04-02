@@ -10,9 +10,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     public interface IBrowser : IDisposable
     {
         void Login(CrmConnectionString connectionString);
-        void OpenNewForm(string entityName);
         void OpenRecord(EntityReference crmRecord);
-        void OpenRecord(string logicalName, Guid id);
+        void OpenRecord(string logicalName, Guid? id = null);
 
         IBrowserEntity Entity { get; }
     }

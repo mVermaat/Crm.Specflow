@@ -1,11 +1,8 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk;
+using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.UCI
 {
@@ -34,24 +31,36 @@ namespace Vermaat.Crm.Specflow.EasyRepro.UCI
         public void Login(CrmConnectionString connectionString)
         {
             _app.OnlineLogin.Login(new Uri(connectionString.Url), connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
-            
+            _app.Navigation.OpenApp(connectionString.AppName);
         }
 
-        public void OpenNewForm(string entityName)
+        public void OpenRecord(string entityName, Guid? id = null)
         {
-            var currentUri = new Uri(_client.Browser.Driver.Url);
-            var newRecordFormUri = new Uri($"{currentUri.Scheme}://{currentUri.Authority}/main.aspx?etn={entityName}&pagetype=entityrecord");
-            _client.Browser.Navigate(newRecordFormUri);
+            _client.Execute(BrowserOptionHelper.GetOptions($"Open: {entityName}"), driver =>
+            {
+                Uri uri = new Uri(_client.Browser.Driver.Url);
+                string link = $"{uri.Scheme}://{uri.Authority}/main.aspx?etn={entityName}&pagetype=entityrecord";
+
+                if (id.HasValue)
+                {
+                    link += $"&id=%7B{id:D}%7D";
+                }
+
+                driver.Navigate().GoToUrl(link);
+                driver.WaitForPageToLoad();
+                driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
+                    new TimeSpan(0, 0, 30),
+                    null,
+                    d => { throw new Exception("CRM Record is Unavailable or not finished loading. Timeout Exceeded"); }
+                );
+
+                return true;
+            });
         }
 
         public void OpenRecord(EntityReference crmRecord)
         {
             OpenRecord(crmRecord.LogicalName, crmRecord.Id);
-        }
-
-        public void OpenRecord(string logicalName, Guid id)
-        {
-            _app.Entity.OpenEntity(logicalName, id);
         }
 
         public void Dispose()
@@ -72,6 +81,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro.UCI
             }
         }
 
-        
+
     }
 }

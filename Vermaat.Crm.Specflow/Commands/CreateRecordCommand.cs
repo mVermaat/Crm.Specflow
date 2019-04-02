@@ -28,7 +28,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
         protected override EntityReference ExecuteBrowser()
         {
-            _seleniumContext.Browser.OpenNewForm(_entityLogicalName);
+            _seleniumContext.Browser.OpenRecord(_entityLogicalName);
             _seleniumContext.Browser.Entity.FillForm(_crmContext, _entityLogicalName, _criteria);
             _seleniumContext.Browser.Entity.SaveRecord(true);
 

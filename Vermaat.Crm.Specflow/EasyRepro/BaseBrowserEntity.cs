@@ -22,6 +22,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             //Entity entity = _browser.Entity;
             FormData formData = new FormData(crmContext, entityName, dataTable);
+            var formFiller = CreateBrowserFiller();
             foreach (IFormField field in formData.Fields)
             {
                 if (!IsFieldOnForm(field.FieldName))
@@ -32,7 +33,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 {
                     ExpandTabThatContainsField(field.FieldName);
                 }
-                field.EnterOnForm(_browser, CreateBrowserFiller());
+                field.EnterOnForm(_browser, formFiller);
             }
         }
 

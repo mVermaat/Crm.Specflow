@@ -30,21 +30,21 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Web
                connectionString.Password.ToSecureString());
         }
 
-        public void OpenNewForm(string entityName)
-        {
-            var currentUri = new Uri(_browser.Driver.Url);
-            var newRecordFormUri = new Uri($"{currentUri.Scheme}://{currentUri.Authority}/main.aspx?etn={entityName}&pagetype=entityrecord");
-            _browser.Entity.OpenEntity(newRecordFormUri);
-        }
-
         public void OpenRecord(EntityReference crmRecord)
         {
             OpenRecord(crmRecord.LogicalName, crmRecord.Id);
         }
 
-        public void OpenRecord(string logicalName, Guid id)
+        public void OpenRecord(string logicalName, Guid? id)
         {
-            _browser.Entity.OpenEntity(logicalName, id);
+            if(id.HasValue)
+                _browser.Entity.OpenEntity(logicalName, id.Value);
+            else
+            {
+                var currentUri = new Uri(_browser.Driver.Url);
+                var newRecordFormUri = new Uri($"{currentUri.Scheme}://{currentUri.Authority}/main.aspx?etn={logicalName}&pagetype=entityrecord");
+                _browser.Entity.OpenEntity(newRecordFormUri);
+            }
         }
 
         public void Dispose()

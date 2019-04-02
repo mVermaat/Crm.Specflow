@@ -27,13 +27,15 @@ namespace Vermaat.Crm.Specflow
         public CrmTestingContext()
         {
             ConnectionInfo = CrmConnectionString.CreateFromAppConfig();
-            Service = CrmConnectionFactory.CreateCrmConnection(ConnectionInfo, RecordCache);
+            Service = CrmConnectionFactory.CreateCrmConnection(ConnectionInfo);
             Metadata = new MetadataCache(Service);
             RecordCache = new AliasedRecordCache(Service, Metadata);
             RecordBuilder = new RecordBuilder(this);
             TableConverter = new TableConverter(this);
             LanguageCode = GetLanguageCode();
             CommandProcessor = new CommandProcessor();
+
+            Service.RecordCache = RecordCache;
         }
 
         private int GetLanguageCode()
