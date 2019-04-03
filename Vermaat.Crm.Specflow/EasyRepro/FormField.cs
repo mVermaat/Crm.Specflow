@@ -95,10 +95,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
         }
 
-        private void SetLookupValue(EntityReference fieldValue)
-        {
-            throw new NotImplementedException();
-        }
 
         private void SetTwoOptionField(bool fieldValue)
         {
@@ -119,6 +115,25 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             SetValueFix(_metadata.LogicalName, fieldValue);
         }
+
+        private void SetLookupValue(EntityReference fieldValue)
+        {
+            throw new NotImplementedException();
+            //var lookupItem = new LookupItem { Name = _metadata.LogicalName, Value = fieldValue.Name };
+            //_app.App.Entity.SelectLookup(lookupItem);
+
+            //if (!string.IsNullOrEmpty(lookupItem.Value))
+            //    _app.App.Lookup.Search(lookupItem, lookupItem.Value);
+
+            //_app.Client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
+            //{
+
+
+            //    return true;
+            //});
+        }
+
+       
 
         /// <summary>
         /// Set Value
