@@ -19,12 +19,16 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public override void Execute()
         {
-            _seleniumContext.Browser.OpenRecord(_crmRecord);
+            var formData = _seleniumContext.Browser.OpenRecord(_crmContext.Metadata.GetEntityMetadata(_crmRecord.LogicalName), _crmRecord);
             List<string> errors = new List<string>();
+
             foreach (TableRow row in _visibilityCriteria.Rows)
             {
+                Assert.IsTrue(formData.ContainsField(row[Constants.SpecFlow.TABLE_KEY]), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
+                    
+
                 bool expectedVisible = bool.Parse(row["Visible"]);
-                if (_seleniumContext.Browser.Entity.IsFieldVisible(row[Constants.SpecFlow.TABLE_KEY]) != expectedVisible)
+                if (formData[row[Constants.SpecFlow.TABLE_KEY]].IsVisible() != expectedVisible)
                 {
                     errors.Add(string.Format("{0} was expected to be {1}visible but it is {2}visible",
                         row[Constants.SpecFlow.TABLE_KEY], expectedVisible ? "" : "in", expectedVisible ? "in" : ""));

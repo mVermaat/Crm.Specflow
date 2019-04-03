@@ -1,53 +1,125 @@
-﻿using System;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using Microsoft.Dynamics365.UIAutomation.Browser;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Xrm.Sdk.Metadata;
+using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    class FormData
+    public class FormData
     {
-        private readonly CrmTestingContext _crmContext;
-        private readonly string _entityName;
-        private List<IFormField> _fields;
+        private readonly UCIApp _app;
+        private readonly EntityMetadata _entityMetadata;
+        private Dictionary<string, FormField> _formFields;
 
-        public IEnumerable<IFormField> Fields => _fields;
+        public FormField this[string attributeName] => _formFields[attributeName];
 
-        public FormData(CrmTestingContext crmContext, string entityName, Table fieldData)
+        public FormData(UCIApp app, EntityMetadata entityMetadata)
         {
-            _crmContext = crmContext;
-            _entityName = entityName;
-            _fields = GenerateFormFields(fieldData);
+            _app = app;
+            _entityMetadata = entityMetadata;
+
+            _formFields = InitializeFormData();
         }
 
-        private List<IFormField> GenerateFormFields(Table fieldData)
+        public void Delete()
         {
-            List<IFormField> result = new List<IFormField>();
-            var composites = new Dictionary<string, CompositeFormField>();
+            _app.App.CommandBar.ClickCommand(_app.ButtonTexts.Delete);
+            _app.App.Dialogs.ConfirmationDialog(true);
+        }
 
-            foreach(var row in fieldData.Rows)
+        public bool ContainsField(string fieldLogicalName)
+        {
+            return _formFields.ContainsKey(fieldLogicalName);
+        }
+
+        public void ExpandTab(string tabLabel)
+        {
+            _app.App.Entity.SelectTab(tabLabel);
+        }
+
+
+        public Guid GetRecordId()
+        {
+            return _app.App.Entity.GetObjectId();
+        }
+
+        public void Save(bool saveIfDuplicate)
+        {
+            _app.App.Entity.Save();
+            ConfirmDuplicate(saveIfDuplicate);
+            WaitUntilSaveCompleted();
+        }
+
+        public void FillForm(CrmTestingContext crmContext, Table formData)
+        {
+            foreach (var row in formData.Rows)
             {
-                var formField = new FormField(_crmContext, _entityName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE]);
-                string compositeParent = CompositeFields.GetCompositeParentField(_entityName, row[Constants.SpecFlow.TABLE_KEY]);
+                Assert.IsTrue(ContainsField(row[Constants.SpecFlow.TABLE_KEY]), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
+                var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];
 
-                if (!string.IsNullOrEmpty(compositeParent))
-                {
-                    if (!composites.TryGetValue(compositeParent, out CompositeFormField field))
-                    {
-                        field = new CompositeFormField(compositeParent);
-                        composites.Add(compositeParent, field);
-                        result.Add(field);
-                    }
-                    field.AddField(formField);
-                }
-                else
-                {
-                    result.Add(formField);
-                }
+                if (!field.IsTabOfFieldExpanded())
+                    ExpandTab(field.GetTabLabel());
+
+                field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }
-            return result;
+        }
+
+        private void WaitUntilSaveCompleted()
+        {
+            var timeout = DateTime.Now.AddSeconds(20);
+            bool saveCompleted = false;
+            while (!saveCompleted && DateTime.Now < timeout)
+            {
+                var footerElement = _app.WebDriver.FindElement(By.XPath("//span[@data-id='edit-form-footer-message']"));
+
+                if (!string.IsNullOrEmpty(footerElement.Text) && footerElement.Text.ToLower() == "saving")
+                    Thread.Sleep(2500);
+            }
+        }
+
+        private void ConfirmDuplicate(bool saveIfDuplicate)
+        {
+            _app.WebDriver.WaitUntilAvailable(By.XPath("//div[contains(@id,'dialogFooterContainer_')]"), new TimeSpan(0, 0, 5),
+                d =>
+                {
+                    if (saveIfDuplicate)
+                    {
+                        d.ClickWhenAvailable(By.Id("id-125fc733-aabe-4bd2-807e-fd7b6da72779-4"));
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Duplicate found and not selected for save");
+                    }
+                });
+        }
+
+        private Dictionary<string, FormField> InitializeFormData()
+        {
+            dynamic attributeCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.data.entity.attributes.getAll().map(function(a) { return { name: a.getName(), controls: a.controls.getAll().map(function(c) { return c.getName() }) } })");
+
+            var formFields = new Dictionary<string, FormField>();
+            var metadataDic = _entityMetadata.Attributes.ToDictionary(a => a.LogicalName);
+            foreach (var attribute in attributeCollection)
+            {
+                var controls = new string[attribute["controls"].Count];
+
+                for (int i = 0; i < attribute["controls"].Count; i++)
+                {
+                    controls[i] = attribute["controls"][i];
+                }
+
+                formFields.Add(attribute["name"], new FormField(this, _app, metadataDic[attribute["name"]], controls));
+            }
+
+            return formFields;
         }
     }
 }

@@ -1,18 +1,19 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
 using System;
+using System.Collections.Generic;
 
-namespace Vermaat.Crm.Specflow.EasyRepro.UCI
+namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    class UCIBrowser : IBrowser
+    public class UCIBrowser
     {
-        private WebClient _client;
-        private XrmApp _app;
+        private UCIApp _app;
         private bool _isDisposed = false;
 
-        public IBrowserEntity Entity { get; }
+        private Dictionary<string, FormData> _forms;
 
         static UCIBrowser()
         {
@@ -22,23 +23,21 @@ namespace Vermaat.Crm.Specflow.EasyRepro.UCI
 
         public UCIBrowser(BrowserOptions browserOptions, ButtonTexts buttonTexts)
         {
-            _client = new WebClient(browserOptions);
-            _app = new XrmApp(_client);
-
-            Entity = new UCIBrowserEntity(this, _client, _app, buttonTexts);
+            _app = new UCIApp(browserOptions, buttonTexts);
+            _forms = new Dictionary<string, FormData>();
         }
 
         public void Login(CrmConnectionString connectionString)
         {
-            _app.OnlineLogin.Login(new Uri(connectionString.Url), connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
-            _app.Navigation.OpenApp(connectionString.AppName);
+            _app.App.OnlineLogin.Login(new Uri(connectionString.Url), connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
+            _app.App.Navigation.OpenApp(connectionString.AppName);
         }
 
-        public void OpenRecord(string entityName, Guid? id = null)
+        public FormData OpenRecord(EntityMetadata entityMetadata, string entityName, Guid? id = null)
         {
-            _client.Execute(BrowserOptionHelper.GetOptions($"Open: {entityName}"), driver =>
+            _app.Client.Execute(BrowserOptionHelper.GetOptions($"Open: {entityName}"), driver =>
             {
-                Uri uri = new Uri(_client.Browser.Driver.Url);
+                Uri uri = new Uri(_app.WebDriver.Url);
                 string link = $"{uri.Scheme}://{uri.Authority}/main.aspx?etn={entityName}&pagetype=entityrecord";
 
                 if (id.HasValue)
@@ -56,11 +55,26 @@ namespace Vermaat.Crm.Specflow.EasyRepro.UCI
 
                 return true;
             });
+
+            return GetFormData(entityMetadata, entityName);
         }
 
-        public void OpenRecord(EntityReference crmRecord)
+        public FormData OpenRecord(EntityMetadata entityMetadata, EntityReference crmRecord)
         {
-            OpenRecord(crmRecord.LogicalName, crmRecord.Id);
+            return OpenRecord(entityMetadata, crmRecord.LogicalName, crmRecord.Id);
+        }
+
+        private FormData GetFormData(EntityMetadata entityMetadata, string entityName)
+        {
+            var currentFormId = _app.WebDriver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId()")?.ToString();
+
+            if(!_forms.TryGetValue(entityName+currentFormId, out FormData formData))
+            {
+                formData = new FormData(_app, entityMetadata);
+                _forms.Add(entityName + currentFormId, formData);
+            }
+
+            return formData;
         }
 
         public void Dispose()
