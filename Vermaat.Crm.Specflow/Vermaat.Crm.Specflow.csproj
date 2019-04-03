@@ -137,7 +137,6 @@
     <Compile Include="AssertHelper.cs" />
     <Compile Include="BusinessProcessFlowHelper.cs" />
     <Compile Include="ConvertedObjectType.cs" />
-    <Compile Include="EasyRepro\BaseBrowserEntity.cs" />
     <Compile Include="EasyRepro\ButtonTexts.cs" />
     <Compile Include="CommandProcessor.cs" />
     <Compile Include="Commands\AssertBusinessProcessStageCommand.cs" />
