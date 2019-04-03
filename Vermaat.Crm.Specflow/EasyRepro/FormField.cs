@@ -67,13 +67,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public bool IsTabOfFieldExpanded()
         {
-            string result = _app.WebDriver.ExecuteScript($"return Xrm.Page.ui.tabs.get({GetTabName()}).getDisplayState()")?.ToString();
+            string result = _app.WebDriver.ExecuteScript($"return Xrm.Page.ui.tabs.get('{GetTabName()}').getDisplayState()")?.ToString();
             return "expanded".Equals(result, StringComparison.CurrentCultureIgnoreCase);
         }
 
         public void SetValue(CrmTestingContext crmContext, string fieldValueText)
         {
-            var fieldValue = ObjectConverter.ToCrmObject(_metadata.EntityLogicalName, fieldValueText, _metadata.LogicalName, crmContext, ConvertedObjectType.UserInterface);
+            var fieldValue = ObjectConverter.ToCrmObject(_metadata.EntityLogicalName, _metadata.LogicalName, fieldValueText, crmContext, ConvertedObjectType.UserInterface);
             switch (_metadata.AttributeType.Value)
             {
                 case AttributeTypeCode.Boolean:
