@@ -166,15 +166,10 @@
     <Compile Include="EasyRepro\BrowserOptionHelper.cs" />
     <Compile Include="EasyRepro\CompositeFields.cs" />
     <Compile Include="EasyRepro\UCIApp.cs" />
-    <Compile Include="EasyRepro\UCI\CompositeFormField.cs" />
     <Compile Include="EasyRepro\EntityExtensions.cs" />
     <Compile Include="EasyRepro\FormData.cs" />
     <Compile Include="EasyRepro\FormField.cs" />
-    <Compile Include="EasyRepro\UCI\FormFieldOld.cs" />
-    <Compile Include="EasyRepro\UCI\IFormField.cs" />
     <Compile Include="EasyRepro\UCIBrowser.cs" />
-    <Compile Include="EasyRepro\UCI\UCIBrowserEntity.cs" />
-    <Compile Include="EasyRepro\UCI\UCIFormFiller.cs" />
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Entities\OptionSets.cs" />
     <Compile Include="ExtensionMethods.cs" />
