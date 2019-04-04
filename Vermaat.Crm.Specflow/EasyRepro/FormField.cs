@@ -118,19 +118,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void SetLookupValue(EntityReference fieldValue)
         {
-            throw new NotImplementedException();
-            //var lookupItem = new LookupItem { Name = _metadata.LogicalName, Value = fieldValue.Name };
-            //_app.App.Entity.SelectLookup(lookupItem);
-
-            //if (!string.IsNullOrEmpty(lookupItem.Value))
-            //    _app.App.Lookup.Search(lookupItem, lookupItem.Value);
-
-            //_app.Client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
-            //{
-
-
-            //    return true;
-            //});
+            _app.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{_metadata.LogicalName}').setValue([ {{ id: '{fieldValue.Id}', name: '{fieldValue.Name}', entityType: '{fieldValue.LogicalName}' }} ])");
         }
 
        
@@ -162,6 +150,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                             }
                         }
                         stringBuilder.Append(value);
+                        stringBuilder.Append(Keys.Backspace);
 
                         input.Click();
                         input.SendKeys(stringBuilder.ToString());
