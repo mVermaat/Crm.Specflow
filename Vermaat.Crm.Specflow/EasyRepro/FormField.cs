@@ -150,7 +150,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                             }
                         }
                         stringBuilder.Append(value);
-                        stringBuilder.Append(Keys.Backspace);
+                        stringBuilder.Append(Keys.Tab);
 
                         input.Click();
                         input.SendKeys(stringBuilder.ToString());
