@@ -29,52 +29,41 @@ namespace Vermaat.Crm.Specflow
         [BeforeScenario("Chrome")]
         public void ChromeSetup()
         {
-            if (ScenarioContext.Current.IsTagTargetted("Chrome"))
+            if (HelperMethods.IsTagTargetted("Chrome"))
             {
                 _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.Chrome;
-                Login();
+                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
             }
         }
 
         [BeforeScenario("Edge")]
         public void EdgeSetup()
         {
-            if (ScenarioContext.Current.IsTagTargetted("Edge"))
+            if (HelperMethods.IsTagTargetted("Edge"))
             {
                 _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.Edge;
-                Login();
+                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
             }
         }
 
         [BeforeScenario("Firefox")]
         public void FirefoxSetup()
         {
-            if (ScenarioContext.Current.IsTagTargetted("Firefox"))
+            if (HelperMethods.IsTagTargetted("Firefox"))
             {
                 _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.Firefox;
-                Login();
+                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
             }
         }
 
         [BeforeScenario("IE")]
         public void IESetup()
         {
-            if (ScenarioContext.Current.IsTagTargetted("IE"))
+            if (HelperMethods.IsTagTargetted("IE"))
             {
                 _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.IE;
-                Login();
+                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
             }
-        }
-
-
-        private void Login()
-        {
-            _seleniumTestingContext.Browser.LoginPage.Login(new Uri(
-                _crmContext.ConnectionInfo.Url),
-                _crmContext.ConnectionInfo.Username.ToSecureString(),
-                _crmContext.ConnectionInfo.Password.ToSecureString());
-        }
-
-       
+        }       
     }
 }

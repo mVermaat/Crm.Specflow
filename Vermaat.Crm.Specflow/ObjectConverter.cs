@@ -20,7 +20,7 @@ namespace Vermaat.Crm.Specflow
             switch (metadata.AttributeType)
             {
                 case AttributeTypeCode.Boolean:
-                        return GetTwoOptionValue(metadata, value, context, objectType);       
+                        return GetTwoOptionValue(metadata, value, context);       
                 case AttributeTypeCode.DateTime: return DateTime.Parse(value);
                 case AttributeTypeCode.Double: return double.Parse(value);
                 case AttributeTypeCode.Decimal: return decimal.Parse(value);
@@ -117,22 +117,16 @@ namespace Vermaat.Crm.Specflow
         /// <param name="context"></param>
         /// <param name="objectType"></param>
         /// <returns></returns>
-        private static object GetTwoOptionValue(AttributeMetadata metadata, string value, CrmTestingContext context, ConvertedObjectType objectType)
+        private static object GetTwoOptionValue(AttributeMetadata metadata, string value, CrmTestingContext context)
         {
             var optionMd = metadata as BooleanAttributeMetadata;
 
-            bool twoOptionResult;
             if (value.ToLower() != optionMd.OptionSet.TrueOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
-                twoOptionResult = true;
+                return true;
             else if(value.ToLower() != optionMd.OptionSet.FalseOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
-                twoOptionResult = false;
+                return false;
             else
                 throw new ArgumentException($"Field {metadata.LogicalName} doesn't have option {value}");
-
-            if (objectType == ConvertedObjectType.UserInterface)
-                return value;
-            else
-                return twoOptionResult;
         }
     }
 }

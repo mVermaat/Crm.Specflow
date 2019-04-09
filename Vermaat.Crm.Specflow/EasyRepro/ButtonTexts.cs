@@ -15,12 +15,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 SaveAndClose = "Save & Close";
                 New = "New";
                 Delete = "Delete";
+                Save = "Save";
             }
         }
 
         public string SaveAndClose { get; set; }
         public string New { get; set; }
         public string Delete { get; set; }
-
+        public string Save { get; set; }
     }
 }

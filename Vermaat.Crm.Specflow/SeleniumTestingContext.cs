@@ -11,10 +11,10 @@ namespace Vermaat.Crm.Specflow
 {
     public class SeleniumTestingContext : IDisposable
     {
-        private readonly Lazy<Browser> _browser;
+        private readonly Lazy<UCIBrowser> _browser;
 
-        public Browser Browser => _browser.Value;
-        public BrowserOptions BrowserOptions { get; private set; }
+        public UCIBrowser Browser => _browser.Value;
+        public BrowserOptions BrowserOptions { get; }
         public ButtonTexts ButtonTexts { get; set; }
 
         public SeleniumTestingContext()
@@ -23,10 +23,9 @@ namespace Vermaat.Crm.Specflow
             BrowserOptions = new BrowserOptions()
             {
                 CleanSession = true,
-
             };
 
-            _browser = new Lazy<Browser>(() => new Browser(BrowserOptions));
+            _browser = new Lazy<UCIBrowser>(() => new UCIBrowser(BrowserOptions, ButtonTexts));
         }
 
         public void Dispose()

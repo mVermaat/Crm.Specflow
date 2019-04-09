@@ -1,4 +1,4 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -7,98 +7,166 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    class FormField : IFormField
+    public class FormField
     {
+        private readonly string[] _controls;
+        private readonly FormData _form;
+        private readonly UCIApp _app;
+        private readonly AttributeMetadata _metadata;
 
-        private readonly AttributeMetadata _fieldMetadata;
+        private string _tabLabel;
+        private string _tabName;
 
-        public object FieldValue { get; }
+        public IEnumerable<string> Controls => _controls;
 
-        public string FieldName { get; }
-
-        public FormField(CrmTestingContext crmContext, string entityName, string fieldName, string value)
+        public FormField(FormData form, UCIApp app, AttributeMetadata attributeMetadata, string[] controls)
         {
-            FieldName = fieldName;
-
-            _fieldMetadata = crmContext.Metadata.GetAttributeMetadata(entityName, fieldName);
-            FieldValue = ObjectConverter.ToCrmObject(entityName, fieldName, value, crmContext, ConvertedObjectType.UserInterface);
-           
+            _form = form;
+            _app = app;
+            _metadata = attributeMetadata;
+            _controls = controls;
         }
 
-        public bool IsOnForm(IWebDriver driver)
+        public string GetDefaultControl()
         {
-            return Convert.ToBoolean(driver.ExecuteScript($"return Xrm.Page.getControl('{FieldName}') != null"));
+            if (_controls.Length == 1)
+                return _controls[0];
+            else
+                return _controls.FirstOrDefault(c => !c.StartsWith("header"));
         }
 
-        public void EnterOnForm(Browser browser, Microsoft.Dynamics365.UIAutomation.Api.Entity entity)
+        public string GetTabLabel()
         {
-            switch (_fieldMetadata.AttributeType.Value)
+            if (string.IsNullOrEmpty(_tabLabel))
+            {
+                _tabLabel = _app.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{GetDefaultControl()}').getParent().getParent().getLabel()")?.ToString();
+            }
+            return _tabLabel;
+        }
+
+        internal bool IsVisible()
+        {
+            if (!IsTabOfFieldExpanded())
+                _form.ExpandTab(GetTabLabel());
+
+            return _app.WebDriver.WaitUntilVisible(By.XPath(
+                AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)), TimeSpan.FromSeconds(5));
+        }
+
+        public string GetTabName()
+        {
+            if (string.IsNullOrEmpty(_tabName))
+            {
+                _tabName = _app.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{GetDefaultControl()}').getParent().getParent().getName()")?.ToString();
+            }
+            return _tabName;
+        }
+
+        public bool IsTabOfFieldExpanded()
+        {
+            string result = _app.WebDriver.ExecuteScript($"return Xrm.Page.ui.tabs.get('{GetTabName()}').getDisplayState()")?.ToString();
+            return "expanded".Equals(result, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public void SetValue(CrmTestingContext crmContext, string fieldValueText)
+        {
+            var fieldValue = ObjectConverter.ToCrmObject(_metadata.EntityLogicalName, _metadata.LogicalName, fieldValueText, crmContext, ConvertedObjectType.UserInterface);
+            switch (_metadata.AttributeType.Value)
             {
                 case AttributeTypeCode.Boolean:
-                    entity.SetValueFix(new TwoOption() { Name = FieldName, Value = (string)FieldValue });
+                    SetTwoOptionField((bool)fieldValue);
                     break;
                 case AttributeTypeCode.DateTime:
-                    entity.SetValue(new DateTimeControl() { Name = FieldName, Value = (DateTime)FieldValue });
+                    SetDateTimeField((DateTime)fieldValue);
                     break;
                 case AttributeTypeCode.Customer:
                 case AttributeTypeCode.Lookup:
-                    SetLookupValue(browser, entity, (EntityReference)FieldValue);
-                    //entity.SetValue(new LookupEntityReference { FieldName = FieldName, Value = (EntityReference)FieldValue });
+                    SetLookupValue((EntityReference)fieldValue);
                     break;
                 case AttributeTypeCode.Picklist:
-                    entity.SetValue(new OptionSet { Name = FieldName, Value = (string)FieldValue });
+                    SetOptionSetField((string)fieldValue);
                     break;
                 default:
-                    entity.SetValueFix(FieldName,(string)FieldValue);
+                    SetTextField((string)fieldValue);
                     break;
             }
         }
 
-        private void SetLookupValue(Browser browser, Microsoft.Dynamics365.UIAutomation.Api.Entity entity, EntityReference value)
+
+        private void SetTwoOptionField(bool fieldValue)
         {
-            entity.SelectLookup(new LookupItem { Name = FieldName });
-
-            var lookup = browser.Lookup;
-            if (!string.IsNullOrEmpty(value.Name))
-                lookup.Search(value.Name);
-
-            var index = FindGridItemIndex(value, lookup);
-
-            if (index == null)
-                throw new ArgumentException($"Lookup not found. Was looking for Entity: {value.Id} ({value.Name}) of type {value.LogicalName}");
-
-            if(index != 0) // First item is automatically selected
-                lookup.SelectItem(index.Value);
-
-            lookup.Add();
-            entity.SwitchToContentFrame();
+            _app.App.Entity.SetValue(new BooleanItem { Name = _metadata.LogicalName, Value = fieldValue });
         }
 
-        private int? FindGridItemIndex(EntityReference value, Lookup lookup)
+        private void SetDateTimeField(DateTime fieldValue)
         {
-            var gridItems = lookup.GetGridItems();
+            _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue);
+        }
 
-            if (gridItems.Value.Count == 0)
-                return null;
+        private void SetOptionSetField(string optionSetLabel)
+        {
+            _app.App.Entity.SetValue(new OptionSet { Name = _metadata.LogicalName, Value = optionSetLabel });
+        }
 
+        private void SetTextField(string fieldValue)
+        {
+            SetValueFix(_metadata.LogicalName, fieldValue);
+        }
 
-            for (int i = 0; i < gridItems.Value.Count; i++)
+        private void SetLookupValue(EntityReference fieldValue)
+        {
+            _app.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{_metadata.LogicalName}').setValue([ {{ id: '{fieldValue.Id}', name: '{fieldValue.Name}', entityType: '{fieldValue.LogicalName}' }} ])");
+        }
+
+        /// <summary>
+        /// Set Value
+        /// </summary>
+        /// <param name="field">The field</param>
+        /// <param name="value">The value</param>
+        /// <example>xrmApp.Entity.SetValue("firstname", "Test");</example>
+        private BrowserCommandResult<bool> SetValueFix(string field, string value)
+        {
+            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
-                if (gridItems.Value[i].Id == value.Id)
-                    return i;
-            }
+                var fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field)));
 
-            var next = lookup.NextPage();
+                if (fieldContainer.FindElements(By.TagName("input")).Count > 0)
+                {
+                    var input = fieldContainer.FindElement(By.TagName("input"));
+                    if (input != null)
+                    {
+                        var currentValue = input.GetAttribute("value");
+                        var stringBuilder = new StringBuilder(value.Length + currentValue.Length);
+                        if (!string.IsNullOrEmpty(currentValue))
+                        {
+                            for (int i = 0; i < currentValue.Length; i++)
+                            {
+                                stringBuilder.Append(Keys.Backspace);
+                            }
+                        }
+                        stringBuilder.Append(value);
+                        stringBuilder.Append(Keys.Tab);
 
-            if (next.Success.GetValueOrDefault())
-                return FindGridItemIndex(value, lookup);
-            else
-                return null;
+                        input.Click();
+                        input.SendKeys(stringBuilder.ToString());
+                    }
+                }
+                else if (fieldContainer.FindElements(By.TagName("textarea")).Count > 0)
+                {
+                    fieldContainer.FindElement(By.TagName("textarea")).Click();
+                    fieldContainer.FindElement(By.TagName("textarea")).Clear();
+                    fieldContainer.FindElement(By.TagName("textarea")).SendKeys(value);
+                }
+                else
+                {
+                    throw new Exception($"Field with name {field} does not exist.");
+                }
 
+                return true;
+            });
         }
     }
 }

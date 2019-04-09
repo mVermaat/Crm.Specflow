@@ -6,8 +6,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         private static readonly Dictionary<string, Dictionary<string, string>> _compositeData;
 
+        private static readonly bool _uci;
+
         static CompositeFields()
         {
+            _uci = bool.Parse(HelperMethods.GetAppSettingsValue("UCI"));
             _compositeData = new Dictionary<string, Dictionary<string, string>>()
             {
                 { "lead", new Dictionary<string, string>()
@@ -32,6 +35,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return parentField;
             else
                 return null;
+        }
+
+        public static bool IsCompositeField(string entityName, string fieldName)
+        {
+            return !string.IsNullOrWhiteSpace(GetCompositeParentField(entityName, fieldName));
         }
     }
 }
