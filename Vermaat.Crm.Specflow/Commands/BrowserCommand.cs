@@ -16,14 +16,14 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public TResult Execute()
         {
-            if (ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_API))
+            if (HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_API))
             {
                 return ExecuteApi();
             }
-            else if (ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Chrome) ||
-                     ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Edge) ||
-                     ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Firefox) ||
-                     ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_InternetExplorer))
+            else if (HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Chrome) ||
+                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Edge) ||
+                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Firefox) ||
+                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_InternetExplorer))
             {
                 return ExecuteBrowser();
             }
@@ -50,14 +50,14 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public void Execute()
         {
-            if (ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_API))
+            if (HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_API))
             {
                 ExecuteApi();
             }
-            else if (ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Chrome) ||
-                     ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Edge) ||
-                     ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Firefox) ||
-                     ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_InternetExplorer))
+            else if (HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Chrome) ||
+                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Edge) ||
+                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Firefox) ||
+                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_InternetExplorer))
             {
                 ExecuteBrowser();
             }

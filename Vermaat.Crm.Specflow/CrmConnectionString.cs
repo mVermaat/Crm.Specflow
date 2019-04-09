@@ -13,6 +13,7 @@ namespace Vermaat.Crm.Specflow
         public string Username { get; set; }
         public string Password { get; set; }
         public string AuthType { get; set; }
+        public string AppName { get; set; }
 
         public static CrmConnectionString CreateFromAppConfig()
         {
@@ -21,7 +22,8 @@ namespace Vermaat.Crm.Specflow
                 Url = HelperMethods.GetAppSettingsValue("Url"),
                 Username = HelperMethods.GetAppSettingsValue("Username", true),
                 Password = HelperMethods.GetAppSettingsValue("Password", true),
-                AuthType = HelperMethods.GetAppSettingsValue("AuthType")
+                AuthType = HelperMethods.GetAppSettingsValue("AuthType"),
+                AppName = HelperMethods.GetAppSettingsValue("AppName")
             };
         }
 

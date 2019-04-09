@@ -1,0 +1,100 @@
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using Microsoft.Dynamics365.UIAutomation.Browser;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Metadata;
+using OpenQA.Selenium;
+using System;
+using System.Collections.Generic;
+
+namespace Vermaat.Crm.Specflow.EasyRepro
+{
+    public class UCIBrowser
+    {
+        private UCIApp _app;
+        private bool _isDisposed = false;
+
+        private Dictionary<string, FormData> _forms;
+
+        static UCIBrowser()
+        {
+            Elements.Xpath["Login_CrmMainPage"] = "//*[@data-id='topBar']";
+            AppElements.Xpath["Nav_AppMenuButton"] = "//button[@data-id='navbar-switch-app']";
+        }
+
+        public UCIBrowser(BrowserOptions browserOptions, ButtonTexts buttonTexts)
+        {
+            _app = new UCIApp(browserOptions, buttonTexts);
+            _forms = new Dictionary<string, FormData>();
+        }
+
+        public void Login(CrmConnectionString connectionString)
+        {
+            _app.App.OnlineLogin.Login(new Uri(connectionString.Url), connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
+            _app.App.Navigation.OpenApp(connectionString.AppName);
+        }
+
+        public FormData OpenRecord(EntityMetadata entityMetadata, string entityName, Guid? id = null)
+        {
+            _app.Client.Execute(BrowserOptionHelper.GetOptions($"Open: {entityName}"), driver =>
+            {
+                Uri uri = new Uri(_app.WebDriver.Url);
+                string link = $"{uri.Scheme}://{uri.Authority}/main.aspx?etn={entityName}&pagetype=entityrecord";
+
+                if (id.HasValue)
+                {
+                    link += $"&id=%7B{id:D}%7D";
+                }
+
+                driver.Navigate().GoToUrl(link);
+                driver.WaitForPageToLoad();
+                driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
+                    new TimeSpan(0, 0, 30),
+                    null,
+                    d => { throw new Exception("CRM Record is Unavailable or not finished loading. Timeout Exceeded"); }
+                );
+
+                return true;
+            });
+
+            return GetFormData(entityMetadata, entityName);
+        }
+
+        public FormData OpenRecord(EntityMetadata entityMetadata, EntityReference crmRecord)
+        {
+            return OpenRecord(entityMetadata, crmRecord.LogicalName, crmRecord.Id);
+        }
+
+        private FormData GetFormData(EntityMetadata entityMetadata, string entityName)
+        {
+            var currentFormId = _app.WebDriver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId()")?.ToString();
+
+            if(!_forms.TryGetValue(entityName+currentFormId, out FormData formData))
+            {
+                formData = new FormData(_app, entityMetadata);
+                _forms.Add(entityName + currentFormId, formData);
+            }
+
+            return formData;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_isDisposed)
+            {
+                if (disposing)
+                {
+                    _app.Dispose();
+                }
+
+                _isDisposed = true;
+            }
+        }
+
+
+    }
+}

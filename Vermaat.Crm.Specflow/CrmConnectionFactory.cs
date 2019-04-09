@@ -12,11 +12,11 @@ namespace Vermaat.Crm.Specflow
 {
     internal static class CrmConnectionFactory
     {
-        public static CrmService CreateCrmConnection(CrmConnectionString connection, AliasedRecordCache cache)
+        public static CrmService CreateCrmConnection(CrmConnectionString connection)
         {
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
             var client = new CrmServiceClient(connection.ToCrmClientString());
-            return new CrmService(client, cache);
+            return new CrmService(client);
         }
     }
 }

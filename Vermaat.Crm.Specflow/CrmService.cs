@@ -14,18 +14,18 @@ namespace Vermaat.Crm.Specflow
     public class CrmService : IOrganizationService
     {
         private IOrganizationService _service;
-        private AliasedRecordCache _cache;
 
-        public CrmService(IOrganizationService service, AliasedRecordCache cache)
+        public AliasedRecordCache RecordCache { get; set; }
+
+        public CrmService(IOrganizationService service)
         {
             _service = service;
-            _cache = cache;
         }
 
         public void Create(Entity entity, string alias)
         {
             entity.Id = CreateRecord(entity);
-            _cache.Add(alias, entity.ToEntityReference());
+            RecordCache.Add(alias, entity.ToEntityReference());
         }
 
         public void Associate(string entityName, Guid entityId, Relationship relationship, EntityReferenceCollection relatedEntities)

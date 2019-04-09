@@ -36,17 +36,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BoDi, Version=1.4.1.0, Culture=neutral, PublicKeyToken=ff7cd5ea2744b496, processorArchitecture=MSIL">
+      <HintPath>..\packages\BoDi.1.4.1\lib\net45\BoDi.dll</HintPath>
+    </Reference>
+    <Reference Include="Gherkin, Version=6.0.0.0, Culture=neutral, PublicKeyToken=86496cfa5b4a5851, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gherkin.6.0.0\lib\net45\Gherkin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics365.UIAutomation.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.dll</HintPath>
+      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0.1\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics365.UIAutomation.Api.UCI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.UCI.dll</HintPath>
+      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0.1\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.UCI.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics365.UIAutomation.Browser, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0\lib\net46\Microsoft.Dynamics365.UIAutomation.Browser.dll</HintPath>
+      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0.1\lib\net46\Microsoft.Dynamics365.UIAutomation.Browser.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.6.1.7600.16394\lib\net35\Microsoft.IdentityModel.dll</HintPath>
@@ -96,6 +102,9 @@
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.4.0\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -110,8 +119,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="TechTalk.SpecFlow, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.2.4.1\lib\net45\TechTalk.SpecFlow.dll</HintPath>
+    <Reference Include="TechTalk.SpecFlow, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecFlow.3.0.188\lib\net45\TechTalk.SpecFlow.dll</HintPath>
+    </Reference>
+    <Reference Include="Utf8Json, Version=1.3.7.0, Culture=neutral, PublicKeyToken=8a73d3ba7e392e27, processorArchitecture=MSIL">
+      <HintPath>..\packages\Utf8Json.1.3.7\lib\net45\Utf8Json.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
@@ -152,14 +164,11 @@
     <Compile Include="CrmTestingContext.cs" />
     <Compile Include="EasyRepro\BrowserOptionHelper.cs" />
     <Compile Include="EasyRepro\CompositeFields.cs" />
-    <Compile Include="EasyRepro\CompositeFormField.cs" />
+    <Compile Include="EasyRepro\UCIApp.cs" />
     <Compile Include="EasyRepro\EntityExtensions.cs" />
     <Compile Include="EasyRepro\FormData.cs" />
-    <Compile Include="EasyRepro\FormHelper.cs" />
     <Compile Include="EasyRepro\FormField.cs" />
-    <Compile Include="EasyRepro\FormType.cs" />
-    <Compile Include="EasyRepro\IFormField.cs" />
-    <Compile Include="EasyRepro\NavigationHelper.cs" />
+    <Compile Include="EasyRepro\UCIBrowser.cs" />
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Entities\OptionSets.cs" />
     <Compile Include="ExtensionMethods.cs" />
@@ -167,7 +176,6 @@
     <Compile Include="Hooks.cs" />
     <Compile Include="ProcessStage.cs" />
     <Compile Include="QueryHelper.cs" />
-    <Compile Include="ScenarioContextExtensions.cs" />
     <Compile Include="SeleniumTestingContext.cs" />
     <Compile Include="Steps\GeneralSteps.cs" />
     <Compile Include="Steps\LeadSteps.cs" />
@@ -189,12 +197,10 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\SpecFlow.2.4.1\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.2.4.1\build\SpecFlow.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\SpecFlow.2.4.1\build\SpecFlow.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.2.4.1\build\SpecFlow.targets'))" />
     <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets'))" />
   </Target>
   <Import Project="..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets')" />

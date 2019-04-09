@@ -35,9 +35,9 @@ namespace Vermaat.Crm.Specflow.Commands
 
         protected override void ExecuteBrowser()
         {
-            _seleniumContext.Browser.Entity.OpenEntity(_toUpdate.LogicalName, _toUpdate.Id);
-            FormHelper.FillForm(_crmContext, _seleniumContext.Browser, _toUpdate.LogicalName, _criteria);
-            FormHelper.SaveRecord(_seleniumContext, true);
+            var formData = _seleniumContext.Browser.OpenRecord(_crmContext.Metadata.GetEntityMetadata(_toUpdate.LogicalName), _toUpdate.LogicalName, _toUpdate.Id);
+            formData.FillForm(_crmContext, _criteria);
+            formData.Save(true);
         }
     }
 }

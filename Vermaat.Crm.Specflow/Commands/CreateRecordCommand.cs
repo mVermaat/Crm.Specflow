@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Xrm.Sdk;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.EasyRepro;
 
@@ -28,10 +29,13 @@ namespace Vermaat.Crm.Specflow.Commands
 
         protected override EntityReference ExecuteBrowser()
         {
-            NavigationHelper.OpenNewForm(_seleniumContext.Browser, _entityLogicalName);
-            FormHelper.FillForm(_crmContext, _seleniumContext.Browser, _entityLogicalName, _criteria);
-            FormHelper.SaveRecord(_seleniumContext, true);
-            return FormHelper.AddAlias(_crmContext, _seleniumContext.Browser.Driver, _alias);
+            var formData = _seleniumContext.Browser.OpenRecord(_crmContext.Metadata.GetEntityMetadata(_entityLogicalName), _entityLogicalName);
+            formData.FillForm(_crmContext, _criteria);
+            formData.Save(true);
+
+            var record = new EntityReference(_entityLogicalName, formData.GetRecordId());
+            _crmContext.RecordCache.Add(_alias, record);
+            return record;
         }
     }
 }
