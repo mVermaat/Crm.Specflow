@@ -121,8 +121,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _app.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{_metadata.LogicalName}').setValue([ {{ id: '{fieldValue.Id}', name: '{fieldValue.Name}', entityType: '{fieldValue.LogicalName}' }} ])");
         }
 
-       
-
         /// <summary>
         /// Set Value
         /// </summary>
