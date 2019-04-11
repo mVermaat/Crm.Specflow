@@ -5,32 +5,42 @@ using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public class UCIBrowser
     {
         private UCIApp _app;
+        private string _appId;
         private bool _isDisposed = false;
 
         private Dictionary<string, FormData> _forms;
 
         static UCIBrowser()
         {
-            Elements.Xpath["Login_CrmMainPage"] = "//*[@data-id='topBar']";
-            AppElements.Xpath["Nav_AppMenuButton"] = "//button[@data-id='navbar-switch-app']";
+          
         }
 
         public UCIBrowser(BrowserOptions browserOptions, ButtonTexts buttonTexts)
         {
             _app = new UCIApp(browserOptions, buttonTexts);
             _forms = new Dictionary<string, FormData>();
+            _appId = null;
         }
 
         public void Login(CrmConnectionString connectionString)
         {
+            if(bool.Parse(HelperMethods.GetAppSettingsValue("UCIOnly")))
+            {
+                Elements.Xpath["Login_CrmMainPage"] = "//*[@data-id='topBar']";
+                AppElements.Xpath["Nav_AppMenuButton"] = "//button[@data-id='navbar-switch-app']";
+            }
             _app.App.OnlineLogin.Login(new Uri(connectionString.Url), connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
             _app.App.Navigation.OpenApp(connectionString.AppName);
+
+            var queryDic = System.Web.HttpUtility.ParseQueryString(new Uri(_app.WebDriver.Url).Query);
+            _appId = queryDic["appid"];
         }
 
         public FormData OpenRecord(EntityMetadata entityMetadata, string entityName, Guid? id = null)
@@ -44,6 +54,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 {
                     link += $"&id=%7B{id:D}%7D";
                 }
+                if (!string.IsNullOrEmpty(_appId))
+                    link += $"&appid={_appId}";
 
                 driver.Navigate().GoToUrl(link);
                 driver.WaitForPageToLoad();

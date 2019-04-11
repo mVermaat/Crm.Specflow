@@ -172,6 +172,7 @@
     <Compile Include="EasyRepro\FormData.cs" />
     <Compile Include="EasyRepro\FormField.cs" />
     <Compile Include="EasyRepro\UCIBrowser.cs" />
+    <Compile Include="EasyRepro\WebElementExtensions.cs" />
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Entities\OptionSets.cs" />
     <Compile Include="ExtensionMethods.cs" />

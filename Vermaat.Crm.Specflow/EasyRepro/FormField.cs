@@ -3,6 +3,7 @@ using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +78,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             switch (_metadata.AttributeType.Value)
             {
                 case AttributeTypeCode.Boolean:
-                    SetTwoOptionField((bool)fieldValue);
+                    SetTwoOptionField((bool)fieldValue, fieldValueText);
                     break;
                 case AttributeTypeCode.DateTime:
                     SetDateTimeField((DateTime)fieldValue);
@@ -96,9 +97,38 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         }
 
 
-        private void SetTwoOptionField(bool fieldValue)
+        private void SetTwoOptionField(bool fieldValueBool, string fieldValueText)
         {
-            _app.App.Entity.SetValue(new BooleanItem { Name = _metadata.LogicalName, Value = fieldValue });
+            _app.Client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
+            {
+                var container = driver.FindElement(By.XPath($"//*[contains(@id, '{_metadata.LogicalName}-{_metadata.LogicalName}.fieldControl-checkbox-')]"));
+
+                if (container.TryFindElement(By.XPath($"//input[contains(@id, '{_metadata.LogicalName}-{_metadata.LogicalName}.fieldControl-checkbox-toggle')]"), out var checkbox))
+                {
+                    if (checkbox.Selected != fieldValueBool)
+                    {
+                        checkbox.Click();
+                    }
+                }
+                else if (container.TryFindElement(By.XPath($"//label[contains(@id, '{_metadata.LogicalName}-{_metadata.LogicalName}.fieldControl-checkbox-inner-first')]"), out var radioButton))
+                {
+                    if(radioButton.Text != fieldValueText)
+                    {
+                        radioButton.Click();
+                    }
+                }
+                else if (container.TryFindElement(By.XPath($"//select[contains(@id, '{_metadata.LogicalName}-{_metadata.LogicalName}.fieldControl-checkbox-select')]"), out var listItem))
+                {
+                    var selection = new SelectElement(listItem);
+                    selection.SelectByText(fieldValueText);
+                }
+                else
+                {
+                    throw new ArgumentException($"Field {_metadata.LogicalName} not found on the form as a two option field");
+                }
+
+                return true;
+            });
         }
 
         private void SetDateTimeField(DateTime fieldValue)

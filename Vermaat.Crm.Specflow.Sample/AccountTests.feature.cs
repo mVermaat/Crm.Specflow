@@ -232,6 +232,57 @@ testRunner.Then("TestAccount\'s form has the following visbility", ((string)(nul
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Create Account - Check two option fields", new string[] {
+                "Chrome",
+                "Cleanup"}, SourceLine=53)]
+        public virtual void CreateAccount_CheckTwoOptionFields()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Account - Check two option fields", null, new string[] {
+                        "Chrome",
+                        "Cleanup"});
+#line 54
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table8.AddRow(new string[] {
+                        "Account Name",
+                        "Checkbox"});
+            table8.AddRow(new string[] {
+                        "Do not allow Phone Calls",
+                        "Do Not Allow"});
+            table8.AddRow(new string[] {
+                        "Do not allow Faxes",
+                        "Do Not Allow"});
+            table8.AddRow(new string[] {
+                        "Do not allow Mails",
+                        "Do Not Allow"});
+#line 55
+testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table8, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table9.AddRow(new string[] {
+                        "Account Name",
+                        "Checkbox"});
+            table9.AddRow(new string[] {
+                        "Do not allow Phone Calls",
+                        "Do Not Allow"});
+            table9.AddRow(new string[] {
+                        "Do not allow Faxes",
+                        "Do Not Allow"});
+            table9.AddRow(new string[] {
+                        "Do not allow Mails",
+                        "Do Not Allow"});
+#line 61
+testRunner.Then("TestAccount has the following values", ((string)(null)), table9, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {
