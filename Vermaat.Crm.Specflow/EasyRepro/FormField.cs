@@ -101,7 +101,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             _app.Client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
-                var container = driver.FindElement(By.XPath($"//*[contains(@id, '{_metadata.LogicalName}-{_metadata.LogicalName}.fieldControl-checkbox-')]"));
+                //var container = driver.FindElement(By.XPath($"//*[contains(@id, '{_metadata.LogicalName}-{_metadata.LogicalName}.fieldControl-checkbox-')]"));
+                var container = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)));
 
                 if (container.TryFindElement(By.XPath($"//input[contains(@id, '{_metadata.LogicalName}-{_metadata.LogicalName}.fieldControl-checkbox-toggle')]"), out var checkbox))
                 {
@@ -149,6 +150,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private void SetLookupValue(EntityReference fieldValue)
         {
             _app.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{_metadata.LogicalName}').setValue([ {{ id: '{fieldValue.Id}', name: '{fieldValue.Name}', entityType: '{fieldValue.LogicalName}' }} ])");
+            _app.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{_metadata.LogicalName}').fireOnChange()");
         }
 
         /// <summary>
