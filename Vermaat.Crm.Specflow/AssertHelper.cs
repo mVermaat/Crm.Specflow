@@ -19,7 +19,7 @@ namespace Vermaat.Crm.Specflow
         /// </summary>
         /// <param name="actualValue"></param>
         /// <param name="expectedValue"></param>
-        public static void AreEqual(object actualValue, object expectedValue)
+        public static void AreEqual(object actualValue, object expectedValue, string attributeName)
         {
             if (actualValue == null && expectedValue == null)
                 return;
@@ -27,13 +27,13 @@ namespace Vermaat.Crm.Specflow
             var type = expectedValue != null ? expectedValue.GetType() : actualValue.GetType();
 
             if (type == typeof(EntityReference))
-                Assert.AreEqual(((EntityReference)expectedValue)?.Id, ((EntityReference)actualValue)?.Id);
+                Assert.AreEqual(((EntityReference)expectedValue)?.Id, ((EntityReference)actualValue)?.Id, $"Field {attributeName} is different");
             else if (type == typeof(OptionSetValue))
-                Assert.AreEqual(((OptionSetValue)expectedValue)?.Value, ((OptionSetValue)actualValue)?.Value);
+                Assert.AreEqual(((OptionSetValue)expectedValue)?.Value, ((OptionSetValue)actualValue)?.Value, $"Field {attributeName} is different");
             else if (type == typeof(Money))
-                Assert.AreEqual(((Money)expectedValue)?.Value, ((Money)actualValue)?.Value);
+                Assert.AreEqual(((Money)expectedValue)?.Value, ((Money)actualValue)?.Value, $"Field {attributeName} is different");
             else
-                Assert.AreEqual(expectedValue, actualValue);
+                Assert.AreEqual(expectedValue, actualValue, $"Field {attributeName} is different");
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Vermaat.Crm.Specflow
                 var actualValue = record.Contains(row[Constants.SpecFlow.TABLE_KEY]) ? record[row[Constants.SpecFlow.TABLE_KEY]] : null;
                 var expectedValue = ObjectConverter.ToCrmObject(record.LogicalName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], context);
 
-                AreEqual(actualValue, expectedValue);
+                AreEqual(actualValue, expectedValue, row[Constants.SpecFlow.TABLE_KEY]);
             }
         }
     }
