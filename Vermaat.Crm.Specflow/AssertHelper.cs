@@ -19,7 +19,7 @@ namespace Vermaat.Crm.Specflow
         /// </summary>
         /// <param name="actualValue"></param>
         /// <param name="expectedValue"></param>
-        private static void AreEqual(object actualValue, object expectedValue, string attributeName)
+        public static void AreEqual(object actualValue, object expectedValue, string attributeName)
         {
             if (actualValue == null && expectedValue == null)
                 return;
