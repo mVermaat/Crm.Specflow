@@ -10,15 +10,20 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		NuGetRelease|Any CPU = NuGetRelease|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}.NuGetRelease|Any CPU.ActiveCfg = NuGetRelease|Any CPU
+		{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}.NuGetRelease|Any CPU.Build.0 = NuGetRelease|Any CPU
 		{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}.Release|Any CPU.Build.0 = Release|Any CPU
 		{40155862-3830-401C-945A-70E57B35F7A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{40155862-3830-401C-945A-70E57B35F7A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40155862-3830-401C-945A-70E57B35F7A1}.NuGetRelease|Any CPU.ActiveCfg = NuGetRelease|Any CPU
+		{40155862-3830-401C-945A-70E57B35F7A1}.NuGetRelease|Any CPU.Build.0 = NuGetRelease|Any CPU
 		{40155862-3830-401C-945A-70E57B35F7A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40155862-3830-401C-945A-70E57B35F7A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
