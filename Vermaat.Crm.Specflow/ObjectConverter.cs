@@ -122,9 +122,9 @@ namespace Vermaat.Crm.Specflow
             var optionMd = metadata as BooleanAttributeMetadata;
 
             bool twoOptionResult;
-            if (value.ToLower() != optionMd.OptionSet.TrueOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
+            if (value.ToLower() == optionMd.OptionSet.TrueOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
                 twoOptionResult = true;
-            else if(value.ToLower() != optionMd.OptionSet.FalseOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
+            else if(value.ToLower() == optionMd.OptionSet.FalseOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
                 twoOptionResult = false;
             else
                 throw new ArgumentException($"Field {metadata.LogicalName} doesn't have option {value}");
