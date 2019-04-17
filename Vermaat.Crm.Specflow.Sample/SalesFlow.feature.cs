@@ -80,61 +80,34 @@ namespace Vermaat.Crm.Specflow.Sample
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table15.AddRow(new string[] {
-                        "First Name",
-                        "Qualify"});
-            table15.AddRow(new string[] {
-                        "Last Name",
-                        "Test"});
-            table15.AddRow(new string[] {
-                        "Topic",
-                        "Qualification Test"});
-            table15.AddRow(new string[] {
-                        "Company Name",
-                        "Qualify Account"});
-#line 6
-testRunner.Given("a lead named ToQualify with the following values", ((string)(null)), table15, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Account",
-                        "Opportunity",
-                        "Contact"});
-            table16.AddRow(new string[] {
-                        "true",
-                        "true",
-                        "true"});
-#line 12
-testRunner.When("ToQualify is qualified to a", ((string)(null)), table16, "When ");
-#line hidden
             TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table17.AddRow(new string[] {
-                        "Originating Lead",
-                        "ToQualify"});
-            table17.AddRow(new string[] {
-                        "Account Name",
-                        "Qualify Account"});
-#line 15
-testRunner.Then("an account exists with the following values", ((string)(null)), table17, "Then ");
-#line hidden
-            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table18.AddRow(new string[] {
-                        "Originating Lead",
-                        "ToQualify"});
-            table18.AddRow(new string[] {
                         "First Name",
                         "Qualify"});
-            table18.AddRow(new string[] {
+            table17.AddRow(new string[] {
                         "Last Name",
                         "Test"});
-#line 19
-testRunner.And("a contact exists with the following values", ((string)(null)), table18, "And ");
+            table17.AddRow(new string[] {
+                        "Topic",
+                        "Qualification Test"});
+            table17.AddRow(new string[] {
+                        "Company Name",
+                        "Qualify Account"});
+#line 6
+testRunner.Given("a lead named ToQualify with the following values", ((string)(null)), table17, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Account",
+                        "Opportunity",
+                        "Contact"});
+            table18.AddRow(new string[] {
+                        "true",
+                        "true",
+                        "true"});
+#line 12
+testRunner.When("ToQualify is qualified to a", ((string)(null)), table18, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
@@ -143,10 +116,300 @@ testRunner.And("a contact exists with the following values", ((string)(null)), t
                         "Originating Lead",
                         "ToQualify"});
             table19.AddRow(new string[] {
+                        "Account Name",
+                        "Qualify Account"});
+#line 15
+testRunner.Then("an account exists with the following values", ((string)(null)), table19, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table20.AddRow(new string[] {
+                        "Originating Lead",
+                        "ToQualify"});
+            table20.AddRow(new string[] {
+                        "First Name",
+                        "Qualify"});
+            table20.AddRow(new string[] {
+                        "Last Name",
+                        "Test"});
+#line 19
+testRunner.And("a contact exists with the following values", ((string)(null)), table20, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table21.AddRow(new string[] {
+                        "Originating Lead",
+                        "ToQualify"});
+            table21.AddRow(new string[] {
                         "Topic",
                         "Qualification Test"});
 #line 24
-testRunner.And("an opportunity exists with the following values", ((string)(null)), table19, "And ");
+testRunner.And("an opportunity exists with the following values", ((string)(null)), table21, "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Create a new Account and FCP should result in a Customer in F&O", new string[] {
+                "API"}, SourceLine=29)]
+        public virtual void CreateANewAccountAndFCPShouldResultInACustomerInFO()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new Account and FCP should result in a Customer in F&O", null, new string[] {
+                        "API"});
+#line 30
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table22.AddRow(new string[] {
+                        "Account Name",
+                        "VSTestAccount"});
+            table22.AddRow(new string[] {
+                        "Business Phone",
+                        "0612345678"});
+            table22.AddRow(new string[] {
+                        "Website",
+                        "https://kiwa.nl"});
+            table22.AddRow(new string[] {
+                        "Fax",
+                        "213091273098"});
+            table22.AddRow(new string[] {
+                        "Language",
+                        "Dutch"});
+            table22.AddRow(new string[] {
+                        "Chamber of commerce",
+                        "231123213"});
+            table22.AddRow(new string[] {
+                        "Address 1: Street 1",
+                        "street 1"});
+            table22.AddRow(new string[] {
+                        "Address 1: Street 2",
+                        "street 2"});
+            table22.AddRow(new string[] {
+                        "Address 1: Street 3",
+                        "11"});
+            table22.AddRow(new string[] {
+                        "Address 1: ZIP/Postal Code",
+                        "1234 AA"});
+            table22.AddRow(new string[] {
+                        "Address 1: City",
+                        "Rijswijk"});
+            table22.AddRow(new string[] {
+                        "Address 1: Country ID",
+                        "Netherlands"});
+            table22.AddRow(new string[] {
+                        "Customer Group",
+                        "Regular"});
+            table22.AddRow(new string[] {
+                        "Billing",
+                        "Yes"});
+            table22.AddRow(new string[] {
+                        "Email",
+                        "test@vs.com"});
+            table22.AddRow(new string[] {
+                        "Finance",
+                        "Yes"});
+            table22.AddRow(new string[] {
+                        "Tax Exempt Number",
+                        "1111111"});
+            table22.AddRow(new string[] {
+                        "DUNS number",
+                        "123456789"});
+#line 31
+testRunner.When("an account named VSTestAccount is created with the following values", ((string)(null)), table22, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table23.AddRow(new string[] {
+                        "Account",
+                        "VSTestAccount"});
+            table23.AddRow(new string[] {
+                        "Mobile Phone",
+                        "0612345678"});
+            table23.AddRow(new string[] {
+                        "Business Phone",
+                        "010 1234567"});
+            table23.AddRow(new string[] {
+                        "Email",
+                        "a.b@vs.com"});
+            table23.AddRow(new string[] {
+                        "First name",
+                        "FirstName"});
+            table23.AddRow(new string[] {
+                        "Last name",
+                        "Lastname"});
+            table23.AddRow(new string[] {
+                        "Status",
+                        "Active"});
+            table23.AddRow(new string[] {
+                        "Finance",
+                        "Yes"});
+#line 51
+testRunner.And("a contact named TestContact is created with the following values", ((string)(null)), table23, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table24.AddRow(new string[] {
+                        "Account",
+                        "VSTestAccount"});
+            table24.AddRow(new string[] {
+                        "Organizational Unit",
+                        "1136"});
+            table24.AddRow(new string[] {
+                        "Billing Account",
+                        "VSTestAccount"});
+            table24.AddRow(new string[] {
+                        "Billing Contact",
+                        "TestContact"});
+            table24.AddRow(new string[] {
+                        "Payment Method",
+                        "SEPA"});
+            table24.AddRow(new string[] {
+                        "Invoice Method",
+                        "Paper"});
+            table24.AddRow(new string[] {
+                        "Tax Exempt (Y/N)",
+                        "Yes"});
+            table24.AddRow(new string[] {
+                        "Salex Tax Group",
+                        "Domestic"});
+            table24.AddRow(new string[] {
+                        "Currency",
+                        "euro"});
+            table24.AddRow(new string[] {
+                        "E-Invoice Attachment (Y/N)",
+                        "Yes"});
+#line 62
+testRunner.And("an hso_accountlegalentity named VSTestAccountFCP is created with the following va" +
+                    "lues", ((string)(null)), table24, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table25.AddRow(new string[] {
+                        "Account Name",
+                        "VSTestAccount"});
+            table25.AddRow(new string[] {
+                        "Business Phone",
+                        "0612345678"});
+            table25.AddRow(new string[] {
+                        "Website",
+                        "https://kiwa.nl"});
+            table25.AddRow(new string[] {
+                        "Fax",
+                        "213091273098"});
+            table25.AddRow(new string[] {
+                        "Language",
+                        "Dutch"});
+            table25.AddRow(new string[] {
+                        "Chamber of commerce",
+                        "231123213"});
+            table25.AddRow(new string[] {
+                        "Address 1: Street 1",
+                        "street 1"});
+            table25.AddRow(new string[] {
+                        "Address 1: Street 2",
+                        "street 2"});
+            table25.AddRow(new string[] {
+                        "Address 1: Street 3",
+                        "11"});
+            table25.AddRow(new string[] {
+                        "Address 1: ZIP/Postal Code",
+                        "1234 AA"});
+            table25.AddRow(new string[] {
+                        "Address 1: City",
+                        "Rijswijk"});
+            table25.AddRow(new string[] {
+                        "Address 1: Country ID",
+                        "Netherlands"});
+            table25.AddRow(new string[] {
+                        "Customer Group",
+                        "Regular"});
+            table25.AddRow(new string[] {
+                        "Billing",
+                        "Yes"});
+            table25.AddRow(new string[] {
+                        "Email",
+                        "test@vs.com"});
+            table25.AddRow(new string[] {
+                        "Finance",
+                        "Yes"});
+            table25.AddRow(new string[] {
+                        "Tax Exempt Number",
+                        "1111111"});
+            table25.AddRow(new string[] {
+                        "DUNS number",
+                        "123456789"});
+#line 78
+testRunner.Then("VSTestAccount has the following values", ((string)(null)), table25, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table26.AddRow(new string[] {
+                        "Account",
+                        "VSTestAccount"});
+            table26.AddRow(new string[] {
+                        "Mobile Phone",
+                        "0612345678"});
+            table26.AddRow(new string[] {
+                        "Business Phone",
+                        "010 1234567"});
+            table26.AddRow(new string[] {
+                        "Email",
+                        "a.b@vs.com"});
+            table26.AddRow(new string[] {
+                        "First name",
+                        "FirstName"});
+            table26.AddRow(new string[] {
+                        "Last name",
+                        "Lastname"});
+            table26.AddRow(new string[] {
+                        "Status",
+                        "Active"});
+            table26.AddRow(new string[] {
+                        "Finance",
+                        "Yes"});
+#line 98
+       testRunner.And("TestContact has the following values", ((string)(null)), table26, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table27.AddRow(new string[] {
+                        "Account",
+                        "VSTestAccount"});
+            table27.AddRow(new string[] {
+                        "Organizational Unit",
+                        "1136"});
+            table27.AddRow(new string[] {
+                        "Billing Account",
+                        "VSTestAccount"});
+            table27.AddRow(new string[] {
+                        "Billing Contact",
+                        "TestContact"});
+            table27.AddRow(new string[] {
+                        "Invoice Method",
+                        "Paper"});
+            table27.AddRow(new string[] {
+                        "Tax Exempt (Y/N)",
+                        "Yes"});
+            table27.AddRow(new string[] {
+                        "Salex Tax Group",
+                        "Domestic"});
+            table27.AddRow(new string[] {
+                        "Currency",
+                        "euro"});
+            table27.AddRow(new string[] {
+                        "E-Invoice Attachment (Y/N)",
+                        "Yes"});
+#line 108
+testRunner.And("VSTestAccountFCP has the following values", ((string)(null)), table27, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
