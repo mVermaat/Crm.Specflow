@@ -14,6 +14,15 @@ namespace Vermaat.Crm.Specflow
 {
     public static class ObjectConverter
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <param name="attributeName"></param>
+        /// <param name="value"></param>
+        /// <param name="context"></param>
+        /// <param name="objectType"></param>
+        /// <returns></returns>
         public static object ToCrmObject(string entityName, string attributeName, string value, CrmTestingContext context, ConvertedObjectType objectType = ConvertedObjectType.Default)
         {
             if (string.IsNullOrWhiteSpace(value))
