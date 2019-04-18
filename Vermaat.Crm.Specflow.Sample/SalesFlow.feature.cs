@@ -119,7 +119,7 @@ testRunner.When("ToQualify is qualified to a", ((string)(null)), table17, "When 
                         "Account Name",
                         "Qualify Account"});
 #line 15
-testRunner.Then("an account exists with the following values", ((string)(null)), table18, "Then ");
+testRunner.Then("an account named QualifyAccount exists with the following values", ((string)(null)), table18, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
@@ -127,6 +127,9 @@ testRunner.Then("an account exists with the following values", ((string)(null)),
             table19.AddRow(new string[] {
                         "Originating Lead",
                         "ToQualify"});
+            table19.AddRow(new string[] {
+                        "Company Name",
+                        "QualifyAccount"});
             table19.AddRow(new string[] {
                         "First Name",
                         "Qualify"});
@@ -145,7 +148,7 @@ testRunner.And("a contact exists with the following values", ((string)(null)), t
             table20.AddRow(new string[] {
                         "Topic",
                         "Qualification Test"});
-#line 24
+#line 25
 testRunner.And("an opportunity exists with the following values", ((string)(null)), table20, "And ");
 #line hidden
             this.ScenarioCleanup();

@@ -110,8 +110,8 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssertCrmRecordCommand(_crmContext, aliasRef, criteria));
         }
 
-        [Then(@"a (.*) exists with the following values")]
-        [Then(@"an (.*) exists with the following values")]
+        [Then(@"a ([^\s]+) exists with the following values")]
+        [Then(@"an ([^\s]+) exists with the following values")]
         public Entity ThenRecordExists(string entityName, Table criteria)
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
@@ -121,6 +121,18 @@ namespace Vermaat.Crm.Specflow.Steps
             return records[0];
         }
 
+        [Then(@"a ([^\s]+) named (.*) exists with the following values")]
+        [Then(@"an ([^\s]+) named (.*) exists with the following values")]
+        public Entity ThenRecordExistsAndGiveAlias(string entityName, string alias, Table criteria)
+        {
+            _crmContext.TableConverter.ConvertTable(entityName, criteria);
+            DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_crmContext, entityName, criteria));
+            Assert.AreEqual(1, records.Count, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Count));
+
+            _crmContext.RecordCache.Add(alias, records[0]);
+
+            return records[0];
+        }
 
         #endregion
 
