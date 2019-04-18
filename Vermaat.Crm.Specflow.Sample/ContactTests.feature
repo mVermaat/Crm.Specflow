@@ -19,7 +19,7 @@ Then TestContact has the following values
 	| Last Name  | Smith                  |
 	| Job Title  | Chief Lazyness Officer |
 
-@Chrome @Cleanup
+@API @Cleanup
 Scenario: Lookup with multiple results tests
 Given an account named FirstAccount with the following values
 	| Property     | Value                   |

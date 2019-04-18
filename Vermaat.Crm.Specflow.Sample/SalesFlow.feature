@@ -1,7 +1,7 @@
 ﻿Feature: Salesflow
 	Tests for the lead/opportunity entity to show special dialogs like the qualify lead, process flows and related entities
 
-@API @Chrome
+@API @Cleanup
 Scenario: Lead Qualification
 Given a lead named ToQualify with the following values
 	| Property     | Value              |

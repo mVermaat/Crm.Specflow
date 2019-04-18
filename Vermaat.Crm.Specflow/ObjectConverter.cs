@@ -16,6 +16,9 @@ namespace Vermaat.Crm.Specflow
     {
         public static object ToCrmObject(string entityName, string attributeName, string value, CrmTestingContext context, ConvertedObjectType objectType = ConvertedObjectType.Default)
         {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+
             var metadata = context.Metadata.GetAttributeMetadata(entityName, attributeName);
             switch (metadata.AttributeType)
             {

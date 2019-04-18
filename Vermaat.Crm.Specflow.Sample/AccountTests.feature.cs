@@ -68,13 +68,11 @@ namespace Vermaat.Crm.Specflow.Sample
         
         [TechTalk.SpecRun.ScenarioAttribute("Create a new Account", new string[] {
                 "API",
-                "Chrome",
                 "Cleanup"}, SourceLine=4)]
         public virtual void CreateANewAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new Account", null, new string[] {
                         "API",
-                        "Chrome",
                         "Cleanup"});
 #line 5
 this.ScenarioInitialize(scenarioInfo);
@@ -121,13 +119,11 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table2
         
         [TechTalk.SpecRun.ScenarioAttribute("Update an existing Account", new string[] {
                 "API",
-                "Chrome",
                 "Cleanup"}, SourceLine=19)]
         public virtual void UpdateAnExistingAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update an existing Account", null, new string[] {
                         "API",
-                        "Chrome",
                         "Cleanup"});
 #line 20
 this.ScenarioInitialize(scenarioInfo);
@@ -187,15 +183,15 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table5
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Check visiblity of form items", new string[] {
-                "Chrome",
-                "Cleanup"}, SourceLine=40)]
-        public virtual void CheckVisiblityOfFormItems()
+        [TechTalk.SpecRun.ScenarioAttribute("Clearing values of Account", new string[] {
+                "API",
+                "Cleanup"}, SourceLine=39)]
+        public virtual void ClearingValuesOfAccount()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check visiblity of form items", null, new string[] {
-                        "Chrome",
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clearing values of Account", null, new string[] {
+                        "API",
                         "Cleanup"});
-#line 41
+#line 40
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -214,71 +210,35 @@ this.ScenarioInitialize(scenarioInfo);
             table6.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 42
-testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table6, "When ");
+#line 41
+testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table6, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
-                        "Visible"});
+                        "Value"});
             table7.AddRow(new string[] {
-                        "SIC Code",
-                        "True"});
-            table7.AddRow(new string[] {
-                        "Ownership",
-                        "False"});
-#line 48
-testRunner.Then("TestAccount\'s form has the following visbility", ((string)(null)), table7, "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [TechTalk.SpecRun.ScenarioAttribute("Create Account - Check two option fields", new string[] {
-                "Chrome",
-                "Cleanup"}, SourceLine=53)]
-        public virtual void CreateAccount_CheckTwoOptionFields()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Account - Check two option fields", null, new string[] {
-                        "Chrome",
-                        "Cleanup"});
-#line 54
-this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
+                        "Industry",
+                        ""});
+#line 47
+testRunner.When("TestAccount is updated with the following values", ((string)(null)), table7, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table8.AddRow(new string[] {
                         "Account Name",
-                        "Checkbox"});
+                        "DynamicHands"});
             table8.AddRow(new string[] {
-                        "Do not allow Phone Calls",
-                        "Do Not Allow"});
+                        "Main Phone",
+                        "0612345678"});
             table8.AddRow(new string[] {
-                        "Do not allow Faxes",
-                        "Do Not Allow"});
+                        "Website",
+                        "https://dynamichands.nl"});
             table8.AddRow(new string[] {
-                        "Do not allow Mails",
-                        "Do Not Allow"});
-#line 55
-testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table8, "When ");
-#line hidden
-            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table9.AddRow(new string[] {
-                        "Account Name",
-                        "Checkbox"});
-            table9.AddRow(new string[] {
-                        "Do not allow Phone Calls",
-                        "Do Not Allow"});
-            table9.AddRow(new string[] {
-                        "Do not allow Faxes",
-                        "Do Not Allow"});
-            table9.AddRow(new string[] {
-                        "Do not allow Mails",
-                        "Do Not Allow"});
-#line 61
-testRunner.Then("TestAccount has the following values", ((string)(null)), table9, "Then ");
+                        "Industry",
+                        ""});
+#line 50
+testRunner.Then("TestAccount has the following values", ((string)(null)), table8, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

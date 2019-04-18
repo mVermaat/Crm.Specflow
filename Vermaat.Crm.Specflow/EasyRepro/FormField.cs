@@ -36,6 +36,37 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void EnterOnForm(Browser browser, Microsoft.Dynamics365.UIAutomation.Api.Entity entity)
         {
+            if (FieldValue != null)
+                SetFormValue(browser, entity);
+            else
+                ClearFormValue(browser, entity);
+        }
+
+        private void ClearFormValue(Browser browser, Microsoft.Dynamics365.UIAutomation.Api.Entity entity)
+        {
+            switch (_fieldMetadata.AttributeType.Value)
+            {
+                case AttributeTypeCode.Boolean:
+                    entity.ClearValue(new TwoOption() { Name = FieldName });
+                    break;
+                case AttributeTypeCode.DateTime:
+                    entity.ClearValue(new DateTimeControl() { Name = FieldName });
+                    break;
+                case AttributeTypeCode.Customer:
+                case AttributeTypeCode.Lookup:
+                    entity.ClearValue(new LookupItem { Name = FieldName });
+                    break;
+                case AttributeTypeCode.Picklist:
+                    entity.ClearValue(new OptionSet { Name = FieldName });
+                    break;
+                default:
+                    entity.ClearValue(FieldName);
+                    break;
+            }
+        }
+
+        private void SetFormValue(Browser browser, Microsoft.Dynamics365.UIAutomation.Api.Entity entity)
+        {
             switch (_fieldMetadata.AttributeType.Value)
             {
                 case AttributeTypeCode.Boolean:
@@ -47,13 +78,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 case AttributeTypeCode.Customer:
                 case AttributeTypeCode.Lookup:
                     SetLookupValue(browser, entity, (EntityReference)FieldValue);
-                    //entity.SetValue(new LookupEntityReference { FieldName = FieldName, Value = (EntityReference)FieldValue });
                     break;
                 case AttributeTypeCode.Picklist:
                     entity.SetValue(new OptionSet { Name = FieldName, Value = (string)FieldValue });
                     break;
                 default:
-                    entity.SetValueFix(FieldName,(string)FieldValue);
+                    entity.SetValueFix(FieldName, (string)FieldValue);
                     break;
             }
         }
