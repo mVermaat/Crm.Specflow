@@ -60,13 +60,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void FillForm(CrmTestingContext crmContext, Table formData)
         {
+            string currentTab = null;
             foreach (var row in formData.Rows)
             {
                 Assert.IsTrue(ContainsField(row[Constants.SpecFlow.TABLE_KEY]), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
                 var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];
 
-                if (!field.IsTabOfFieldExpanded())
+                var newTab = field.GetTabName();
+                if(string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab)
+                {
                     ExpandTab(field.GetTabLabel());
+                    currentTab = newTab;
+                }
 
                 field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }

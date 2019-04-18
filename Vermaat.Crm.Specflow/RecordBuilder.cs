@@ -56,7 +56,6 @@ namespace Vermaat.Crm.Specflow
 
             foreach (TableRow row in customFields.Rows)
             {
-
                 toCreate[row[Constants.SpecFlow.TABLE_KEY]] = ObjectConverter.ToCrmObject(entityName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], _crmContext);
             }
             return toCreate;

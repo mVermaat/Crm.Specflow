@@ -283,6 +283,128 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table9
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Clearing values of Account", new string[] {
+                "API",
+                "Chrome",
+                "Cleanup"}, SourceLine=68)]
+        public virtual void ClearingValuesOfAccount()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clearing values of Account", null, new string[] {
+                        "API",
+                        "Chrome",
+                        "Cleanup"});
+#line 69
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table10.AddRow(new string[] {
+                        "Account Name",
+                        "DynamicHands"});
+            table10.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+            table10.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+            table10.AddRow(new string[] {
+                        "Industry",
+                        "Consulting"});
+#line 70
+testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table10, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table11.AddRow(new string[] {
+                        "Industry",
+                        ""});
+            table11.AddRow(new string[] {
+                        "Website",
+                        ""});
+#line 76
+testRunner.When("TestAccount is updated with the following values", ((string)(null)), table11, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table12.AddRow(new string[] {
+                        "Account Name",
+                        "DynamicHands"});
+            table12.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+            table12.AddRow(new string[] {
+                        "Website",
+                        ""});
+            table12.AddRow(new string[] {
+                        "Industry",
+                        ""});
+#line 80
+testRunner.Then("TestAccount has the following values", ((string)(null)), table12, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Setting values while switching tabs", new string[] {
+                "Chrome",
+                "Cleanup"}, SourceLine=87)]
+        public virtual void SettingValuesWhileSwitchingTabs()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting values while switching tabs", null, new string[] {
+                        "Chrome",
+                        "Cleanup"});
+#line 88
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table13.AddRow(new string[] {
+                        "Account Name",
+                        "DynamicHands"});
+            table13.AddRow(new string[] {
+                        "Industry",
+                        "Consulting"});
+            table13.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+            table13.AddRow(new string[] {
+                        "Credit Hold",
+                        "Yes"});
+            table13.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+#line 89
+testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table13, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table14.AddRow(new string[] {
+                        "Account Name",
+                        "DynamicHands"});
+            table14.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+            table14.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+            table14.AddRow(new string[] {
+                        "Industry",
+                        "Consulting"});
+            table14.AddRow(new string[] {
+                        "Credit Hold",
+                        "Yes"});
+#line 96
+testRunner.Then("TestAccount has the following values", ((string)(null)), table14, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

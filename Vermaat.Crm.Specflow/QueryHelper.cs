@@ -33,7 +33,11 @@ namespace Vermaat.Crm.Specflow
             foreach (var row in criteria.Rows)
             {
                 var crmValue = ObjectConverter.ToCrmObject(entityName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], context, ConvertedObjectType.Primitive);
-                qe.Criteria.AddCondition(row[Constants.SpecFlow.TABLE_KEY], ConditionOperator.Equal, crmValue);
+
+                if (crmValue == null)
+                    qe.Criteria.AddCondition(row[Constants.SpecFlow.TABLE_KEY], ConditionOperator.Null);
+                else
+                    qe.Criteria.AddCondition(row[Constants.SpecFlow.TABLE_KEY], ConditionOperator.Equal, crmValue);
             }
 
             return qe;

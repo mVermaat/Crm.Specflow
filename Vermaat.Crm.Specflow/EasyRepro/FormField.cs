@@ -68,6 +68,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public bool IsTabOfFieldExpanded()
         {
+
             string result = _app.WebDriver.ExecuteScript($"return Xrm.Page.ui.tabs.get('{GetTabName()}').getDisplayState()")?.ToString();
             return "expanded".Equals(result, StringComparison.CurrentCultureIgnoreCase);
         }
@@ -75,27 +76,53 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void SetValue(CrmTestingContext crmContext, string fieldValueText)
         {
             var fieldValue = ObjectConverter.ToCrmObject(_metadata.EntityLogicalName, _metadata.LogicalName, fieldValueText, crmContext, ConvertedObjectType.UserInterface);
-            switch (_metadata.AttributeType.Value)
+
+            if (fieldValue != null)
             {
-                case AttributeTypeCode.Boolean:
-                    SetTwoOptionField((bool)fieldValue, fieldValueText);
-                    break;
-                case AttributeTypeCode.DateTime:
-                    SetDateTimeField((DateTime)fieldValue);
-                    break;
-                case AttributeTypeCode.Customer:
-                case AttributeTypeCode.Lookup:
-                    SetLookupValue((EntityReference)fieldValue);
-                    break;
-                case AttributeTypeCode.Picklist:
-                    SetOptionSetField((string)fieldValue);
-                    break;
-                default:
-                    SetTextField((string)fieldValue);
-                    break;
+                switch (_metadata.AttributeType.Value)
+                {
+                    case AttributeTypeCode.Boolean:
+                        SetTwoOptionField((bool)fieldValue, fieldValueText);
+                        break;
+                    case AttributeTypeCode.DateTime:
+                        SetDateTimeField((DateTime)fieldValue);
+                        break;
+                    case AttributeTypeCode.Customer:
+                    case AttributeTypeCode.Lookup:
+                        SetLookupValue((EntityReference)fieldValue);
+                        break;
+                    case AttributeTypeCode.Picklist:
+                        SetOptionSetField((string)fieldValue);
+                        break;
+                    default:
+                        SetTextField((string)fieldValue);
+                        break;
+                }
+            }
+            else
+            {
+                ClearValue(crmContext);
             }
         }
 
+        private void ClearValue(CrmTestingContext crmContext)
+        {
+            switch (_metadata.AttributeType.Value)
+            {
+                case AttributeTypeCode.Boolean:
+                    throw new InvalidOperationException("Two option fields can't be cleared");
+                case AttributeTypeCode.Customer:
+                case AttributeTypeCode.Lookup:
+                    _app.App.Entity.ClearValue(new LookupItem { Name = _metadata.LogicalName });
+                    break;
+                case AttributeTypeCode.Picklist:
+                    _app.App.Entity.ClearValue(new OptionSet { Name = _metadata.LogicalName });
+                    break;
+                default:
+                    SetValueFix(_metadata.LogicalName, null);
+                    break;
+            }
+        }
 
         private void SetTwoOptionField(bool fieldValueBool, string fieldValueText)
         {
@@ -171,7 +198,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     if (input != null)
                     {
                         var currentValue = input.GetAttribute("value");
-                        var stringBuilder = new StringBuilder(value.Length + currentValue.Length);
+                        var stringBuilder = new StringBuilder((value?.Length).GetValueOrDefault() + currentValue.Length);
                         if (!string.IsNullOrEmpty(currentValue))
                         {
                             for (int i = 0; i < currentValue.Length; i++)
@@ -179,7 +206,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                                 stringBuilder.Append(Keys.Backspace);
                             }
                         }
-                        stringBuilder.Append(value);
+
+                        if(!string.IsNullOrWhiteSpace(value)) 
+                            stringBuilder.Append(value);
+
                         stringBuilder.Append(Keys.Tab);
 
                         input.Click();
