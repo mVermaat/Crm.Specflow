@@ -75,7 +75,7 @@ namespace Vermaat.Crm.Specflow
         }
 
 
-        public static EntityReference GetLookupValue(AttributeMetadata metadata, string alias, CrmTestingContext context)
+        private static EntityReference GetLookupValue(AttributeMetadata metadata, string alias, CrmTestingContext context)
         {
             var result = context.RecordCache.Get(alias);
             if (result != null)
