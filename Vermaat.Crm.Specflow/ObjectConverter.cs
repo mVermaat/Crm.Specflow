@@ -98,7 +98,7 @@ namespace Vermaat.Crm.Specflow
             qe.Criteria.AddCondition(targetMd.PrimaryNameAttribute, ConditionOperator.Equal, alias);
             var col = context.Service.RetrieveMultiple(qe);
 
-            Assert.AreEqual(1, col.Entities.Count);
+            Assert.AreEqual(1, col.Entities.Count, $"Looking for {targetEntity} resulted in a wrong amount. Text: {alias}");
             return col.Entities.FirstOrDefault()?.ToEntityReference(targetMd.PrimaryNameAttribute);
         }
 
