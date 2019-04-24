@@ -135,6 +135,9 @@
     <Compile Include="AssertHelper.cs" />
     <Compile Include="BusinessProcessFlowHelper.cs" />
     <Compile Include="CommandAction.cs" />
+    <Compile Include="Commands\ActivateQuoteCommand.cs" />
+    <Compile Include="Commands\ConvertQuoteToSalesOrderCommand.cs" />
+    <Compile Include="Commands\WinQuoteCommand.cs" />
     <Compile Include="ConvertedObjectType.cs" />
     <Compile Include="EasyRepro\ButtonTexts.cs" />
     <Compile Include="CommandProcessor.cs" />
@@ -182,6 +185,7 @@
     <Compile Include="SeleniumTestingContext.cs" />
     <Compile Include="Steps\GeneralSteps.cs" />
     <Compile Include="Steps\LeadSteps.cs" />
+    <Compile Include="Steps\QuoteSteps.cs" />
     <Compile Include="Steps\UISteps.cs" />
     <Compile Include="TableConverter.cs" />
     <Compile Include="Xml\DefaultDataXmlClasses.cs" />
