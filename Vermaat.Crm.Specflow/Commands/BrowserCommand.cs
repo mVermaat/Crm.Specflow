@@ -14,13 +14,14 @@ namespace Vermaat.Crm.Specflow.Commands
             _seleniumContext = seleniumContext;
         }
 
-        public TResult Execute()
+        public TResult Execute(CommandAction commandAction = CommandAction.Default)
         {
-            if (ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_API))
+            if (commandAction == CommandAction.ForceApi || ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_API))
             {
                 return ExecuteApi();
             }
-            else if (ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Chrome) ||
+            else if (commandAction == CommandAction.ForceBrowser ||
+                     ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Chrome) ||
                      ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Edge) ||
                      ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Firefox) ||
                      ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_InternetExplorer))
@@ -48,13 +49,15 @@ namespace Vermaat.Crm.Specflow.Commands
             _seleniumContext = seleniumContext;
         }
 
-        public void Execute()
+        public void Execute(CommandAction commandAction = CommandAction.Default)
         {
-            if (ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_API))
+            if (commandAction == CommandAction.ForceApi ||
+                ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_API))
             {
                 ExecuteApi();
             }
-            else if (ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Chrome) ||
+            else if (commandAction == CommandAction.ForceBrowser ||
+                     ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Chrome) ||
                      ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Edge) ||
                      ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_Firefox) ||
                      ScenarioContext.Current.IsTagTargetted(Constants.SpecFlow.TARGET_InternetExplorer))

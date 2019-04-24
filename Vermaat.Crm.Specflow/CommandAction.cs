@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vermaat.Crm.Specflow.Commands
+namespace Vermaat.Crm.Specflow
 {
-    public interface ICommand
+    public enum CommandAction
     {
-        void Execute(CommandAction commandAction);
+        Default = 0, ForceApi = 1, ForceBrowser = 2
     }
 }

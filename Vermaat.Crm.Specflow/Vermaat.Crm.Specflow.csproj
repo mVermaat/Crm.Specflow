@@ -134,6 +134,7 @@
     <Compile Include="AliasedRecordCache.cs" />
     <Compile Include="AssertHelper.cs" />
     <Compile Include="BusinessProcessFlowHelper.cs" />
+    <Compile Include="CommandAction.cs" />
     <Compile Include="ConvertedObjectType.cs" />
     <Compile Include="EasyRepro\ButtonTexts.cs" />
     <Compile Include="CommandProcessor.cs" />
