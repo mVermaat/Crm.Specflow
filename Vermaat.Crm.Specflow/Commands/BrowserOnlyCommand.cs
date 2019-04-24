@@ -1,4 +1,6 @@
-﻿namespace Vermaat.Crm.Specflow.Commands
+﻿using System;
+
+namespace Vermaat.Crm.Specflow.Commands
 {
     public abstract class BrowserOnlyCommandFunc<TResult> : ICommandFunc<TResult>
     {
@@ -12,6 +14,13 @@
         }
 
         public abstract TResult Execute();
+
+        public TResult Execute(CommandAction commandAction = CommandAction.Default)
+        {
+            if (commandAction == CommandAction.ForceApi)
+                throw new InvalidOperationException("API not supported for Browser only commands");
+            return Execute();
+        }
     }
 
 
@@ -27,5 +36,12 @@
         }
 
         public abstract void Execute();
+
+        public void Execute(CommandAction commandAction = CommandAction.Default)
+        {
+            if (commandAction == CommandAction.ForceApi)
+                throw new InvalidOperationException("API not supported for Browser only commands");
+            Execute();
+        }
     }
 }

@@ -17,6 +17,11 @@ namespace Vermaat.Crm.Specflow
         public BrowserOptions BrowserOptions { get; private set; }
         public ButtonTexts ButtonTexts { get; set; }
 
+        static SeleniumTestingContext()
+        {
+            Elements.Xpath[Reference.Entity.FieldContainer] = "//div[@id=\"[NAME]\"]";
+        }
+
         public SeleniumTestingContext()
         {
             ButtonTexts = new ButtonTexts();

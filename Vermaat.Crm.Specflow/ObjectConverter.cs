@@ -58,7 +58,7 @@ namespace Vermaat.Crm.Specflow
                 case AttributeTypeCode.Customer:
                 case AttributeTypeCode.Lookup:
                 case AttributeTypeCode.Owner:
-                    var lookup = GetLookupValue(metadata, value, context);
+                    var lookup = GetLookupValue(context, metadata, value);
                     if (objectType == ConvertedObjectType.Primitive)
                         return lookup.Id;
                     else
@@ -83,15 +83,11 @@ namespace Vermaat.Crm.Specflow
             };
         }
 
-
-        private static EntityReference GetLookupValue(AttributeMetadata metadata, string alias, CrmTestingContext context)
+        public static EntityReference GetLookupValue(CrmTestingContext context, string alias, string targetEntity)
         {
             var result = context.RecordCache.Get(alias);
             if (result != null)
                 return result;
-
-            var lookupMd = (LookupAttributeMetadata)metadata;
-            string targetEntity = lookupMd.Targets[0];
 
             var targetMd = context.Metadata.GetEntityMetadata(targetEntity);
 
@@ -102,8 +98,21 @@ namespace Vermaat.Crm.Specflow
             qe.Criteria.AddCondition(targetMd.PrimaryNameAttribute, ConditionOperator.Equal, alias);
             var col = context.Service.RetrieveMultiple(qe);
 
-            Assert.AreEqual(1, col.Entities.Count);
-            return col.Entities.First().ToEntityReference(targetMd.PrimaryNameAttribute);
+            Assert.AreEqual(1, col.Entities.Count, $"Looking for {targetEntity} resulted in a wrong amount. Text: {alias}");
+            return col.Entities.FirstOrDefault()?.ToEntityReference(targetMd.PrimaryNameAttribute);
+        }
+
+
+        private static EntityReference GetLookupValue(CrmTestingContext context, AttributeMetadata metadata, string alias)
+        {
+            var lookupMd = (LookupAttributeMetadata)metadata;
+            foreach(string targetEntity in lookupMd.Targets)
+            {
+                EntityReference result = GetLookupValue(context, alias, targetEntity);
+                if (result != null)
+                    return result;
+            }
+            return null;           
         }
 
         private static OptionSetValue GetOptionSetValue(AttributeMetadata metadata, string value, CrmTestingContext context)

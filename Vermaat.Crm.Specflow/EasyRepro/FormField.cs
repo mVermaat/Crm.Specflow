@@ -101,7 +101,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (index == null)
                 throw new ArgumentException($"Lookup not found. Was looking for Entity: {value.Id} ({value.Name}) of type {value.LogicalName}");
 
-            lookup.SelectItem(index.Value);
+            // First item is always automatically selected by CE, so no need to select if index = 0
+            if(index > 0)
+                lookup.SelectItem(index.Value);
+
             lookup.Add();
             entity.SwitchToContentFrame();
         }
