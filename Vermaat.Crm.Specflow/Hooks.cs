@@ -64,6 +64,6 @@ namespace Vermaat.Crm.Specflow
                 _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.IE;
                 _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
             }
-        }       
+        }     
     }
 }

@@ -17,6 +17,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private Dictionary<string, FormData> _forms;
 
+        public int TotalThinkTime => _app.Client.Browser.TotalThinkTime;
+
         static UCIBrowser()
         {
           
@@ -31,6 +33,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void Login(CrmConnectionString connectionString)
         {
+            Logger.WriteLine("Logging in CRM");
             if(bool.Parse(HelperMethods.GetAppSettingsValue("UCIOnly")))
             {
                 Elements.Xpath["Login_CrmMainPage"] = "//*[@data-id='topBar']";
@@ -41,10 +44,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             var queryDic = System.Web.HttpUtility.ParseQueryString(new Uri(_app.WebDriver.Url).Query);
             _appId = queryDic["appid"];
+            Logger.WriteLine($"Logged into app {_appId}");
         }
 
         public FormData OpenRecord(EntityMetadata entityMetadata, string entityName, Guid? id = null)
         {
+            Logger.WriteLine($"Opening record {entityName} with ID {id}");
             _app.Client.Execute(BrowserOptionHelper.GetOptions($"Open: {entityName}"), driver =>
             {
                 Uri uri = new Uri(_app.WebDriver.Url);

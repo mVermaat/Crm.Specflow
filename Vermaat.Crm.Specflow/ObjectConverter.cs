@@ -16,14 +16,23 @@ namespace Vermaat.Crm.Specflow
     {
         public static object ToCrmObject(string entityName, string attributeName, string value, CrmTestingContext context, ConvertedObjectType objectType = ConvertedObjectType.Default)
         {
+            Logger.WriteLine($"Converting CRM Object. Entity: {entityName}, Attribute: {attributeName}, Value: {value}, ObjectType: {objectType}");
             if (string.IsNullOrWhiteSpace(value))
                 return null;
 
             var metadata = context.Metadata.GetAttributeMetadata(entityName, attributeName);
+            object convertedValue = GetConvertedValue(context, metadata, value, objectType);
+            Logger.WriteLine($"ConvertedValue: {HelperMethods.CrmObjectToPrimitive(convertedValue)}");
+
+            return convertedValue;
+        }
+
+        private static object GetConvertedValue(CrmTestingContext context, AttributeMetadata metadata, string value, ConvertedObjectType objectType)
+        {
             switch (metadata.AttributeType)
             {
                 case AttributeTypeCode.Boolean:
-                        return GetTwoOptionValue(metadata, value, context);       
+                    return GetTwoOptionValue(metadata, value, context);
                 case AttributeTypeCode.DateTime: return DateTime.Parse(value);
                 case AttributeTypeCode.Double: return double.Parse(value);
                 case AttributeTypeCode.Decimal: return decimal.Parse(value);
@@ -76,12 +85,18 @@ namespace Vermaat.Crm.Specflow
 
         public static EntityReference GetLookupValue(CrmTestingContext context, string alias, string targetEntity)
         {
+            Logger.WriteLine($"Getting lookupvalue for entity {targetEntity}");
+
             var result = context.RecordCache.Get(alias);
             if (result != null)
+            {
+                Logger.WriteLine($"Cached record found");
                 return result;
+            }
 
             var targetMd = context.Metadata.GetEntityMetadata(targetEntity);
 
+            Logger.WriteLine($"Querying lookup in CRM");
             QueryExpression qe = new QueryExpression(targetEntity)
             {
                 ColumnSet = new ColumnSet(targetMd.PrimaryNameAttribute)

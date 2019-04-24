@@ -1,6 +1,7 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using System;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -25,6 +26,7 @@ namespace Vermaat.Crm.Specflow.Commands
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
             Entity lead = _crmContext.Service.Retrieve(aliasRef, new ColumnSet(Lead.Fields.TransactionCurrencyId, Lead.Fields.CustomerId, Lead.Fields.CampaignId));
 
+            Logger.WriteLine($"Qualifying Lead {lead.Id}");
             QualifyLeadRequest req = new QualifyLeadRequest()
             {
                 CreateAccount = _createAccount,

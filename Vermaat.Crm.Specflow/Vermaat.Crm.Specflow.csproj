@@ -189,6 +189,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="HelperMethods.cs" />
     <Compile Include="Hooks.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="ProcessStage.cs" />
     <Compile Include="QueryHelper.cs" />
     <Compile Include="SeleniumTestingContext.cs" />

@@ -59,5 +59,26 @@ namespace Vermaat.Crm.Specflow
             return target.Equals(ConfigurationManager.AppSettings["Target"], StringComparison.CurrentCultureIgnoreCase);
         }
 
+        public static object CrmObjectToPrimitive(object value)
+        {
+            if (value == null)
+                return null;
+
+            var type = value.GetType();
+            if (type == typeof(OptionSetValue))
+            {
+                return ((OptionSetValue)value).Value;
+            }
+            else if (type == typeof(EntityReference))
+            {
+                return ((EntityReference)value).Id;
+            }
+            else if (type == typeof(Money))
+            {
+                return ((Money)value).Value;
+            }
+            return value;
+        }
+
     }
 }

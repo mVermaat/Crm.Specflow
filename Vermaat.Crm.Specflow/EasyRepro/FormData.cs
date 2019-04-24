@@ -31,28 +31,36 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void Delete()
         {
+            Logger.WriteLine($"Deleting record");
             _app.App.CommandBar.ClickCommand(_app.ButtonTexts.Delete);
             _app.App.Dialogs.ConfirmationDialog(true);
         }
 
         public bool ContainsField(string fieldLogicalName)
         {
-            return _formFields.ContainsKey(fieldLogicalName);
+            var containsField = _formFields.ContainsKey(fieldLogicalName);
+            Logger.WriteLine($"Field {fieldLogicalName} is on Form: {containsField}");
+            return containsField;
         }
 
         public void ExpandTab(string tabLabel)
         {
+            Logger.WriteLine($"Expanding tab {tabLabel}");
             _app.App.Entity.SelectTab(tabLabel);
         }
 
 
         public Guid GetRecordId()
         {
-            return _app.App.Entity.GetObjectId();
+            Logger.WriteLine("Getting Record Id");
+            var id = _app.App.Entity.GetObjectId();
+            Logger.WriteLine($"Record ID of current opened record: {id}");
+            return id;
         }
 
         public void Save(bool saveIfDuplicate)
         {
+            Logger.WriteLine($"Saving Record");
             _app.App.Entity.Save();
             ConfirmDuplicate(saveIfDuplicate);
             WaitUntilSaveCompleted();
@@ -60,6 +68,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void FillForm(CrmTestingContext crmContext, Table formData)
         {
+            Logger.WriteLine($"Filling form");
             string currentTab = null;
             foreach (var row in formData.Rows)
             {
@@ -86,8 +95,19 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 var footerElement = _app.WebDriver.FindElement(By.XPath("//span[@data-id='edit-form-footer-message']"));
 
                 if (!string.IsNullOrEmpty(footerElement.Text) && footerElement.Text.ToLower() == "saving")
-                    Thread.Sleep(2500);
+                {
+                    Logger.WriteLine("Save not yet completed. Waiting..");
+                    Thread.Sleep(500);
+                }
+                else
+                {
+                    Logger.WriteLine("Save sucessfull");
+                    saveCompleted = true;
+                }
             }
+
+            if (!saveCompleted)
+                throw new InvalidOperationException("Save wasn't completed in 20 seconds");
         }
 
         private void ConfirmDuplicate(bool saveIfDuplicate)

@@ -25,6 +25,7 @@ namespace Vermaat.Crm.Specflow
 
         public static QueryExpression CreateQueryExpressionFromTable(string entityName, Table criteria, CrmTestingContext context)
         {
+            Logger.WriteLine($"Creating Query for {entityName}");
             QueryExpression qe = new QueryExpression(entityName)
             {
                 ColumnSet = new ColumnSet()
@@ -35,9 +36,15 @@ namespace Vermaat.Crm.Specflow
                 var crmValue = ObjectConverter.ToCrmObject(entityName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], context, ConvertedObjectType.Primitive);
 
                 if (crmValue == null)
+                {
+                    Logger.WriteLine($"Adding condition {row[Constants.SpecFlow.TABLE_KEY]} IS NULL");
                     qe.Criteria.AddCondition(row[Constants.SpecFlow.TABLE_KEY], ConditionOperator.Null);
+                }
                 else
+                {
+                    Logger.WriteLine($"Adding condition {row[Constants.SpecFlow.TABLE_KEY]} Equals {crmValue}");
                     qe.Criteria.AddCondition(row[Constants.SpecFlow.TABLE_KEY], ConditionOperator.Equal, crmValue);
+                }
             }
 
             return qe;

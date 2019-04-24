@@ -79,6 +79,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             if (fieldValue != null)
             {
+                Logger.WriteLine($"Setting field value");
                 switch (_metadata.AttributeType.Value)
                 {
                     case AttributeTypeCode.Boolean:
@@ -101,6 +102,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
             else
             {
+                Logger.WriteLine($"Clearing field value");
                 ClearValue(crmContext);
             }
         }

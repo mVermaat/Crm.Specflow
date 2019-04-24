@@ -43,6 +43,7 @@ namespace Vermaat.Crm.Specflow
                 reference.Name = entity.GetAttributeValue<string>(md.PrimaryNameAttribute);
             }
 
+            Logger.WriteLine($"Adding alias {alias} to cache. {reference?.Id}");
             _aliasedRecords.Add(alias, reference);
         }
 
@@ -68,6 +69,7 @@ namespace Vermaat.Crm.Specflow
             if(!_aliasedRecords.TryGetValue(alias, out EntityReference value) && mustExist)
                 Assert.Fail("alias {0} doesn't exist", alias);
 
+            Logger.WriteLine($"Getting Alias {alias} from cache. Result: {value?.Id}");
             return value;
         }
 
@@ -89,9 +91,15 @@ namespace Vermaat.Crm.Specflow
         public void Upsert(string alias, EntityReference entityReference)
         {
             if (_aliasedRecords.ContainsKey(alias))
+            {
+                Logger.WriteLine($"Adding {alias} to cache with ID {entityReference?.Id}");
                 _aliasedRecords[alias] = entityReference;
+            }
             else
+            {
+                Logger.WriteLine($"Updating {alias} to cache with ID {entityReference?.Id}");
                 _aliasedRecords.Add(alias, entityReference);
+            }
         }
 
         /// <summary>
@@ -100,6 +108,7 @@ namespace Vermaat.Crm.Specflow
         /// <param name="alias">Alias of the record</param>
         public void Remove(string alias)
         {
+            Logger.WriteLine($"Removing {alias} from cache");
             _aliasedRecords.Remove(alias);
         }
 
@@ -109,6 +118,7 @@ namespace Vermaat.Crm.Specflow
         /// <param name="service"></param>
         public void DeleteAllCachedRecords(CrmService service)
         {
+            Logger.WriteLine("Clearing cache");
             foreach (var record in _aliasedRecords)
             {
                 if (_aliasesToIgnore.Contains(record.Key) || _entitiesToIgnore.Contains(record.Value.LogicalName))

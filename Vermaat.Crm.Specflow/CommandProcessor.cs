@@ -17,7 +17,7 @@ namespace Vermaat.Crm.Specflow
 
         public TResult Execute<TResult>(ICommandFunc<TResult> command, CommandAction commandAction = CommandAction.Default)
         {
-            Trace.WriteLine($"Executing Command: {command?.GetType().FullName}");
+            Logger.WriteLine($"Executing Command: {command?.GetType().FullName}");
             return command.Execute(commandAction);
         }
     }
