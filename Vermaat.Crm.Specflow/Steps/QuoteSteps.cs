@@ -24,16 +24,12 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new ActivateQuoteCommand(_crmContext, alias));
         }
 
-        [When(@"a quote named (.*) is converted to a sales order")]
-        public void ConverQuoteToSalesOrder(string alias)
-        {
-            _crmContext.CommandProcessor.Execute(new ConverQuoteToSalesOrderCommand(_crmContext, alias));
-        }
-
         [When(@"a quote named (.*) is won")]
-        public void WinQuote(string alias)
+        public void WinQuote(string alias, Table table)
         {
-            _crmContext.CommandProcessor.Execute(new WinQuoteCommand(_crmContext, alias));
+            var row = table.Rows[0];
+            var subject = row["Subject"];
+            _crmContext.CommandProcessor.Execute(new WinQuoteCommand(_crmContext, alias, subject));
         }
     }
 }
