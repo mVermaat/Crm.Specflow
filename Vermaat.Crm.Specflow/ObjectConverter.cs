@@ -37,6 +37,8 @@ namespace Vermaat.Crm.Specflow
                 case AttributeTypeCode.Double: return double.Parse(value);
                 case AttributeTypeCode.Decimal: return decimal.Parse(value);
                 case AttributeTypeCode.Integer: return int.Parse(value);
+
+                case AttributeTypeCode.Memo:
                 case AttributeTypeCode.String: return value;
 
                 case AttributeTypeCode.Money:
