@@ -200,7 +200,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     if (input != null)
                     {
                         var currentValue = input.GetAttribute("value");
-                        var stringBuilder = new StringBuilder((value?.Length).GetValueOrDefault() + currentValue.Length);
+                        var stringBuilder = new StringBuilder((value?.Length).GetValueOrDefault() + currentValue.Length + 2);
                         if (!string.IsNullOrEmpty(currentValue))
                         {
                             for (int i = 0; i < currentValue.Length; i++)
@@ -212,6 +212,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         if(!string.IsNullOrWhiteSpace(value)) 
                             stringBuilder.Append(value);
 
+                        stringBuilder.Append(Keys.Tab);
                         stringBuilder.Append(Keys.Tab);
 
                         input.Click();
