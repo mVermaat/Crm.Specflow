@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TestProfile xmlns="http://www.specflow.org/schemas/plus/TestProfile/1.5">
   <Settings projectName="Vermaat.Crm.Specflow.Sample" projectId="{40155862-3830-401c-945a-70e57b35f7a1}" />
-  <Execution stopAfterFailures="1" testThreadCount="1" testSchedulingMode="Sequential" />
+  <Execution stopAfterFailures="0" testThreadCount="1" testSchedulingMode="Sequential" retryCount="1" retryFor="Failing" />
+  <VSTest testRetryResults="Unified" passRateAbsolute="1"/>
   <!-- For collecting by a SpecRun server update and enable the following element. For using the 
       collected statistics, set testSchedulingMode="Adaptive" attribute on the <Execution> element.
     <Server serverUrl="http://specrunserver:6365" publishResults="true" />
