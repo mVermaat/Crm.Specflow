@@ -1,0 +1,15 @@
+<entities >
+  <entity name="pricelevel" displayname="Price List" etc="1022" primaryidfield="pricelevelid" primarynamefield="name" disableplugins="false">
+    <fields>
+      <field displayname="Payment Method " name="paymentmethodcode" type="optionsetvalue" />
+      <field displayname="Name" name="name" type="string" />
+      <field displayname="Price List" name="pricelevelid" type="guid" primaryKey="true" />
+      <field displayname="Shipping Method" name="shippingmethodcode" type="optionsetvalue" />
+      <field displayname="Start Date" name="begindate" type="datetime" />
+      <field displayname="Currency" name="transactioncurrencyid" type="entityreference" lookupType="transactioncurrency" />
+      <field displayname="Description" name="description" type="string" />
+      <field displayname="End Date" name="enddate" type="datetime" />
+      <field displayname="Freight Terms" name="freighttermscode" type="optionsetvalue" />
+    </fields>
+  </entity>
+</entities>

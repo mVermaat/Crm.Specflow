@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow", "Ver
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow.Sample", "Vermaat.Crm.Specflow.Sample\Vermaat.Crm.Specflow.Sample.csproj", "{40155862-3830-401C-945A-70E57B35F7A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow.PackageDeployment", "Vermaat.Crm.Specflow.PackageDeployment\Vermaat.Crm.Specflow.PackageDeployment.csproj", "{73C83080-388D-4633-99A4-E53E582B717A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,12 @@ Global
 		{40155862-3830-401C-945A-70E57B35F7A1}.NuGetRelease|Any CPU.ActiveCfg = NuGetRelease|Any CPU
 		{40155862-3830-401C-945A-70E57B35F7A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40155862-3830-401C-945A-70E57B35F7A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73C83080-388D-4633-99A4-E53E582B717A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73C83080-388D-4633-99A4-E53E582B717A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73C83080-388D-4633-99A4-E53E582B717A}.NuGetRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{73C83080-388D-4633-99A4-E53E582B717A}.NuGetRelease|Any CPU.Build.0 = Release|Any CPU
+		{73C83080-388D-4633-99A4-E53E582B717A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73C83080-388D-4633-99A4-E53E582B717A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
