@@ -88,7 +88,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "DynamicHands"});
             table1.AddRow(new string[] {
                         "Main Phone",
-                        "0612345678"});
+                        "06123456789"});
             table1.AddRow(new string[] {
                         "Website",
                         "https://dynamichands.nl"});
@@ -106,7 +106,7 @@ testRunner.When("an account named TestAccount is created with the following valu
                         "DynamicHands"});
             table2.AddRow(new string[] {
                         "Main Phone",
-                        "0612345678"});
+                        "06123456789"});
             table2.AddRow(new string[] {
                         "Website",
                         "https://dynamichands.nl"});
