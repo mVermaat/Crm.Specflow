@@ -106,7 +106,7 @@ namespace Vermaat.Crm.Specflow
             qe.Criteria.AddCondition(targetMd.PrimaryNameAttribute, ConditionOperator.Equal, alias);
             var col = context.Service.RetrieveMultiple(qe);
 
-            Assert.AreEqual(1, col.Entities.Count);
+            Logger.WriteLine($"Looked for {targetEntity} with {targetMd.PrimaryNameAttribute} is {alias}. Found {col.Entities.Count} records");
             return col.Entities.FirstOrDefault()?.ToEntityReference(targetMd.PrimaryNameAttribute);
         }
 
@@ -121,7 +121,7 @@ namespace Vermaat.Crm.Specflow
                     return result;
                 }
             }
-            return null;
+            throw new ArgumentException($"Lookup named {alias} was not found. Queried entities: {string.Join(", ", lookupMd.Targets)}");
         }
 
         private static OptionSetValue GetOptionSetValue(AttributeMetadata metadata, string value, CrmTestingContext context)

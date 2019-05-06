@@ -24,5 +24,11 @@ namespace Vermaat.Crm.Specflow
         {
             public const string STATUSCODE = "statuscode";
         }
+
+        public class EasyReproReference
+        {
+            public const string DIALOG_CONTAINER = "Dialog_Container";
+            public const string DIALOG_OK = "Dialog_ConvertSalesOrder_OK";
+        }
     }
 }

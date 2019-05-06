@@ -16,6 +16,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 New = "New";
                 Delete = "Delete";
                 Save = "Save";
+                ActivateQuote = "Activate Quote";
+                CreateOrder = "Create Order";
+                ReviseQuote = "Revise";
+                CloseQuote = "Close Quote";
             }
         }
 
@@ -23,5 +27,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public string New { get; set; }
         public string Delete { get; set; }
         public string Save { get; set; }
+        public string ActivateQuote { get; set; }
+        public string CreateOrder { get; set; }
+        public string ReviseQuote { get; set; }
+        public string CloseQuote { get; set; }
     }
 }

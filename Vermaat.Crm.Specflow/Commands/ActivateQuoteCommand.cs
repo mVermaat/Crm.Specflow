@@ -1,20 +1,23 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
+using Vermaat.Crm.Specflow.EasyRepro;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    public class ActivateQuoteCommand : ApiOnlyCommandFunc<SetStateResponse>
+    public class ActivateQuoteCommand : BrowserCommand
     {
         private readonly string _alias;
 
-        public ActivateQuoteCommand(CrmTestingContext crmContext, string alias) : base(crmContext)
+        public ActivateQuoteCommand(CrmTestingContext crmContext, SeleniumTestingContext selenumContext, string alias) 
+            : base(crmContext, selenumContext)
         {
             _alias = alias;
         }
 
-        public override SetStateResponse Execute()
+        protected override void ExecuteApi()
         {
             var aliasRef = _crmContext.RecordCache[_alias];
 
@@ -25,7 +28,16 @@ namespace Vermaat.Crm.Specflow.Commands
                 Status = new OptionSetValue(2)//In progress
             };
 
-            return _crmContext.Service.Execute<SetStateResponse>(activateQuote);
+            _crmContext.Service.Execute<SetStateResponse>(activateQuote);
+        }
+
+        protected override void ExecuteBrowser()
+        {
+            EntityReference aliasRef = _crmContext.RecordCache[_alias];
+            EntityMetadata metadata = _crmContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
+
+            FormData formData = _seleniumContext.Browser.OpenRecord(metadata, aliasRef);
+            formData.CommandBar.ActivateQuote();
         }
     }
 }

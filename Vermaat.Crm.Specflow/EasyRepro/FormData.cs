@@ -20,20 +20,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private Dictionary<string, FormField> _formFields;
 
         public FormField this[string attributeName] => _formFields[attributeName];
+        public CommandBarActions CommandBar { get; }
 
         public FormData(UCIApp app, EntityMetadata entityMetadata)
         {
             _app = app;
             _entityMetadata = entityMetadata;
+            CommandBar = new CommandBarActions(_app);
 
             _formFields = InitializeFormData();
-        }
-
-        public void Delete()
-        {
-            Logger.WriteLine($"Deleting record");
-            _app.App.CommandBar.ClickCommand(_app.ButtonTexts.Delete);
-            _app.App.Dialogs.ConfirmationDialog(true);
         }
 
         public bool ContainsField(string fieldLogicalName)

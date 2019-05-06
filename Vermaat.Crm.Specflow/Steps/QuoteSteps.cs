@@ -12,24 +12,31 @@ namespace Vermaat.Crm.Specflow.Steps
     public class QuoteSteps
     {
         private readonly CrmTestingContext _crmContext;
+        private readonly SeleniumTestingContext _selenumContext;
 
-        public QuoteSteps(CrmTestingContext crmContext)
+        public QuoteSteps(CrmTestingContext crmContext, SeleniumTestingContext selenumContext)
         {
             _crmContext = crmContext;
+            _selenumContext = selenumContext;
         }
 
-        [When(@"a quote named (.*) is activated")]
+        [When(@"the quote (.*) is activated")]
         public void ActivateQuote(string alias)
         {
-            _crmContext.CommandProcessor.Execute(new ActivateQuoteCommand(_crmContext, alias));
+            _crmContext.CommandProcessor.Execute(new ActivateQuoteCommand(_crmContext, _selenumContext, alias));
         }
 
-        [When(@"a quote named (.*) is won")]
-        public void WinQuote(string alias, Table table)
+        [When(@"(.*) is converted to a sales order named (.*)")]
+        public void ConvertQuoteToSalesOrder(string quoteAlias, string orderAlias)
         {
-            var row = table.Rows[0];
-            var subject = row["Subject"];
-            _crmContext.CommandProcessor.Execute(new WinQuoteCommand(_crmContext, alias, subject));
+            _crmContext.CommandProcessor.Execute(new ConvertToSalesOrderCommand(_crmContext, _selenumContext, quoteAlias, orderAlias));
+        }
+
+        [When(@"(.*) is activated and converted to a sales order named (.*)")]
+        public void ActivateQuoteAndConvertQuoteToSalesOrder(string quoteAlias, string orderAlias)
+        {
+            _crmContext.CommandProcessor.Execute(new ActivateQuoteCommand(_crmContext, _selenumContext, quoteAlias));
+            _crmContext.CommandProcessor.Execute(new ConvertToSalesOrderCommand(_crmContext, _selenumContext, quoteAlias, orderAlias));
         }
     }
 }

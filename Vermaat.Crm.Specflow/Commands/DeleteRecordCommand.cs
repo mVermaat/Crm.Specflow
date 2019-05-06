@@ -24,7 +24,7 @@ namespace Vermaat.Crm.Specflow.Commands
         protected override void ExecuteBrowser()
         {
             var formData = _seleniumContext.Browser.OpenRecord(_crmContext.Metadata.GetEntityMetadata(_toDelete.LogicalName), _toDelete.LogicalName, _toDelete.Id);
-            formData.Delete();
+            formData.CommandBar.Delete();
             _crmContext.RecordCache.Remove(_alias);
         }
     }

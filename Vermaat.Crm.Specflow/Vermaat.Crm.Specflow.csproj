@@ -151,7 +151,7 @@
     <Compile Include="BusinessProcessFlowHelper.cs" />
     <Compile Include="CommandAction.cs" />
     <Compile Include="Commands\ActivateQuoteCommand.cs" />
-    <Compile Include="Commands\WinQuoteCommand.cs" />
+    <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
     <Compile Include="ConvertedObjectType.cs" />
     <Compile Include="EasyRepro\ButtonTexts.cs" />
     <Compile Include="CommandProcessor.cs" />
@@ -179,6 +179,7 @@
     <Compile Include="CrmService.cs" />
     <Compile Include="CrmTestingContext.cs" />
     <Compile Include="EasyRepro\BrowserOptionHelper.cs" />
+    <Compile Include="EasyRepro\CommandBarActions.cs" />
     <Compile Include="EasyRepro\CompositeFields.cs" />
     <Compile Include="EasyRepro\UCIApp.cs" />
     <Compile Include="EasyRepro\EntityExtensions.cs" />
@@ -216,11 +217,11 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Selenium.Chrome.WebDriver.74.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.74.0.0\build\Selenium.Chrome.WebDriver.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.74.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.74.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
   </Target>
-  <Import Project="..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.2.45\build\Selenium.Chrome.WebDriver.targets')" />
 </Project>
