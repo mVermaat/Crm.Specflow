@@ -18,18 +18,23 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext = crmContext;
         }
 
-        [When(@"a quote named (.*) is activated")]
+        [When(@"the quote (.*) is activated")]
         public void ActivateQuote(string alias)
         {
             _crmContext.CommandProcessor.Execute(new ActivateQuoteCommand(_crmContext, alias));
         }
 
-        [When(@"a quote named (.*) is won")]
-        public void WinQuote(string alias, Table table)
+        [When(@"(.*) is converted to a sales order named (.*)")]
+        public void ConvertQuoteToSalesOrder(string quoteAlias, string orderAlias)
         {
-            var row = table.Rows[0];
-            var subject = row["Subject"];
-            _crmContext.CommandProcessor.Execute(new WinQuoteCommand(_crmContext, alias, subject));
+            _crmContext.CommandProcessor.Execute(new ConvertToSalesOrderCommand(_crmContext, quoteAlias, orderAlias));
+        }
+
+        [When(@"(.*) is activated and converted to a sales order named (.*)")]
+        public void ActivateQuoteAndConvertQuoteToSalesOrder(string quoteAlias, string orderAlias)
+        {
+            _crmContext.CommandProcessor.Execute(new ActivateQuoteCommand(_crmContext, quoteAlias));
+            _crmContext.CommandProcessor.Execute(new ConvertToSalesOrderCommand(_crmContext, quoteAlias, orderAlias));
         }
     }
 }

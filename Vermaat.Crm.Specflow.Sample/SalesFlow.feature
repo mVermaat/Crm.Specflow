@@ -27,3 +27,21 @@ And an opportunity exists with the following values
 	| Originating Lead | ToQualify          |
 	| Topic            | Qualification Test |
 
+@API @Cleanup
+Scenario: Convert Quote to Sales Order
+Given an account named QuoteTesting with the following values
+	| Property              | Value                   |
+	| Account Name          | QuoteTesting            |
+And a quote named TestQuote with the following values
+	| Property           | Value                |
+	| Name               | AT Quote             |
+	| Price List         | Automated Testing PL |
+	| Potential Customer | QuoteTesting         |
+
+When TestQuote is activated and converted to a sales order named TestOrder
+Then TestOrder has the following values
+	| Property   | Value                |
+	| Name       | AT Quote             |
+	| Price List | Automated Testing PL |
+	| Customer   | QuoteTesting         |
+	| Quote      | TestQuote            |

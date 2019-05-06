@@ -154,6 +154,65 @@ testRunner.And("an opportunity exists with the following values", ((string)(null
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Convert Quote to Sales Order", new string[] {
+                "API",
+                "Cleanup"}, SourceLine=30)]
+        public virtual void ConvertQuoteToSalesOrder()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Convert Quote to Sales Order", null, new string[] {
+                        "API",
+                        "Cleanup"});
+#line 31
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table21.AddRow(new string[] {
+                        "Account Name",
+                        "QuoteTesting"});
+#line 32
+testRunner.Given("an account named QuoteTesting with the following values", ((string)(null)), table21, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table22.AddRow(new string[] {
+                        "Name",
+                        "AT Quote"});
+            table22.AddRow(new string[] {
+                        "Price List",
+                        "Automated Testing PL"});
+            table22.AddRow(new string[] {
+                        "Potential Customer",
+                        "QuoteTesting"});
+#line 35
+testRunner.And("a quote named TestQuote with the following values", ((string)(null)), table22, "And ");
+#line 41
+testRunner.When("TestQuote is activated and converted to a sales order named TestOrder", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table23.AddRow(new string[] {
+                        "Name",
+                        "AT Quote"});
+            table23.AddRow(new string[] {
+                        "Price List",
+                        "Automated Testing PL"});
+            table23.AddRow(new string[] {
+                        "Customer",
+                        "QuoteTesting"});
+            table23.AddRow(new string[] {
+                        "Quote",
+                        "TestQuote"});
+#line 42
+testRunner.Then("TestOrder has the following values", ((string)(null)), table23, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

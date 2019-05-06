@@ -138,6 +138,7 @@
     <Compile Include="BusinessProcessFlowHelper.cs" />
     <Compile Include="CommandAction.cs" />
     <Compile Include="Commands\ActivateQuoteCommand.cs" />
+    <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
     <Compile Include="Commands\WinQuoteCommand.cs" />
     <Compile Include="ConvertedObjectType.cs" />
     <Compile Include="EasyRepro\ButtonTexts.cs" />
