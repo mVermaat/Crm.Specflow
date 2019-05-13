@@ -3,7 +3,7 @@ using System;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class DeleteRecordCommand : BrowserCommand
+    public class DeleteRecordCommand : BrowserCommand
     {
         private readonly EntityReference _toDelete;
         private readonly string _alias;

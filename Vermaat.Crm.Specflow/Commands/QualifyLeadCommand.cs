@@ -6,7 +6,7 @@ using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class QualifyLeadCommand : ApiOnlyCommandFunc<EntityReferenceCollection>
+    public class QualifyLeadCommand : ApiOnlyCommandFunc<EntityReferenceCollection>
     {
         private readonly string _alias;
         private readonly bool _createAccount;

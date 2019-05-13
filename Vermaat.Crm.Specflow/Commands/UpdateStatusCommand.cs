@@ -3,7 +3,7 @@ using Microsoft.Xrm.Sdk;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class UpdateStatusCommand : ApiOnlyCommand
+    public class UpdateStatusCommand : ApiOnlyCommand
     {
         private readonly string _alias;
         private readonly string _statusCodeText;

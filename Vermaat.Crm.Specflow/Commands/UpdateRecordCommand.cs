@@ -4,7 +4,7 @@ using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class UpdateRecordCommand : BrowserCommand
+    public class UpdateRecordCommand : BrowserCommand
     {
         private readonly EntityReference _toUpdate;
         private readonly Table _criteria;

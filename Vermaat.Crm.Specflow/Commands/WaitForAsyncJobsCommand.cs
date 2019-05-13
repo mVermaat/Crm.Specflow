@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class WaitForAsyncJobsCommand : ApiOnlyCommand
+    public class WaitForAsyncJobsCommand : ApiOnlyCommand
     {
         private readonly string _alias;
 

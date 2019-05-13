@@ -20,6 +20,12 @@ namespace Vermaat.Crm.Specflow
             _crmContext = crmContext;
         }
 
+        [AfterScenario("Cleanup")]
+        public void Cleanup()
+        {
+            _crmContext.RecordCache.DeleteAllCachedRecords(_crmContext.Service);
+        }
+
         [BeforeScenario("API")]
         public void APISetup()
         {

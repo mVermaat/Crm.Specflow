@@ -5,7 +5,7 @@ using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class AssertCrmRecordCommand : ApiOnlyCommand
+    public class AssertCrmRecordCommand : ApiOnlyCommand
     {
         private readonly EntityReference _crmRecord;
         private readonly Table _criteria;

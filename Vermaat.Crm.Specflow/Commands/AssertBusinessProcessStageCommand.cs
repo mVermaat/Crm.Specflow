@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class AssertBusinessProcessStageCommand : ApiOnlyCommand
+    public class AssertBusinessProcessStageCommand : ApiOnlyCommand
     {
         private readonly string _alias;
         private readonly string _expectedStage;

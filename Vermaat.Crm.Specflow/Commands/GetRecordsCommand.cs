@@ -3,7 +3,7 @@ using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class GetRecordsCommand : ApiOnlyCommandFunc<DataCollection<Entity>>
+    public class GetRecordsCommand : ApiOnlyCommandFunc<DataCollection<Entity>>
     {
         private readonly string _entityName;
         private readonly Table _criteria;

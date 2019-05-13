@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class MoveToBusinessProcessStageCommand : ApiOnlyCommand
+    public class MoveToBusinessProcessStageCommand : ApiOnlyCommand
     {
         private readonly string _alias;
         private readonly string _stageName;

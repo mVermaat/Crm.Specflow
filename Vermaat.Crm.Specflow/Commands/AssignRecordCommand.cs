@@ -3,7 +3,7 @@ using Microsoft.Xrm.Sdk;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class AssignRecordCommand : ApiOnlyCommand
+    public class AssignRecordCommand : ApiOnlyCommand
     {
         private readonly string _aliasToAssign;
         private readonly string _aliasToAssignTo;

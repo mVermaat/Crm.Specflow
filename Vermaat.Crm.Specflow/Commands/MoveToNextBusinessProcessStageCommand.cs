@@ -3,7 +3,7 @@ using System;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class MoveToNextBusinessProcessStageCommand : ApiOnlyCommand
+    public class MoveToNextBusinessProcessStageCommand : ApiOnlyCommand
     {
         private readonly string _alias;
 

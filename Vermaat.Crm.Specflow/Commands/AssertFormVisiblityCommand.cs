@@ -5,7 +5,7 @@ using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    class AssertFormVisiblityCommand : BrowserOnlyCommand
+    public class AssertFormVisiblityCommand : BrowserOnlyCommand
     {
         private readonly EntityReference _crmRecord;
         private readonly Table _visibilityCriteria;
