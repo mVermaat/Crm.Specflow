@@ -23,7 +23,7 @@ namespace Vermaat.Crm.Specflow
                 Username = HelperMethods.GetAppSettingsValue("Username", true),
                 Password = HelperMethods.GetAppSettingsValue("Password", true),
                 AuthType = HelperMethods.GetAppSettingsValue("AuthType"),
-                AppName = HelperMethods.GetAppSettingsValue("AppName")
+                AppName = HelperMethods.GetAppSettingsValue("AppName", true)
             };
         }
 

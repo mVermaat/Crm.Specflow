@@ -191,7 +191,7 @@ testRunner.Given("an account named QuoteTesting with the following values", ((st
                         "QuoteTesting"});
 #line 35
 testRunner.And("a quote named TestQuote with the following values", ((string)(null)), table28, "And ");
-#line 40
+#line 41
 testRunner.When("TestQuote is activated and converted to a sales order named TestOrder", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
@@ -209,7 +209,7 @@ testRunner.When("TestQuote is activated and converted to a sales order named Tes
             table29.AddRow(new string[] {
                         "Quote",
                         "TestQuote"});
-#line 41
+#line 42
 testRunner.Then("TestOrder has the following values", ((string)(null)), table29, "Then ");
 #line hidden
             this.ScenarioCleanup();
