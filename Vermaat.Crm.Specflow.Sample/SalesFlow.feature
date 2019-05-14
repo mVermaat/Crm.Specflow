@@ -27,7 +27,7 @@ And an opportunity exists with the following values
 	| Originating Lead | ToQualify          |
 	| Topic            | Qualification Test |
 
-@API @Chrome
+@API @Chrome @Cleanup
 Scenario: Convert Quote to Sales Order
 Given an account named QuoteTesting with the following values
 	| Property              | Value                   |

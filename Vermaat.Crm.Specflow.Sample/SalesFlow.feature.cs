@@ -158,12 +158,14 @@ testRunner.And("an opportunity exists with the following values", ((string)(null
         
         [TechTalk.SpecRun.ScenarioAttribute("Convert Quote to Sales Order", new string[] {
                 "API",
-                "Chrome"}, SourceLine=30)]
+                "Chrome",
+                "Cleanup"}, SourceLine=30)]
         public virtual void ConvertQuoteToSalesOrder()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Convert Quote to Sales Order", null, new string[] {
                         "API",
-                        "Chrome"});
+                        "Chrome",
+                        "Cleanup"});
 #line 31
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
