@@ -71,13 +71,15 @@ namespace Vermaat.Crm.Specflow.Sample
         [TechTalk.SpecRun.ScenarioAttribute("Lead Qualification", new string[] {
                 "API",
                 "Chrome",
-                "Cleanup"}, SourceLine=4)]
+                "Cleanup",
+                "Sales"}, SourceLine=4)]
         public virtual void LeadQualification()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Lead Qualification", null, new string[] {
                         "API",
                         "Chrome",
-                        "Cleanup"});
+                        "Cleanup",
+                        "Sales"});
 #line 5
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();

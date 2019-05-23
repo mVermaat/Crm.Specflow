@@ -16,15 +16,15 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public TResult Execute(CommandAction commandAction = CommandAction.Default)
         {
-            if (commandAction == CommandAction.ForceApi || HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_API))
+            if (commandAction == CommandAction.ForceApi || _seleniumContext.IsTarget(Constants.SpecFlow.TARGET_API))
             {
                 return ExecuteApi();
             }
             else if (commandAction == CommandAction.ForceBrowser ||
-                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Chrome) ||
-                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Edge) ||
-                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Firefox) ||
-                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_InternetExplorer))
+                     _seleniumContext.IsTarget(Constants.SpecFlow.TARGET_Chrome) ||
+                     _seleniumContext.IsTarget(Constants.SpecFlow.TARGET_Edge) ||
+                     _seleniumContext.IsTarget(Constants.SpecFlow.TARGET_Firefox) ||
+                     _seleniumContext.IsTarget(Constants.SpecFlow.TARGET_InternetExplorer))
             {
                 return ExecuteBrowser();
             }
@@ -52,15 +52,15 @@ namespace Vermaat.Crm.Specflow.Commands
         public void Execute(CommandAction commandAction = CommandAction.Default)
         {
             if (commandAction == CommandAction.ForceApi ||
-                HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_API))
+                _seleniumContext.IsTarget(Constants.SpecFlow.TARGET_API))
             {
                 ExecuteApi();
             }
             else if (commandAction == CommandAction.ForceBrowser ||
-                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Chrome) ||
-                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Edge) ||
-                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_Firefox) ||
-                     HelperMethods.IsTagTargetted(Constants.SpecFlow.TARGET_InternetExplorer))
+                     _seleniumContext.IsTarget(Constants.SpecFlow.TARGET_Chrome) ||
+                     _seleniumContext.IsTarget(Constants.SpecFlow.TARGET_Edge) ||
+                     _seleniumContext.IsTarget(Constants.SpecFlow.TARGET_Firefox) ||
+                     _seleniumContext.IsTarget(Constants.SpecFlow.TARGET_InternetExplorer))
             {
                 ExecuteBrowser();
             }

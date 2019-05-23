@@ -11,12 +11,12 @@ namespace Vermaat.Crm.Specflow
     [Binding]
     public class Hooks
     {
-        private readonly SeleniumTestingContext _seleniumTestingContext;
+        private readonly SeleniumTestingContext _seleniumContext;
         private readonly CrmTestingContext _crmContext;
 
         public Hooks(SeleniumTestingContext seleniumTestingContext, CrmTestingContext crmContext)
         {
-            _seleniumTestingContext = seleniumTestingContext;
+            _seleniumContext = seleniumTestingContext;
             _crmContext = crmContext;
         }
 
@@ -35,40 +35,36 @@ namespace Vermaat.Crm.Specflow
         [BeforeScenario("Chrome")]
         public void ChromeSetup()
         {
-            if (HelperMethods.IsTagTargetted("Chrome"))
+            if (_seleniumContext.IsTarget("Chrome"))
             {
-                _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.Chrome;
-                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
+                _seleniumContext.BrowserOptions.BrowserType = BrowserType.Chrome;
             }
         }
 
         [BeforeScenario("Edge")]
         public void EdgeSetup()
         {
-            if (HelperMethods.IsTagTargetted("Edge"))
+            if (_seleniumContext.IsTarget("Edge"))
             {
-                _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.Edge;
-                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
+                _seleniumContext.BrowserOptions.BrowserType = BrowserType.Edge;
             }
         }
 
         [BeforeScenario("Firefox")]
         public void FirefoxSetup()
         {
-            if (HelperMethods.IsTagTargetted("Firefox"))
+            if (_seleniumContext.IsTarget("Firefox"))
             {
-                _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.Firefox;
-                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
+                _seleniumContext.BrowserOptions.BrowserType = BrowserType.Firefox;
             }
         }
 
         [BeforeScenario("IE")]
         public void IESetup()
         {
-            if (HelperMethods.IsTagTargetted("IE"))
+            if (_seleniumContext.IsTarget("IE"))
             {
-                _seleniumTestingContext.BrowserOptions.BrowserType = BrowserType.IE;
-                _seleniumTestingContext.Browser.Login(_crmContext.ConnectionInfo);
+                _seleniumContext.BrowserOptions.BrowserType = BrowserType.IE;
             }
         }     
     }

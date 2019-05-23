@@ -54,11 +54,6 @@ namespace Vermaat.Crm.Specflow
             return result;
         }
 
-        public static bool IsTagTargetted(string target)
-        {
-            return target.Equals(ConfigurationManager.AppSettings["Target"], StringComparison.CurrentCultureIgnoreCase);
-        }
-
         public static object CrmObjectToPrimitive(object value)
         {
             if (value == null)
