@@ -13,13 +13,25 @@ namespace Vermaat.Crm.Specflow
     /// </summary>
     public class CrmService : IOrganizationService
     {
-        private IOrganizationService _service;
+        private readonly Lazy<IOrganizationService> _service;
+        private readonly CrmConnectionString _connectionString;
+        private IOrganizationService Service => _service.Value;
 
         public AliasedRecordCache RecordCache { get; set; }
+        public ICrmConnectionProvider ConnectionProvider { get; set; }
+        
 
-        public CrmService(IOrganizationService service)
+        public CrmService(CrmConnectionString connectionString)
+            : this(connectionString, new DefaultCrmConnectionProvider())
         {
-            _service = service;
+           
+        }
+
+        public CrmService(CrmConnectionString connectionString, ICrmConnectionProvider provider)
+        {
+            _connectionString = connectionString;
+            ConnectionProvider = provider;
+            _service = new Lazy<IOrganizationService>(ConnectToCrm);
         }
 
         public void Create(Entity entity, string alias)
@@ -30,22 +42,22 @@ namespace Vermaat.Crm.Specflow
 
         public void Associate(string entityName, Guid entityId, Relationship relationship, EntityReferenceCollection relatedEntities)
         {
-            _service.Associate(entityName, entityId, relationship, relatedEntities);
+            Service.Associate(entityName, entityId, relationship, relatedEntities);
         }
 
         public void Delete(string entityName, Guid id)
         {
-            _service.Delete(entityName, id);
+            Service.Delete(entityName, id);
         }
 
         public void Delete(EntityReference entityReference)
         {
-            _service.Delete(entityReference.LogicalName, entityReference.Id);
+            Service.Delete(entityReference.LogicalName, entityReference.Id);
         }
 
         public void Disassociate(string entityName, Guid entityId, Relationship relationship, EntityReferenceCollection relatedEntities)
         {
-            _service.Disassociate(entityName, entityId, relationship, relatedEntities);
+            Service.Disassociate(entityName, entityId, relationship, relatedEntities);
         }
 
         public T Execute<T>(OrganizationRequest request) where T : OrganizationResponse
@@ -55,22 +67,22 @@ namespace Vermaat.Crm.Specflow
 
         public Entity Retrieve(string entityName, Guid id, ColumnSet columnSet)
         {
-            return _service.Retrieve(entityName, id, columnSet);
+            return Service.Retrieve(entityName, id, columnSet);
         }
 
         public Entity Retrieve(EntityReference entityReference, ColumnSet columnSet)
         {
-            return _service.Retrieve(entityReference.LogicalName, entityReference.Id, columnSet);
+            return Service.Retrieve(entityReference.LogicalName, entityReference.Id, columnSet);
         }
 
         public EntityCollection RetrieveMultiple(QueryBase query)
         {
-            return _service.RetrieveMultiple(query);
+            return Service.RetrieveMultiple(query);
         }
 
         public void Update(Entity entity)
         {
-            _service.Update(entity);
+            Service.Update(entity);
         }
 
         #region IOrganizationService
@@ -87,14 +99,19 @@ namespace Vermaat.Crm.Specflow
 
         private OrganizationResponse ExecuteRequest(OrganizationRequest request)
         {
-            return _service.Execute(request);
+            return Service.Execute(request);
         }
 
         private Guid CreateRecord(Entity entity)
         {
-            return _service.Create(entity);
+            return Service.Create(entity);
         }
 
         #endregion
+
+        private IOrganizationService ConnectToCrm()
+        {
+            return ConnectionProvider.CreateCrmConnection(_connectionString);
+        }
     }
 }

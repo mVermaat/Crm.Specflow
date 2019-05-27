@@ -173,7 +173,7 @@
     <Compile Include="Commands\UpdateRecordCommand.cs" />
     <Compile Include="Commands\UpdateStatusCommand.cs" />
     <Compile Include="Commands\WaitForAsyncJobsCommand.cs" />
-    <Compile Include="CrmConnectionFactory.cs" />
+    <Compile Include="DefaultCrmConnectionProvider.cs" />
     <Compile Include="CrmConnectionString.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CrmService.cs" />
@@ -192,6 +192,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="HelperMethods.cs" />
     <Compile Include="Hooks.cs" />
+    <Compile Include="ICrmConnectionProvider.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="ProcessStage.cs" />
     <Compile Include="QueryHelper.cs" />

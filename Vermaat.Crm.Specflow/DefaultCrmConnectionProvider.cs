@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow
 {
-    internal static class CrmConnectionFactory
+    internal class DefaultCrmConnectionProvider : ICrmConnectionProvider
     {
-        public static CrmService CreateCrmConnection(CrmConnectionString connection)
+        public IOrganizationService CreateCrmConnection(CrmConnectionString connection)
         {
+            Logger.WriteLine("Connecting to Dynamics CRM API");
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
-            var client = new CrmServiceClient(connection.ToCrmClientString());
-            return new CrmService(client);
+            return new CrmServiceClient(connection.ToCrmClientString());
         }
     }
 }
