@@ -121,7 +121,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     _app.App.Entity.ClearValue(new OptionSet { Name = _metadata.LogicalName });
                     break;
                 default:
-                    SetValueFix(_metadata.LogicalName, null);
+                    SetTextField(null);
                     break;
             }
         }
@@ -173,7 +173,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void SetTextField(string fieldValue)
         {
-            SetValueFix(_metadata.LogicalName, fieldValue);
+            if (string.IsNullOrWhiteSpace(fieldValue))
+                _app.App.Entity.ClearValue(_metadata.LogicalName);
+            else
+               SetValueFix(_metadata.LogicalName, fieldValue);
         }
 
         private void SetLookupValue(EntityReference fieldValue)
