@@ -90,6 +90,23 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssignRecordCommand(_crmContext, aliasToAssign, aliasToAssignTo));
         }
 
+        [When(@"(.*) is fully merged into (.*)")]
+        public void WhenRecordsAreMerged(string subordindateAlias, string targetAlias)
+        {
+            var targetRecord = _crmContext.RecordCache.Get(targetAlias);
+            var subordinateRecord = _crmContext.RecordCache.Get(subordindateAlias);
+            _crmContext.CommandProcessor.Execute(new MergeRecordsCommand(_crmContext, targetRecord, subordinateRecord));
+        }
+
+        [When(@"The following fields of (.*) are fully merged into (.*)")]
+        public void WhenRecordsAreMergedPartial(string subordindateAlias, string targetAlias, Table mergeTable)
+        {
+            var targetRecord = _crmContext.RecordCache.Get(targetAlias);
+            var subordinateRecord = _crmContext.RecordCache.Get(subordindateAlias);
+            _crmContext.TableConverter.ConvertTable(subordinateRecord.LogicalName, mergeTable);
+            _crmContext.CommandProcessor.Execute(new MergeRecordsCommand(_crmContext, targetRecord, subordinateRecord, mergeTable));
+        }
+
         #endregion
 
         #region Then

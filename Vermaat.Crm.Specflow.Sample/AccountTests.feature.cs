@@ -405,6 +405,135 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table1
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Full Merge of two accounts into one", new string[] {
+                "API",
+                "Cleanup"}, SourceLine=104)]
+        public virtual void FullMergeOfTwoAccountsIntoOne()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Full Merge of two accounts into one", null, new string[] {
+                        "API",
+                        "Cleanup"});
+#line 105
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table15.AddRow(new string[] {
+                        "Account Name",
+                        "Merging Source"});
+            table15.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+#line 106
+testRunner.Given("an account named MergeSource with the following values", ((string)(null)), table15, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table16.AddRow(new string[] {
+                        "Account Name",
+                        "Merging Target"});
+            table16.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+            table16.AddRow(new string[] {
+                        "Industry",
+                        "Consulting"});
+#line 110
+testRunner.Given("an account named MergeTarget with the following values", ((string)(null)), table16, "Given ");
+#line 115
+testRunner.When("MergeSource is fully merged into MergeTarget", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table17.AddRow(new string[] {
+                        "Account Name",
+                        "Merging Source"});
+            table17.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+            table17.AddRow(new string[] {
+                        "Industry",
+                        "Consulting"});
+            table17.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+#line 116
+testRunner.Then("MergeTarget has the following values", ((string)(null)), table17, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Partial Merge of two accounts into one", new string[] {
+                "API",
+                "Cleanup"}, SourceLine=123)]
+        public virtual void PartialMergeOfTwoAccountsIntoOne()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Partial Merge of two accounts into one", null, new string[] {
+                        "API",
+                        "Cleanup"});
+#line 124
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table18.AddRow(new string[] {
+                        "Account Name",
+                        "Merging Source"});
+            table18.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+#line 125
+testRunner.Given("an account named MergeSource with the following values", ((string)(null)), table18, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table19.AddRow(new string[] {
+                        "Account Name",
+                        "Merging Target"});
+            table19.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+            table19.AddRow(new string[] {
+                        "Industry",
+                        "Consulting"});
+#line 129
+testRunner.Given("an account named MergeTarget with the following values", ((string)(null)), table19, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property"});
+            table20.AddRow(new string[] {
+                        "Main Phone"});
+#line 134
+testRunner.When("The following fields of MergeSource are fully merged into MergeTarget", ((string)(null)), table20, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table21.AddRow(new string[] {
+                        "Account Name",
+                        "Merging Target"});
+            table21.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+            table21.AddRow(new string[] {
+                        "Industry",
+                        "Consulting"});
+            table21.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+#line 137
+testRunner.Then("MergeTarget has the following values", ((string)(null)), table21, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {
