@@ -50,7 +50,7 @@ Then TestAccount's form has the following visbility
 	| SIC Code  | True    |
 	| Ownership | False   |
 
-@Chrome @Cleanup
+@API @Chrome @Cleanup
 Scenario: Create Account - Check two option fields
 When an account named TestAccount is created with the following values
 	| Property                 | Value        |

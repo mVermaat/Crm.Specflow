@@ -233,11 +233,13 @@ testRunner.Then("TestAccount\'s form has the following visbility", ((string)(nul
         }
         
         [TechTalk.SpecRun.ScenarioAttribute("Create Account - Check two option fields", new string[] {
+                "API",
                 "Chrome",
                 "Cleanup"}, SourceLine=53)]
         public virtual void CreateAccount_CheckTwoOptionFields()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Account - Check two option fields", null, new string[] {
+                        "API",
                         "Chrome",
                         "Cleanup"});
 #line 54
