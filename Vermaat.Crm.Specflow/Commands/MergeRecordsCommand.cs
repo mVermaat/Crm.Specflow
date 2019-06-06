@@ -34,6 +34,7 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             VerifyRecordTypes();
+            Logger.WriteLine($"Merging records of type {_targetRecord.LogicalName}");
 
             _crmContext.Service.Execute<MergeResponse>(new MergeRequest
             {
@@ -42,6 +43,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 Target = _targetRecord,
                 UpdateContent = BuildChangeEntity()
             });
+            Logger.WriteLine("Merge successful");
         }
 
         private Entity BuildChangeEntity()
@@ -63,6 +65,8 @@ namespace Vermaat.Crm.Specflow.Commands
             {
                 result.Attributes.Remove(toRemove);
             }
+            Logger.WriteLine($"Merging fields: {string.Join(", ", result.Attributes.Keys)}");
+
             return result;
         }
 
