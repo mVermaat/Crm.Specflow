@@ -45,10 +45,10 @@ When an account named TestAccount is created with the following values
 	| Main Phone   | 0612345678              |
 	| Website      | https://dynamichands.nl |
 	| Industry     | Consulting              |
-Then TestAccount's form has the following visbility
-	| Property  | Visible |
-	| SIC Code  | True    |
-	| Ownership | False   |
+Then TestAccount's form has the following form state
+	| Property  | State     |
+	| SIC Code  | Visible   |
+	| Ownership | Invisible |
 
 @API @Chrome @Cleanup
 Scenario: Create Account - Check two option fields

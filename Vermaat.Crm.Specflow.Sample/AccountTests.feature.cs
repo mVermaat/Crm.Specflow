@@ -219,15 +219,15 @@ testRunner.When("an account named TestAccount is created with the following valu
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
-                        "Visible"});
+                        "State"});
             table7.AddRow(new string[] {
                         "SIC Code",
-                        "True"});
+                        "Visible"});
             table7.AddRow(new string[] {
                         "Ownership",
-                        "False"});
+                        "Invisible"});
 #line 48
-testRunner.Then("TestAccount\'s form has the following visbility", ((string)(null)), table7, "Then ");
+testRunner.Then("TestAccount\'s form has the following form state", ((string)(null)), table7, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

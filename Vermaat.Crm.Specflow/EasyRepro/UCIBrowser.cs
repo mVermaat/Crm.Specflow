@@ -37,13 +37,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if(bool.Parse(HelperMethods.GetAppSettingsValue("UCIOnly")))
             {
                 Elements.Xpath[Reference.Login.CrmMainPage] = "//*[@data-id='topBar']";
-                Elements.Xpath[Constants.EasyReproReference.DIALOG_CONTAINER] = "id(\"dialogContentContainer_1\")";
-                Elements.Xpath[Constants.EasyReproReference.DIALOG_OK] = "//button[@data-id='ok_id']";
-
                 AppElements.Xpath[AppReference.Navigation.AppMenuButton] = "//button[@data-id='navbar-switch-app']";
                     
 
             }
+
             _app.App.OnlineLogin.Login(new Uri(connectionString.Url), connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
             _app.App.Navigation.OpenApp(connectionString.AppName);
 

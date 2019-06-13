@@ -45,3 +45,43 @@ Then TestLookup has the following values
 	| Last Name    | Smith            |
 	| Company Name | SecondAccount    |
 	| Email        | someone@test.com |
+
+@Chrome @Cleanup
+Scenario: Check required of form items
+Given a contact named TestContact with the following values
+	| Property   | Value |
+	| First Name | John  |
+	| Last Name  | Smith |
+	| Job Title  | CLO   |
+Then TestContact's form has the following form state
+	| Property           | State       |
+	| First Name         | Recommended |
+	| Last Name          | Required    |
+	| Job Title          | Optional    |
+
+@Chrome @Cleanup
+Scenario: Check locked state of form items
+Given a contact named TestContact with the following values
+	| Property   | Value |
+	| First Name | John  |
+	| Last Name  | Smith |
+	| Job Title  | CLO   |
+Then TestContact's form has the following form state
+	| Property                       | State    |
+	| First Name                     | Unlocked |
+	| Last Date Included in Campaign | Locked   |
+
+@Chrome @Cleanup
+Scenario: Check combined state of form items
+Given a contact named TestContact with the following values
+	| Property   | Value |
+	| First Name | John  |
+	| Last Name  | Smith |
+	| Job Title  | CLO   |
+Then TestContact's form has the following form state
+	| Property                       | State                          |
+	| First Name                     | Recommended, Unlocked, Visible |
+	| Last Name                      | Required, Unlocked, Visible    |
+	| Job Title                      | Optional, Unlocked, Visible    |
+	| Last Date Included in Campaign | Locked, Optional, Visible      |
+

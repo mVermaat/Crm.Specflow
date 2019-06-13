@@ -41,10 +41,22 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _app.App.Dialogs.ConfirmationDialog(true);
         }
 
-        public void ReviseQuote()
+        public EntityReference ReviseQuote()
         {
             Logger.WriteLine("Revising Quote");
-            _app.App.CommandBar.ClickCommand(_app.ButtonTexts.ReviseQuote);
+            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Revise Quote"), driver =>
+            {
+                _app.App.CommandBar.ClickCommand(_app.ButtonTexts.ReviseQuote);
+
+                _app.Client.Browser.ThinkTime(1000);
+                driver.WaitForPageToLoad();
+                driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
+                    new TimeSpan(0, 0, 30),
+                    null,
+                    d => { throw new Exception("CRM Record is Unavailable or not finished loading. Timeout Exceeded"); }
+                );
+                return new EntityReference("quote", _app.App.Entity.GetObjectId()); ;
+            }).Value;            
         }
 
 
@@ -53,8 +65,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _app.Client.Execute(BrowserOptionHelper.GetOptions($"Create Sales Order"), driver =>
             {
                 
-                var container = driver.WaitUntilAvailable(By.XPath(Elements.Xpath[Constants.EasyReproReference.DIALOG_CONTAINER]));
-                var button = container.FindElement(By.XPath(Elements.Xpath[Constants.EasyReproReference.DIALOG_OK]));
+                var container = driver.WaitUntilAvailable(By.XPath(Constants.XPath.DIALOG_CONTAINER));
+                var button = container.FindElement(By.XPath(Constants.XPath.DIALOG_OK));
 
                 button.Click();
                 _app.Client.Browser.ThinkTime(1000);

@@ -38,5 +38,11 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new ActivateQuoteCommand(_crmContext, _selenumContext, quoteAlias));
             _crmContext.CommandProcessor.Execute(new ConvertToSalesOrderCommand(_crmContext, _selenumContext, quoteAlias, orderAlias));
         }
+
+        [When(@"(.*) is revised and its revised quote is named (.*)")]
+        public void ReviseQuote(string quoteAlias, string newQuoteAlias)
+        {
+            _crmContext.CommandProcessor.Execute(new ReviseQuoteCommand(_crmContext, _selenumContext, quoteAlias, newQuoteAlias));
+        }
     }
 }

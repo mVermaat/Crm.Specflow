@@ -212,6 +212,141 @@ testRunner.Then("TestLookup has the following values", ((string)(null)), table28
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Check required of form items", new string[] {
+                "Chrome",
+                "Cleanup"}, SourceLine=49)]
+        public virtual void CheckRequiredOfFormItems()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check required of form items", null, new string[] {
+                        "Chrome",
+                        "Cleanup"});
+#line 50
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table29.AddRow(new string[] {
+                        "First Name",
+                        "John"});
+            table29.AddRow(new string[] {
+                        "Last Name",
+                        "Smith"});
+            table29.AddRow(new string[] {
+                        "Job Title",
+                        "CLO"});
+#line 51
+testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table29, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "State"});
+            table30.AddRow(new string[] {
+                        "First Name",
+                        "Recommended"});
+            table30.AddRow(new string[] {
+                        "Last Name",
+                        "Required"});
+            table30.AddRow(new string[] {
+                        "Job Title",
+                        "Optional"});
+#line 56
+testRunner.Then("TestContact\'s form has the following form state", ((string)(null)), table30, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Check locked state of form items", new string[] {
+                "Chrome",
+                "Cleanup"}, SourceLine=62)]
+        public virtual void CheckLockedStateOfFormItems()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check locked state of form items", null, new string[] {
+                        "Chrome",
+                        "Cleanup"});
+#line 63
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table31.AddRow(new string[] {
+                        "First Name",
+                        "John"});
+            table31.AddRow(new string[] {
+                        "Last Name",
+                        "Smith"});
+            table31.AddRow(new string[] {
+                        "Job Title",
+                        "CLO"});
+#line 64
+testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table31, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table32 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "State"});
+            table32.AddRow(new string[] {
+                        "First Name",
+                        "Unlocked"});
+            table32.AddRow(new string[] {
+                        "Last Date Included in Campaign",
+                        "Locked"});
+#line 69
+testRunner.Then("TestContact\'s form has the following form state", ((string)(null)), table32, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Check combined state of form items", new string[] {
+                "Chrome",
+                "Cleanup"}, SourceLine=74)]
+        public virtual void CheckCombinedStateOfFormItems()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check combined state of form items", null, new string[] {
+                        "Chrome",
+                        "Cleanup"});
+#line 75
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table33.AddRow(new string[] {
+                        "First Name",
+                        "John"});
+            table33.AddRow(new string[] {
+                        "Last Name",
+                        "Smith"});
+            table33.AddRow(new string[] {
+                        "Job Title",
+                        "CLO"});
+#line 76
+testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table33, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "State"});
+            table34.AddRow(new string[] {
+                        "First Name",
+                        "Recommended, Unlocked, Visible"});
+            table34.AddRow(new string[] {
+                        "Last Name",
+                        "Required, Unlocked, Visible"});
+            table34.AddRow(new string[] {
+                        "Job Title",
+                        "Optional, Unlocked, Visible"});
+            table34.AddRow(new string[] {
+                        "Last Date Included in Campaign",
+                        "Locked, Optional, Visible"});
+#line 81
+testRunner.Then("TestContact\'s form has the following form state", ((string)(null)), table34, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

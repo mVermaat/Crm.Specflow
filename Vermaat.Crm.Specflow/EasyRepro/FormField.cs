@@ -3,11 +3,9 @@ using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -48,13 +46,49 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return _tabLabel;
         }
 
-        internal bool IsVisible()
+        public RequiredState GetRequiredState()
+        {
+            BrowserCommandResult<RequiredState> result = _app.Client.Execute(BrowserOptionHelper.GetOptions($"Check field requirement"), driver =>
+            {
+                var fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)));
+                if (fieldContainer == null)
+                    throw new InvalidOperationException($"Field {_metadata.LogicalName} can't be found on form");
+
+                if (fieldContainer.TryFindElement(By.XPath(Constants.XPath.FIELD_ISREQUIREDORRECOMMEND.Replace("[NAME]", _metadata.LogicalName)), out IWebElement requiredElement))
+                {
+                    if (requiredElement.GetAttribute("innerText") == "*")
+                        return RequiredState.Required;
+                    else
+                        return RequiredState.Recommended;
+                }
+                else
+                {
+                    return RequiredState.Optional;
+                }
+            });
+
+            return result.Value;
+        }
+
+        public bool IsVisible()
         {
             if (!IsTabOfFieldExpanded())
                 _form.ExpandTab(GetTabLabel());
 
             return _app.WebDriver.WaitUntilVisible(By.XPath(
                 AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)), TimeSpan.FromSeconds(5));
+        }
+
+        public bool IsLocked()
+        {
+            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Check field requirement"), driver =>
+            {
+                var fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)));
+                if (fieldContainer == null)
+                    throw new InvalidOperationException($"Field {_metadata.LogicalName} can't be found on form");
+
+                return fieldContainer.TryFindElement(By.XPath(Constants.XPath.FIELD_ISLOCKED.Replace("[NAME]", _metadata.LogicalName)), out IWebElement requiredElement);
+            }).Value;
         }
 
         public string GetTabName()
@@ -75,7 +109,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void SetValue(CrmTestingContext crmContext, string fieldValueText)
         {
-            var fieldValue = ObjectConverter.ToCrmObject(_metadata.EntityLogicalName, _metadata.LogicalName, fieldValueText, crmContext, ConvertedObjectType.UserInterface);
+            object fieldValue = ObjectConverter.ToCrmObject(_metadata.EntityLogicalName, _metadata.LogicalName, fieldValueText, crmContext, ConvertedObjectType.UserInterface);
 
             if (fieldValue != null)
             {
@@ -106,6 +140,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 ClearValue(crmContext);
             }
         }
+
+
 
         private void ClearValue(CrmTestingContext crmContext)
         {
@@ -146,7 +182,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (string.IsNullOrWhiteSpace(fieldValue))
                 _app.App.Entity.ClearValue(_metadata.LogicalName);
             else
-               SetValueFix(_metadata.LogicalName, fieldValue);
+                SetValueFix(_metadata.LogicalName, fieldValue);
         }
 
         private void SetLookupValue(EntityReference fieldValue)
@@ -165,14 +201,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
-                var fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field)));
+                IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field)));
 
                 if (fieldContainer.FindElements(By.TagName("input")).Count > 0)
                 {
-                    var input = fieldContainer.FindElement(By.TagName("input"));
+                    IWebElement input = fieldContainer.FindElement(By.TagName("input"));
                     if (input != null)
                     {
-                        var currentValue = input.GetAttribute("value");
+                        string currentValue = input.GetAttribute("value");
 
                         input.Click();
                         if (!string.IsNullOrWhiteSpace(currentValue))
@@ -181,7 +217,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                             input.SendKeys(Keys.Backspace);
                         }
 
-                        if(!string.IsNullOrWhiteSpace(value))
+                        if (!string.IsNullOrWhiteSpace(value))
                         {
                             input.SendKeys(value);
                         }

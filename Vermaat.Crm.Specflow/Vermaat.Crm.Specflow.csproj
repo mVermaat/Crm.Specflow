@@ -153,12 +153,13 @@
     <Compile Include="Commands\ActivateQuoteCommand.cs" />
     <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
     <Compile Include="Commands\MergeRecordsCommand.cs" />
+    <Compile Include="Commands\ReviseQuoteCommand.cs" />
     <Compile Include="ConvertedObjectType.cs" />
     <Compile Include="EasyRepro\ButtonTexts.cs" />
     <Compile Include="CommandProcessor.cs" />
     <Compile Include="Commands\AssertBusinessProcessStageCommand.cs" />
     <Compile Include="Commands\AssertCrmRecordCommand.cs" />
-    <Compile Include="Commands\AssertFormVisiblityCommand.cs" />
+    <Compile Include="Commands\AssertFormStateCommand.cs" />
     <Compile Include="Commands\AssignRecordCommand.cs" />
     <Compile Include="Commands\BrowserCommand.cs" />
     <Compile Include="Commands\BrowserOnlyCommand.cs" />
@@ -182,6 +183,8 @@
     <Compile Include="EasyRepro\BrowserOptionHelper.cs" />
     <Compile Include="EasyRepro\CommandBarActions.cs" />
     <Compile Include="EasyRepro\CompositeFields.cs" />
+    <Compile Include="EasyRepro\FormState.cs" />
+    <Compile Include="EasyRepro\RequiredState.cs" />
     <Compile Include="EasyRepro\UCIApp.cs" />
     <Compile Include="EasyRepro\EntityExtensions.cs" />
     <Compile Include="EasyRepro\FormData.cs" />

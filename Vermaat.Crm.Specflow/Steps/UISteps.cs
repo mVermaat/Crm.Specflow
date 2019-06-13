@@ -25,13 +25,13 @@ namespace Vermaat.Crm.Specflow.Steps
             _seleniumContext = seleniumContext;
         }
 
-        [Then("(.*)'s form has the following visbility")]
+        [Then("(.*)'s form has the following form state")]
         public void ThenFieldsAreVisibleOnForm(string alias, Table table)
         {
             var aliasRef = _crmContext.RecordCache[alias];
             _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, table);
            
-            _crmContext.CommandProcessor.Execute(new AssertFormVisiblityCommand(_crmContext, _seleniumContext, aliasRef, table));
+            _crmContext.CommandProcessor.Execute(new AssertFormStateCommand(_crmContext, _seleniumContext, aliasRef, table));
 
         }
     }
