@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow
 {
-    static class Logger
+    public static class Logger
     {
         public static void WriteLine(string text)
         {
