@@ -65,7 +65,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             Logger.WriteLine($"Filling form");
             string currentTab = null;
-            foreach (var row in formData.Rows)
+            var tableWithDefaults = crmContext.RecordBuilder.AddDefaultsToTable(_entityMetadata.LogicalName, formData);
+            foreach (var row in tableWithDefaults.Rows)
             {
                 Assert.IsTrue(ContainsField(row[Constants.SpecFlow.TABLE_KEY]), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
                 var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];

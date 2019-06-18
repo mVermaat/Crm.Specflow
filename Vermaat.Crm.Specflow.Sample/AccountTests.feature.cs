@@ -536,6 +536,38 @@ testRunner.Then("MergeTarget has the following values", ((string)(null)), table2
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Use DefaultData for default values", new string[] {
+                "API",
+                "Chrome",
+                "Cleanup"}, SourceLine=144)]
+        public virtual void UseDefaultDataForDefaultValues()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Use DefaultData for default values", null, new string[] {
+                        "API",
+                        "Chrome",
+                        "Cleanup"});
+#line 145
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+#line 146
+testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table22, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table23.AddRow(new string[] {
+                        "Account Name",
+                        "test"});
+#line 148
+testRunner.Then("TestAccount has the following values", ((string)(null)), table23, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

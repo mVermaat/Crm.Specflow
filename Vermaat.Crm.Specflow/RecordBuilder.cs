@@ -42,6 +42,36 @@ namespace Vermaat.Crm.Specflow
 
         }
 
+        public Table AddDefaultsToTable(string entityName, Table customFields)
+        {
+            Table result = new Table(customFields.Header.ToArray());
+
+            Dictionary<string, TableRow> rows = new Dictionary<string, TableRow>();
+
+            if (_defaultData.ContainsKey(entityName))
+            {
+                for(int i = 0; i < _defaultData[entityName].Length; i++)
+                {
+                    result.AddRow(_defaultData[entityName][i].Name, _defaultData[entityName][i].Value);
+                    rows.Add(_defaultData[entityName][i].Name, result.Rows[i]);
+                }
+            }
+
+            foreach(var row in customFields.Rows)
+            {
+                if(rows.TryGetValue(row[Constants.SpecFlow.TABLE_KEY], out TableRow rowToUpdate))
+                {
+                    rowToUpdate[Constants.SpecFlow.TABLE_VALUE] = row[Constants.SpecFlow.TABLE_VALUE];
+                }
+                else
+                {
+                    result.AddRow(row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE]);
+                }
+            }
+
+            return result;
+        }
+
         public Entity SetupEntityWithDefaults(string entityName, Table customFields)
         {
             Entity toCreate = new Entity(entityName);
