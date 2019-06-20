@@ -26,6 +26,7 @@ namespace Vermaat.Crm.Specflow
             {
                 CleanSession = true,
             };
+            CurrentApp = HelperMethods.GetAppSettingsValue("AppName", true);
 
             _targets = ConfigurationManager.AppSettings["Target"]
                 .ToLower()
