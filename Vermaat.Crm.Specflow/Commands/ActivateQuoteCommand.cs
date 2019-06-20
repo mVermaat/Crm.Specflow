@@ -28,15 +28,15 @@ namespace Vermaat.Crm.Specflow.Commands
                 Status = new OptionSetValue(2)//In progress
             };
 
-            _crmContext.Service.Execute<SetStateResponse>(activateQuote);
+            GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<SetStateResponse>(activateQuote);
         }
 
         protected override void ExecuteBrowser()
         {
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
-            EntityMetadata metadata = _crmContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
+            EntityMetadata metadata = GlobalTestingContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
 
-            FormData formData = _seleniumContext.Browser.OpenRecord(metadata, aliasRef);
+            FormData formData = _seleniumContext.GetBrowser().OpenRecord(metadata, aliasRef);
             formData.CommandBar.ActivateQuote();
         }
     }

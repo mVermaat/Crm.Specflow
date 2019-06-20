@@ -10,26 +10,22 @@ using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow
 {
-    public class SeleniumTestingContext : IDisposable
+    public class SeleniumTestingContext
     {
-        private readonly Lazy<UCIBrowser> _browser;
+
         private readonly CrmTestingContext _crmContext;
         private readonly string[] _targets;
 
-        public UCIBrowser Browser => _browser.Value;
         public BrowserOptions BrowserOptions { get; }
-        public ButtonTexts ButtonTexts { get; set; }
+        public string CurrentApp { get; set; }
 
         public SeleniumTestingContext(CrmTestingContext crmContext)
         {
             _crmContext = crmContext;
-            ButtonTexts = new ButtonTexts();
             BrowserOptions = new BrowserOptions()
             {
                 CleanSession = true,
             };
-
-            _browser = new Lazy<UCIBrowser>(InitializeBrowser);
 
             _targets = ConfigurationManager.AppSettings["Target"]
                 .ToLower()
@@ -38,27 +34,19 @@ namespace Vermaat.Crm.Specflow
                 .ToArray();
         }
 
+        public UCIBrowser GetBrowser()
+        {
+            var browser = GlobalTestingContext.BrowserManager.GetBrowser(BrowserOptions, GlobalTestingContext.ConnectionManager.CurrentUserDetails, GlobalTestingContext.ConnectionManager.Url);
+            browser.ChangeApp(CurrentApp);
+            return browser;
+        }
+
         public bool IsTarget(string target)
         {
             if (string.IsNullOrWhiteSpace(target))
                 return false;
 
             return _targets.Contains(target.ToLower());
-        }
-
-        public void Dispose()
-        {
-            if (_browser.IsValueCreated)
-            {
-                _browser.Value.Dispose();
-            }
-        }
-
-        private UCIBrowser InitializeBrowser()
-        {
-            var browser = new UCIBrowser(BrowserOptions, ButtonTexts);
-            browser.Login(_crmContext.ConnectionInfo);
-            return browser;
         }
     }
 }

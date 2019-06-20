@@ -13,29 +13,23 @@ namespace Vermaat.Crm.Specflow
     [Binding]
     public class CrmTestingContext
     {
-        public CrmService Service { get; set; }
-        public MetadataCache Metadata { get; set; }
-        public RecordBuilder RecordBuilder { get; set; }
-        public CrmConnectionString ConnectionInfo { get; set; }
-        public AliasedRecordCache RecordCache { get; set; }
-        public TableConverter TableConverter { get; set; }
+
+        public RecordBuilder RecordBuilder { get; }
+        public TableConverter TableConverter { get; }
 
         public CommandProcessor CommandProcessor { get; set; }
+
+        public AliasedRecordCache RecordCache { get; }
 
         public int LanguageCode { get; set; }
 
         public CrmTestingContext()
         {
-            ConnectionInfo = CrmConnectionString.CreateFromAppConfig();
-            Service = new CrmService(ConnectionInfo);
-            Metadata = new MetadataCache(Service);
-            RecordCache = new AliasedRecordCache(Service, Metadata);
             RecordBuilder = new RecordBuilder(this);
             TableConverter = new TableConverter(this);
             LanguageCode = GetLanguageCode();
             CommandProcessor = new CommandProcessor();
-
-            Service.RecordCache = RecordCache;
+            RecordCache = new AliasedRecordCache(GlobalTestingContext.ConnectionManager, GlobalTestingContext.Metadata);
         }
 
         private int GetLanguageCode()

@@ -19,7 +19,7 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             ColumnSet columns = new ColumnSet(_criteria.Rows.Select(r => r[Constants.SpecFlow.TABLE_KEY]).ToArray());
-            Entity record = _crmContext.Service.Retrieve(_crmRecord, columns);
+            Entity record = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(_crmRecord, columns);
             AssertHelper.HasProperties(record, _criteria, _crmContext);
         }
     }

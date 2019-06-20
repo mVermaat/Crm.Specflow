@@ -36,7 +36,7 @@ namespace Vermaat.Crm.Specflow.Commands
             VerifyRecordTypes();
             Logger.WriteLine($"Merging records of type {_targetRecord.LogicalName}");
 
-            _crmContext.Service.Execute<MergeResponse>(new MergeRequest
+            GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<MergeResponse>(new MergeRequest
             {
                 PerformParentingChecks = false,
                 SubordinateId = _subordinateRecord.Id,
@@ -52,9 +52,9 @@ namespace Vermaat.Crm.Specflow.Commands
                 new ColumnSet(true) :
                 new ColumnSet(_fieldsToPush.Rows.Select(r => r[Constants.SpecFlow.TABLE_KEY]).ToArray());
 
-            Entity result = _crmContext.Service.Retrieve(_subordinateRecord, columnSet);
+            Entity result = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(_subordinateRecord, columnSet);
 
-            var attributeMetadata = _crmContext.Metadata.GetEntityMetadata(_subordinateRecord.LogicalName).Attributes.ToDictionary(a => a.LogicalName);
+            var attributeMetadata = GlobalTestingContext.Metadata.GetEntityMetadata(_subordinateRecord.LogicalName).Attributes.ToDictionary(a => a.LogicalName);
             var deleteQuery = result.Attributes.Where(a =>
                 attributeMetadata[a.Key].IsPrimaryId.GetValueOrDefault() || 
                 !attributeMetadata[a.Key].IsValidForUpdate.GetValueOrDefault() ||

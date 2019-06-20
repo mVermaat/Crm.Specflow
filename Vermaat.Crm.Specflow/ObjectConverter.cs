@@ -20,7 +20,7 @@ namespace Vermaat.Crm.Specflow
             if (string.IsNullOrWhiteSpace(value))
                 return null;
 
-            var metadata = context.Metadata.GetAttributeMetadata(entityName, attributeName);
+            var metadata = GlobalTestingContext.Metadata.GetAttributeMetadata(entityName, attributeName);
             object convertedValue = GetConvertedValue(context, metadata, value, objectType);
             Logger.WriteLine($"ConvertedValue: {HelperMethods.CrmObjectToPrimitive(convertedValue)}");
 
@@ -74,7 +74,7 @@ namespace Vermaat.Crm.Specflow
 
         public static SetStateRequest ToSetStateRequest(EntityReference target, string desiredstatus, CrmTestingContext context)
         {
-            var attributeMd = context.Metadata.GetAttributeMetadata(target.LogicalName, Constants.CRM.STATUSCODE) as StatusAttributeMetadata;
+            var attributeMd = GlobalTestingContext.Metadata.GetAttributeMetadata(target.LogicalName, Constants.CRM.STATUSCODE) as StatusAttributeMetadata;
             var optionMd = attributeMd.OptionSet.Options.Where(o => o.Label.IsLabel(context.LanguageCode, desiredstatus)).FirstOrDefault() as StatusOptionMetadata;
 
             return new SetStateRequest()
@@ -96,7 +96,7 @@ namespace Vermaat.Crm.Specflow
                 return result;
             }
 
-            var targetMd = context.Metadata.GetEntityMetadata(targetEntity);
+            var targetMd = GlobalTestingContext.Metadata.GetEntityMetadata(targetEntity);
 
             Logger.WriteLine($"Querying lookup in CRM");
             QueryExpression qe = new QueryExpression(targetEntity)
@@ -104,7 +104,7 @@ namespace Vermaat.Crm.Specflow
                 ColumnSet = new ColumnSet(targetMd.PrimaryNameAttribute)
             };
             qe.Criteria.AddCondition(targetMd.PrimaryNameAttribute, ConditionOperator.Equal, alias);
-            var col = context.Service.RetrieveMultiple(qe);
+            var col = GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(qe);
 
             Logger.WriteLine($"Looked for {targetEntity} with {targetMd.PrimaryNameAttribute} is {alias}. Found {col.Entities.Count} records");
             return col.Entities.FirstOrDefault()?.ToEntityReference(targetMd.PrimaryNameAttribute);

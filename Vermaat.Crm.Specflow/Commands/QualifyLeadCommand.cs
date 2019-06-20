@@ -24,7 +24,7 @@ namespace Vermaat.Crm.Specflow.Commands
         public override EntityReferenceCollection Execute()
         {
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
-            Entity lead = _crmContext.Service.Retrieve(aliasRef, new ColumnSet(Lead.Fields.TransactionCurrencyId, Lead.Fields.CustomerId, Lead.Fields.CampaignId));
+            Entity lead = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(aliasRef, new ColumnSet(Lead.Fields.TransactionCurrencyId, Lead.Fields.CustomerId, Lead.Fields.CampaignId));
 
             Logger.WriteLine($"Qualifying Lead {lead.Id}");
             QualifyLeadRequest req = new QualifyLeadRequest()
@@ -40,7 +40,7 @@ namespace Vermaat.Crm.Specflow.Commands
             };
             req.Parameters.Add("SuppressDuplicateDetection", true);
 
-            return _crmContext.Service.Execute<QualifyLeadResponse>(req).CreatedEntities;
+            return GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<QualifyLeadResponse>(req).CreatedEntities;
         }
     }
 }

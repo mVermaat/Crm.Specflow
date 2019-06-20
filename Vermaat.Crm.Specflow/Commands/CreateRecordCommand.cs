@@ -23,14 +23,17 @@ namespace Vermaat.Crm.Specflow.Commands
         protected override EntityReference ExecuteApi()
         {
             Entity toCreate = _crmContext.RecordBuilder.SetupEntityWithDefaults(_entityLogicalName, _criteria);
-            _crmContext.Service.Create(toCreate, _alias);
+            GlobalTestingContext.ConnectionManager.CurrentConnection.Create(toCreate, _alias, _crmContext.RecordCache);
             return toCreate.ToEntityReference();
         }
 
         protected override EntityReference ExecuteBrowser()
         {
-            var formData = _seleniumContext.Browser.OpenRecord(_crmContext.Metadata.GetEntityMetadata(_entityLogicalName), _entityLogicalName);
-            formData.FillForm(_crmContext, _criteria);
+            var formData = _seleniumContext.GetBrowser().OpenRecord(GlobalTestingContext.Metadata.GetEntityMetadata(_entityLogicalName), _entityLogicalName);
+
+            var tableWithDefaults = _crmContext.RecordBuilder.AddDefaultsToTable(_entityLogicalName, _criteria);
+
+            formData.FillForm(_crmContext, tableWithDefaults);
             formData.Save(true);
 
             var record = new EntityReference(_entityLogicalName, formData.GetRecordId());

@@ -154,7 +154,9 @@
     <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
     <Compile Include="Commands\MergeRecordsCommand.cs" />
     <Compile Include="Commands\ReviseQuoteCommand.cs" />
+    <Compile Include="ConnectionManager.cs" />
     <Compile Include="ConvertedObjectType.cs" />
+    <Compile Include="EasyRepro\BrowserManager.cs" />
     <Compile Include="EasyRepro\ButtonTexts.cs" />
     <Compile Include="CommandProcessor.cs" />
     <Compile Include="Commands\AssertBusinessProcessStageCommand.cs" />
@@ -176,7 +178,8 @@
     <Compile Include="Commands\UpdateStatusCommand.cs" />
     <Compile Include="Commands\WaitForAsyncJobsCommand.cs" />
     <Compile Include="DefaultCrmConnectionProvider.cs" />
-    <Compile Include="CrmConnectionString.cs" />
+    <Compile Include="GlobalTestingContext.cs" />
+    <Compile Include="UserDetails.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CrmService.cs" />
     <Compile Include="CrmTestingContext.cs" />

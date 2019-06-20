@@ -34,7 +34,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
             var processRecord = BusinessProcessFlowHelper.GetProcessRecord(_crmContext, crmRecord, instance.Id);
             processRecord["activestageid"] = path[currentStage + 1].ToEntityReference();
-            _crmContext.Service.Update(processRecord);
+            GlobalTestingContext.ConnectionManager.CurrentConnection.Update(processRecord);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Vermaat.Crm.Specflow.Commands
         {
             EntityReference crmRecord = _crmContext.RecordCache[_alias];
             SetStateRequest request = ObjectConverter.ToSetStateRequest(crmRecord, _statusCodeText, _crmContext);
-            _crmContext.Service.Execute<SetStateResponse>(request);
+            GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<SetStateResponse>(request);
         }
     }
 }

@@ -12,11 +12,11 @@ namespace Vermaat.Crm.Specflow
 {
     internal class DefaultCrmConnectionProvider : ICrmConnectionProvider
     {
-        public IOrganizationService CreateCrmConnection(CrmConnectionString connection)
+        public IOrganizationService CreateCrmConnection(string connectionString)
         {
             Logger.WriteLine("Connecting to Dynamics CRM API");
-            ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
-            return new CrmServiceClient(connection.ToCrmClientString());
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            return new CrmServiceClient(connectionString);
         }
     }
 }

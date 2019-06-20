@@ -13,11 +13,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         private UCIApp _app;
         private string _appId;
+        private string _appName;
         private bool _isDisposed = false;
 
         private Dictionary<string, FormData> _forms;
 
-        public int TotalThinkTime => _app.Client.Browser.TotalThinkTime;
 
         static UCIBrowser()
         {
@@ -31,23 +31,29 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _appId = null;
         }
 
-        public void Login(CrmConnectionString connectionString)
+        public void Login(Uri uri, UserDetails connectionString)
         {
             Logger.WriteLine("Logging in CRM");
             if(bool.Parse(HelperMethods.GetAppSettingsValue("UCIOnly")))
             {
                 Elements.Xpath[Reference.Login.CrmMainPage] = "//*[@data-id='topBar']";
                 AppElements.Xpath[AppReference.Navigation.AppMenuButton] = "//button[@data-id='navbar-switch-app']";
-                    
-
             }
 
-            _app.App.OnlineLogin.Login(new Uri(connectionString.Url), connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
-            _app.App.Navigation.OpenApp(connectionString.AppName);
+            _app.App.OnlineLogin.Login(uri, connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
+        }
 
-            var queryDic = System.Web.HttpUtility.ParseQueryString(new Uri(_app.WebDriver.Url).Query);
-            _appId = queryDic["appid"];
-            Logger.WriteLine($"Logged into app {_appId}");
+        public void ChangeApp(string appName)
+        {
+            if (appName != _appName)
+            {
+                Logger.WriteLine($"Changing app from {_appName} to {appName}");
+                _app.App.Navigation.OpenApp(appName);
+                var queryDic = System.Web.HttpUtility.ParseQueryString(new Uri(_app.WebDriver.Url).Query);
+                _appId = queryDic["appid"];
+                _appName = appName;
+                Logger.WriteLine($"Logged into app: {appName} ({_appId})");
+            }
         }
 
         public FormData OpenRecord(EntityMetadata entityMetadata, string entityName, Guid? id = null)

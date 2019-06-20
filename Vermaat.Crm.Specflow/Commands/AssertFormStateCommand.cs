@@ -21,7 +21,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public override void Execute()
         {
-            var formData = _seleniumContext.Browser.OpenRecord(_crmContext.Metadata.GetEntityMetadata(_crmRecord.LogicalName), _crmRecord);
+            var formData = _seleniumContext.GetBrowser().OpenRecord(GlobalTestingContext.Metadata.GetEntityMetadata(_crmRecord.LogicalName), _crmRecord);
             List<string> errors = new List<string>();
 
             string currentTab = null;

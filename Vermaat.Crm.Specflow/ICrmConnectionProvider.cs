@@ -4,6 +4,6 @@ namespace Vermaat.Crm.Specflow
 {
     public interface ICrmConnectionProvider
     {
-        IOrganizationService CreateCrmConnection(CrmConnectionString connection);
+        IOrganizationService CreateCrmConnection(string connectionString);
     }
 }

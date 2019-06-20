@@ -26,20 +26,20 @@ namespace Vermaat.Crm.Specflow.Commands
         protected override void ExecuteApi()
         {
             var aliasRef = _crmContext.RecordCache[_toReviseAlias];
-            EntityMetadata metadata = _crmContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
+            EntityMetadata metadata = GlobalTestingContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
 
             var quoteClose = new Entity("quoteclose");
             quoteClose["quoteid"] = aliasRef;
             quoteClose["subject"] = "Closed to revise";
 
 
-            _crmContext.Service.Execute<CloseQuoteResponse>(new CloseQuoteRequest()
+            GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<CloseQuoteResponse>(new CloseQuoteRequest()
             {
                 Status = new OptionSetValue(-1),
                 QuoteClose = quoteClose                
             });
 
-            var response = _crmContext.Service.Execute<ReviseQuoteResponse>(new ReviseQuoteRequest()
+            var response = GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<ReviseQuoteResponse>(new ReviseQuoteRequest()
             {
                 ColumnSet = new ColumnSet(metadata.PrimaryNameAttribute),
                 QuoteId = aliasRef.Id
@@ -50,9 +50,9 @@ namespace Vermaat.Crm.Specflow.Commands
         protected override void ExecuteBrowser()
         {
             EntityReference aliasRef = _crmContext.RecordCache[_toReviseAlias];
-            EntityMetadata metadata = _crmContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
+            EntityMetadata metadata = GlobalTestingContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
 
-            FormData formData = _seleniumContext.Browser.OpenRecord(metadata, aliasRef);
+            FormData formData = _seleniumContext.GetBrowser().OpenRecord(metadata, aliasRef);
             var revisedQuote = formData.CommandBar.ReviseQuote();
             _crmContext.RecordCache.Add(_newQuoteAlias, revisedQuote);
         }

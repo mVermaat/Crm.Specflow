@@ -23,7 +23,7 @@ namespace Vermaat.Crm.Specflow
         [AfterScenario("Cleanup")]
         public void Cleanup()
         {
-            _crmContext.RecordCache.DeleteAllCachedRecords(_crmContext.Service);
+            _crmContext.RecordCache.DeleteAllCachedRecords(GlobalTestingContext.ConnectionManager.CurrentConnection);
         }
 
         [BeforeScenario("API")]
@@ -67,5 +67,26 @@ namespace Vermaat.Crm.Specflow
                 _seleniumContext.BrowserOptions.BrowserType = BrowserType.IE;
             }
         }     
+
+        [BeforeScenario]
+        public void SetDefaultConnection()
+        {
+            var details = new UserDetails
+            {
+                Username = HelperMethods.GetAppSettingsValue("Username", true),
+                Password = HelperMethods.GetAppSettingsValue("Password", true),
+            };
+            if(!string.IsNullOrEmpty(details.Username) && !string.IsNullOrEmpty(details.Password))
+            {
+                GlobalTestingContext.ConnectionManager.SetCurrentConnection(details);
+            }
+        }
+
+        [AfterTestRun]
+        public static void AfterTestRunCleanup()
+        {
+            GlobalTestingContext.BrowserManager.Dispose();
+            GlobalTestingContext.ConnectionManager.Dispose();
+        }
     }
 }

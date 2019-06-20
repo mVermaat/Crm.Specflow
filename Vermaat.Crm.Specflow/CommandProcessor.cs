@@ -10,6 +10,10 @@ namespace Vermaat.Crm.Specflow
 {
     public class CommandProcessor
     {
+        private ConnectionManager ConnectionManager { get; }
+        private MetadataCache MetadataCache { get; }
+
+
         public void Execute(ICommand command, CommandAction commandAction = CommandAction.Default)
         {
             command.Execute(commandAction);

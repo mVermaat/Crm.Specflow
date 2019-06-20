@@ -22,9 +22,9 @@ namespace Vermaat.Crm.Specflow.Commands
         protected override void ExecuteApi()
         {
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
-            EntityMetadata metadata = _crmContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
+            EntityMetadata metadata = GlobalTestingContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
 
-            Entity record = _crmContext.Service.Retrieve(aliasRef, new ColumnSet(metadata.PrimaryNameAttribute));
+            Entity record = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(aliasRef, new ColumnSet(metadata.PrimaryNameAttribute));
 
             ConvertQuoteToSalesOrderRequest convertSalesOrderRequest = new ConvertQuoteToSalesOrderRequest
             {
@@ -34,16 +34,16 @@ namespace Vermaat.Crm.Specflow.Commands
                 QuoteCloseStatus = new OptionSetValue(-1),
                 QuoteCloseSubject = record.GetAttributeValue<string>(metadata.PrimaryNameAttribute)
             };
-            ConvertQuoteToSalesOrderResponse resp = _crmContext.Service.Execute<ConvertQuoteToSalesOrderResponse>(convertSalesOrderRequest);
+            ConvertQuoteToSalesOrderResponse resp = GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<ConvertQuoteToSalesOrderResponse>(convertSalesOrderRequest);
             _crmContext.RecordCache.Add(_orderAlias, resp.Entity);
         }
 
         protected override void ExecuteBrowser()
         {
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
-            EntityMetadata metadata = _crmContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
+            EntityMetadata metadata = GlobalTestingContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
 
-            FormData formData = _seleniumContext.Browser.OpenRecord(metadata, aliasRef);
+            FormData formData = _seleniumContext.GetBrowser().OpenRecord(metadata, aliasRef);
             EntityReference order = formData.CommandBar.CreateOrder();
             _crmContext.RecordCache.Add(_orderAlias, order);
         }

@@ -14,30 +14,29 @@ namespace Vermaat.Crm.Specflow
     public class CrmService : IOrganizationService
     {
         private readonly Lazy<IOrganizationService> _service;
-        private readonly CrmConnectionString _connectionString;
+        private readonly string _connectionString;
         private IOrganizationService Service => _service.Value;
 
-        public AliasedRecordCache RecordCache { get; set; }
         public ICrmConnectionProvider ConnectionProvider { get; set; }
         
 
-        public CrmService(CrmConnectionString connectionString)
+        public CrmService(string connectionString)
             : this(connectionString, new DefaultCrmConnectionProvider())
         {
            
         }
 
-        public CrmService(CrmConnectionString connectionString, ICrmConnectionProvider provider)
+        public CrmService(string connectionString, ICrmConnectionProvider provider)
         {
             _connectionString = connectionString;
             ConnectionProvider = provider;
             _service = new Lazy<IOrganizationService>(ConnectToCrm);
         }
 
-        public void Create(Entity entity, string alias)
+        public void Create(Entity entity, string alias, AliasedRecordCache recordCache)
         {
             entity.Id = CreateRecord(entity);
-            RecordCache.Add(alias, entity.ToEntityReference());
+            recordCache.Add(alias, entity.ToEntityReference());
         }
 
         public void Associate(string entityName, Guid entityId, Relationship relationship, EntityReferenceCollection relatedEntities)

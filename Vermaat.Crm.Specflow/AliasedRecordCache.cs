@@ -17,15 +17,15 @@ namespace Vermaat.Crm.Specflow
         private Dictionary<string, EntityReference> _aliasedRecords;
         private List<string> _entitiesToIgnore;
         private List<string> _aliasesToIgnore;
-        private readonly CrmService _service;
+        private readonly ConnectionManager _connectionManager;
         private readonly MetadataCache _metadataCache;
 
-        internal AliasedRecordCache(CrmService service, MetadataCache metadataCache)
+        internal AliasedRecordCache(ConnectionManager connectionManager, MetadataCache metadataCache)
         {
             _aliasedRecords = new Dictionary<string, EntityReference>();
             _entitiesToIgnore = new List<string>();
             _aliasesToIgnore = new List<string>();
-            _service = service;
+            _connectionManager = connectionManager;
             _metadataCache = metadataCache;
         }
 
@@ -39,7 +39,7 @@ namespace Vermaat.Crm.Specflow
             if(string.IsNullOrEmpty(reference.Name))
             {
                 var md = _metadataCache.GetEntityMetadata(reference.LogicalName);
-                var entity = _service.Retrieve(reference, new ColumnSet(md.PrimaryNameAttribute));
+                var entity = _connectionManager.CurrentConnection.Retrieve(reference, new ColumnSet(md.PrimaryNameAttribute));
                 reference.Name = entity.GetAttributeValue<string>(md.PrimaryNameAttribute);
             }
 

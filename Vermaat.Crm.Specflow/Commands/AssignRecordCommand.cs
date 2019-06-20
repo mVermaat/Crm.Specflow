@@ -24,7 +24,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 Assignee = assignTo,
                 Target = recordToAssign
             };
-            _crmContext.Service.Execute<AssignResponse>(req);
+            GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<AssignResponse>(req);
         }
     }
 }

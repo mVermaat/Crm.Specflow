@@ -45,7 +45,7 @@ namespace Vermaat.Crm.Specflow.Commands
             qe.Criteria.AddCondition("stagename", ConditionOperator.Equal, stageName);
             qe.TopCount = 1;
 
-            return _crmContext.Service.RetrieveMultiple(qe)?.Entities?.FirstOrDefault()?.Id;
+            return GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(qe)?.Entities?.FirstOrDefault()?.Id;
         }
     }
 }

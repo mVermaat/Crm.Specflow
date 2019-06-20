@@ -17,7 +17,7 @@ namespace Vermaat.Crm.Specflow.Commands
         public override DataCollection<Entity> Execute()
         {
             Microsoft.Xrm.Sdk.Query.QueryExpression query = QueryHelper.CreateQueryExpressionFromTable(_entityName, _criteria, _crmContext);
-            return HelperMethods.ExecuteWithRetry(20, 500, () => _crmContext.Service.RetrieveMultiple(query)).Entities;
+            return HelperMethods.ExecuteWithRetry(20, 500, () => GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(query)).Entities;
         }
     }
 }

@@ -30,12 +30,12 @@ namespace Vermaat.Crm.Specflow.Commands
                     row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], _crmContext);
             }
 
-            _crmContext.Service.Update(toUpdate);
+            GlobalTestingContext.ConnectionManager.CurrentConnection.Update(toUpdate);
         }
 
         protected override void ExecuteBrowser()
         {
-            var formData = _seleniumContext.Browser.OpenRecord(_crmContext.Metadata.GetEntityMetadata(_toUpdate.LogicalName), _toUpdate.LogicalName, _toUpdate.Id);
+            var formData = _seleniumContext.GetBrowser().OpenRecord(GlobalTestingContext.Metadata.GetEntityMetadata(_toUpdate.LogicalName), _toUpdate.LogicalName, _toUpdate.Id);
             formData.FillForm(_crmContext, _criteria);
             formData.Save(true);
         }

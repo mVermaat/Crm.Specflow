@@ -17,13 +17,13 @@ namespace Vermaat.Crm.Specflow.Commands
 
         protected override void ExecuteApi()
         {
-            _crmContext.Service.Delete(_toDelete);
+            GlobalTestingContext.ConnectionManager.CurrentConnection.Delete(_toDelete);
             _crmContext.RecordCache.Remove(_alias);
         }
 
         protected override void ExecuteBrowser()
         {
-            var formData = _seleniumContext.Browser.OpenRecord(_crmContext.Metadata.GetEntityMetadata(_toDelete.LogicalName), _toDelete.LogicalName, _toDelete.Id);
+            var formData = _seleniumContext.GetBrowser().OpenRecord(GlobalTestingContext.Metadata.GetEntityMetadata(_toDelete.LogicalName), _toDelete.LogicalName, _toDelete.Id);
             formData.CommandBar.Delete();
             _crmContext.RecordCache.Remove(_alias);
         }

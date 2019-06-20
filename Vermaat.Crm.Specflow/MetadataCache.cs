@@ -11,13 +11,13 @@ namespace Vermaat.Crm.Specflow
 {
     public class MetadataCache
     {
-        private CrmService _service;
+        private ConnectionManager _connectionManager;
 
         private Dictionary<string, EntityMetadata> _cache;
 
-        public MetadataCache(CrmService service)
+        public MetadataCache(ConnectionManager connectionManager)
         {
-            _service = service;
+            _connectionManager = connectionManager;
             _cache = new Dictionary<string, EntityMetadata>();
         }
 
@@ -56,7 +56,7 @@ namespace Vermaat.Crm.Specflow
                     LogicalName = entityName,
                 };
 
-                result = _service.Execute<RetrieveEntityResponse>(req).EntityMetadata;
+                result = _connectionManager.CurrentConnection.Execute<RetrieveEntityResponse>(req).EntityMetadata;
                 _cache.Add(entityName, result);
             }
             return result;

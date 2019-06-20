@@ -23,7 +23,7 @@ namespace Vermaat.Crm.Specflow.Commands
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
 
             int tryCount = 0;
-            while (tryCount < 15 && QueryHelper.HasOpenSystemJobs(aliasRef.Id, _crmContext.Service))
+            while (tryCount < 15 && QueryHelper.HasOpenSystemJobs(aliasRef.Id, GlobalTestingContext.ConnectionManager.CurrentConnection))
             {
                 Thread.Sleep(2000);
                 tryCount++;

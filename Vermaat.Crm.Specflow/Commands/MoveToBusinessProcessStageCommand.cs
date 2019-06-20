@@ -48,14 +48,14 @@ namespace Vermaat.Crm.Specflow.Commands
             if (desiredStage < currentStage)
             {
                 processRecord["activestageid"] = path[desiredStage].ToEntityReference();
-                _crmContext.Service.Update(processRecord);
+                GlobalTestingContext.ConnectionManager.CurrentConnection.Update(processRecord);
                 return;
             }
 
             while (desiredStage > currentStage)
             {
                 processRecord["activestageid"] = path[currentStage + 1].ToEntityReference();
-                _crmContext.Service.Update(processRecord);
+                GlobalTestingContext.ConnectionManager.CurrentConnection.Update(processRecord);
                 currentStage++;
             }
         }
