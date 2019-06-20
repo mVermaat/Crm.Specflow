@@ -54,6 +54,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 _appName = appName;
                 Logger.WriteLine($"Logged into app: {appName} ({_appId})");
             }
+            else
+            {
+                Logger.WriteLine($"App name is already {_appName}. No need to switch");
+            }
         }
 
         public FormData OpenRecord(EntityMetadata entityMetadata, string entityName, Guid? id = null)
