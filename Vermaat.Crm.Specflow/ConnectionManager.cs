@@ -37,7 +37,7 @@ namespace Vermaat.Crm.Specflow
 
         private string ToCrmClientString(UserDetails userDetails)
         {
-            var builder = new StringBuilder($"AuthType={_authType};Url={Url}");
+            var builder = new StringBuilder($"AuthType={_authType};Url={Url};RequireNewInstance=True");
 
             if (!string.IsNullOrWhiteSpace(userDetails.Username))
                 builder.Append($";Username={userDetails.Username}");
