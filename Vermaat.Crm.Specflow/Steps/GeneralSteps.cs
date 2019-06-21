@@ -47,6 +47,13 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new MoveToBusinessProcessStageCommand(_crmContext, alias, stageName));
         }
 
+        [Given(@"a related ([^\s]+) from (.*) named (.*) with the following values")]
+        [When(@"a related ([^\s]+) from (.*) named (.*) is created with the following values")]
+        public void GivenRelatedEntityWithValues(string entityName, string parentAlias, string childAlias, Table criteria)
+        {
+            _crmContext.TableConverter.ConvertTable(entityName, criteria);
+            _crmContext.CommandProcessor.Execute(new CreateRelatedRecordCommand(_crmContext, _seleniumContext, entityName, criteria, childAlias, parentAlias));
+        }
 
         #endregion
 

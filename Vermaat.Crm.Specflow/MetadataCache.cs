@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
+using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +15,14 @@ namespace Vermaat.Crm.Specflow
     {
         private ConnectionManager _connectionManager;
 
-        private Dictionary<string, EntityMetadata> _cache;
+        private Dictionary<string, EntityMetadata> _entityMetadataCache;
+        private Dictionary<string, DataCollection<Entity>> _attributeMapCache;
 
         public MetadataCache(ConnectionManager connectionManager)
         {
             _connectionManager = connectionManager;
-            _cache = new Dictionary<string, EntityMetadata>();
+            _entityMetadataCache = new Dictionary<string, EntityMetadata>();
+            _attributeMapCache = new Dictionary<string, DataCollection<Entity>>();
         }
 
         public AttributeMetadata GetAttributeMetadata(string entityName, string logicalName)
@@ -47,7 +51,7 @@ namespace Vermaat.Crm.Specflow
 
         public EntityMetadata GetEntityMetadata(string entityName)
         {
-            if(!_cache.TryGetValue(entityName, out EntityMetadata result))
+            if(!_entityMetadataCache.TryGetValue(entityName, out EntityMetadata result))
             {
                 var req = new RetrieveEntityRequest()
                 {
@@ -57,7 +61,26 @@ namespace Vermaat.Crm.Specflow
                 };
 
                 result = _connectionManager.CurrentConnection.Execute<RetrieveEntityResponse>(req).EntityMetadata;
-                _cache.Add(entityName, result);
+                _entityMetadataCache.Add(entityName, result);
+            }
+            return result;
+        }
+
+        public DataCollection<Entity> GetAttributeMaps(string parentEntity, string childEntity)
+        {
+            Logger.WriteLine($"Getting attribute maps between {parentEntity} and {childEntity}");
+            if(!_attributeMapCache.TryGetValue(parentEntity+childEntity, out DataCollection<Entity> result)) 
+            {
+                Logger.WriteLine("Not cached yet. Retrieving from CRM");
+                var query = new QueryExpression("attributemap");
+                query.ColumnSet.AddColumns("sourceattributename", "targetattributename");
+
+                var link = query.AddLink("entitymap", "entitymapid", "entitymapid");
+                link.LinkCriteria.AddCondition("sourceentityname", ConditionOperator.Equal, parentEntity);
+                link.LinkCriteria.AddCondition("targetentityname", ConditionOperator.Equal, childEntity);
+
+                result = GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(query).Entities;
+                _attributeMapCache.Add(parentEntity + childEntity, result);
             }
             return result;
         }

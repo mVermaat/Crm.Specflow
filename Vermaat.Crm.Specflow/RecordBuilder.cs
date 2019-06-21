@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Metadata;
+using Microsoft.Xrm.Sdk.Query;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -50,16 +52,16 @@ namespace Vermaat.Crm.Specflow
 
             if (_defaultData.ContainsKey(entityName))
             {
-                for(int i = 0; i < _defaultData[entityName].Length; i++)
+                for (int i = 0; i < _defaultData[entityName].Length; i++)
                 {
                     result.AddRow(_defaultData[entityName][i].Name, _defaultData[entityName][i].Value);
                     rows.Add(_defaultData[entityName][i].Name, result.Rows[i]);
                 }
             }
 
-            foreach(var row in customFields.Rows)
+            foreach (TableRow row in customFields.Rows)
             {
-                if(rows.TryGetValue(row[Constants.SpecFlow.TABLE_KEY], out TableRow rowToUpdate))
+                if (rows.TryGetValue(row[Constants.SpecFlow.TABLE_KEY], out TableRow rowToUpdate))
                 {
                     rowToUpdate[Constants.SpecFlow.TABLE_VALUE] = row[Constants.SpecFlow.TABLE_VALUE];
                 }
@@ -75,24 +77,78 @@ namespace Vermaat.Crm.Specflow
         public Entity SetupEntityWithDefaults(string entityName, Table customFields)
         {
             Entity toCreate = new Entity(entityName);
+            AddDefaultsFromDefaultData(toCreate);
+            AddDefaultsFromTable(toCreate, customFields);
+            return toCreate;
+        }
 
-            if (_defaultData.ContainsKey(entityName))
+
+
+        public Entity SetupEntityFromParent(EntityReference parentEntity, string childEntityName, Table customFields, DataCollection<Entity> attributeMaps)
+        {
+            Dictionary<string, AttributeMetadata> parentMetadata = GlobalTestingContext.Metadata.GetEntityMetadata(parentEntity.LogicalName).Attributes.ToDictionary(a => a.LogicalName);
+            Dictionary<string, AttributeMetadata> childMetadata = GlobalTestingContext.Metadata.GetEntityMetadata(childEntityName).Attributes.ToDictionary(a => a.LogicalName);
+
+            IEnumerable<Entity> validMaps = attributeMaps.Where(m =>
+            AttributeValid(parentMetadata, m.GetAttributeValue<string>("sourceattributename")) &&
+            AttributeValid(childMetadata, m.GetAttributeValue<string>("targetattributename")));
+
+            Entity parentRecord = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(parentEntity,
+                new ColumnSet(validMaps.Select(m => m.GetAttributeValue<string>("sourceattributename")).ToArray()));
+
+            Entity toCreate = new Entity(childEntityName);
+            //AddDefaultsFromDefaultData(toCreate);
+
+            foreach (Entity map in validMaps)
             {
-                foreach (DefaultDataField defaultDataField in _defaultData[entityName])
+                if (parentRecord.Attributes.ContainsKey(map.GetAttributeValue<string>("sourceattributename")))
                 {
-                    toCreate[defaultDataField.Name] = ObjectConverter.ToCrmObject(entityName, defaultDataField.Name, defaultDataField.Value, _crmContext);
+                    var sourceAttribute = map.GetAttributeValue<string>("sourceattributename");
+
+                    if(parentMetadata[sourceAttribute].IsPrimaryId.GetValueOrDefault())
+                    {
+                        toCreate[map.GetAttributeValue<string>("targetattributename")] = parentEntity;
+                    }
+                    else
+                    {
+                        toCreate[map.GetAttributeValue<string>("targetattributename")] = parentRecord[sourceAttribute];
+                    }
                 }
             }
 
-            foreach (TableRow row in customFields.Rows)
-            {
-                toCreate[row[Constants.SpecFlow.TABLE_KEY]] = ObjectConverter.ToCrmObject(entityName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], _crmContext);
-            }
+            AddDefaultsFromTable(toCreate, customFields);
+
             return toCreate;
         }
+
+        private bool AttributeValid(Dictionary<string, AttributeMetadata> childMetadata, string attributeName)
+        {
+            if (!childMetadata.TryGetValue(attributeName, out AttributeMetadata metadata))
+            {
+                return false;
+            }
+
+            return string.IsNullOrEmpty(metadata.AttributeOf);
+        }
+
+        private void AddDefaultsFromDefaultData(Entity toCreate)
+        {
+            if (_defaultData.ContainsKey(toCreate.LogicalName))
+            {
+                foreach (DefaultDataField defaultDataField in _defaultData[toCreate.LogicalName])
+                {
+                    toCreate[defaultDataField.Name] = ObjectConverter.ToCrmObject(toCreate.LogicalName, defaultDataField.Name, defaultDataField.Value, _crmContext);
+                }
+            }
+        }
+
+        private void AddDefaultsFromTable(Entity toCreate, Table customFields)
+        {
+            foreach (TableRow row in customFields.Rows)
+            {
+                toCreate[row[Constants.SpecFlow.TABLE_KEY]] = ObjectConverter.ToCrmObject(toCreate.LogicalName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], _crmContext);
+            }
+        }
+
     }
-
-
-
-
 }

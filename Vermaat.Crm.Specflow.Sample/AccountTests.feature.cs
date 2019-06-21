@@ -568,6 +568,102 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table2
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Creating child contact from account", new string[] {
+                "API",
+                "Chrome",
+                "Cleanup"}, SourceLine=153)]
+        public virtual void CreatingChildContactFromAccount()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating child contact from account", null, new string[] {
+                        "API",
+                        "Chrome",
+                        "Cleanup"});
+#line 154
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table24.AddRow(new string[] {
+                        "Account Name",
+                        "ParentAccount"});
+            table24.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+            table24.AddRow(new string[] {
+                        "Website",
+                        "https://dynamichands.nl"});
+            table24.AddRow(new string[] {
+                        "Address 1: Street 1",
+                        "Street 1"});
+            table24.AddRow(new string[] {
+                        "Address 1: Street 2",
+                        "Street 2"});
+            table24.AddRow(new string[] {
+                        "Address 1: Street 3",
+                        "Street 3"});
+            table24.AddRow(new string[] {
+                        "Address 1: City",
+                        "City"});
+            table24.AddRow(new string[] {
+                        "Address 1: State/Province",
+                        "State"});
+#line 155
+testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table24, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table25.AddRow(new string[] {
+                        "First Name",
+                        "Child"});
+            table25.AddRow(new string[] {
+                        "Last Name",
+                        "Record"});
+            table25.AddRow(new string[] {
+                        "Address 1: Street 1",
+                        "SomethingElse"});
+            table25.AddRow(new string[] {
+                        "Address 1: Street 2",
+                        ""});
+#line 167
+testRunner.When("a related contact from TestAccount named ChildContact is created with the followi" +
+                    "ng values", ((string)(null)), table25, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table26.AddRow(new string[] {
+                        "First Name",
+                        "Child"});
+            table26.AddRow(new string[] {
+                        "Last Name",
+                        "Record"});
+            table26.AddRow(new string[] {
+                        "Business Phone",
+                        "0612345678"});
+            table26.AddRow(new string[] {
+                        "Address 1: Street 1",
+                        "SomethingElse"});
+            table26.AddRow(new string[] {
+                        "Address 1: Street 2",
+                        ""});
+            table26.AddRow(new string[] {
+                        "Address 1: Street 3",
+                        "Street 3"});
+            table26.AddRow(new string[] {
+                        "Address 1: City",
+                        "City"});
+            table26.AddRow(new string[] {
+                        "Address 1: State/Province",
+                        "State"});
+#line 173
+testRunner.Then("ChildContact has the following values", ((string)(null)), table26, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

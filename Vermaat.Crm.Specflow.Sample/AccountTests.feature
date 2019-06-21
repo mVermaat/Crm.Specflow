@@ -148,3 +148,33 @@ When an account named TestAccount is created with the following values
 Then TestAccount has the following values
 	| Property     | Value |
 	| Account Name | test  |
+
+
+@API @Chrome @Cleanup
+Scenario: Creating child contact from account
+Given an account named TestAccount with the following values
+	| Property                   | Value                   |
+	| Account Name               | ParentAccount           |
+	| Main Phone                 | 0612345678              |
+	| Website                    | https://dynamichands.nl |
+	| Address 1: Street 1        | Street 1                |
+	| Address 1: Street 2        | Street 2                |
+	| Address 1: Street 3        | Street 3                |
+	| Address 1: City            | City                    |
+	| Address 1: State/Province  | State                   |
+When a related contact from TestAccount named ChildContact is created with the following values
+	| Property            | Value         |
+	| First Name          | Child         |
+	| Last Name           | Record        |
+	| Address 1: Street 1 | SomethingElse |
+	| Address 1: Street 2 |               |
+Then ChildContact has the following values
+	| Property                   | Value         |
+	| First Name                 | Child         |
+	| Last Name                  | Record        |
+	| Business Phone             | 0612345678    |
+	| Address 1: Street 1        | SomethingElse |
+	| Address 1: Street 2        |               |
+	| Address 1: Street 3        | Street 3      |
+	| Address 1: City            | City          |
+	| Address 1: State/Province  | State         |

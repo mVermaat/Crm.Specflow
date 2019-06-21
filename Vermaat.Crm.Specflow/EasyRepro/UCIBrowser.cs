@@ -6,6 +6,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -60,7 +61,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
         }
 
-        public FormData OpenRecord(EntityMetadata entityMetadata, string entityName, Guid? id = null)
+        public FormData OpenRecord(EntityMetadata entityMetadata, string entityName, Guid? id = null, EntityReference parent = null)
         {
             Logger.WriteLine($"Opening record {entityName} with ID {id}");
             _app.Client.Execute(BrowserOptionHelper.GetOptions($"Open: {entityName}"), driver =>
@@ -69,11 +70,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 string link = $"{uri.Scheme}://{uri.Authority}/main.aspx?etn={entityName}&pagetype=entityrecord";
 
                 if (id.HasValue)
-                {
                     link += $"&id=%7B{id:D}%7D";
-                }
                 if (!string.IsNullOrEmpty(_appId))
                     link += $"&appid={_appId}";
+                if (parent != null)
+                {
+                    link += $"&extraqs={HttpUtility.UrlEncode($"parentrecordid={parent.Id}&parentrecordname={parent.Name}&parentrecordtype={parent.LogicalName}")}";
+                }
+
 
                 driver.Navigate().GoToUrl(link);
                 driver.WaitForPageToLoad();
