@@ -627,7 +627,7 @@ testRunner.Given("an account named TestAccount with the following values", ((str
             table25.AddRow(new string[] {
                         "Address 1: Street 2",
                         ""});
-#line 167
+#line 165
 testRunner.When("a related contact from TestAccount named ChildContact is created with the followi" +
                     "ng values", ((string)(null)), table25, "When ");
 #line hidden
@@ -658,7 +658,7 @@ testRunner.When("a related contact from TestAccount named ChildContact is create
             table26.AddRow(new string[] {
                         "Address 1: State/Province",
                         "State"});
-#line 173
+#line 171
 testRunner.Then("ChildContact has the following values", ((string)(null)), table26, "Then ");
 #line hidden
             this.ScenarioCleanup();

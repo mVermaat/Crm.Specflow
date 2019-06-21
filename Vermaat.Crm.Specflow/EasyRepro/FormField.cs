@@ -129,6 +129,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     case AttributeTypeCode.Picklist:
                         SetOptionSetField((string)fieldValue);
                         break;
+                    case AttributeTypeCode.Money:
+                        SetMoneyField((Money)fieldValue);
+                        break;
                     default:
                         SetTextField((string)fieldValue);
                         break;
@@ -140,8 +143,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 ClearValue(crmContext);
             }
         }
-
-
 
         private void ClearValue(CrmTestingContext crmContext)
         {
@@ -175,6 +176,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private void SetOptionSetField(string optionSetLabel)
         {
             _app.App.Entity.SetValue(new OptionSet { Name = _metadata.LogicalName, Value = optionSetLabel });
+        }
+
+        private void SetMoneyField(Money fieldValue)
+        {
+            SetTextField(fieldValue?.Value.ToString());
         }
 
         private void SetTextField(string fieldValue)

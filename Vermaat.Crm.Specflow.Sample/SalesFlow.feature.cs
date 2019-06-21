@@ -156,13 +156,13 @@ testRunner.And("an opportunity exists with the following values", ((string)(null
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Convert Quote to Sales Order", new string[] {
+        [TechTalk.SpecRun.ScenarioAttribute("Filling Money fields", new string[] {
                 "API",
                 "Chrome",
                 "Cleanup"}, SourceLine=30)]
-        public virtual void ConvertQuoteToSalesOrder()
+        public virtual void FillingMoneyFields()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Convert Quote to Sales Order", null, new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Filling Money fields", null, new string[] {
                         "API",
                         "Chrome",
                         "Cleanup"});
@@ -175,59 +175,52 @@ this.ScenarioInitialize(scenarioInfo);
                         "Value"});
             table45.AddRow(new string[] {
                         "Account Name",
-                        "QuoteTesting"});
+                        "TestAccount"});
 #line 32
-testRunner.Given("an account named QuoteTesting with the following values", ((string)(null)), table45, "Given ");
+testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table45, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table46 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table46.AddRow(new string[] {
-                        "Name",
-                        "AT Quote"});
+                        "Topic",
+                        "Test Opp Money"});
             table46.AddRow(new string[] {
-                        "Price List",
-                        "Automated Testing PL"});
-            table46.AddRow(new string[] {
-                        "Potential Customer",
-                        "QuoteTesting"});
+                        "Budget Amount",
+                        "12345"});
 #line 35
-testRunner.And("a quote named TestQuote with the following values", ((string)(null)), table46, "And ");
-#line 41
-testRunner.When("TestQuote is activated and converted to a sales order named TestOrder", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.When("a related opportunity from TestAccount named TestOpp is created with the followin" +
+                    "g values", ((string)(null)), table46, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table47 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table47.AddRow(new string[] {
-                        "Name",
-                        "AT Quote"});
+                        "Topic",
+                        "Test Opp Money"});
             table47.AddRow(new string[] {
-                        "Price List",
-                        "Automated Testing PL"});
+                        "Budget Amount",
+                        "12345"});
             table47.AddRow(new string[] {
-                        "Customer",
-                        "QuoteTesting"});
-            table47.AddRow(new string[] {
-                        "Quote",
-                        "TestQuote"});
-#line 42
-testRunner.Then("TestOrder has the following values", ((string)(null)), table47, "Then ");
+                        "Account",
+                        "TestAccount"});
+#line 39
+testRunner.Then("TestOpp has the following values", ((string)(null)), table47, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Revise a quote", new string[] {
+        [TechTalk.SpecRun.ScenarioAttribute("Convert Quote to Sales Order", new string[] {
                 "API",
                 "Chrome",
-                "Cleanup"}, SourceLine=49)]
-        public virtual void ReviseAQuote()
+                "Cleanup"}, SourceLine=45)]
+        public virtual void ConvertQuoteToSalesOrder()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Revise a quote", null, new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Convert Quote to Sales Order", null, new string[] {
                         "API",
                         "Chrome",
                         "Cleanup"});
-#line 50
+#line 46
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -237,7 +230,7 @@ this.ScenarioInitialize(scenarioInfo);
             table48.AddRow(new string[] {
                         "Account Name",
                         "QuoteTesting"});
-#line 51
+#line 47
 testRunner.Given("an account named QuoteTesting with the following values", ((string)(null)), table48, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table49 = new TechTalk.SpecFlow.Table(new string[] {
@@ -245,34 +238,95 @@ testRunner.Given("an account named QuoteTesting with the following values", ((st
                         "Value"});
             table49.AddRow(new string[] {
                         "Name",
-                        "AT Quote to Revise"});
+                        "AT Quote"});
             table49.AddRow(new string[] {
                         "Price List",
                         "Automated Testing PL"});
             table49.AddRow(new string[] {
                         "Potential Customer",
                         "QuoteTesting"});
-#line 54
+#line 50
 testRunner.And("a quote named TestQuote with the following values", ((string)(null)), table49, "And ");
-#line 59
-testRunner.When("the quote TestQuote is activated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 60
-testRunner.And("TestQuote is revised and its revised quote is named RevisiedQuote", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 56
+testRunner.When("TestQuote is activated and converted to a sales order named TestOrder", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table50 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table50.AddRow(new string[] {
                         "Name",
-                        "AT Quote to Revise"});
+                        "AT Quote"});
             table50.AddRow(new string[] {
                         "Price List",
                         "Automated Testing PL"});
             table50.AddRow(new string[] {
+                        "Customer",
+                        "QuoteTesting"});
+            table50.AddRow(new string[] {
+                        "Quote",
+                        "TestQuote"});
+#line 57
+testRunner.Then("TestOrder has the following values", ((string)(null)), table50, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Revise a quote", new string[] {
+                "API",
+                "Chrome",
+                "Cleanup"}, SourceLine=64)]
+        public virtual void ReviseAQuote()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Revise a quote", null, new string[] {
+                        "API",
+                        "Chrome",
+                        "Cleanup"});
+#line 65
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table51 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table51.AddRow(new string[] {
+                        "Account Name",
+                        "QuoteTesting"});
+#line 66
+testRunner.Given("an account named QuoteTesting with the following values", ((string)(null)), table51, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table52 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table52.AddRow(new string[] {
+                        "Name",
+                        "AT Quote to Revise"});
+            table52.AddRow(new string[] {
+                        "Price List",
+                        "Automated Testing PL"});
+            table52.AddRow(new string[] {
                         "Potential Customer",
                         "QuoteTesting"});
-#line 61
-testRunner.Then("RevisiedQuote has the following values", ((string)(null)), table50, "Then ");
+#line 69
+testRunner.And("a quote named TestQuote with the following values", ((string)(null)), table52, "And ");
+#line 74
+testRunner.When("the quote TestQuote is activated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 75
+testRunner.And("TestQuote is revised and its revised quote is named RevisiedQuote", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table53 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table53.AddRow(new string[] {
+                        "Name",
+                        "AT Quote to Revise"});
+            table53.AddRow(new string[] {
+                        "Price List",
+                        "Automated Testing PL"});
+            table53.AddRow(new string[] {
+                        "Potential Customer",
+                        "QuoteTesting"});
+#line 76
+testRunner.Then("RevisiedQuote has the following values", ((string)(null)), table53, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

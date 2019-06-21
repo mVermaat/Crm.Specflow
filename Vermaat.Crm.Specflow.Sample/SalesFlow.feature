@@ -28,6 +28,21 @@ And an opportunity exists with the following values
 	| Topic            | Qualification Test |
 
 @API @Chrome @Cleanup
+Scenario: Filling Money fields
+Given an account named TestAccount with the following values
+	| Property     | Value       |
+	| Account Name | TestAccount |
+When a related opportunity from TestAccount named TestOpp is created with the following values
+	| Property      | Value          |
+	| Topic         | Test Opp Money |
+	| Budget Amount | 12345          |
+Then TestOpp has the following values
+	| Property      | Value          |
+	| Topic         | Test Opp Money |
+	| Budget Amount | 12345          |
+	| Account       | TestAccount    |
+
+@API @Chrome @Cleanup
 Scenario: Convert Quote to Sales Order
 Given an account named QuoteTesting with the following values
 	| Property              | Value                   |
