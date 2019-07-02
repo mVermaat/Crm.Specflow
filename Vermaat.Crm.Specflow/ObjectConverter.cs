@@ -66,9 +66,23 @@ namespace Vermaat.Crm.Specflow
                     else
                         return lookup;
 
-
+                case AttributeTypeCode.Virtual:
+                    return ParseVirtualType(context, metadata, value, objectType);
 
                 default: throw new NotImplementedException(string.Format("Type {0} not implemented", metadata.AttributeType));
+            }
+        }
+
+        private static object ParseVirtualType(CrmTestingContext context, AttributeMetadata metadata, string value, ConvertedObjectType objectType)
+        {
+            
+            if (metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
+            {
+                return new OptionSetValueCollection(value.Split(',').Select(v => GetOptionSetValue(metadata, v.Trim(), context)).ToList());
+            }
+            else
+            {
+                throw new NotImplementedException(string.Format("Virtual type {0} not implemented", metadata.AttributeTypeName.Value));
             }
         }
 

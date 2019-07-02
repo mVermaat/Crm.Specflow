@@ -132,6 +132,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     case AttributeTypeCode.Money:
                         SetMoneyField((Money)fieldValue);
                         break;
+                    case AttributeTypeCode.Virtual:
+                        SetVirtualField(fieldValue, fieldValueText);
+                        break;
                     default:
                         SetTextField((string)fieldValue);
                         break;
@@ -142,6 +145,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 Logger.WriteLine($"Clearing field value");
                 ClearValue(crmContext);
             }
+        }
+
+        private void SetVirtualField(object fieldValue, string fieldValueText)
+        {
+            if (_metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
+                _app.App.Entity.SetValue(new MultiValueOptionSet { Name = _metadata.LogicalName, Values = fieldValueText.Split(',').Select(v => v.Trim()).ToArray() });
+            else
+                throw new NotImplementedException(string.Format("Virtual type {0} not implemented", _metadata.AttributeTypeName.Value));
         }
 
         private void ClearValue(CrmTestingContext crmContext)
