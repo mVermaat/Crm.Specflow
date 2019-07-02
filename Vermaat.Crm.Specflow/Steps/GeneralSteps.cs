@@ -114,6 +114,13 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new MergeRecordsCommand(_crmContext, targetRecord, subordinateRecord, mergeTable));
         }
 
+        [When(@"the following records of type ([^\s]+) are connected to (.*)")]
+        public void AssociateRecordsViaNN(string relatedEntityName, string alias, Table records)
+        {
+            _crmContext.CommandProcessor.Execute(new AssociateToNNRelationshipCommand(_crmContext, alias, relatedEntityName, records));
+        }
+
+
         #endregion
 
         #region Then
@@ -158,6 +165,11 @@ namespace Vermaat.Crm.Specflow.Steps
             return records[0];
         }
 
+        [Then(@"(.*) has the following connected records of type ([^\s]+)")]
+        public void ThenRecordsAreConnectedViaNN(string alias, string relatedEntityName, Table records)
+        {
+            _crmContext.CommandProcessor.Execute(new AssertNNRelationshipCommand(_crmContext, alias, relatedEntityName, records));
+        }
 
         #endregion
 

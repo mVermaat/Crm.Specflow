@@ -664,6 +664,91 @@ testRunner.Then("ChildContact has the following values", ((string)(null)), table
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Connect records via a N:N Relationship", new string[] {
+                "API",
+                "Cleanup"}, SourceLine=182)]
+        public virtual void ConnectRecordsViaANNRelationship()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Connect records via a N:N Relationship", null, new string[] {
+                        "API",
+                        "Cleanup"});
+#line 183
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table27.AddRow(new string[] {
+                        "Account Name",
+                        "NN Relationship"});
+            table27.AddRow(new string[] {
+                        "Main Phone",
+                        "0612345678"});
+#line 184
+testRunner.Given("an account named NNAccount with the following values", ((string)(null)), table27, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table28.AddRow(new string[] {
+                        "First Name",
+                        "John"});
+            table28.AddRow(new string[] {
+                        "Last Name",
+                        "Smith"});
+#line 188
+testRunner.And("a contact named Contact1 with the following values", ((string)(null)), table28, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table29.AddRow(new string[] {
+                        "First Name",
+                        "Bart"});
+            table29.AddRow(new string[] {
+                        "Last Name",
+                        "Pond"});
+#line 192
+testRunner.And("a contact named Contact2 with the following values", ((string)(null)), table29, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table30.AddRow(new string[] {
+                        "First Name",
+                        "Eric"});
+            table30.AddRow(new string[] {
+                        "Last Name",
+                        "Foreman"});
+#line 196
+testRunner.And("a contact named Contact3 with the following values", ((string)(null)), table30, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Value"});
+            table31.AddRow(new string[] {
+                        "Contact1"});
+            table31.AddRow(new string[] {
+                        "Contact2"});
+            table31.AddRow(new string[] {
+                        "Contact3"});
+#line 200
+testRunner.When("the following records of type contact are connected to NNAccount", ((string)(null)), table31, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table32 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Value"});
+            table32.AddRow(new string[] {
+                        "Contact1"});
+            table32.AddRow(new string[] {
+                        "Contact2"});
+            table32.AddRow(new string[] {
+                        "Contact3"});
+#line 205
+testRunner.Then("NNAccount has the following connected records of type contact", ((string)(null)), table32, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

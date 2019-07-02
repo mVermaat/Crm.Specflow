@@ -80,47 +80,47 @@ namespace Vermaat.Crm.Specflow.Sample
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table27.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "First Name",
                         "John"});
-            table27.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Last Name",
                         "Smith"});
-            table27.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Job Title",
                         "CLO"});
 #line 7
-testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table27, "Given ");
+testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table33, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table28.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "First Name",
                         "Jerry"});
-            table28.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Job Title",
                         "Chief Lazyness Officer"});
 #line 12
-testRunner.When("TestContact is updated with the following values", ((string)(null)), table28, "When ");
+testRunner.When("TestContact is updated with the following values", ((string)(null)), table34, "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table35 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table29.AddRow(new string[] {
+            table35.AddRow(new string[] {
                         "First Name",
                         "Jerry"});
-            table29.AddRow(new string[] {
+            table35.AddRow(new string[] {
                         "Last Name",
                         "Smith"});
-            table29.AddRow(new string[] {
+            table35.AddRow(new string[] {
                         "Job Title",
                         "Chief Lazyness Officer"});
 #line 16
-testRunner.Then("TestContact has the following values", ((string)(null)), table29, "Then ");
+testRunner.Then("TestContact has the following values", ((string)(null)), table35, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -137,77 +137,77 @@ testRunner.Then("TestContact has the following values", ((string)(null)), table2
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table36 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table30.AddRow(new string[] {
+            table36.AddRow(new string[] {
                         "Account Name",
                         "DynamicHands"});
-            table30.AddRow(new string[] {
+            table36.AddRow(new string[] {
                         "Main Phone",
                         "0612345678"});
-            table30.AddRow(new string[] {
+            table36.AddRow(new string[] {
                         "Website",
                         "https://dynamichands.nl"});
-            table30.AddRow(new string[] {
+            table36.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
 #line 24
-testRunner.Given("an account named FirstAccount with the following values", ((string)(null)), table30, "Given ");
+testRunner.Given("an account named FirstAccount with the following values", ((string)(null)), table36, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table37 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table31.AddRow(new string[] {
+            table37.AddRow(new string[] {
                         "Account Name",
                         "DynamicHands"});
-            table31.AddRow(new string[] {
+            table37.AddRow(new string[] {
                         "Main Phone",
                         "0612345678"});
-            table31.AddRow(new string[] {
+            table37.AddRow(new string[] {
                         "Website",
                         "https://dynamichands.nl"});
-            table31.AddRow(new string[] {
+            table37.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
 #line 30
-testRunner.And("an account named SecondAccount with the following values", ((string)(null)), table31, "And ");
+testRunner.And("an account named SecondAccount with the following values", ((string)(null)), table37, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table32 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table32.AddRow(new string[] {
+            table38.AddRow(new string[] {
                         "First Name",
                         "Jerry"});
-            table32.AddRow(new string[] {
+            table38.AddRow(new string[] {
                         "Last Name",
                         "Smith"});
-            table32.AddRow(new string[] {
+            table38.AddRow(new string[] {
                         "Company Name",
                         "SecondAccount"});
-            table32.AddRow(new string[] {
+            table38.AddRow(new string[] {
                         "Email",
                         "someone@test.com"});
 #line 36
-testRunner.When("a contact named TestLookup is created with the following values", ((string)(null)), table32, "When ");
+testRunner.When("a contact named TestLookup is created with the following values", ((string)(null)), table38, "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table39 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table33.AddRow(new string[] {
+            table39.AddRow(new string[] {
                         "First Name",
                         "Jerry"});
-            table33.AddRow(new string[] {
+            table39.AddRow(new string[] {
                         "Last Name",
                         "Smith"});
-            table33.AddRow(new string[] {
+            table39.AddRow(new string[] {
                         "Company Name",
                         "SecondAccount"});
-            table33.AddRow(new string[] {
+            table39.AddRow(new string[] {
                         "Email",
                         "someone@test.com"});
 #line 42
-testRunner.Then("TestLookup has the following values", ((string)(null)), table33, "Then ");
+testRunner.Then("TestLookup has the following values", ((string)(null)), table39, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -224,35 +224,35 @@ testRunner.Then("TestLookup has the following values", ((string)(null)), table33
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table40 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table34.AddRow(new string[] {
+            table40.AddRow(new string[] {
                         "First Name",
                         "John"});
-            table34.AddRow(new string[] {
+            table40.AddRow(new string[] {
                         "Last Name",
                         "Smith"});
-            table34.AddRow(new string[] {
+            table40.AddRow(new string[] {
                         "Job Title",
                         "CLO"});
 #line 51
-testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table34, "Given ");
+testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table40, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table35 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table41 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "State"});
-            table35.AddRow(new string[] {
+            table41.AddRow(new string[] {
                         "First Name",
                         "Recommended"});
-            table35.AddRow(new string[] {
+            table41.AddRow(new string[] {
                         "Last Name",
                         "Required"});
-            table35.AddRow(new string[] {
+            table41.AddRow(new string[] {
                         "Job Title",
                         "Optional"});
 #line 56
-testRunner.Then("TestContact\'s form has the following form state", ((string)(null)), table35, "Then ");
+testRunner.Then("TestContact\'s form has the following form state", ((string)(null)), table41, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -269,32 +269,32 @@ testRunner.Then("TestContact\'s form has the following form state", ((string)(nu
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table36 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table42 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table36.AddRow(new string[] {
+            table42.AddRow(new string[] {
                         "First Name",
                         "John"});
-            table36.AddRow(new string[] {
+            table42.AddRow(new string[] {
                         "Last Name",
                         "Smith"});
-            table36.AddRow(new string[] {
+            table42.AddRow(new string[] {
                         "Job Title",
                         "CLO"});
 #line 64
-testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table36, "Given ");
+testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table42, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table37 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table43 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "State"});
-            table37.AddRow(new string[] {
+            table43.AddRow(new string[] {
                         "First Name",
                         "Unlocked"});
-            table37.AddRow(new string[] {
+            table43.AddRow(new string[] {
                         "Last Date Included in Campaign",
                         "Locked"});
 #line 69
-testRunner.Then("TestContact\'s form has the following form state", ((string)(null)), table37, "Then ");
+testRunner.Then("TestContact\'s form has the following form state", ((string)(null)), table43, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -311,38 +311,38 @@ testRunner.Then("TestContact\'s form has the following form state", ((string)(nu
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table44 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table38.AddRow(new string[] {
+            table44.AddRow(new string[] {
                         "First Name",
                         "John"});
-            table38.AddRow(new string[] {
+            table44.AddRow(new string[] {
                         "Last Name",
                         "Smith"});
-            table38.AddRow(new string[] {
+            table44.AddRow(new string[] {
                         "Job Title",
                         "CLO"});
 #line 76
-testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table38, "Given ");
+testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table44, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table39 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table45 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "State"});
-            table39.AddRow(new string[] {
+            table45.AddRow(new string[] {
                         "First Name",
                         "Recommended, Unlocked, Visible"});
-            table39.AddRow(new string[] {
+            table45.AddRow(new string[] {
                         "Last Name",
                         "Required, Unlocked, Visible"});
-            table39.AddRow(new string[] {
+            table45.AddRow(new string[] {
                         "Job Title",
                         "Optional, Unlocked, Visible"});
-            table39.AddRow(new string[] {
+            table45.AddRow(new string[] {
                         "Last Date Included in Campaign",
                         "Locked, Optional, Visible"});
 #line 81
-testRunner.Then("TestContact\'s form has the following form state", ((string)(null)), table39, "Then ");
+testRunner.Then("TestContact\'s form has the following form state", ((string)(null)), table45, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

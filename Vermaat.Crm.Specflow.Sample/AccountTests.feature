@@ -178,3 +178,32 @@ Then ChildContact has the following values
 	| Address 1: Street 3        | Street 3      |
 	| Address 1: City            | City          |
 	| Address 1: State/Province  | State         |
+
+@API @Cleanup
+Scenario: Connect records via a N:N Relationship
+Given an account named NNAccount with the following values
+	| Property     | Value           |
+	| Account Name | NN Relationship |
+	| Main Phone   | 0612345678      |
+And a contact named Contact1 with the following values
+    | Property   | Value |
+    | First Name | John  |
+    | Last Name  | Smith |
+And a contact named Contact2 with the following values
+    | Property   | Value |
+    | First Name | Bart  |
+    | Last Name  | Pond  |
+And a contact named Contact3 with the following values
+    | Property   | Value   |
+    | First Name | Eric    |
+    | Last Name  | Foreman |
+When the following records of type contact are connected to NNAccount
+	| Value    |
+	| Contact1 |
+	| Contact2 |
+	| Contact3 |
+Then NNAccount has the following connected records of type contact
+	| Value    |
+	| Contact1 |
+	| Contact2 |
+	| Contact3 |

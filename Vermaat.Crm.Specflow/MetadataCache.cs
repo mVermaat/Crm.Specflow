@@ -15,13 +15,13 @@ namespace Vermaat.Crm.Specflow
     {
         private ConnectionManager _connectionManager;
 
-        private Dictionary<string, EntityMetadata> _entityMetadataCache;
+        private Dictionary<string, Dictionary<EntityFilters, EntityMetadata>> _entityMetadataCache;
         private Dictionary<string, DataCollection<Entity>> _attributeMapCache;
 
         public MetadataCache(ConnectionManager connectionManager)
         {
             _connectionManager = connectionManager;
-            _entityMetadataCache = new Dictionary<string, EntityMetadata>();
+            _entityMetadataCache = new Dictionary<string, Dictionary<EntityFilters, EntityMetadata>>();
             _attributeMapCache = new Dictionary<string, DataCollection<Entity>>();
         }
 
@@ -49,19 +49,25 @@ namespace Vermaat.Crm.Specflow
 
         }
 
-        public EntityMetadata GetEntityMetadata(string entityName)
+        public EntityMetadata GetEntityMetadata(string entityName, EntityFilters filters = EntityFilters.Attributes)
         {
-            if(!_entityMetadataCache.TryGetValue(entityName, out EntityMetadata result))
+            if (!_entityMetadataCache.TryGetValue(entityName, out var metadataDic))
             {
+                metadataDic = new Dictionary<EntityFilters, EntityMetadata>();
+                _entityMetadataCache.Add(entityName, metadataDic);
+            }
+
+            if(!metadataDic.TryGetValue(filters, out EntityMetadata result))
+            { 
                 var req = new RetrieveEntityRequest()
                 {
-                    EntityFilters = EntityFilters.Attributes,
+                    EntityFilters = filters,
                     RetrieveAsIfPublished = true,
                     LogicalName = entityName,
                 };
 
                 result = _connectionManager.CurrentConnection.Execute<RetrieveEntityResponse>(req).EntityMetadata;
-                _entityMetadataCache.Add(entityName, result);
+                metadataDic.Add(filters, result);
             }
             return result;
         }

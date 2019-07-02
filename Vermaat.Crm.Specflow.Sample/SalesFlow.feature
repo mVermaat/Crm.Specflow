@@ -78,3 +78,4 @@ Then RevisiedQuote has the following values
 	| Name               | AT Quote to Revise   |
 	| Price List         | Automated Testing PL |
 	| Potential Customer | QuoteTesting         |
+

@@ -151,6 +151,8 @@
     <Compile Include="BusinessProcessFlowHelper.cs" />
     <Compile Include="CommandAction.cs" />
     <Compile Include="Commands\ActivateQuoteCommand.cs" />
+    <Compile Include="Commands\AssertNNRelationshipCommand.cs" />
+    <Compile Include="Commands\AssociateToNNRelationshipCommand.cs" />
     <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
     <Compile Include="Commands\CreateRelatedRecordCommand.cs" />
     <Compile Include="Commands\MergeRecordsCommand.cs" />
