@@ -49,7 +49,7 @@ namespace Vermaat.Crm.Specflow.Commands
             var currentRecordFieldName = relationship.Entity1LogicalName == record.LogicalName ? relationship.Entity1IntersectAttribute : relationship.Entity2IntersectAttribute;
             var relatedFieldName = relationship.Entity1LogicalName == _relatedEntityName ? relationship.Entity1IntersectAttribute : relationship.Entity2IntersectAttribute;
 
-            var query = new QueryExpression(relationship.SchemaName);
+            var query = new QueryExpression(relationship.IntersectEntityName);
             query.Criteria.AddCondition(currentRecordFieldName, ConditionOperator.Equal, record.Id);
             query.Criteria.AddCondition(relatedFieldName, ConditionOperator.In, records.Select(r => (object)r.Id).ToArray());
             var result = GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(query);
