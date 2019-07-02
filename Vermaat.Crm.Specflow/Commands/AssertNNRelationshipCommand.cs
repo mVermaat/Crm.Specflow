@@ -50,11 +50,12 @@ namespace Vermaat.Crm.Specflow.Commands
             var relatedFieldName = relationship.Entity1LogicalName == _relatedEntityName ? relationship.Entity1IntersectAttribute : relationship.Entity2IntersectAttribute;
 
             var query = new QueryExpression(relationship.IntersectEntityName);
+            query.ColumnSet.AddColumn("roleid");
             query.Criteria.AddCondition(currentRecordFieldName, ConditionOperator.Equal, record.Id);
             query.Criteria.AddCondition(relatedFieldName, ConditionOperator.In, records.Select(r => (object)r.Id).ToArray());
             var result = GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(query);
 
-            Assert.AreEqual(records.Count, result.Entities.Count, $"Different records: {string.Join(", ", records.Where(r => !result.Entities.Select(e => e.Id).Contains(r.Id)).Select(r => r.Name))}");
+            Assert.AreEqual(records.Count, result.Entities.Count, $"Different records: {string.Join(", ", records.Where(r => !result.Entities.Select(e => e.GetAttributeValue<Guid>("roleid")).Contains(r.Id)).Select(r => r.Name))}");
         }
     }
 }
