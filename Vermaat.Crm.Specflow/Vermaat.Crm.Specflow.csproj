@@ -181,6 +181,7 @@
     <Compile Include="Commands\UpdateStatusCommand.cs" />
     <Compile Include="Commands\WaitForAsyncJobsCommand.cs" />
     <Compile Include="DefaultCrmConnectionProvider.cs" />
+    <Compile Include="EntityReferenceComparer.cs" />
     <Compile Include="GlobalTestingContext.cs" />
     <Compile Include="UserDetails.cs" />
     <Compile Include="Constants.cs" />
