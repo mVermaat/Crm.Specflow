@@ -101,6 +101,11 @@ namespace Vermaat.Crm.Specflow
 
         public static EntityReference GetLookupValue(CrmTestingContext context, string alias, string targetEntity)
         {
+            return GetLookupValue(context, alias, targetEntity, new ConditionExpression[0]);
+        }
+
+        public static EntityReference GetLookupValue(CrmTestingContext context, string alias, string targetEntity, IEnumerable<ConditionExpression> addtionalLookupFilters)
+        {
             Logger.WriteLine($"Getting lookupvalue for entity {targetEntity}");
 
             var result = context.RecordCache.Get(alias);
@@ -118,6 +123,15 @@ namespace Vermaat.Crm.Specflow
                 ColumnSet = new ColumnSet(targetMd.PrimaryNameAttribute)
             };
             qe.Criteria.AddCondition(targetMd.PrimaryNameAttribute, ConditionOperator.Equal, alias);
+
+            if(addtionalLookupFilters != null)
+            {
+                foreach(var filter in addtionalLookupFilters)
+                {
+                    qe.Criteria.AddCondition(filter);
+                }
+            }
+
             var col = GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(qe);
 
             Logger.WriteLine($"Looked for {targetEntity} with {targetMd.PrimaryNameAttribute} is {alias}. Found {col.Entities.Count} records");
