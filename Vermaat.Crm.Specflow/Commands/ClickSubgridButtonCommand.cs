@@ -10,14 +10,15 @@ namespace Vermaat.Crm.Specflow.Commands
     public class ClickSubgridButtonCommand : BrowserOnlyCommand
     {
         private readonly string _parentAlias;
-
+        private readonly string _tabName;
         private readonly string _subgridName;
         private readonly string _gridButtonId;
 
         public ClickSubgridButtonCommand(CrmTestingContext crmContext, SeleniumTestingContext seleniumContext,
-            string parentAlias, string subgridName, string gridButtonId) : base(crmContext, seleniumContext)
+            string parentAlias, string tabName, string subgridName, string gridButtonId) : base(crmContext, seleniumContext)
         {
             _parentAlias = parentAlias;
+            _tabName = tabName;
             _subgridName = subgridName;
             _gridButtonId = gridButtonId;
         }
@@ -29,6 +30,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
             var browser = _seleniumContext.GetBrowser();
             var record = browser.OpenRecord(parentMd, parentRecord);
+            record.ExpandTab(_tabName);
 
             record.ClickSubgridButton(_subgridName, _gridButtonId);
         }
