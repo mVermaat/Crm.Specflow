@@ -153,6 +153,7 @@
     <Compile Include="Commands\AssertNNRelationshipCommand.cs" />
     <Compile Include="Commands\AssociateToNNRelationshipCommand.cs" />
     <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
+    <Compile Include="Commands\CreateChildRecordViaSubgridCommand.cs" />
     <Compile Include="Commands\CreateRelatedRecordCommand.cs" />
     <Compile Include="Commands\MergeRecordsCommand.cs" />
     <Compile Include="Commands\ReviseQuoteCommand.cs" />
@@ -180,6 +181,9 @@
     <Compile Include="Commands\UpdateStatusCommand.cs" />
     <Compile Include="Commands\WaitForAsyncJobsCommand.cs" />
     <Compile Include="DefaultCrmConnectionProvider.cs" />
+    <Compile Include="EasyRepro\SeleniumFunctions.cs" />
+    <Compile Include="EasyRepro\XPathData.cs" />
+    <Compile Include="EasyRepro\XPathItems.cs" />
     <Compile Include="EntityReferenceComparer.cs" />
     <Compile Include="GlobalTestingContext.cs" />
     <Compile Include="UserDetails.cs" />

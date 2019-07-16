@@ -73,6 +73,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     link += $"&id=%7B{id:D}%7D";
                 if (!string.IsNullOrEmpty(_appId))
                     link += $"&appid={_appId}";
+
                 if (parent != null)
                 {
                     link += $"&extraqs={HttpUtility.UrlEncode($"parentrecordid={parent.Id}&parentrecordname={parent.Name}&parentrecordtype={parent.LogicalName}")}";

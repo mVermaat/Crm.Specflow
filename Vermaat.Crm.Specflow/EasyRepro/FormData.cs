@@ -31,6 +31,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _formFields = InitializeFormData();
         }
 
+        public void ClickSubgridButton(string subgridName, string subgridButton)
+        {
+            _app.Client.ClickSubgridButton(subgridName, subgridButton);
+        }
+
         public bool ContainsField(string fieldLogicalName)
         {
             var containsField = _formFields.ContainsKey(fieldLogicalName);
