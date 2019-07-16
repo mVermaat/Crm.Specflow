@@ -153,7 +153,7 @@
     <Compile Include="Commands\AssertNNRelationshipCommand.cs" />
     <Compile Include="Commands\AssociateToNNRelationshipCommand.cs" />
     <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
-    <Compile Include="Commands\CreateChildRecordViaSubgridCommand.cs" />
+    <Compile Include="Commands\ClickSubgridButtonCommand.cs" />
     <Compile Include="Commands\CreateRelatedRecordCommand.cs" />
     <Compile Include="Commands\MergeRecordsCommand.cs" />
     <Compile Include="Commands\ReviseQuoteCommand.cs" />

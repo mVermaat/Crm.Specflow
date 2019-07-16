@@ -23,7 +23,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 var buttons = menuBar.FindElements(By.TagName("button"));
 
-                var button = buttons.FirstOrDefault(b => b.GetAttribute("data-id").Contains("subgridButtonId"));
+                var button = buttons.FirstOrDefault(b => b.GetAttribute("data-id").Contains(subgridButtonId));
                 if(button != null)
                 {
                     button.Click();
