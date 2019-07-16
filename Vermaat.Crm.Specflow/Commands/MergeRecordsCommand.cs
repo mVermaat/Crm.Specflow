@@ -65,6 +65,15 @@ namespace Vermaat.Crm.Specflow.Commands
             {
                 result.Attributes.Remove(toRemove);
             }
+
+            // Need to clear name from entityreference, as merge creates an error if an entityreference has its name filled.
+            foreach(var remainingAttribute in result.Attributes)
+            {
+                var value = remainingAttribute.Value as EntityReference;
+                if (value != null)
+                    value.Name = null;
+            }
+
             Logger.WriteLine($"Merging fields: {string.Join(", ", result.Attributes.Keys)}");
 
             return result;
