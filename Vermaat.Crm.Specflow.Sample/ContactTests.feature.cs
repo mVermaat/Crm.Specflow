@@ -347,6 +347,65 @@ testRunner.Then("TestContact\'s form has the following form state", ((string)(nu
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Filling DateTime fields", new string[] {
+                "Cleanup",
+                "Chrome",
+                "API"}, SourceLine=88)]
+        public virtual void FillingDateTimeFields()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Filling DateTime fields", null, new string[] {
+                        "Cleanup",
+                        "Chrome",
+                        "API"});
+#line 89
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table46 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table46.AddRow(new string[] {
+                        "First Name",
+                        "John"});
+            table46.AddRow(new string[] {
+                        "Last Name",
+                        "Smith"});
+            table46.AddRow(new string[] {
+                        "Job Title",
+                        "CLO"});
+            table46.AddRow(new string[] {
+                        "Birthday",
+                        "20-05-1985"});
+            table46.AddRow(new string[] {
+                        "Anniversary",
+                        "10-10-2010"});
+#line 90
+testRunner.Given("a contact named TestContact with the following values", ((string)(null)), table46, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table47 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table47.AddRow(new string[] {
+                        "First Name",
+                        "John"});
+            table47.AddRow(new string[] {
+                        "Last Name",
+                        "Smith"});
+            table47.AddRow(new string[] {
+                        "Job Title",
+                        "CLO"});
+            table47.AddRow(new string[] {
+                        "Birthday",
+                        "20-05-1985"});
+            table47.AddRow(new string[] {
+                        "Anniversary",
+                        "10-10-2010"});
+#line 97
+testRunner.Then("TestContact has the following values", ((string)(null)), table47, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

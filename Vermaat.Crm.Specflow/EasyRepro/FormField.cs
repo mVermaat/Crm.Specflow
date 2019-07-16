@@ -11,6 +11,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public class FormField
     {
+        private static readonly string _datetimeFormat;
+        static FormField()
+        {
+            _datetimeFormat = HelperMethods.GetAppSettingsValue("DateTimeFormat", false);
+        }
+
         private readonly string[] _controls;
         private readonly FormData _form;
         private readonly UCIApp _app;
@@ -181,7 +187,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void SetDateTimeField(DateTime fieldValue)
         {
-            _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue);
+            _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue, _datetimeFormat);
         }
 
         private void SetOptionSetField(string optionSetLabel)
@@ -256,5 +262,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return true;
             });
         }
+
     }
 }

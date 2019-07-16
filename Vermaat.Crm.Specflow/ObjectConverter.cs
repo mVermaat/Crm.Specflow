@@ -5,6 +5,7 @@ using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,13 @@ namespace Vermaat.Crm.Specflow
 {
     public static class ObjectConverter
     {
+        private static readonly string _datetimeFormat;
+
+        static ObjectConverter()
+        {
+            _datetimeFormat = HelperMethods.GetAppSettingsValue("DateTimeFormat", false);
+        }
+
         public static object ToCrmObject(string entityName, string attributeName, string value, CrmTestingContext context, ConvertedObjectType objectType = ConvertedObjectType.Default)
         {
             Logger.WriteLine($"Converting CRM Object. Entity: {entityName}, Attribute: {attributeName}, Value: {value}, ObjectType: {objectType}");
@@ -33,7 +41,7 @@ namespace Vermaat.Crm.Specflow
             {
                 case AttributeTypeCode.Boolean:
                     return GetTwoOptionValue(metadata, value, context);
-                case AttributeTypeCode.DateTime: return DateTime.Parse(value);
+                case AttributeTypeCode.DateTime: return DateTime.ParseExact(value, _datetimeFormat, CultureInfo.InvariantCulture);
                 case AttributeTypeCode.Double: return double.Parse(value);
                 case AttributeTypeCode.Decimal: return decimal.Parse(value);
                 case AttributeTypeCode.Integer: return int.Parse(value);

@@ -85,3 +85,19 @@ Then TestContact's form has the following form state
 	| Job Title                      | Optional, Unlocked, Visible    |
 	| Last Date Included in Campaign | Locked, Optional, Visible      |
 
+@Cleanup @Chrome @API
+Scenario: Filling DateTime fields
+Given a contact named TestContact with the following values
+	| Property    | Value      |
+	| First Name  | John       |
+	| Last Name   | Smith      |
+	| Job Title   | CLO        |
+	| Birthday    | 20-05-1985 |
+	| Anniversary | 10-10-2010 |
+Then TestContact has the following values
+    | Property    | Value      |
+    | First Name  | John       |
+    | Last Name   | Smith      |
+    | Job Title   | CLO        |
+    | Birthday    | 20-05-1985 |
+    | Anniversary | 10-10-2010 |
