@@ -99,7 +99,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return OpenRecord(entityMetadata, crmRecord.LogicalName, crmRecord.Id);
         }
 
-        private FormData GetFormData(EntityMetadata entityMetadata, string entityName)
+        public FormData GetFormData(EntityMetadata entityMetadata, string entityName)
         {
             var currentFormId = _app.WebDriver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId()")?.ToString();
 
