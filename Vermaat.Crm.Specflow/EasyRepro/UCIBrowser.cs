@@ -79,19 +79,24 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     link += $"&extraqs={HttpUtility.UrlEncode($"parentrecordid={parent.Id}&parentrecordname={parent.Name}&parentrecordtype={parent.LogicalName}")}";
                 }
 
-
                 driver.Navigate().GoToUrl(link);
-                driver.WaitForPageToLoad();
-                driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
-                    new TimeSpan(0, 0, 30),
-                    null,
-                    d => { throw new Exception("CRM Record is Unavailable or not finished loading. Timeout Exceeded"); }
-                );
+                WaitForFormLoad();
 
                 return true;
             });
 
             return GetFormData(entityMetadata, entityName);
+        }
+
+        private void WaitForFormLoad()
+        {
+            var driver = _app.Client.Browser.Driver;
+            driver.WaitForPageToLoad();
+            driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
+                new TimeSpan(0, 0, 30),
+                null,
+                d => { throw new Exception("CRM Record is Unavailable or not finished loading. Timeout Exceeded"); }
+            );
         }
 
         public FormData OpenRecord(EntityMetadata entityMetadata, EntityReference crmRecord)
