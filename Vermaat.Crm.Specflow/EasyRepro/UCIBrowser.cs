@@ -88,7 +88,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return GetFormData(entityMetadata, entityName);
         }
 
-        private void WaitForFormLoad()
+        public void WaitForFormLoad()
         {
             var driver = _app.Client.Browser.Driver;
             driver.WaitForPageToLoad();

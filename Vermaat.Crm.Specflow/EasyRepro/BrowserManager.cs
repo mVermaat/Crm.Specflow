@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    public class BrowserManager : IDisposable
+    internal class BrowserManager : IDisposable
     {
         private readonly ButtonTexts _buttonTexts;
         private Dictionary<BrowserType, Dictionary<string, UCIBrowser>> _browserCache;

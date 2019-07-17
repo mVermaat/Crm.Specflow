@@ -13,7 +13,7 @@ namespace Vermaat.Crm.Specflow
         public static MetadataCache Metadata { get; }
         public static ButtonTexts ButtonTexts { get;  }
 
-        public static BrowserManager BrowserManager { get; }
+        internal static BrowserManager BrowserManager { get; }
 
         static GlobalTestingContext()
         {
