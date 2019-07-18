@@ -99,6 +99,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     Logger.WriteLine("Save not yet completed. Waiting..");
                     Thread.Sleep(500);
                 }
+                else if(!string.IsNullOrEmpty(footerElement.Text) && footerElement.Text.ToLower() == "unsaved changes")
+                {
+                    throw new InvalidOperationException("Save failed. Detected unsaved changes after saving");
+                }
                 else
                 {
                     Logger.WriteLine("Save sucessfull");
