@@ -2,7 +2,7 @@
 Some tests specific to the contact entity. 
 Used to show tests that use unusual fields like the address and composite fields
 
-@API @Cleanup
+@API @Chrome @Cleanup
 Scenario: Basic contact test
 Given a contact named TestContact with the following values
 	| Property   | Value |

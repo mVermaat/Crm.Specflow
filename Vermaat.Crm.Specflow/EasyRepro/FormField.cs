@@ -141,6 +141,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     case AttributeTypeCode.Virtual:
                         SetVirtualField(fieldValue, fieldValueText);
                         break;
+                    case AttributeTypeCode.Integer:
+                    case AttributeTypeCode.Decimal:
+                        SetTextField(fieldValueText);
+                        break;
                     default:
                         SetTextField((string)fieldValue);
                         break;

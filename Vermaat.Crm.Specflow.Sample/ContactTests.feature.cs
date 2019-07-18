@@ -70,11 +70,13 @@ namespace Vermaat.Crm.Specflow.Sample
         
         [TechTalk.SpecRun.ScenarioAttribute("Basic contact test", new string[] {
                 "API",
+                "Chrome",
                 "Cleanup"}, SourceLine=5)]
         public virtual void BasicContactTest()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Basic contact test", null, new string[] {
                         "API",
+                        "Chrome",
                         "Cleanup"});
 #line 6
 this.ScenarioInitialize(scenarioInfo);
