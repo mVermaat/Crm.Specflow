@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,14 +27,25 @@ namespace Vermaat.Crm.Specflow
         public void SetCurrentConnection(UserDetails userDetails)
         {
             Logger.WriteLine($"Changing current connection to {userDetails.Username}");
-            if(!_services.TryGetValue(userDetails.Username, out CrmService crmService))
+            if (!_services.TryGetValue(userDetails.Username, out CrmService crmService))
             {
                 Logger.WriteLine("Connection doesn't exist. Creating new API connection");
                 crmService = new CrmService(ToCrmClientString(userDetails));
                 _services.Add(userDetails.Username, crmService);
+                PopulateUserSettings(userDetails, crmService);
             }
             CurrentConnection = crmService;
             CurrentUserDetails = userDetails;
+        }
+
+        private void PopulateUserSettings(UserDetails userDetails, CrmService crmService)
+        {
+            var query = new QueryExpression("usersettings");
+            query.TopCount = 1;
+            query.ColumnSet.AllColumns = true;
+            query.Criteria.AddCondition("systemuserid", ConditionOperator.EqualUserId);
+
+            userDetails.UserSettings = crmService.RetrieveMultiple(query).Entities[0];
         }
 
         private string ToCrmClientString(UserDetails userDetails)

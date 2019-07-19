@@ -16,9 +16,12 @@ namespace Vermaat.Crm.Specflow
     public static class ObjectConverter
     {
         private static readonly string _datetimeFormat;
+        private static readonly string _dateonlyFormat;
+
 
         static ObjectConverter()
         {
+            _dateonlyFormat = HelperMethods.GetAppSettingsValue("DateFormat", false);
             _datetimeFormat = HelperMethods.GetAppSettingsValue("DateTimeFormat", false);
         }
 
@@ -41,10 +44,11 @@ namespace Vermaat.Crm.Specflow
             {
                 case AttributeTypeCode.Boolean:
                     return GetTwoOptionValue(metadata, value, context);
-                case AttributeTypeCode.DateTime: return DateTime.ParseExact(value, _datetimeFormat, CultureInfo.InvariantCulture);
                 case AttributeTypeCode.Double: return double.Parse(value);
                 case AttributeTypeCode.Decimal: return decimal.Parse(value);
                 case AttributeTypeCode.Integer: return int.Parse(value);
+                case AttributeTypeCode.DateTime:
+                    return DateTime.ParseExact(value, GetDateTimeFormat((DateTimeAttributeMetadata)metadata), CultureInfo.InvariantCulture);
 
                 case AttributeTypeCode.Memo:
                 case AttributeTypeCode.String: return value;
@@ -79,6 +83,11 @@ namespace Vermaat.Crm.Specflow
 
                 default: throw new NotImplementedException(string.Format("Type {0} not implemented", metadata.AttributeType));
             }
+        }
+
+        private static string GetDateTimeFormat(DateTimeAttributeMetadata metadata)
+        {
+            return (metadata.Format == DateTimeFormat.DateOnly || metadata.DateTimeBehavior == DateTimeBehavior.DateOnly) ? _dateonlyFormat : _datetimeFormat;
         }
 
         private static object ParseVirtualType(CrmTestingContext context, AttributeMetadata metadata, string value, ConvertedObjectType objectType)
