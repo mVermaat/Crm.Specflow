@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Metadata;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -77,6 +78,11 @@ namespace Vermaat.Crm.Specflow
                 return ((OptionSetValueCollection)value).Where(ov => ov != null).Select(ov => ov.Value);
             }
             return value;
+        }
+
+        public static DateTimeFormat GetDateTimeFormat(DateTimeAttributeMetadata metadata)
+        {
+            return (metadata.Format == DateTimeFormat.DateOnly || metadata.DateTimeBehavior == DateTimeBehavior.DateOnly) ? DateTimeFormat.DateOnly : DateTimeFormat.DateAndTime;
         }
 
     }

@@ -191,7 +191,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void SetDateTimeField(DateTime fieldValue)
         {
-            _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue, _datetimeFormat);
+            var format = HelperMethods.GetDateTimeFormat((DateTimeAttributeMetadata)_metadata);
+
+            if(format == DateTimeFormat.DateAndTime)
+            {
+                _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue, _datetimeFormat);
+            }
+            else
+            {
+                sad
+            }
         }
 
         private void SetOptionSetField(string optionSetLabel)
