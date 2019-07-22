@@ -48,9 +48,7 @@ namespace Vermaat.Crm.Specflow
                 case AttributeTypeCode.Decimal: return decimal.Parse(value);
                 case AttributeTypeCode.Integer: return int.Parse(value);
                 case AttributeTypeCode.DateTime:
-                    return DateTime.ParseExact(value, 
-                        ((DateTimeAttributeMetadata)metadata).Format == DateTimeFormat.DateOnly ? _dateonlyFormat : _datetimeFormat,
-                        CultureInfo.InvariantCulture);
+                    return ParseDateTime(metadata, value);
 
                 case AttributeTypeCode.Memo:
                 case AttributeTypeCode.String: return value;
@@ -87,7 +85,19 @@ namespace Vermaat.Crm.Specflow
             }
         }
 
-        
+        private static DateTime? ParseDateTime(AttributeMetadata metadata, string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return null;
+
+            var dateTime = DateTime.ParseExact(value,
+                         ((DateTimeAttributeMetadata)metadata).Format == DateTimeFormat.DateOnly ? _dateonlyFormat : _datetimeFormat,
+                         CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal);
+
+            // Todo: timezone conversion
+
+            return dateTime;
+        }
 
         private static object ParseVirtualType(CrmTestingContext context, AttributeMetadata metadata, string value, ConvertedObjectType objectType)
         {

@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="AccountTests.feature" />
+    <None Include="ActivityTests.feature" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
