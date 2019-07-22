@@ -24,21 +24,10 @@ namespace Vermaat.Crm.Specflow.Commands
         public override EntityReferenceCollection Execute()
         {
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
-            Entity lead = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(aliasRef, new ColumnSet(Lead.Fields.TransactionCurrencyId, Lead.Fields.CustomerId, Lead.Fields.CampaignId));
+            var lead = new Lead(GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(aliasRef, new ColumnSet(Lead.Fields.TransactionCurrencyId, Lead.Fields.CustomerId, Lead.Fields.CampaignId)));
 
             Logger.WriteLine($"Qualifying Lead {lead.Id}");
-            QualifyLeadRequest req = new QualifyLeadRequest()
-            {
-                CreateAccount = _createAccount,
-                CreateContact = _createContact,
-                CreateOpportunity = _createOpportunity,
-                LeadId = aliasRef,
-                OpportunityCurrencyId = lead.GetAttributeValue<EntityReference>(Lead.Fields.TransactionCurrencyId),
-                OpportunityCustomerId = lead.GetAttributeValue<EntityReference>(Lead.Fields.CustomerId),
-                SourceCampaignId = lead.GetAttributeValue<EntityReference>(Lead.Fields.CampaignId),
-                Status = new OptionSetValue((int)Lead_StatusCode.Qualified)
-            };
-            req.Parameters.Add("SuppressDuplicateDetection", true);
+            QualifyLeadRequest req = lead.CreateQualifyLeadRequest(_createAccount, _createContact, _createOpportunity);
 
             return GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<QualifyLeadResponse>(req).CreatedEntities;
         }

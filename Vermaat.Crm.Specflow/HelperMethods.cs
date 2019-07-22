@@ -80,10 +80,5 @@ namespace Vermaat.Crm.Specflow
             return value;
         }
 
-        public static DateTimeFormat GetDateTimeFormat(DateTimeAttributeMetadata metadata)
-        {
-            return (metadata.Format == DateTimeFormat.DateOnly || metadata.DateTimeBehavior == DateTimeBehavior.DateOnly) ? DateTimeFormat.DateOnly : DateTimeFormat.DateAndTime;
-        }
-
     }
 }

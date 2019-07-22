@@ -11,11 +11,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public class FormField
     {
-        private static readonly string _datetimeFormat;
-        static FormField()
-        {
-            _datetimeFormat = HelperMethods.GetAppSettingsValue("DateTimeFormat", false);
-        }
 
         private readonly string[] _controls;
         private readonly FormData _form;
@@ -56,7 +51,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             BrowserCommandResult<RequiredState> result = _app.Client.Execute(BrowserOptionHelper.GetOptions($"Check field requirement"), driver =>
             {
-                var fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)));
+                IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)));
                 if (fieldContainer == null)
                     throw new InvalidOperationException($"Field {_metadata.LogicalName} can't be found on form");
 
@@ -89,7 +84,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Check field requirement"), driver =>
             {
-                var fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)));
+                IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)));
                 if (fieldContainer == null)
                     throw new InvalidOperationException($"Field {_metadata.LogicalName} can't be found on form");
 
@@ -191,16 +186,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void SetDateTimeField(DateTime fieldValue)
         {
-            var format = HelperMethods.GetDateTimeFormat((DateTimeAttributeMetadata)_metadata);
+            string format = ((DateTimeAttributeMetadata)_metadata).Format == DateTimeFormat.DateAndTime
+                ? GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.DateTimeFormat
+                : GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.DateFormat;
 
-            if(format == DateTimeFormat.DateAndTime)
-            {
-                _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue, _datetimeFormat);
-            }
-            else
-            {
-                sad
-            }
+            _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue, format);
         }
 
         private void SetOptionSetField(string optionSetLabel)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -45,7 +46,7 @@ namespace Vermaat.Crm.Specflow
             query.ColumnSet.AllColumns = true;
             query.Criteria.AddCondition("systemuserid", ConditionOperator.EqualUserId);
 
-            userDetails.UserSettings = crmService.RetrieveMultiple(query).Entities[0];
+            userDetails.UserSettings = new UserSettings(crmService.RetrieveMultiple(query).Entities[0]);
         }
 
         private string ToCrmClientString(UserDetails userDetails)

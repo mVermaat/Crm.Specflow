@@ -184,6 +184,8 @@
     <Compile Include="EasyRepro\SeleniumFunctions.cs" />
     <Compile Include="EasyRepro\XPathData.cs" />
     <Compile Include="EasyRepro\XPathItems.cs" />
+    <Compile Include="Entities\Lead.cs" />
+    <Compile Include="Entities\UserSettings.cs" />
     <Compile Include="EntityReferenceComparer.cs" />
     <Compile Include="GlobalTestingContext.cs" />
     <Compile Include="UserDetails.cs" />
@@ -201,8 +203,6 @@
     <Compile Include="EasyRepro\FormField.cs" />
     <Compile Include="EasyRepro\UCIBrowser.cs" />
     <Compile Include="EasyRepro\WebElementExtensions.cs" />
-    <Compile Include="Entities\Entities.cs" />
-    <Compile Include="Entities\OptionSets.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="HelperMethods.cs" />
     <Compile Include="Hooks.cs" />

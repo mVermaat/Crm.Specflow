@@ -48,7 +48,9 @@ namespace Vermaat.Crm.Specflow
                 case AttributeTypeCode.Decimal: return decimal.Parse(value);
                 case AttributeTypeCode.Integer: return int.Parse(value);
                 case AttributeTypeCode.DateTime:
-                    return DateTime.ParseExact(value, HelperMethods.GetDateTimeFormat((DateTimeAttributeMetadata)metadata), CultureInfo.InvariantCulture);
+                    return DateTime.ParseExact(value, 
+                        ((DateTimeAttributeMetadata)metadata).Format == DateTimeFormat.DateOnly ? _dateonlyFormat : _datetimeFormat,
+                        CultureInfo.InvariantCulture);
 
                 case AttributeTypeCode.Memo:
                 case AttributeTypeCode.String: return value;
