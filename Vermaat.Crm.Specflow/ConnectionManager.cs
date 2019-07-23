@@ -33,20 +33,10 @@ namespace Vermaat.Crm.Specflow
                 Logger.WriteLine("Connection doesn't exist. Creating new API connection");
                 crmService = new CrmService(ToCrmClientString(userDetails));
                 _services.Add(userDetails.Username, crmService);
-                PopulateUserSettings(userDetails, crmService);
+                userDetails.UserSettings = UserSettings.GetUserSettings(crmService);
             }
             CurrentConnection = crmService;
             CurrentUserDetails = userDetails;
-        }
-
-        private void PopulateUserSettings(UserDetails userDetails, CrmService crmService)
-        {
-            var query = new QueryExpression("usersettings");
-            query.TopCount = 1;
-            query.ColumnSet.AllColumns = true;
-            query.Criteria.AddCondition("systemuserid", ConditionOperator.EqualUserId);
-
-            userDetails.UserSettings = new UserSettings(crmService.RetrieveMultiple(query).Entities[0]);
         }
 
         private string ToCrmClientString(UserDetails userDetails)

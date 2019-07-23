@@ -92,11 +92,10 @@ namespace Vermaat.Crm.Specflow
 
             var dateTime = DateTime.ParseExact(value,
                          ((DateTimeAttributeMetadata)metadata).Format == DateTimeFormat.DateOnly ? _dateonlyFormat : _datetimeFormat,
-                         CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal);
+                         CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
 
-            // Todo: timezone conversion
-
-            return dateTime;
+           var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(dateTime);
+            return dateTime.Subtract(offset);
         }
 
         private static object ParseVirtualType(CrmTestingContext context, AttributeMetadata metadata, string value, ConvertedObjectType objectType)
