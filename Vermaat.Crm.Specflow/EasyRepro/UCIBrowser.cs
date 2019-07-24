@@ -80,12 +80,25 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 }
 
                 driver.Navigate().GoToUrl(link);
+                CheckAlert(driver);
                 WaitForFormLoad();
 
                 return true;
             });
 
             return GetFormData(entityMetadata, entityName);
+        }
+
+        private void CheckAlert(IWebDriver driver)
+        {
+            try
+            {
+                var alert = driver.SwitchTo().Alert();
+                alert.Accept();
+            }   
+            catch (NoAlertPresentException)
+            {
+            }
         }
 
         public void WaitForFormLoad()
