@@ -11,8 +11,15 @@ namespace Vermaat.Crm.Specflow
 {
     public class ConnectionManager : IDisposable
     {
+        private class ConnectionCache
+        {
+            public CrmService Service { get; set; }
+            public UserDetails UserDetails { get; set; }
+        }
+
+
         private readonly string _authType;
-        private readonly Dictionary<string, CrmService> _services;
+        private readonly Dictionary<string, ConnectionCache> _connectionCache;
 
         public CrmService CurrentConnection { get; private set; }
         public UserDetails CurrentUserDetails { get; private set; }
@@ -22,21 +29,26 @@ namespace Vermaat.Crm.Specflow
         {
             Url = new Uri(HelperMethods.GetAppSettingsValue("Url"));
             _authType = HelperMethods.GetAppSettingsValue("AuthType");
-            _services = new Dictionary<string, CrmService>();
+            _connectionCache = new Dictionary<string, ConnectionCache>();
         }
 
         public void SetCurrentConnection(UserDetails userDetails)
         {
             Logger.WriteLine($"Changing current connection to {userDetails.Username}");
-            if (!_services.TryGetValue(userDetails.Username, out CrmService crmService))
+            if (!_connectionCache.TryGetValue(userDetails.Username, out ConnectionCache connectionCache))
             {
                 Logger.WriteLine("Connection doesn't exist. Creating new API connection");
-                crmService = new CrmService(ToCrmClientString(userDetails));
-                _services.Add(userDetails.Username, crmService);
-                userDetails.UserSettings = UserSettings.GetUserSettings(crmService);
+                connectionCache = new ConnectionCache()
+                {
+                    Service = new CrmService(ToCrmClientString(userDetails)),
+                    UserDetails = new UserDetails { Username = userDetails.Username, Password = userDetails.Password }
+                };
+                connectionCache.UserDetails.UserSettings = UserSettings.GetUserSettings(connectionCache.Service);
+                _connectionCache.Add(userDetails.Username, connectionCache);
+               
             }
-            CurrentConnection = crmService;
-            CurrentUserDetails = userDetails;
+            CurrentConnection = connectionCache.Service;
+            CurrentUserDetails = connectionCache.UserDetails;
         }
 
         private string ToCrmClientString(UserDetails userDetails)
@@ -61,7 +73,7 @@ namespace Vermaat.Crm.Specflow
                 Logger.WriteLine("Cleaning up CRM API sessions");
                 if (disposing)
                 {
-                    _services.Clear();
+                    _connectionCache.Clear();
                 }
 
                 disposedValue = true;
