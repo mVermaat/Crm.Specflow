@@ -17,7 +17,7 @@ namespace Vermaat.Crm.Specflow.Sample
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [TechTalk.SpecRun.FeatureAttribute("AccountTests", Description="\tSome tests involving the account entity", SourceFile="AccountTests.feature", SourceLine=0)]
+    [TechTalk.SpecRun.FeatureAttribute("AccountTests", Description="    Some tests involving the account entity", SourceFile="AccountTests.feature", SourceLine=0)]
     public partial class AccountTestsFeature
     {
         
@@ -30,7 +30,7 @@ namespace Vermaat.Crm.Specflow.Sample
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "AccountTests", "\tSome tests involving the account entity", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "AccountTests", "    Some tests involving the account entity", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -745,6 +745,84 @@ testRunner.When("the following records of type contact are connected to NNAccoun
                         "Contact3"});
 #line 205
 testRunner.Then("NNAccount has the following connected records of type contact", ((string)(null)), table32, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Single form notification", new string[] {
+                "Chrome",
+                "Cleanup"}, SourceLine=211)]
+        public virtual void SingleFormNotification()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Single form notification", null, new string[] {
+                        "Chrome",
+                        "Cleanup"});
+#line 212
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table33.AddRow(new string[] {
+                        "Account Name",
+                        "Single Notification"});
+            table33.AddRow(new string[] {
+                        "Credit Limit",
+                        "10000"});
+#line 213
+testRunner.Given("an account named NotificationAccount with the following values", ((string)(null)), table33, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Message",
+                        "Level"});
+            table34.AddRow(new string[] {
+                        "The credit limit of this account is under 1.000.000",
+                        "Warning"});
+#line 217
+testRunner.Then("NotificationAccount has the following form notifications", ((string)(null)), table34, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Multiple form notifications", new string[] {
+                "Chrome",
+                "Cleanup"}, SourceLine=221)]
+        public virtual void MultipleFormNotifications()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Multiple form notifications", null, new string[] {
+                        "Chrome",
+                        "Cleanup"});
+#line 222
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table35 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table35.AddRow(new string[] {
+                        "Account Name",
+                        "Multiple Notifications"});
+            table35.AddRow(new string[] {
+                        "Credit Limit",
+                        "10000"});
+            table35.AddRow(new string[] {
+                        "Industry",
+                        "Brokers"});
+#line 223
+testRunner.Given("an account named NotificationAccount with the following values", ((string)(null)), table35, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table36 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Message",
+                        "Level"});
+            table36.AddRow(new string[] {
+                        "The credit limit of this account is under 1.000.000",
+                        "Warning"});
+            table36.AddRow(new string[] {
+                        "This account is from the broker industry. Additional rules applicable.",
+                        "Warning"});
+#line 228
+testRunner.Then("NotificationAccount has the following form notifications", ((string)(null)), table36, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

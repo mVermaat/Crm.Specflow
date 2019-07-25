@@ -150,6 +150,7 @@
     <Compile Include="BusinessProcessFlowHelper.cs" />
     <Compile Include="CommandAction.cs" />
     <Compile Include="Commands\ActivateQuoteCommand.cs" />
+    <Compile Include="Commands\AssertFormNotificationsCommand.cs" />
     <Compile Include="Commands\AssertNNRelationshipCommand.cs" />
     <Compile Include="Commands\AssociateToNNRelationshipCommand.cs" />
     <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
@@ -181,6 +182,8 @@
     <Compile Include="Commands\UpdateStatusCommand.cs" />
     <Compile Include="Commands\WaitForAsyncJobsCommand.cs" />
     <Compile Include="DefaultCrmConnectionProvider.cs" />
+    <Compile Include="EasyRepro\FormNotification.cs" />
+    <Compile Include="EasyRepro\FormNotificationType.cs" />
     <Compile Include="EasyRepro\SeleniumFunctions.cs" />
     <Compile Include="EasyRepro\SeleniumSelectorData.cs" />
     <Compile Include="EasyRepro\SeleniumSelectorItems.cs" />

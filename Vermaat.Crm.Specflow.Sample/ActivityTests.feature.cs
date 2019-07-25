@@ -80,35 +80,35 @@ namespace Vermaat.Crm.Specflow.Sample
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table37 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table33.AddRow(new string[] {
+            table37.AddRow(new string[] {
                         "Subject",
                         "TestDateTime"});
-            table33.AddRow(new string[] {
+            table37.AddRow(new string[] {
                         "Start Time",
                         "20-5-2018 10:00"});
-            table33.AddRow(new string[] {
+            table37.AddRow(new string[] {
                         "End Time",
                         "20-5-2018 12:00"});
 #line 6
-testRunner.Given("an appointment named TestAppointment with the following values", ((string)(null)), table33, "Given ");
+testRunner.Given("an appointment named TestAppointment with the following values", ((string)(null)), table37, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table34.AddRow(new string[] {
+            table38.AddRow(new string[] {
                         "Subject",
                         "TestDateTime"});
-            table34.AddRow(new string[] {
+            table38.AddRow(new string[] {
                         "Start Time",
                         "20-5-2018 10:00"});
-            table34.AddRow(new string[] {
+            table38.AddRow(new string[] {
                         "End Time",
                         "20-5-2018 12:00"});
 #line 11
-testRunner.Then("TestAppointment has the following values", ((string)(null)), table34, "Then ");
+testRunner.Then("TestAppointment has the following values", ((string)(null)), table38, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

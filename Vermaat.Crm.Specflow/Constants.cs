@@ -13,6 +13,8 @@ namespace Vermaat.Crm.Specflow
             public const string TABLE_KEY = "Property";
             public const string TABLE_VALUE = "Value";
             public const string TABLE_FORMSTATE = "State";
+            public const string TABLE_FORMNOTIFICATION_MESSAGE = "Message";
+            public const string TABLE_FORMNOTIFICATION_LEVEL = "Level";
 
             public const string TARGET_API = "API";
             public const string TARGET_Chrome = "Chrome";

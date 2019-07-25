@@ -49,6 +49,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _app.App.Entity.SelectTab(tabLabel);
         }
 
+        public IReadOnlyCollection<FormNotification> GetFormNotifications()
+        {
+            return _app.Client.GetFormNotifications();
+        }
 
         public Guid GetRecordId()
         {
