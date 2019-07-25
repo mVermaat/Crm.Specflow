@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    internal enum XPathItems
+    internal enum SeleniumSelectorItems
     {
         Entity_SubGrid,
         Entity_SubGrid_Button,

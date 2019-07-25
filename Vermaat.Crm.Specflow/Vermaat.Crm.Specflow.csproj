@@ -182,8 +182,8 @@
     <Compile Include="Commands\WaitForAsyncJobsCommand.cs" />
     <Compile Include="DefaultCrmConnectionProvider.cs" />
     <Compile Include="EasyRepro\SeleniumFunctions.cs" />
-    <Compile Include="EasyRepro\XPathData.cs" />
-    <Compile Include="EasyRepro\XPathItems.cs" />
+    <Compile Include="EasyRepro\SeleniumSelectorData.cs" />
+    <Compile Include="EasyRepro\SeleniumSelectorItems.cs" />
     <Compile Include="Entities\Lead.cs" />
     <Compile Include="Entities\UserSettings.cs" />
     <Compile Include="EntityReferenceComparer.cs" />
@@ -232,11 +232,11 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Selenium.Chrome.WebDriver.74.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.74.0.0\build\Selenium.Chrome.WebDriver.targets')" />
+  <Import Project="..\packages\Selenium.Chrome.WebDriver.75.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.75.0.0\build\Selenium.Chrome.WebDriver.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.74.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.74.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.75.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.75.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
   </Target>
 </Project>

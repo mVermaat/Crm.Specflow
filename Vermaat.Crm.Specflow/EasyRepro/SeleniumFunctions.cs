@@ -11,15 +11,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     internal static class SeleniumFunctions
     {
-        private static XPathData _xpathData = new XPathData();
+        private static SeleniumSelectorData _xpathData = new SeleniumSelectorData();
 
        
         public static void ClickSubgridButton(this WebClient client, string subgridName, string subgridButtonId)
         {
             client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
-                var subGrid = driver.FindElement(By.XPath(_xpathData.GetXPath(XPathItems.Entity_SubGrid, subgridName)));
-                var menuBar = subGrid.FindElement(By.XPath(_xpathData.GetXPath(XPathItems.Entity_SubGrid_ButtonList)));
+                var subGrid = driver.FindElement(_xpathData.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid, subgridName));
+                var menuBar = subGrid.FindElement(_xpathData.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid_ButtonList));
 
                 var buttons = menuBar.FindElements(By.TagName("button"));
 
@@ -36,7 +36,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 moreCommands.Click();
 
                 var flyout = driver.FindElement(By.Id("__flyoutRootNode"));
-                flyout.FindElement(By.XPath(_xpathData.GetXPath(XPathItems.Entity_SubGrid_Button, subgridButtonId))).Click();
+                flyout.FindElement(_xpathData.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid_Button, subgridButtonId)).Click();
 
                 return true;
             });
