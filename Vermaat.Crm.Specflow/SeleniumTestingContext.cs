@@ -14,7 +14,6 @@ namespace Vermaat.Crm.Specflow
     {
 
         private readonly CrmTestingContext _crmContext;
-        private readonly string[] _targets;
 
         public BrowserOptions BrowserOptions { get; }
         public string CurrentApp { get; set; }
@@ -28,26 +27,18 @@ namespace Vermaat.Crm.Specflow
             };
             CurrentApp = HelperMethods.GetAppSettingsValue("AppName", true);
 
-            _targets = ConfigurationManager.AppSettings["Target"]
-                .ToLower()
-                .Split(';')
-                .Select(splitted => splitted.Trim())
-                .ToArray();
         }
 
         public UCIBrowser GetBrowser()
         {
+            if (_crmContext.IsTarget("API"))
+                throw new InvalidOperationException("Cannot start the browser if the target is API");
+
             var browser = GlobalTestingContext.BrowserManager.GetBrowser(BrowserOptions, GlobalTestingContext.ConnectionManager.CurrentUserDetails, GlobalTestingContext.ConnectionManager.Url);
             browser.ChangeApp(CurrentApp);
             return browser;
         }
 
-        public bool IsTarget(string target)
-        {
-            if (string.IsNullOrWhiteSpace(target))
-                return false;
-
-            return _targets.Contains(target.ToLower());
-        }
+        
     }
 }

@@ -21,6 +21,8 @@ namespace Vermaat.Crm.Specflow
 
         public AliasedRecordCache RecordCache { get; }
 
+        private readonly string[] _targets;
+
         public int LanguageCode { get; set; }
 
         public CrmTestingContext()
@@ -30,6 +32,20 @@ namespace Vermaat.Crm.Specflow
             LanguageCode = GetLanguageCode();
             CommandProcessor = new CommandProcessor();
             RecordCache = new AliasedRecordCache(GlobalTestingContext.ConnectionManager, GlobalTestingContext.Metadata);
+
+            _targets = ConfigurationManager.AppSettings["Target"]
+                .ToLower()
+                .Split(';')
+                .Select(splitted => splitted.Trim())
+                .ToArray();
+        }
+
+        public bool IsTarget(string target)
+        {
+            if (string.IsNullOrWhiteSpace(target))
+                return false;
+
+            return _targets.Contains(target.ToLower());
         }
 
         private int GetLanguageCode()

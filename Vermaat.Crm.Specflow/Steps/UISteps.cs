@@ -34,5 +34,11 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssertFormStateCommand(_crmContext, _seleniumContext, aliasRef, table));
 
         }
+
+        [Then(@"(.*) has the following form notifications")]
+        public void ThenFormNotificationExist(string alias, Table formNotifications)
+        {
+            _crmContext.CommandProcessor.Execute(new AssertFormNotificationsCommand(_crmContext, _seleniumContext, alias, formNotifications));
+        }
     }
 }

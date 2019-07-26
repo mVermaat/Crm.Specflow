@@ -90,9 +90,12 @@ namespace Vermaat.Crm.Specflow
             if (string.IsNullOrEmpty(value))
                 return null;
 
-            var dateTime = DateTime.ParseExact(value,
-                         ((DateTimeAttributeMetadata)metadata).Format == DateTimeFormat.DateOnly ? _dateonlyFormat : _datetimeFormat,
-                         CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
+            if(((DateTimeAttributeMetadata)metadata).Format == DateTimeFormat.DateOnly)
+                return DateTime.ParseExact(value, _dateonlyFormat, CultureInfo.InvariantCulture);
+
+
+            var dateTime = DateTime.ParseExact(value, _datetimeFormat, CultureInfo.InvariantCulture, 
+                DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
 
            var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(dateTime);
             return dateTime.Subtract(offset);

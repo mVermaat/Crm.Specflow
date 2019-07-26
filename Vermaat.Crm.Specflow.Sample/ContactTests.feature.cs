@@ -349,13 +349,13 @@ testRunner.Then("TestContact\'s form has the following form state", ((string)(nu
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Filling DateTime fields", new string[] {
+        [TechTalk.SpecRun.ScenarioAttribute("Filling Date Only fields", new string[] {
                 "Cleanup",
                 "Chrome",
                 "API"}, SourceLine=88)]
-        public virtual void FillingDateTimeFields()
+        public virtual void FillingDateOnlyFields()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Filling DateTime fields", null, new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Filling Date Only fields", null, new string[] {
                         "Cleanup",
                         "Chrome",
                         "API"});
@@ -404,6 +404,56 @@ testRunner.Given("a contact named TestContact with the following values", ((stri
                         "10-10-2010"});
 #line 97
 testRunner.Then("TestContact has the following values", ((string)(null)), table53, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Wait for Async processes to finish", new string[] {
+                "Cleanup",
+                "API"}, SourceLine=105)]
+        public virtual void WaitForAsyncProcessesToFinish()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Wait for Async processes to finish", null, new string[] {
+                        "Cleanup",
+                        "API"});
+#line 106
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table54 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table54.AddRow(new string[] {
+                        "Account Name",
+                        "AsyncTest"});
+#line 107
+testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table54, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table55 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table55.AddRow(new string[] {
+                        "First Name",
+                        "John"});
+            table55.AddRow(new string[] {
+                        "Last Name",
+                        "Smith"});
+            table55.AddRow(new string[] {
+                        "Company Name",
+                        "TestAccount"});
+#line 110
+testRunner.And("a contact named TestContact with the following values", ((string)(null)), table55, "And ");
+#line 115
+testRunner.When("all asynchronous processes for TestContact are finished", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table56 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table56.AddRow(new string[] {
+                        "Contact Present",
+                        "Yes"});
+#line 116
+testRunner.Then("TestAccount has the following values", ((string)(null)), table56, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

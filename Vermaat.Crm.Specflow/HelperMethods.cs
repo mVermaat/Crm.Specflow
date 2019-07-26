@@ -27,6 +27,14 @@ namespace Vermaat.Crm.Specflow
             return name.Equals(label.GetLabelInLanguage(lcid), StringComparison.CurrentCultureIgnoreCase);
         }
 
+        public static void ExecuteWithRetry(int retryCount, int sleepTime, Action action)
+        {
+            ExecuteWithRetry(retryCount, sleepTime, () => {
+                action();
+                return true;
+            });
+        }
+
         public static T ExecuteWithRetry<T>(int retryCount, int sleepTime, Func<T> action)
         {
             try

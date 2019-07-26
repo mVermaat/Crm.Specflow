@@ -35,7 +35,7 @@ namespace Vermaat.Crm.Specflow
         [BeforeScenario("Chrome")]
         public void ChromeSetup()
         {
-            if (_seleniumContext.IsTarget("Chrome"))
+            if (_crmContext.IsTarget("Chrome"))
             {
                 _seleniumContext.BrowserOptions.BrowserType = BrowserType.Chrome;
             }
@@ -44,7 +44,7 @@ namespace Vermaat.Crm.Specflow
         [BeforeScenario("Edge")]
         public void EdgeSetup()
         {
-            if (_seleniumContext.IsTarget("Edge"))
+            if (_crmContext.IsTarget("Edge"))
             {
                 _seleniumContext.BrowserOptions.BrowserType = BrowserType.Edge;
             }
@@ -53,7 +53,7 @@ namespace Vermaat.Crm.Specflow
         [BeforeScenario("Firefox")]
         public void FirefoxSetup()
         {
-            if (_seleniumContext.IsTarget("Firefox"))
+            if (_crmContext.IsTarget("Firefox"))
             {
                 _seleniumContext.BrowserOptions.BrowserType = BrowserType.Firefox;
             }
@@ -62,7 +62,7 @@ namespace Vermaat.Crm.Specflow
         [BeforeScenario("IE")]
         public void IESetup()
         {
-            if (_seleniumContext.IsTarget("IE"))
+            if (_crmContext.IsTarget("IE"))
             {
                 _seleniumContext.BrowserOptions.BrowserType = BrowserType.IE;
             }
