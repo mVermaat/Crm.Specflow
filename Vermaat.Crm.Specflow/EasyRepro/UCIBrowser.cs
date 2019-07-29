@@ -12,13 +12,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public class UCIBrowser
     {
-        private UCIApp _app;
         private string _appId;
         private string _appName;
         private bool _isDisposed = false;
 
         private Dictionary<string, FormData> _forms;
 
+        public UCIApp App { get; }
 
         static UCIBrowser()
         {
@@ -27,7 +27,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public UCIBrowser(BrowserOptions browserOptions, ButtonTexts buttonTexts)
         {
-            _app = new UCIApp(browserOptions, buttonTexts);
+            App = new UCIApp(browserOptions, buttonTexts);
             _forms = new Dictionary<string, FormData>();
             _appId = null;
         }
@@ -41,7 +41,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 AppElements.Xpath[AppReference.Navigation.AppMenuButton] = "//button[@data-id='navbar-switch-app']";
             }
 
-            _app.App.OnlineLogin.Login(uri, connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
+            App.App.OnlineLogin.Login(uri, connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
         }
 
         public void ChangeApp(string appName)
@@ -49,8 +49,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (appName != _appName)
             {
                 Logger.WriteLine($"Changing app from {_appName} to {appName}");
-                _app.App.Navigation.OpenApp(appName);
-                var queryDic = System.Web.HttpUtility.ParseQueryString(new Uri(_app.WebDriver.Url).Query);
+                App.App.Navigation.OpenApp(appName);
+                var queryDic = System.Web.HttpUtility.ParseQueryString(new Uri(App.WebDriver.Url).Query);
                 _appId = queryDic["appid"];
                 _appName = appName;
                 Logger.WriteLine($"Logged into app: {appName} ({_appId})");
@@ -64,9 +64,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public FormData OpenRecord(EntityMetadata entityMetadata, string entityName, Guid? id = null, EntityReference parent = null)
         {
             Logger.WriteLine($"Opening record {entityName} with ID {id}");
-            _app.Client.Execute(BrowserOptionHelper.GetOptions($"Open: {entityName}"), driver =>
+            App.Client.Execute(BrowserOptionHelper.GetOptions($"Open: {entityName}"), driver =>
             {
-                Uri uri = new Uri(_app.WebDriver.Url);
+                Uri uri = new Uri(App.WebDriver.Url);
                 string link = $"{uri.Scheme}://{uri.Authority}/main.aspx?etn={entityName}&pagetype=entityrecord";
 
                 if (id.HasValue)
@@ -103,7 +103,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void WaitForFormLoad()
         {
-            var driver = _app.Client.Browser.Driver;
+            var driver = App.Client.Browser.Driver;
             driver.WaitForPageToLoad();
             driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
                 new TimeSpan(0, 0, 30),
@@ -119,11 +119,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public FormData GetFormData(EntityMetadata entityMetadata, string entityName)
         {
-            var currentFormId = _app.WebDriver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId()")?.ToString();
+            var currentFormId = App.WebDriver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId()")?.ToString();
 
             if(!_forms.TryGetValue(entityName+currentFormId, out FormData formData))
             {
-                formData = new FormData(_app, entityMetadata);
+                formData = new FormData(App, entityMetadata);
                 _forms.Add(entityName + currentFormId, formData);
             }
 
@@ -141,7 +141,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 if (disposing)
                 {
-                    _app.Dispose();
+                    App.Dispose();
                 }
 
                 _isDisposed = true;
