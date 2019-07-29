@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    static class BrowserOptionHelper
+    public static class BrowserOptionHelper
     {
         public static BrowserCommandOptions GetOptions(string commandName)
         {
