@@ -56,6 +56,7 @@ namespace Vermaat.Crm.Specflow
             public const int OPTION_NOT_FOUND = 24;
             public const int CANT_START_BROWSER_FOR_API_TESTS = 25;
             public const int FORM_LOAD_TIMEOUT = 26;
+            public const int UNABLE_TO_LOGIN = 27;
         }
 
         public class XPath

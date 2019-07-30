@@ -16,7 +16,12 @@ namespace Vermaat.Crm.Specflow
         {
             Logger.WriteLine("Connecting to Dynamics CRM API");
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            return new CrmServiceClient(connectionString);
+            var client = new CrmServiceClient(connectionString);
+
+            if (!client.IsReady)
+                throw new TestExecutionException(Constants.ErrorCodes.UNABLE_TO_LOGIN, client.LastCrmException, client.LastCrmError);
+
+            return client;
         }
     }
 }
