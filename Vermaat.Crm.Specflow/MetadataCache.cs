@@ -17,12 +17,14 @@ namespace Vermaat.Crm.Specflow
 
         private Dictionary<string, Dictionary<EntityFilters, EntityMetadata>> _entityMetadataCache;
         private Dictionary<string, DataCollection<Entity>> _attributeMapCache;
+        private Dictionary<string, Guid> _formCache;
 
         public MetadataCache(ConnectionManager connectionManager)
         {
             _connectionManager = connectionManager;
             _entityMetadataCache = new Dictionary<string, Dictionary<EntityFilters, EntityMetadata>>();
             _attributeMapCache = new Dictionary<string, DataCollection<Entity>>();
+            _formCache = new Dictionary<string, Guid>();
         }
 
         public AttributeMetadata GetAttributeMetadata(string entityName, string logicalName)
@@ -89,6 +91,26 @@ namespace Vermaat.Crm.Specflow
                 _attributeMapCache.Add(parentEntity + childEntity, result);
             }
             return result;
+        }
+
+        public Guid GetFormId(string entityName, string formName)
+        {
+            if(!_formCache.TryGetValue($"{entityName}_{formName}", out Guid formId))
+            {
+                var query = new QueryExpression("systemform");
+                query.TopCount = 1;
+                query.ColumnSet.AddColumn("formid");
+                query.Criteria.AddCondition("objecttypecode", ConditionOperator.Equal, entityName);
+                query.Criteria.AddCondition("name", ConditionOperator.Equal, formName);
+
+                var result = GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(query).Entities.FirstOrDefault();
+
+                if (result == null)
+                    throw new TestExecutionException(Constants.ErrorCodes.FORM_NOT_FOUND, formName, entityName);
+                _formCache.Add($"{entityName}_{formName}", result.Id);
+                formId = result.Id;
+            }
+            return formId;
         }
     }
 }

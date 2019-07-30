@@ -35,7 +35,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
         protected override void ExecuteBrowser()
         {
-            var formData = _seleniumContext.GetBrowser().OpenRecord(GlobalTestingContext.Metadata.GetEntityMetadata(_toUpdate.LogicalName), _toUpdate.LogicalName, _toUpdate.Id);
+            var formData = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(_toUpdate));
             formData.FillForm(_crmContext, _criteria);
             formData.Save(true);
         }

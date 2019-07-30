@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -38,8 +39,10 @@ namespace Vermaat.Crm.Specflow.Commands
 
         protected override EntityReference ExecuteBrowser()
         {
-            var formData = _seleniumContext.GetBrowser().OpenRecord(GlobalTestingContext.Metadata.GetEntityMetadata(_entityLogicalName),
-                _entityLogicalName, parent: _crmContext.RecordCache.Get(_parentAlias, true));
+            var formData = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(_entityLogicalName)
+            {
+                Parent = _crmContext.RecordCache.Get(_parentAlias, true)
+            });
 
             formData.FillForm(_crmContext, _criteria);
             formData.Save(true);

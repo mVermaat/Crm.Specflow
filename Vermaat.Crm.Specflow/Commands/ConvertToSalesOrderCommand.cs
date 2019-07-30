@@ -41,9 +41,8 @@ namespace Vermaat.Crm.Specflow.Commands
         protected override void ExecuteBrowser()
         {
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
-            EntityMetadata metadata = GlobalTestingContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
 
-            FormData formData = _seleniumContext.GetBrowser().OpenRecord(metadata, aliasRef);
+            FormData formData = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(aliasRef));
             EntityReference order = formData.CommandBar.CreateOrder();
             _crmContext.RecordCache.Add(_orderAlias, order);
         }

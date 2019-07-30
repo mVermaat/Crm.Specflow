@@ -29,7 +29,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
         protected override EntityReference ExecuteBrowser()
         {
-            var formData = _seleniumContext.GetBrowser().OpenRecord(GlobalTestingContext.Metadata.GetEntityMetadata(_entityLogicalName), _entityLogicalName);
+            var formData = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(_entityLogicalName));
 
             var tableWithDefaults = _crmContext.RecordBuilder.AddDefaultsToTable(_entityLogicalName, _criteria);
 

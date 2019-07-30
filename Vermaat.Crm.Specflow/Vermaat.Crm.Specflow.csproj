@@ -184,6 +184,7 @@
     <Compile Include="DefaultCrmConnectionProvider.cs" />
     <Compile Include="EasyRepro\FormNotification.cs" />
     <Compile Include="EasyRepro\FormNotificationType.cs" />
+    <Compile Include="EasyRepro\FormOptions.cs" />
     <Compile Include="EasyRepro\SeleniumFunctions.cs" />
     <Compile Include="EasyRepro\SeleniumSelectorData.cs" />
     <Compile Include="EasyRepro\SeleniumSelectorItems.cs" />

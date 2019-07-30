@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -24,9 +25,8 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             var aliasRef = _crmContext.RecordCache.Get(_alias, true);
-            var metadata = GlobalTestingContext.Metadata.GetEntityMetadata(aliasRef.LogicalName);
 
-            var form = _seleniumContext.GetBrowser().OpenRecord(metadata, aliasRef);
+            var form = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(aliasRef));
             var notifications = form.GetFormNotifications();
             Logger.WriteLine($"Found {notifications.Count} notifications");
 

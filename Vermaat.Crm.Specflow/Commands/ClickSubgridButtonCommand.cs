@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -26,10 +27,9 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             var parentRecord = _crmContext.RecordCache.Get(_parentAlias, true);
-            var parentMd = GlobalTestingContext.Metadata.GetEntityMetadata(parentRecord.LogicalName);
 
             var browser = _seleniumContext.GetBrowser();
-            var record = browser.OpenRecord(parentMd, parentRecord);
+            var record = browser.OpenRecord(new OpenFormOptions(parentRecord));
             record.ExpandTab(_tabName);
 
             record.ClickSubgridButton(_subgridName, _gridButtonId);
