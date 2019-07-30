@@ -49,12 +49,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 _app.App.CommandBar.ClickCommand(_app.ButtonTexts.ReviseQuote);
 
                 _app.Client.Browser.ThinkTime(1000);
-                driver.WaitForPageToLoad();
-                driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
-                    new TimeSpan(0, 0, 30),
-                    null,
-                    d => { throw new Exception("CRM Record is Unavailable or not finished loading. Timeout Exceeded"); }
-                );
+                HelperMethods.WaitForFormLoad(driver);
+
                 return new EntityReference("quote", _app.App.Entity.GetObjectId()); ;
             }).Value;            
         }
@@ -70,12 +66,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 button.Click();
                 _app.Client.Browser.ThinkTime(1000);
-                driver.WaitForPageToLoad();
-                driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
-                    new TimeSpan(0, 0, 30),
-                    null,
-                    d => { throw new Exception("CRM Record is Unavailable or not finished loading. Timeout Exceeded"); }
-                );
+                HelperMethods.WaitForFormLoad(driver);
+
                 return true;
             });
         }

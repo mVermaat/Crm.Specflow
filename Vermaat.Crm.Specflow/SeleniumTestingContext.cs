@@ -32,7 +32,7 @@ namespace Vermaat.Crm.Specflow
         public UCIBrowser GetBrowser()
         {
             if (_crmContext.IsTarget("API"))
-                throw new InvalidOperationException("Cannot start the browser if the target is API");
+                throw new TestExecutionException(Constants.ErrorCodes.CANT_START_BROWSER_FOR_API_TESTS);
 
             var browser = GlobalTestingContext.BrowserManager.GetBrowser(BrowserOptions, GlobalTestingContext.ConnectionManager.CurrentUserDetails, GlobalTestingContext.ConnectionManager.Url);
             browser.ChangeApp(CurrentApp);

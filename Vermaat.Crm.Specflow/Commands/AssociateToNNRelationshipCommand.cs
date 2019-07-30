@@ -31,7 +31,7 @@ namespace Vermaat.Crm.Specflow.Commands
                                                            (r.Entity1LogicalName == _relatedEntityName && r.Entity2LogicalName == record.LogicalName));
 
             if (relationship == null)
-                throw new InvalidOperationException($"No N:N relationship found between {record.LogicalName} and {_relatedEntityName}");
+                throw new TestExecutionException(Constants.ErrorCodes.N_N_RELATIONSHIP_NOT_FOUND, record.LogicalName, _relatedEntityName);
 
             Logger.WriteLine($"Using relationship {relationship.SchemaName}");
 
@@ -40,7 +40,7 @@ namespace Vermaat.Crm.Specflow.Commands
             {
                 var lookupValue = ObjectConverter.GetLookupValue(_crmContext, row[Constants.SpecFlow.TABLE_VALUE], _relatedEntityName);
                 if (lookupValue == null)
-                    throw new ArgumentException($"Cannot find record {row[Constants.SpecFlow.TABLE_VALUE]} of type {_relatedEntityName}");
+                    throw new TestExecutionException(Constants.ErrorCodes.RECORD_NOT_FOUND, row[Constants.SpecFlow.TABLE_VALUE], _relatedEntityName);
                 toAssociate.Add(lookupValue);
             }
 

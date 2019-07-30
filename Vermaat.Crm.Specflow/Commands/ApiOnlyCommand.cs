@@ -16,7 +16,7 @@ namespace Vermaat.Crm.Specflow.Commands
         public TResult Execute(CommandAction commandAction = CommandAction.Default)
         {
             if (commandAction == CommandAction.ForceBrowser)
-                throw new InvalidOperationException("Browser not supported for API only commands");
+                throw new TestExecutionException(Constants.ErrorCodes.BROWSER_OT_SUPPORTED_FOR_API_TEST);
             return Execute();
         }
     }
@@ -35,7 +35,7 @@ namespace Vermaat.Crm.Specflow.Commands
         public void Execute(CommandAction commandAction = CommandAction.Default)
         {
             if (commandAction == CommandAction.ForceBrowser)
-                throw new InvalidOperationException("Browser not supported for API only commands");
+                throw new TestExecutionException(Constants.ErrorCodes.BROWSER_OT_SUPPORTED_FOR_API_TEST);
             Execute();
         }
     }

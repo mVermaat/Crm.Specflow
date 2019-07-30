@@ -177,7 +177,8 @@ namespace Vermaat.Crm.Specflow
                     return result;
                 }
             }
-            throw new ArgumentException($"Lookup named {alias} was not found. Queried entities: {string.Join(", ", lookupMd.Targets)}");
+
+            throw new TestExecutionException(Constants.ErrorCodes.LOOKUP_NOT_FOUND, alias, string.Join(", ", lookupMd.Targets));
         }
 
         private static OptionSetValue GetOptionSetValue(AttributeMetadata metadata, string value, CrmTestingContext context)
@@ -209,10 +210,10 @@ namespace Vermaat.Crm.Specflow
 
             if (value.ToLower() == optionMd.OptionSet.TrueOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
                 return true;
-            else if(value.ToLower() == optionMd.OptionSet.FalseOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
+            else if (value.ToLower() == optionMd.OptionSet.FalseOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
                 return false;
             else
-                throw new ArgumentException($"Field {metadata.LogicalName} doesn't have option {value}");
+                throw new TestExecutionException(Constants.ErrorCodes.OPTION_NOT_FOUND, metadata.LogicalName, value);
         }
     }
 }

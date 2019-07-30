@@ -105,7 +105,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 }
                 else if(!string.IsNullOrEmpty(footerElement.Text) && footerElement.Text.ToLower() == "unsaved changes")
                 {
-                    throw new InvalidOperationException("Save failed. Detected unsaved changes after saving");
+                    throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED);
                 }
                 else
                 {
@@ -115,7 +115,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
 
             if (!saveCompleted)
-                throw new InvalidOperationException("Save wasn't completed in 20 seconds");
+                throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_TIMEOUT, 20);
         }
 
         private void ConfirmDuplicate(bool saveIfDuplicate)
@@ -129,7 +129,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     }
                     else
                     {
-                        throw new ArgumentException("Duplicate found and not selected for save");
+                        throw new TestExecutionException(Constants.ErrorCodes.DUPLICATE_RECORD_DETECTED);
                     }
                 });
         }

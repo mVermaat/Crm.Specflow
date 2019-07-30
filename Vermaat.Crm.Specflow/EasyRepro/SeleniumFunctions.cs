@@ -32,7 +32,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 var moreCommands = buttons.FirstOrDefault(b => b.GetAttribute("data-id").Equals("OverflowButton"));
                 if (moreCommands == null)
-                    throw new InvalidOperationException("More commands button not found");
+                    throw new TestExecutionException(Constants.ErrorCodes.MORE_COMMANDS_NOT_FOUND);
                 moreCommands.Click();
 
                 var flyout = driver.FindElement(_seleniumSelectors.GetIdSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
@@ -79,7 +79,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     else if (icon.HasClass("InformationIcon-symbol"))
                         notification.Type = FormNotificationType.Information;
                     else
-                        throw new InvalidOperationException($"Unknown notification type. Current class: {icon.GetAttribute("class")}");
+                        throw new TestExecutionException(Constants.ErrorCodes.UNKNOWN_FORM_NOTIFICATION_TYPE, icon.GetAttribute("class"));
 
                     notifications.Add(notification);
                 }
@@ -109,6 +109,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public static bool HasClass(this IWebElement element, string className)
         {
             return element.GetAttribute("class").Split(' ').Any(c => string.Equals(className, c, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        public static bool ScriptErrorExists(this WebClient client)
+        {
+            return client.Execute(BrowserOptionHelper.GetOptions($"Confirm or Cancel Confirmation Dialog"), driver =>
+            {
+                return driver.HasElement(_seleniumSelectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_ScriptErrorDialog));
+            });
         }
     }
 }

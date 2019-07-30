@@ -36,9 +36,9 @@ namespace Vermaat.Crm.Specflow.Commands
             }
 
             if (currentStage == -1)
-                throw new InvalidOperationException("Current stage can't be found");
+                throw new TestExecutionException(Constants.ErrorCodes.CURRENT_BUSINESS_PROCESS_STAGE_NOT_FOUND);
             if (desiredStage == -1)
-                throw new InvalidOperationException($"{_stageName} isn't in the active path");
+                throw new TestExecutionException(Constants.ErrorCodes.BUSINESS_PROCESS_STAGE_NOT_IN_ACTIVE_PATH, _stageName);
 
             if (currentStage == desiredStage)
                 return;

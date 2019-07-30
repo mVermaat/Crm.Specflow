@@ -43,7 +43,7 @@ namespace Vermaat.Crm.Specflow
             var attributeMd = entityMd.Attributes.Where(a => a.DisplayName.IsLabel(languageCode, displayName) || a.LogicalName.Equals(displayName)).FirstOrDefault();
 
             if (attributeMd == null)
-                throw new ArgumentException(string.Format("Attribute {0} not found for entity {1}", displayName, entityName));
+                throw new TestExecutionException(Constants.ErrorCodes.ATTRIBUTE_DOESNT_EXIST, displayName, entityName);
 
             return attributeMd;
 

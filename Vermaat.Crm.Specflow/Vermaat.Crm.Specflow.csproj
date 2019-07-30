@@ -190,7 +190,9 @@
     <Compile Include="Entities\Lead.cs" />
     <Compile Include="Entities\UserSettings.cs" />
     <Compile Include="EntityReferenceComparer.cs" />
+    <Compile Include="ErrorCodes.cs" />
     <Compile Include="GlobalTestingContext.cs" />
+    <Compile Include="TestExecutionException.cs" />
     <Compile Include="UserDetails.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CrmService.cs" />
@@ -201,7 +203,6 @@
     <Compile Include="EasyRepro\FormState.cs" />
     <Compile Include="EasyRepro\RequiredState.cs" />
     <Compile Include="EasyRepro\UCIApp.cs" />
-    <Compile Include="EasyRepro\EntityExtensions.cs" />
     <Compile Include="EasyRepro\FormData.cs" />
     <Compile Include="EasyRepro\FormField.cs" />
     <Compile Include="EasyRepro\UCIBrowser.cs" />

@@ -5,8 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Dynamics365.UIAutomation.Api;
+using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
+using OpenQA.Selenium;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -18,7 +21,7 @@ namespace Vermaat.Crm.Specflow
             var value = ConfigurationManager.AppSettings[key];
 
             if (!emptyAllowed && string.IsNullOrEmpty(value))
-                throw new ArgumentException(string.Format("AppSetting {0} is required", key));
+                throw new TestExecutionException(Constants.ErrorCodes.APP_SETTINGS_REQUIRED, key);
 
             return value;
         }
@@ -58,7 +61,7 @@ namespace Vermaat.Crm.Specflow
             string result = label.LocalizedLabels.Where(l => l.LanguageCode == lcid).FirstOrDefault()?.Label;
 
             if (label.UserLocalizedLabel != null && !string.IsNullOrEmpty(label.UserLocalizedLabel.Label) && string.IsNullOrEmpty(result))
-                throw new ArgumentException(string.Format("Label {0} doesn't have a translation for language {1}", label.UserLocalizedLabel.Label, lcid));
+                throw new TestExecutionException(Constants.ErrorCodes.LABEL_NOT_TRANSLATED, label.UserLocalizedLabel.Label, lcid);
 
             return result;
         }
@@ -86,6 +89,16 @@ namespace Vermaat.Crm.Specflow
                 return ((OptionSetValueCollection)value).Where(ov => ov != null).Select(ov => ov.Value);
             }
             return value;
+        }
+
+        public static void WaitForFormLoad(IWebDriver driver)
+        {
+            driver.WaitForPageToLoad();
+            driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
+                new TimeSpan(0, 0, 30),
+                null,
+                d => { throw new TestExecutionException(Constants.ErrorCodes.FORM_LOAD_TIMEOUT); }
+            );
         }
 
     }

@@ -18,7 +18,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_SubGrid, "//div[@id=\"dataSetRoot_[NAME]\"]" },
             { SeleniumSelectorItems.Entity_SubGrid_ButtonList, ".//ul[@data-id='CommandBar']" },
             { SeleniumSelectorItems.Entity_SubGrid_Button, ".//button[contains(@data-id,'[NAME]')]" },
-            { SeleniumSelectorItems.FlyoutRoot, "__flyoutRootNode" }
+            { SeleniumSelectorItems.FlyoutRoot, "__flyoutRootNode" },
+            { SeleniumSelectorItems.Entity_ScriptErrorDialog, "//*[@id='dialogTitleText']" }
         };
 
         public By GetXPathSeleniumSelector(SeleniumSelectorItems itemName)

@@ -30,7 +30,7 @@ namespace Vermaat.Crm.Specflow.Commands
             }
             else
             {
-                throw new InvalidOperationException("Unknown tag. Use API, Chrome, Edge, Firefox or IE");
+                throw new TestExecutionException(Constants.ErrorCodes.UNKNOWN_TAG);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Vermaat.Crm.Specflow.Commands
             }
             else
             {
-                throw new InvalidOperationException("Unknown tag. Use API, Chrome, Edge, Firefox or IE");
+                throw new TestExecutionException(Constants.ErrorCodes.UNKNOWN_TAG);
             }
         }
 

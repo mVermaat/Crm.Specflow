@@ -81,7 +81,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 driver.Navigate().GoToUrl(link);
                 CheckAlert(driver);
-                WaitForFormLoad();
+                HelperMethods.WaitForFormLoad(driver);
+
+                if (App.Client.ScriptErrorExists())
+                    throw new TestExecutionException(Constants.ErrorCodes.FORMLOAD_SCRIPT_ERROR_ON_FORM);
 
                 return true;
             });
@@ -99,17 +102,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             catch (NoAlertPresentException)
             {
             }
-        }
-
-        public void WaitForFormLoad()
-        {
-            var driver = App.Client.Browser.Driver;
-            driver.WaitForPageToLoad();
-            driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
-                new TimeSpan(0, 0, 30),
-                null,
-                d => { throw new Exception("CRM Record is Unavailable or not finished loading. Timeout Exceeded"); }
-            );
         }
 
         public FormData OpenRecord(EntityMetadata entityMetadata, EntityReference crmRecord)

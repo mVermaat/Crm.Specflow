@@ -51,7 +51,7 @@ namespace Vermaat.Crm.Specflow
         private int GetLanguageCode()
         {
             if (!int.TryParse(HelperMethods.GetAppSettingsValue("LanguageCode"), out int lcid))
-                throw new InvalidCastException(string.Format("AppSettings languagecode must be an integer i.e. 1033 for english"));
+                throw new TestExecutionException(Constants.ErrorCodes.LANGUAGECODE_MUST_BE_INTEGER);
 
             return lcid;
         }

@@ -62,7 +62,7 @@ namespace Vermaat.Crm.Specflow.Commands
                     case "unlocked": result.Locked = false; break;
                     case "visible": result.Visible = true; break;
                     case "invisible": result.Visible = false; break;
-                    default: throw new ArgumentException($"Invalid value for form state: {state}");
+                    default: throw new TestExecutionException(Constants.ErrorCodes.INVALID_FORM_STATE, state);
                 }
             }
             return result;

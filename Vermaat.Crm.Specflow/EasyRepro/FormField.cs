@@ -53,7 +53,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)));
                 if (fieldContainer == null)
-                    throw new InvalidOperationException($"Field {_metadata.LogicalName} can't be found on form");
+                    throw new TestExecutionException(Constants.ErrorCodes.FIELD_NOT_ON_FORM, _metadata.LogicalName);
 
                 if (fieldContainer.TryFindElement(By.XPath(Constants.XPath.FIELD_ISREQUIREDORRECOMMEND.Replace("[NAME]", _metadata.LogicalName)), out IWebElement requiredElement))
                 {
@@ -86,7 +86,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)));
                 if (fieldContainer == null)
-                    throw new InvalidOperationException($"Field {_metadata.LogicalName} can't be found on form");
+                    throw new TestExecutionException(Constants.ErrorCodes.FIELD_NOT_ON_FORM, _metadata.LogicalName);
 
                 return fieldContainer.TryFindElement(By.XPath(Constants.XPath.FIELD_ISLOCKED.Replace("[NAME]", _metadata.LogicalName)), out IWebElement requiredElement);
             }).Value;
@@ -165,7 +165,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             switch (_metadata.AttributeType.Value)
             {
                 case AttributeTypeCode.Boolean:
-                    throw new InvalidOperationException("Two option fields can't be cleared");
+                    throw new TestExecutionException(Constants.ErrorCodes.TWO_OPTION_FIELDS_CANT_BE_CLEARED);
                 case AttributeTypeCode.Customer:
                 case AttributeTypeCode.Lookup:
                     _app.App.Entity.ClearValue(new LookupItem { Name = _metadata.LogicalName });
