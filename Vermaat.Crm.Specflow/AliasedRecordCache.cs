@@ -14,9 +14,9 @@ namespace Vermaat.Crm.Specflow
     /// </summary>
     public class AliasedRecordCache
     {
-        private Dictionary<string, EntityReference> _aliasedRecords;
-        private List<string> _entitiesToIgnore;
-        private List<string> _aliasesToIgnore;
+        private readonly Dictionary<string, EntityReference> _aliasedRecords;
+        private readonly List<string> _entitiesToIgnore;
+        private readonly List<string> _aliasesToIgnore;
         private readonly ConnectionManager _connectionManager;
         private readonly MetadataCache _metadataCache;
 

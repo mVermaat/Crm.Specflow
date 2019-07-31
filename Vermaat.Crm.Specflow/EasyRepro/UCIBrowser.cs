@@ -10,7 +10,7 @@ using System.Web;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    public class UCIBrowser
+    public class UCIBrowser : IDisposable
     {
         private string _appId;
         private string _appName;

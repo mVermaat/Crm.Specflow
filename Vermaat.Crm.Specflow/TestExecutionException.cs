@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,6 +40,22 @@ namespace Vermaat.Crm.Specflow
 
         protected TestExecutionException(
           System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+          System.Runtime.Serialization.StreamingContext context) : base(info, context)
+        {
+            if (info == null)
+                throw new ArgumentNullException("info");
+
+            ErrorCode = info.GetInt32("ErrorCode");
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            if (info == null)
+                throw new ArgumentNullException("info");
+
+            base.GetObjectData(info, context);
+
+            info.AddValue("ErrorCode", ErrorCode);
+        }
     }
 }
