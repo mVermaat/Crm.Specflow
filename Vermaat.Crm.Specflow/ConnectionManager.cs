@@ -22,6 +22,7 @@ namespace Vermaat.Crm.Specflow
         private readonly Dictionary<string, ConnectionCache> _connectionCache;
 
         public CrmService CurrentConnection { get; private set; }
+        public CrmService AdminConnection { get; private set; }
         public UserDetails CurrentUserDetails { get; private set; }
         public Uri Url { get; }
 
@@ -32,9 +33,22 @@ namespace Vermaat.Crm.Specflow
             _connectionCache = new Dictionary<string, ConnectionCache>();
         }
 
+        public void SetAdminConnection(UserDetails userDetails)
+        {
+            ConnectionCache connectionCache = GetConnectionCache(userDetails, "admin");
+            AdminConnection = connectionCache.Service;
+        }
+
         public void SetCurrentConnection(UserDetails userDetails)
         {
-            Logger.WriteLine($"Changing current connection to {userDetails.Username}");
+            ConnectionCache connectionCache = GetConnectionCache(userDetails, "current");
+            CurrentConnection = connectionCache.Service;
+            CurrentUserDetails = connectionCache.UserDetails;
+        }
+
+        private ConnectionCache GetConnectionCache(UserDetails userDetails, string connectionType)
+        {
+            Logger.WriteLine($"Changing {connectionType} connection to {userDetails.Username}");
             if (!_connectionCache.TryGetValue(userDetails.Username, out ConnectionCache connectionCache))
             {
                 Logger.WriteLine("Connection doesn't exist. Creating new API connection");
@@ -45,10 +59,10 @@ namespace Vermaat.Crm.Specflow
                 };
                 connectionCache.UserDetails.UserSettings = UserSettings.GetUserSettings(connectionCache.Service);
                 _connectionCache.Add(userDetails.Username, connectionCache);
-               
+
             }
-            CurrentConnection = connectionCache.Service;
-            CurrentUserDetails = connectionCache.UserDetails;
+
+            return connectionCache;
         }
 
         private string ToCrmClientString(UserDetails userDetails)

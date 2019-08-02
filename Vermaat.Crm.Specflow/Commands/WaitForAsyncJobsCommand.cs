@@ -23,7 +23,7 @@ namespace Vermaat.Crm.Specflow.Commands
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
 
             int tryCount = 0;
-            while (tryCount < 15 && QueryHelper.HasOpenSystemJobs(aliasRef.Id, GlobalTestingContext.ConnectionManager.CurrentConnection))
+            while (tryCount < 15 && QueryHelper.HasOpenSystemJobs(aliasRef.Id, GlobalTestingContext.ConnectionManager.AdminConnection))
             {
                 Logger.WriteLine("Not all system jobs are completed. Waiting");
                 Thread.Sleep(2000);

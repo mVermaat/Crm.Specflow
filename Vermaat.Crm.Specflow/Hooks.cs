@@ -78,6 +78,7 @@ namespace Vermaat.Crm.Specflow
             };
             if(!string.IsNullOrEmpty(details.Username) && !string.IsNullOrEmpty(details.Password))
             {
+                GlobalTestingContext.ConnectionManager.SetAdminConnection(details);
                 GlobalTestingContext.ConnectionManager.SetCurrentConnection(details);
             }
         }
