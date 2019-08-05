@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Dynamics365.UIAutomation.Api;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
+using System;
+using System.Configuration;
+using System.Linq;
+using System.Threading;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -18,7 +14,7 @@ namespace Vermaat.Crm.Specflow
 
         public static string GetAppSettingsValue(string key, bool emptyAllowed = false)
         {
-            var value = ConfigurationManager.AppSettings[key];
+            string value = ConfigurationManager.AppSettings[key];
 
             if (!emptyAllowed && string.IsNullOrEmpty(value))
                 throw new TestExecutionException(Constants.ErrorCodes.APP_SETTINGS_REQUIRED, key);
@@ -32,7 +28,8 @@ namespace Vermaat.Crm.Specflow
 
         public static void ExecuteWithRetry(int retryCount, int sleepTime, Action action)
         {
-            ExecuteWithRetry(retryCount, sleepTime, () => {
+            ExecuteWithRetry(retryCount, sleepTime, () =>
+            {
                 action();
                 return true;
             });
@@ -71,7 +68,7 @@ namespace Vermaat.Crm.Specflow
             if (value == null)
                 return null;
 
-            var type = value.GetType();
+            Type type = value.GetType();
             if (type == typeof(OptionSetValue))
             {
                 return ((OptionSetValue)value).Value;
