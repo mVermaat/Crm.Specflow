@@ -11,15 +11,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     internal static class SeleniumFunctions
     {
-        private static SeleniumSelectorData _seleniumSelectors = new SeleniumSelectorData();
+        public static SeleniumSelectorData Selectors { get; } = new SeleniumSelectorData();
 
-       
         public static void ClickSubgridButton(this WebClient client, string subgridName, string subgridButtonId)
         {
             client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
-                var subGrid = driver.FindElement(_seleniumSelectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid, subgridName));
-                var menuBar = subGrid.FindElement(_seleniumSelectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid_ButtonList));
+                var subGrid = driver.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid, subgridName));
+                var menuBar = subGrid.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid_ButtonList));
 
                 var buttons = menuBar.FindElements(By.TagName("button"));
 
@@ -35,8 +34,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     throw new TestExecutionException(Constants.ErrorCodes.MORE_COMMANDS_NOT_FOUND);
                 moreCommands.Click();
 
-                var flyout = driver.FindElement(_seleniumSelectors.GetIdSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
-                flyout.FindElement(_seleniumSelectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid_Button, subgridButtonId)).Click();
+                var flyout = driver.FindElement(Selectors.GetIdSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
+                flyout.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid_Button, subgridButtonId)).Click();
 
                 return true;
             });
@@ -48,24 +47,24 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 List<FormNotification> notifications = new List<FormNotification>();
 
-                if(!driver.TryFindElement(_seleniumSelectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationBar),
+                if(!driver.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationBar),
                     out var notificationBar))
                 {
                     return notifications;
                 }
 
-                if(notificationBar.TryFindElement(_seleniumSelectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_ExpandButton), out var expandButton))
+                if(notificationBar.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_ExpandButton), out var expandButton))
                 {
                     expandButton.Click();
-                    notificationBar = driver.FindElement(_seleniumSelectors.GetIdSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
+                    notificationBar = driver.FindElement(Selectors.GetIdSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
                 }
 
-                var notificationList = notificationBar.FindElement(_seleniumSelectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationList));
+                var notificationList = notificationBar.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationList));
                 var notificationListItems = notificationList.FindElements(By.TagName("li"));
 
                 foreach(var item in notificationListItems)
                 {
-                    var icon = item.FindElement(_seleniumSelectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationTypeIcon));
+                    var icon = item.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationTypeIcon));
 
                     var notification = new FormNotification
                     {
@@ -115,8 +114,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             return client.Execute(BrowserOptionHelper.GetOptions($"Confirm or Cancel Confirmation Dialog"), driver =>
             {
-                return driver.HasElement(_seleniumSelectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_ScriptErrorDialog));
+                return driver.HasElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_ScriptErrorDialog));
             });
         }
+
+        
     }
 }

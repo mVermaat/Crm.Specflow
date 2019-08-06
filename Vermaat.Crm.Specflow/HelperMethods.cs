@@ -6,6 +6,7 @@ using System;
 using System.Configuration;
 using System.Linq;
 using System.Threading;
+using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -91,7 +92,7 @@ namespace Vermaat.Crm.Specflow
         public static void WaitForFormLoad(IWebDriver driver)
         {
             driver.WaitForPageToLoad();
-            driver.WaitUntilClickable(By.XPath(Elements.Xpath[Reference.Entity.Form]),
+            driver.WaitUntilClickable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormLoad),
                 new TimeSpan(0, 0, 30),
                 null,
                 d => { throw new TestExecutionException(Constants.ErrorCodes.FORM_LOAD_TIMEOUT); }

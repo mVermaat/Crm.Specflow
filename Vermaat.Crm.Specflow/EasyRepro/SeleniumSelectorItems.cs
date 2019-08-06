@@ -10,6 +10,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         Entity_ScriptErrorDialog,
 
+        Entity_FormLoad,
+
         Entity_FormNotifcation_NotificationBar,
         Entity_FormNotifcation_ExpandButton,
         Entity_FormNotifcation_NotificationList,

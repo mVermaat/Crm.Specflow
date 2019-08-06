@@ -19,7 +19,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_SubGrid_ButtonList, ".//ul[@data-id='CommandBar']" },
             { SeleniumSelectorItems.Entity_SubGrid_Button, ".//button[contains(@data-id,'[NAME]')]" },
             { SeleniumSelectorItems.FlyoutRoot, "__flyoutRootNode" },
-            { SeleniumSelectorItems.Entity_ScriptErrorDialog, "//*[@id='dialogTitleText']" }
+            { SeleniumSelectorItems.Entity_ScriptErrorDialog, "//*[@id='dialogTitleText']" },
+            { SeleniumSelectorItems.Entity_FormLoad, "id(\"tablist\")" }
         };
 
         public By GetXPathSeleniumSelector(SeleniumSelectorItems itemName)
