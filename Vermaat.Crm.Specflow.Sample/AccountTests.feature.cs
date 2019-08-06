@@ -95,6 +95,9 @@ this.ScenarioInitialize(scenarioInfo);
             table1.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
+            table1.AddRow(new string[] {
+                        "Description",
+                        "Test multi line"});
 #line 6
 testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table1, "When ");
 #line hidden
@@ -113,7 +116,10 @@ testRunner.When("an account named TestAccount is created with the following valu
             table2.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 12
+            table2.AddRow(new string[] {
+                        "Description",
+                        "Test multi line"});
+#line 13
 testRunner.Then("TestAccount has the following values", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -122,14 +128,14 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table2
         [TechTalk.SpecRun.ScenarioAttribute("Update an existing Account", new string[] {
                 "API",
                 "Chrome",
-                "Cleanup"}, SourceLine=19)]
+                "Cleanup"}, SourceLine=21)]
         public virtual void UpdateAnExistingAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update an existing Account", null, new string[] {
                         "API",
                         "Chrome",
                         "Cleanup"});
-#line 20
+#line 22
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -148,7 +154,10 @@ this.ScenarioInitialize(scenarioInfo);
             table3.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 21
+            table3.AddRow(new string[] {
+                        "Description",
+                        "Test multi line"});
+#line 23
 testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table3, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -163,7 +172,10 @@ testRunner.Given("an account named TestAccount with the following values", ((str
             table4.AddRow(new string[] {
                         "Fax",
                         "4839432324"});
-#line 27
+            table4.AddRow(new string[] {
+                        "Description",
+                        "Update multi line"});
+#line 30
 testRunner.When("TestAccount is updated with the following values", ((string)(null)), table4, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -181,7 +193,10 @@ testRunner.When("TestAccount is updated with the following values", ((string)(nu
             table5.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 32
+            table5.AddRow(new string[] {
+                        "Description",
+                        "Update multi line"});
+#line 36
 testRunner.Then("TestAccount has the following values", ((string)(null)), table5, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -189,13 +204,13 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table5
         
         [TechTalk.SpecRun.ScenarioAttribute("Check visiblity of form items", new string[] {
                 "Chrome",
-                "Cleanup"}, SourceLine=40)]
+                "Cleanup"}, SourceLine=45)]
         public virtual void CheckVisiblityOfFormItems()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check visiblity of form items", null, new string[] {
                         "Chrome",
                         "Cleanup"});
-#line 41
+#line 46
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -214,7 +229,7 @@ this.ScenarioInitialize(scenarioInfo);
             table6.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 42
+#line 47
 testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table6, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -226,7 +241,7 @@ testRunner.When("an account named TestAccount is created with the following valu
             table7.AddRow(new string[] {
                         "Ownership",
                         "Invisible"});
-#line 48
+#line 53
 testRunner.Then("TestAccount\'s form has the following form state", ((string)(null)), table7, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -235,14 +250,14 @@ testRunner.Then("TestAccount\'s form has the following form state", ((string)(nu
         [TechTalk.SpecRun.ScenarioAttribute("Create Account - Check two option fields", new string[] {
                 "API",
                 "Chrome",
-                "Cleanup"}, SourceLine=53)]
+                "Cleanup"}, SourceLine=58)]
         public virtual void CreateAccount_CheckTwoOptionFields()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Account - Check two option fields", null, new string[] {
                         "API",
                         "Chrome",
                         "Cleanup"});
-#line 54
+#line 59
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -261,7 +276,7 @@ this.ScenarioInitialize(scenarioInfo);
             table8.AddRow(new string[] {
                         "Do not allow Mails",
                         "Do Not Allow"});
-#line 55
+#line 60
 testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table8, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
@@ -279,7 +294,7 @@ testRunner.When("an account named TestAccount is created with the following valu
             table9.AddRow(new string[] {
                         "Do not allow Mails",
                         "Do Not Allow"});
-#line 61
+#line 66
 testRunner.Then("TestAccount has the following values", ((string)(null)), table9, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -288,14 +303,14 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table9
         [TechTalk.SpecRun.ScenarioAttribute("Clearing values of Account", new string[] {
                 "API",
                 "Chrome",
-                "Cleanup"}, SourceLine=68)]
+                "Cleanup"}, SourceLine=73)]
         public virtual void ClearingValuesOfAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clearing values of Account", null, new string[] {
                         "API",
                         "Chrome",
                         "Cleanup"});
-#line 69
+#line 74
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -314,7 +329,10 @@ this.ScenarioInitialize(scenarioInfo);
             table10.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 70
+            table10.AddRow(new string[] {
+                        "Description",
+                        "Test multi line"});
+#line 75
 testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table10, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
@@ -326,7 +344,10 @@ testRunner.Given("an account named TestAccount with the following values", ((str
             table11.AddRow(new string[] {
                         "Website",
                         ""});
-#line 76
+            table11.AddRow(new string[] {
+                        "Description",
+                        ""});
+#line 82
 testRunner.When("TestAccount is updated with the following values", ((string)(null)), table11, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
@@ -344,7 +365,10 @@ testRunner.When("TestAccount is updated with the following values", ((string)(nu
             table12.AddRow(new string[] {
                         "Industry",
                         ""});
-#line 80
+            table12.AddRow(new string[] {
+                        "Description",
+                        ""});
+#line 87
 testRunner.Then("TestAccount has the following values", ((string)(null)), table12, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -352,13 +376,13 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table1
         
         [TechTalk.SpecRun.ScenarioAttribute("Setting values while switching tabs", new string[] {
                 "Chrome",
-                "Cleanup"}, SourceLine=87)]
+                "Cleanup"}, SourceLine=95)]
         public virtual void SettingValuesWhileSwitchingTabs()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting values while switching tabs", null, new string[] {
                         "Chrome",
                         "Cleanup"});
-#line 88
+#line 96
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -380,7 +404,7 @@ this.ScenarioInitialize(scenarioInfo);
             table13.AddRow(new string[] {
                         "Website",
                         "https://dynamichands.nl"});
-#line 89
+#line 97
 testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table13, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -401,7 +425,7 @@ testRunner.When("an account named TestAccount is created with the following valu
             table14.AddRow(new string[] {
                         "Credit Hold",
                         "Yes"});
-#line 96
+#line 104
 testRunner.Then("TestAccount has the following values", ((string)(null)), table14, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -409,13 +433,13 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table1
         
         [TechTalk.SpecRun.ScenarioAttribute("Full Merge of two accounts into one", new string[] {
                 "API",
-                "Cleanup"}, SourceLine=104)]
+                "Cleanup"}, SourceLine=112)]
         public virtual void FullMergeOfTwoAccountsIntoOne()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Full Merge of two accounts into one", null, new string[] {
                         "API",
                         "Cleanup"});
-#line 105
+#line 113
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -428,7 +452,7 @@ this.ScenarioInitialize(scenarioInfo);
             table15.AddRow(new string[] {
                         "Main Phone",
                         "0612345678"});
-#line 106
+#line 114
 testRunner.Given("an account named MergeSource with the following values", ((string)(null)), table15, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
@@ -443,9 +467,9 @@ testRunner.Given("an account named MergeSource with the following values", ((str
             table16.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 110
+#line 118
 testRunner.Given("an account named MergeTarget with the following values", ((string)(null)), table16, "Given ");
-#line 115
+#line 123
 testRunner.When("MergeSource is fully merged into MergeTarget", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
@@ -463,7 +487,7 @@ testRunner.When("MergeSource is fully merged into MergeTarget", ((string)(null))
             table17.AddRow(new string[] {
                         "Main Phone",
                         "0612345678"});
-#line 116
+#line 124
 testRunner.Then("MergeTarget has the following values", ((string)(null)), table17, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -471,13 +495,13 @@ testRunner.Then("MergeTarget has the following values", ((string)(null)), table1
         
         [TechTalk.SpecRun.ScenarioAttribute("Partial Merge of two accounts into one", new string[] {
                 "API",
-                "Cleanup"}, SourceLine=123)]
+                "Cleanup"}, SourceLine=131)]
         public virtual void PartialMergeOfTwoAccountsIntoOne()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Partial Merge of two accounts into one", null, new string[] {
                         "API",
                         "Cleanup"});
-#line 124
+#line 132
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -490,7 +514,7 @@ this.ScenarioInitialize(scenarioInfo);
             table18.AddRow(new string[] {
                         "Main Phone",
                         "0612345678"});
-#line 125
+#line 133
 testRunner.Given("an account named MergeSource with the following values", ((string)(null)), table18, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
@@ -505,14 +529,14 @@ testRunner.Given("an account named MergeSource with the following values", ((str
             table19.AddRow(new string[] {
                         "Industry",
                         "Consulting"});
-#line 129
+#line 137
 testRunner.Given("an account named MergeTarget with the following values", ((string)(null)), table19, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property"});
             table20.AddRow(new string[] {
                         "Main Phone"});
-#line 134
+#line 142
 testRunner.When("The following fields of MergeSource are fully merged into MergeTarget", ((string)(null)), table20, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
@@ -530,7 +554,7 @@ testRunner.When("The following fields of MergeSource are fully merged into Merge
             table21.AddRow(new string[] {
                         "Main Phone",
                         "0612345678"});
-#line 137
+#line 145
 testRunner.Then("MergeTarget has the following values", ((string)(null)), table21, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -539,21 +563,21 @@ testRunner.Then("MergeTarget has the following values", ((string)(null)), table2
         [TechTalk.SpecRun.ScenarioAttribute("Use DefaultData for default values", new string[] {
                 "API",
                 "Chrome",
-                "Cleanup"}, SourceLine=144)]
+                "Cleanup"}, SourceLine=152)]
         public virtual void UseDefaultDataForDefaultValues()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Use DefaultData for default values", null, new string[] {
                         "API",
                         "Chrome",
                         "Cleanup"});
-#line 145
+#line 153
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-#line 146
+#line 154
 testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table22, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
@@ -562,7 +586,7 @@ testRunner.When("an account named TestAccount is created with the following valu
             table23.AddRow(new string[] {
                         "Account Name",
                         "test"});
-#line 148
+#line 156
 testRunner.Then("TestAccount has the following values", ((string)(null)), table23, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -571,14 +595,14 @@ testRunner.Then("TestAccount has the following values", ((string)(null)), table2
         [TechTalk.SpecRun.ScenarioAttribute("Creating child contact from account", new string[] {
                 "API",
                 "Chrome",
-                "Cleanup"}, SourceLine=153)]
+                "Cleanup"}, SourceLine=161)]
         public virtual void CreatingChildContactFromAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating child contact from account", null, new string[] {
                         "API",
                         "Chrome",
                         "Cleanup"});
-#line 154
+#line 162
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -609,7 +633,7 @@ this.ScenarioInitialize(scenarioInfo);
             table24.AddRow(new string[] {
                         "Address 1: State/Province",
                         "State"});
-#line 155
+#line 163
 testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table24, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
@@ -627,7 +651,7 @@ testRunner.Given("an account named TestAccount with the following values", ((str
             table25.AddRow(new string[] {
                         "Address 1: Street 2",
                         ""});
-#line 165
+#line 173
 testRunner.When("a related contact from TestAccount named ChildContact is created with the followi" +
                     "ng values", ((string)(null)), table25, "When ");
 #line hidden
@@ -658,7 +682,7 @@ testRunner.When("a related contact from TestAccount named ChildContact is create
             table26.AddRow(new string[] {
                         "Address 1: State/Province",
                         "State"});
-#line 171
+#line 179
 testRunner.Then("ChildContact has the following values", ((string)(null)), table26, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -666,13 +690,13 @@ testRunner.Then("ChildContact has the following values", ((string)(null)), table
         
         [TechTalk.SpecRun.ScenarioAttribute("Connect records via a N:N Relationship", new string[] {
                 "API",
-                "Cleanup"}, SourceLine=182)]
+                "Cleanup"}, SourceLine=190)]
         public virtual void ConnectRecordsViaANNRelationship()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Connect records via a N:N Relationship", null, new string[] {
                         "API",
                         "Cleanup"});
-#line 183
+#line 191
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -685,7 +709,7 @@ this.ScenarioInitialize(scenarioInfo);
             table27.AddRow(new string[] {
                         "Main Phone",
                         "0612345678"});
-#line 184
+#line 192
 testRunner.Given("an account named NNAccount with the following values", ((string)(null)), table27, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
@@ -697,7 +721,7 @@ testRunner.Given("an account named NNAccount with the following values", ((strin
             table28.AddRow(new string[] {
                         "Last Name",
                         "Smith"});
-#line 188
+#line 196
 testRunner.And("a contact named Contact1 with the following values", ((string)(null)), table28, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
@@ -709,7 +733,7 @@ testRunner.And("a contact named Contact1 with the following values", ((string)(n
             table29.AddRow(new string[] {
                         "Last Name",
                         "Pond"});
-#line 192
+#line 200
 testRunner.And("a contact named Contact2 with the following values", ((string)(null)), table29, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
@@ -721,7 +745,7 @@ testRunner.And("a contact named Contact2 with the following values", ((string)(n
             table30.AddRow(new string[] {
                         "Last Name",
                         "Foreman"});
-#line 196
+#line 204
 testRunner.And("a contact named Contact3 with the following values", ((string)(null)), table30, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
@@ -732,7 +756,7 @@ testRunner.And("a contact named Contact3 with the following values", ((string)(n
                         "Contact2"});
             table31.AddRow(new string[] {
                         "Contact3"});
-#line 200
+#line 208
 testRunner.When("the following records of type contact are connected to NNAccount", ((string)(null)), table31, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table32 = new TechTalk.SpecFlow.Table(new string[] {
@@ -743,7 +767,7 @@ testRunner.When("the following records of type contact are connected to NNAccoun
                         "Contact2"});
             table32.AddRow(new string[] {
                         "Contact3"});
-#line 205
+#line 213
 testRunner.Then("NNAccount has the following connected records of type contact", ((string)(null)), table32, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -751,13 +775,13 @@ testRunner.Then("NNAccount has the following connected records of type contact",
         
         [TechTalk.SpecRun.ScenarioAttribute("Single form notification", new string[] {
                 "Chrome",
-                "Cleanup"}, SourceLine=211)]
+                "Cleanup"}, SourceLine=219)]
         public virtual void SingleFormNotification()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Single form notification", null, new string[] {
                         "Chrome",
                         "Cleanup"});
-#line 212
+#line 220
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -770,7 +794,7 @@ this.ScenarioInitialize(scenarioInfo);
             table33.AddRow(new string[] {
                         "Credit Limit",
                         "10000"});
-#line 213
+#line 221
 testRunner.Given("an account named NotificationAccount with the following values", ((string)(null)), table33, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
@@ -779,7 +803,7 @@ testRunner.Given("an account named NotificationAccount with the following values
             table34.AddRow(new string[] {
                         "The credit limit of this account is under 1.000.000",
                         "Warning"});
-#line 217
+#line 225
 testRunner.Then("NotificationAccount has the following form notifications", ((string)(null)), table34, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -787,13 +811,13 @@ testRunner.Then("NotificationAccount has the following form notifications", ((st
         
         [TechTalk.SpecRun.ScenarioAttribute("Multiple form notifications", new string[] {
                 "Chrome",
-                "Cleanup"}, SourceLine=221)]
+                "Cleanup"}, SourceLine=229)]
         public virtual void MultipleFormNotifications()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Multiple form notifications", null, new string[] {
                         "Chrome",
                         "Cleanup"});
-#line 222
+#line 230
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -809,7 +833,7 @@ this.ScenarioInitialize(scenarioInfo);
             table35.AddRow(new string[] {
                         "Industry",
                         "Brokers"});
-#line 223
+#line 231
 testRunner.Given("an account named NotificationAccount with the following values", ((string)(null)), table35, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table36 = new TechTalk.SpecFlow.Table(new string[] {
@@ -821,7 +845,7 @@ testRunner.Given("an account named NotificationAccount with the following values
             table36.AddRow(new string[] {
                         "This account is from the broker industry. Additional rules applicable.",
                         "Warning"});
-#line 228
+#line 236
 testRunner.Then("NotificationAccount has the following form notifications", ((string)(null)), table36, "Then ");
 #line hidden
             this.ScenarioCleanup();

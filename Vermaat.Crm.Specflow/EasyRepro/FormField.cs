@@ -82,7 +82,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public bool IsLocked()
         {
-            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Check field requirement"), driver =>
+            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Check field locked state"), driver =>
             {
                 IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _metadata.LogicalName)));
                 if (fieldContainer == null)
@@ -237,37 +237,38 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field)));
 
+                IWebElement input;
                 if (fieldContainer.FindElements(By.TagName("input")).Count > 0)
                 {
-                    IWebElement input = fieldContainer.FindElement(By.TagName("input"));
-                    if (input != null)
-                    {
-                        string currentValue = input.GetAttribute("value");
-
-                        input.Click();
-                        if (!string.IsNullOrWhiteSpace(currentValue))
-                        {
-                            input.SendKeys(Keys.Control + "a");
-                            input.SendKeys(Keys.Backspace);
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(value))
-                        {
-                            input.SendKeys(value);
-                        }
-
-                        input.SendKeys(Keys.Tab + Keys.Tab);
-                    }
+                    input = fieldContainer.FindElement(By.TagName("input"));
+                    
                 }
                 else if (fieldContainer.FindElements(By.TagName("textarea")).Count > 0)
                 {
-                    fieldContainer.FindElement(By.TagName("textarea")).Click();
-                    fieldContainer.FindElement(By.TagName("textarea")).Clear();
-                    fieldContainer.FindElement(By.TagName("textarea")).SendKeys(value);
+                    input = fieldContainer.FindElement(By.TagName("textarea"));
                 }
                 else
                 {
                     throw new Exception($"Field with name {field} does not exist.");
+                }
+
+                if (input != null)
+                {
+                    string currentValue = input.GetAttribute("value");
+
+                    input.Click();
+                    if (!string.IsNullOrWhiteSpace(currentValue))
+                    {
+                        input.SendKeys(Keys.Control + "a");
+                        input.SendKeys(Keys.Backspace);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(value))
+                    {
+                        input.SendKeys(value);
+                    }
+
+                    input.SendKeys(Keys.Tab + Keys.Tab);
                 }
 
                 return true;

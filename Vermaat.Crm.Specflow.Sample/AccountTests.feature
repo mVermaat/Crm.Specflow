@@ -9,32 +9,37 @@ When an account named TestAccount is created with the following values
     | Main Phone   | 06123456789             |
     | Website      | https://dynamichands.nl |
     | Industry     | Consulting              |
+    | Description  | Test multi line         |
 Then TestAccount has the following values
     | Property     | Value                   |
     | Account Name | DynamicHands            |
     | Main Phone   | 06123456789             |
     | Website      | https://dynamichands.nl |
     | Industry     | Consulting              |
+    | Description  | Test multi line         |
 
 @API @Chrome @Cleanup
 Scenario: Update an existing Account
 Given an account named TestAccount with the following values
-    | Property              | Value                   |
-    | Account Name          | DynamicHands            |
-    | Main Phone            | 0612345678              |
-    | Website               | https://dynamichands.nl |
-    | Industry              | Consulting              |
+    | Property     | Value                   |
+    | Account Name | DynamicHands            |
+    | Main Phone   | 0612345678              |
+    | Website      | https://dynamichands.nl |
+    | Industry     | Consulting              |
+    | Description  | Test multi line         |
 When TestAccount is updated with the following values
     | Property     | Value             |
     | Account Name | DynamicHands B.V. |
     | Main Phone   | 06987654321       |
-    | Fax          | 4839432324        |	
+    | Fax          | 4839432324        |
+    | Description  | Update multi line |
 Then TestAccount has the following values
     | Property     | Value                   |
     | Account Name | DynamicHands B.V.       |
     | Main Phone   | 06987654321             |
     | Website      | https://dynamichands.nl |
     | Industry     | Consulting              |
+    | Description  | Update multi line       |
 
 
 @Chrome @Cleanup
@@ -73,16 +78,19 @@ Given an account named TestAccount with the following values
     | Main Phone   | 0612345678              |
     | Website      | https://dynamichands.nl |
     | Industry     | Consulting              |
+    | Description  | Test multi line         |
 When TestAccount is updated with the following values
-    | Property | Value |
-    | Industry |       |
-    | Website  |       |
+    | Property    | Value |
+    | Industry    |       |
+    | Website     |       |
+    | Description |       |
 Then TestAccount has the following values
     | Property     | Value        |
     | Account Name | DynamicHands |
     | Main Phone   | 0612345678   |
     | Website      |              |
     | Industry     |              |
+    | Description  |              |
 
 @Chrome @Cleanup
 Scenario: Setting values while switching tabs
