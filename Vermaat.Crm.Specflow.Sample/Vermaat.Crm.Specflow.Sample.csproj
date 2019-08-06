@@ -169,11 +169,11 @@
     <Error Condition="!Exists('..\packages\Microsoft.NET.Test.Sdk.16.2.0\build\net40\Microsoft.NET.Test.Sdk.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NET.Test.Sdk.16.2.0\build\net40\Microsoft.NET.Test.Sdk.targets'))" />
     <Error Condition="!Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.0.225\build\SpecFlow.Tools.MsBuild.Generation.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.Tools.MsBuild.Generation.3.0.225\build\SpecFlow.Tools.MsBuild.Generation.props'))" />
     <Error Condition="!Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.0.225\build\SpecFlow.Tools.MsBuild.Generation.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.Tools.MsBuild.Generation.3.0.225\build\SpecFlow.Tools.MsBuild.Generation.targets'))" />
-    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.76.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.76.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
     <Error Condition="!Exists('..\packages\SpecRun.Runner.3.0.377\build\SpecRun.Runner.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecRun.Runner.3.0.377\build\SpecRun.Runner.props'))" />
     <Error Condition="!Exists('..\packages\SpecRun.Runner.3.0.377\build\SpecRun.Runner.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecRun.Runner.3.0.377\build\SpecRun.Runner.targets'))" />
     <Error Condition="!Exists('..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.props'))" />
     <Error Condition="!Exists('..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.75.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.75.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.targets')" />
   <Target Name="AfterUpdateFeatureFilesInProject">
@@ -185,7 +185,7 @@
   <Import Project="..\packages\Microsoft.CodeCoverage.16.2.0\build\netstandard1.0\Microsoft.CodeCoverage.targets" Condition="Exists('..\packages\Microsoft.CodeCoverage.16.2.0\build\netstandard1.0\Microsoft.CodeCoverage.targets')" />
   <Import Project="..\packages\Microsoft.NET.Test.Sdk.16.2.0\build\net40\Microsoft.NET.Test.Sdk.targets" Condition="Exists('..\packages\Microsoft.NET.Test.Sdk.16.2.0\build\net40\Microsoft.NET.Test.Sdk.targets')" />
   <Import Project="..\packages\SpecFlow.Tools.MsBuild.Generation.3.0.225\build\SpecFlow.Tools.MsBuild.Generation.targets" Condition="Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.0.225\build\SpecFlow.Tools.MsBuild.Generation.targets')" />
-  <Import Project="..\packages\Selenium.Chrome.WebDriver.76.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.76.0.0\build\Selenium.Chrome.WebDriver.targets')" />
   <Import Project="..\packages\SpecRun.Runner.3.0.377\build\SpecRun.Runner.targets" Condition="Exists('..\packages\SpecRun.Runner.3.0.377\build\SpecRun.Runner.targets')" />
   <Import Project="..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.targets" Condition="Exists('..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.targets')" />
+  <Import Project="..\packages\Selenium.Chrome.WebDriver.75.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.75.0.0\build\Selenium.Chrome.WebDriver.targets')" />
 </Project>
