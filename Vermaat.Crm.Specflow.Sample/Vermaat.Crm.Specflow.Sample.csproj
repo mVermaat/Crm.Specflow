@@ -129,6 +129,7 @@
     <None Include="appsettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="DateTesting.feature" />
     <None Include="Default.srprofile">
       <SubType>Designer</SubType>
     </None>

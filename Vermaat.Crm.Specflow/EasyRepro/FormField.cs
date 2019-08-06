@@ -190,9 +190,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 ? GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.DateTimeFormat
                 : GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.DateFormat;
 
-            var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(fieldValue);
-
-            _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue.Add(offset), format);
+            if (((DateTimeAttributeMetadata)_metadata).DateTimeBehavior == DateTimeBehavior.UserLocal)
+            {
+                var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(fieldValue);
+                _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue.Add(offset), format);
+            }
+            else
+            {
+                _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue, format);
+            }            
         }
 
         private void SetOptionSetField(string optionSetLabel)

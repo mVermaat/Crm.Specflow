@@ -90,15 +90,21 @@ namespace Vermaat.Crm.Specflow
             if (string.IsNullOrEmpty(value))
                 return null;
 
-            if(((DateTimeAttributeMetadata)metadata).Format == DateTimeFormat.DateOnly)
-                return DateTime.ParseExact(value, _dateonlyFormat, CultureInfo.InvariantCulture);
+            var format = ((DateTimeAttributeMetadata)metadata).Format == DateTimeFormat.DateOnly ?
+                _dateonlyFormat : _datetimeFormat;
 
-
-            var dateTime = DateTime.ParseExact(value, _datetimeFormat, CultureInfo.InvariantCulture, 
+            if (((DateTimeAttributeMetadata)metadata).DateTimeBehavior == DateTimeBehavior.UserLocal)
+            {
+                var dateTime = DateTime.ParseExact(value, format, CultureInfo.InvariantCulture,
                 DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
 
-           var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(dateTime);
-            return dateTime.Subtract(offset);
+                var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(dateTime);
+                return dateTime.Subtract(offset);
+            }
+            else
+            {
+                return DateTime.ParseExact(value, format, CultureInfo.InvariantCulture);
+            }
         }
 
         private static object ParseVirtualType(CrmTestingContext context, AttributeMetadata metadata, string value, ConvertedObjectType objectType)
