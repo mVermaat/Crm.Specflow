@@ -56,13 +56,14 @@ namespace Vermaat.Crm.Specflow
                 }
                 catch(AssertFailedException ex)
                 {
+                    Logger.WriteLine(ex.Message);
                     errors.Add(ex.Message);
                 }
             }
 
             if(errors.Count > 0)
             {
-                Assert.Fail($"At least one error occured when asseting fields. Errors: {string.Join("\r\n", errors)}");
+                Assert.Fail($"At least one error occured when asseting fields. Errors: {string.Join(Environment.NewLine, errors)}");
             }
         }
     }
