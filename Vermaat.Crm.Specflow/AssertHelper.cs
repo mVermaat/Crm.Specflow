@@ -44,12 +44,25 @@ namespace Vermaat.Crm.Specflow
         /// <param name="context"></param>
         public static void HasProperties(Entity record, Table criteria, CrmTestingContext context)
         {
+            List<string> errors = new List<string>();
             foreach (var row in criteria.Rows)
             {
                 var actualValue = record.Contains(row[Constants.SpecFlow.TABLE_KEY]) ? record[row[Constants.SpecFlow.TABLE_KEY]] : null;
                 var expectedValue = ObjectConverter.ToCrmObject(record.LogicalName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], context);
 
-                AreEqual(actualValue, expectedValue, row[Constants.SpecFlow.TABLE_KEY]);
+                try
+                {
+                    AreEqual(actualValue, expectedValue, row[Constants.SpecFlow.TABLE_KEY]);
+                }
+                catch(AssertFailedException ex)
+                {
+                    errors.Add(ex.Message);
+                }
+            }
+
+            if(errors.Count > 0)
+            {
+                Assert.Fail($"At least one error occured when asseting fields. Errors: {string.Join("\r\n", errors)}");
             }
         }
     }
