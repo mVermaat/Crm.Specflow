@@ -221,7 +221,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void SetLookupValue(EntityReference fieldValue)
         {
-            _app.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{_metadata.LogicalName}').setValue([ {{ id: '{fieldValue.Id}', name: '{fieldValue.Name}', entityType: '{fieldValue.LogicalName}' }} ])");
+            _app.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{_metadata.LogicalName}').setValue([ {{ id: '{fieldValue.Id}', name: '{fieldValue.Name.Replace("'", @"\'")}', entityType: '{fieldValue.LogicalName}' }} ])");
             _app.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{_metadata.LogicalName}').fireOnChange()");
         }
 

@@ -116,3 +116,24 @@ When all asynchronous processes for TestContact are finished
 Then TestAccount has the following values
     | Property        | Value |
     | Contact Present | Yes   |
+
+@Chrome @Cleanup
+Scenario: Basic Lookup test - Special Characters
+Given an account named FirstAccount with the following values
+    | Property     | Value                                 |
+    | Account Name | Thïs \s a ' Special " Chácactèr Test/ |
+    | Main Phone   | 0612345678                            |
+    | Website      | https://dynamichands.nl               |
+    | Industry     | Consulting                            |
+When a contact named TestLookup is created with the following values
+    | Property     | Value            |
+    | First Name   | Jerry            |
+    | Last Name    | Smith            |
+    | Company Name | FirstAccount    |
+    | Email        | someone@test.com |
+Then TestLookup has the following values
+    | Property     | Value            |
+    | First Name   | Jerry            |
+    | Last Name    | Smith            |
+    | Company Name | FirstAccount     |
+    | Email        | someone@test.com |

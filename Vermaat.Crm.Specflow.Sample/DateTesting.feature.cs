@@ -80,50 +80,50 @@ namespace Vermaat.Crm.Specflow.Sample
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table57 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table60 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table57.AddRow(new string[] {
+            table60.AddRow(new string[] {
                         "Name",
                         "Testing Dates"});
-            table57.AddRow(new string[] {
+            table60.AddRow(new string[] {
                         "Date Only",
                         "1-1-2010"});
-            table57.AddRow(new string[] {
+            table60.AddRow(new string[] {
                         "User Local Date Only",
                         "1-1-2010"});
-            table57.AddRow(new string[] {
+            table60.AddRow(new string[] {
                         "User Local Date Time",
                         "1-1-2010 10:00"});
-            table57.AddRow(new string[] {
+            table60.AddRow(new string[] {
                         "Time Zone Independent Date Only",
                         "1-1-2010"});
-            table57.AddRow(new string[] {
+            table60.AddRow(new string[] {
                         "Time Zone Independent Date Time",
                         "1-1-2010 10:00"});
 #line 7
-testRunner.Given("a mv_datetester named TestDateTime with the following values", ((string)(null)), table57, "Given ");
+testRunner.Given("a mv_datetester named TestDateTime with the following values", ((string)(null)), table60, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table58 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table61 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table58.AddRow(new string[] {
+            table61.AddRow(new string[] {
                         "Date Only",
                         "1-1-2010"});
-            table58.AddRow(new string[] {
+            table61.AddRow(new string[] {
                         "User Local Date Only",
                         "1-1-2010"});
-            table58.AddRow(new string[] {
+            table61.AddRow(new string[] {
                         "User Local Date Time",
                         "1-1-2010 10:00"});
-            table58.AddRow(new string[] {
+            table61.AddRow(new string[] {
                         "Time Zone Independent Date Only",
                         "1-1-2010"});
-            table58.AddRow(new string[] {
+            table61.AddRow(new string[] {
                         "Time Zone Independent Date Time",
                         "1-1-2010 10:00"});
 #line 15
-testRunner.Then("TestDateTime has the following values", ((string)(null)), table58, "Then ");
+testRunner.Then("TestDateTime has the following values", ((string)(null)), table61, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
