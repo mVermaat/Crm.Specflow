@@ -19,6 +19,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private Dictionary<string, FormData> _forms;
 
         public UCIApp App { get; }
+        public FormData LastFormData { get; private set; }
 
         static UCIBrowser()
         {
@@ -102,6 +103,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 _forms.Add(entityMetadata.LogicalName + currentFormId, formData);
             }
 
+            LastFormData = formData;
             return formData;
         }
 

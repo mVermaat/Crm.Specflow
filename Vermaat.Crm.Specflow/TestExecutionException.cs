@@ -12,6 +12,7 @@ namespace Vermaat.Crm.Specflow
     public class TestExecutionException : Exception
     {
         public virtual int ErrorCode { get;  }
+
         public TestExecutionException() { }
 
         public TestExecutionException(int errorCode) : 

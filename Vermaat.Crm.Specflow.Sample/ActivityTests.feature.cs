@@ -80,21 +80,6 @@ namespace Vermaat.Crm.Specflow.Sample
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table37 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table37.AddRow(new string[] {
-                        "Subject",
-                        "TestDateTime"});
-            table37.AddRow(new string[] {
-                        "Start Time",
-                        "20-5-2018 10:00"});
-            table37.AddRow(new string[] {
-                        "End Time",
-                        "20-5-2018 12:00"});
-#line 6
-testRunner.Given("an appointment named TestAppointment with the following values", ((string)(null)), table37, "Given ");
-#line hidden
             TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
@@ -107,8 +92,23 @@ testRunner.Given("an appointment named TestAppointment with the following values
             table38.AddRow(new string[] {
                         "End Time",
                         "20-5-2018 12:00"});
+#line 6
+testRunner.Given("an appointment named TestAppointment with the following values", ((string)(null)), table38, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table39 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table39.AddRow(new string[] {
+                        "Subject",
+                        "TestDateTime"});
+            table39.AddRow(new string[] {
+                        "Start Time",
+                        "20-5-2018 10:00"});
+            table39.AddRow(new string[] {
+                        "End Time",
+                        "20-5-2018 12:00"});
 #line 11
-testRunner.Then("TestAppointment has the following values", ((string)(null)), table38, "Then ");
+testRunner.Then("TestAppointment has the following values", ((string)(null)), table39, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

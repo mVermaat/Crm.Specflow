@@ -150,6 +150,7 @@
     <Compile Include="BusinessProcessFlowHelper.cs" />
     <Compile Include="CommandAction.cs" />
     <Compile Include="Commands\ActivateQuoteCommand.cs" />
+    <Compile Include="Commands\AssertErrorDialogCommand.cs" />
     <Compile Include="Commands\AssertFormNotificationsCommand.cs" />
     <Compile Include="Commands\AssertNNRelationshipCommand.cs" />
     <Compile Include="Commands\AssociateToNNRelationshipCommand.cs" />

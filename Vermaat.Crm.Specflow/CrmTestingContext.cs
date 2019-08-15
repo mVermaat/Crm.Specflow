@@ -25,12 +25,12 @@ namespace Vermaat.Crm.Specflow
 
         public int LanguageCode { get; set; }
 
-        public CrmTestingContext()
+        public CrmTestingContext(ScenarioContext scenarioContext)
         {
             RecordBuilder = new RecordBuilder(this);
             TableConverter = new TableConverter(this);
             LanguageCode = GetLanguageCode();
-            CommandProcessor = new CommandProcessor();
+            CommandProcessor = new CommandProcessor(scenarioContext);
             RecordCache = new AliasedRecordCache(GlobalTestingContext.ConnectionManager, GlobalTestingContext.Metadata);
 
             _targets = ConfigurationManager.AppSettings["Target"]

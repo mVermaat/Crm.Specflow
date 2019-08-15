@@ -851,6 +851,37 @@ testRunner.Then("NotificationAccount has the following form notifications", ((st
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Verify error popup", new string[] {
+                "Cleanup",
+                "ExpectedError",
+                "Chrome"}, SourceLine=241)]
+        public virtual void VerifyErrorPopup()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error popup", null, new string[] {
+                        "Cleanup",
+                        "ExpectedError",
+                        "Chrome"});
+#line 242
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table37 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table37.AddRow(new string[] {
+                        "Account Name",
+                        "Test"});
+            table37.AddRow(new string[] {
+                        "Website",
+                        "https://error.com"});
+#line 243
+testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table37, "When ");
+#line 247
+testRunner.Then("the following error message appears: \'Website refers to error.com\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

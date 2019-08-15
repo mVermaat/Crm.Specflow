@@ -237,3 +237,11 @@ Then NotificationAccount has the following form notifications
     | Message                                                                | Level   |
     | The credit limit of this account is under 1.000.000                    | Warning |
     | This account is from the broker industry. Additional rules applicable. | Warning |
+
+@Cleanup @ExpectedError @Chrome
+Scenario: Verify error popup
+When an account named TestAccount is created with the following values
+         | Property     | Value             |
+         | Account Name | Test              |
+         | Website      | https://error.com |
+Then the following error message appears: 'Website refers to error.com'

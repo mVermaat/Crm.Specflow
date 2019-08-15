@@ -29,7 +29,7 @@ namespace Vermaat.Crm.Specflow
             _errorMessages.Add(Constants.ErrorCodes.BUSINESS_PROCESS_STAGE_NOT_IN_ACTIVE_PATH, "{0} isn't in the active path");
             _errorMessages.Add(Constants.ErrorCodes.BUSINESS_PROCESS_STAGE_CANNOT_BE_LAST, "Current stage be the last");
             _errorMessages.Add(Constants.ErrorCodes.LANGUAGECODE_MUST_BE_INTEGER, "AppSettings languagecode must be an integer i.e. 1033 for english");
-            _errorMessages.Add(Constants.ErrorCodes.FORM_SAVE_FAILED, "Save failed. Detected unsaved changes after saving.");
+            _errorMessages.Add(Constants.ErrorCodes.FORM_SAVE_FAILED, "Save failed. {0}");
             _errorMessages.Add(Constants.ErrorCodes.FORM_SAVE_TIMEOUT, "Save wasn't completed in {0} seconds");
             _errorMessages.Add(Constants.ErrorCodes.DUPLICATE_RECORD_DETECTED, "Duplicate found and not selected for save");
             _errorMessages.Add(Constants.ErrorCodes.FIELD_NOT_ON_FORM, "Field {0} can't be found on form");
@@ -48,13 +48,19 @@ namespace Vermaat.Crm.Specflow
             _errorMessages.Add(Constants.ErrorCodes.FORM_NOT_FOUND, "Form {0} of entity {1} wasn't found");
         }
 
+
         public string GetErrorMessage(int errorCode, params object[] formatArgs)
+        {
+            return GetErrorMessage(errorCode, null, formatArgs);
+        }
+
+        public string GetErrorMessage(int errorCode, string additionalDetails, params object[] formatArgs)
         {
             Logger.WriteLine($"Getting error message for errorcode {errorCode}");
             if (!_errorMessages.ContainsKey(errorCode))
                 return string.Format(_errorMessages[Constants.ErrorCodes.ERRORMESSAGE_NOT_FOUND], errorCode);
 
-            return string.Format(_errorMessages[errorCode], formatArgs);
+            return string.Format(_errorMessages[errorCode] + additionalDetails, formatArgs);
         }
 
         public void ChangeErrorMessage(int errorCode, string errorMessage)

@@ -8,6 +8,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     internal enum SeleniumSelectorItems
     {
+        Dialog_Subtitle,
         Entity_ScriptErrorDialog,
 
         Entity_FormLoad,

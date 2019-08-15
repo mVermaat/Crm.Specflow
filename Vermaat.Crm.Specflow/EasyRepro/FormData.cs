@@ -49,6 +49,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _app.App.Entity.SelectTab(tabLabel);
         }
 
+        public string GetErrorDialogMessage()
+        {
+            Logger.WriteLine("Getting error dialog message");
+            return _app.Client.GetErrorDialogMessage();
+        }
+
         public IReadOnlyCollection<FormNotification> GetFormNotifications()
         {
             return _app.Client.GetFormNotifications();
@@ -65,7 +71,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void Save(bool saveIfDuplicate)
         {
             Logger.WriteLine($"Saving Record");
-            _app.App.Entity.Save();
+            try
+            {
+                _app.App.Entity.Save();
+            }
+            catch(InvalidOperationException ex)
+            {
+                throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, ex, ex.Message);
+            }
             ConfirmDuplicate(saveIfDuplicate);
             WaitUntilSaveCompleted();
         }
@@ -105,7 +118,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 }
                 else if(!string.IsNullOrEmpty(footerElement.Text) && footerElement.Text.ToLower() == "unsaved changes")
                 {
-                    throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED);
+                    throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, "Detected Unsaved changes");
                 }
                 else
                 {

@@ -40,5 +40,11 @@ namespace Vermaat.Crm.Specflow.Steps
         {
             _crmContext.CommandProcessor.Execute(new AssertFormNotificationsCommand(_crmContext, _seleniumContext, alias, formNotifications));
         }
+
+        [Then(@"the following error message appears: '(.*)'")]
+        public void ThenErrorAppears(string errorMessage)
+        {
+            _crmContext.CommandProcessor.Execute(new AssertErrorDialogCommand(_crmContext, _seleniumContext, errorMessage));
+        }
     }
 }
