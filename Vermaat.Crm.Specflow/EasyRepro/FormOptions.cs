@@ -32,7 +32,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             Uri currentUrl = new Uri(driver.Url);
 
-            StringBuilder builder = new StringBuilder($"{currentUrl.Scheme}://{currentUrl.Authority}/main.aspx?etn={EntityName}&pagetype=entityrecord");
+            StringBuilder builder = new StringBuilder($"{currentUrl.Scheme}://{currentUrl.Authority}/main.aspx?etn={EntityName}&pagetype=entityrecord&flags=testmode=true");
 
             if (EntityId.HasValue)
                 builder.Append($"&id=%7B{EntityId:D}%7D");
