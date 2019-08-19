@@ -7,16 +7,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public class UCIBrowser : IDisposable
     {
-        private string _appId;
-        private string _appName;
+        private Guid? _currentAppId;
+        private string _currentAppName;
         private bool _isDisposed = false;
 
-        private Dictionary<string, FormData> _forms;
+        private readonly Dictionary<string, FormData> _forms;
+        private readonly CrmModelApps _apps;
 
         public UCIApp App { get; }
         public FormData LastFormData { get; private set; }
@@ -26,11 +28,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
           
         }
 
-        public UCIBrowser(BrowserOptions browserOptions, ButtonTexts buttonTexts)
+        public UCIBrowser(BrowserOptions browserOptions, ButtonTexts buttonTexts, CrmModelApps apps)
         {
             App = new UCIApp(browserOptions, buttonTexts);
             _forms = new Dictionary<string, FormData>();
-            _appId = null;
+            _apps = apps;
         }
 
         public void Login(Uri uri, UserDetails connectionString)
@@ -45,20 +47,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             App.App.OnlineLogin.Login(uri, connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
         }
 
-        public void ChangeApp(string appName)
+        public void ChangeApp(string appUniqueName)
         {
-            if (appName != _appName)
+            if (appUniqueName != _currentAppName)
             {
-                Logger.WriteLine($"Changing app from {_appName} to {appName}");
-                App.App.Navigation.OpenApp(appName);
-                var queryDic = System.Web.HttpUtility.ParseQueryString(new Uri(App.WebDriver.Url).Query);
-                _appId = queryDic["appid"];
-                _appName = appName;
-                Logger.WriteLine($"Logged into app: {appName} ({_appId})");
+                Logger.WriteLine($"Changing app from {_currentAppName} to {appUniqueName}");
+                _currentAppId = _apps.GetAppId(appUniqueName);
+                _currentAppName = appUniqueName;
+                Logger.WriteLine($"Logged into app: {appUniqueName} (ID: {_currentAppId})");
             }
             else
             {
-                Logger.WriteLine($"App name is already {_appName}. No need to switch");
+                Logger.WriteLine($"App name is already {_currentAppName}. No need to switch");
             }
         }
 
@@ -68,7 +68,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             App.Client.Execute(BrowserOptionHelper.GetOptions($"Open: {formOptions.EntityName}"), driver =>
             {
 
-                driver.Navigate().GoToUrl(formOptions.GetUrl(driver, _appId));
+                driver.Navigate().GoToUrl(formOptions.GetUrl(driver, _currentAppId));
                 CheckAlert(driver);
                 HelperMethods.WaitForFormLoad(driver);
 

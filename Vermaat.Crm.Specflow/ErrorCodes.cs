@@ -46,6 +46,7 @@ namespace Vermaat.Crm.Specflow
             _errorMessages.Add(Constants.ErrorCodes.FORM_LOAD_TIMEOUT, "CRM Record is Unavailable or not finished loading. Timeout Exceeded");
             _errorMessages.Add(Constants.ErrorCodes.UNABLE_TO_LOGIN, "Failed to login. Error: {0}");
             _errorMessages.Add(Constants.ErrorCodes.FORM_NOT_FOUND, "Form {0} of entity {1} wasn't found");
+            _errorMessages.Add(Constants.ErrorCodes.APP_NOT_FOUND, "App {0} not found");
         }
 
 

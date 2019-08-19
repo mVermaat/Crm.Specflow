@@ -28,7 +28,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public Guid? EntityId { get; }
         public Guid? FormId { get; set; }
 
-        public string GetUrl(IWebDriver driver, string appId)
+        public string GetUrl(IWebDriver driver, Guid? appId)
         {
             Uri currentUrl = new Uri(driver.Url);
 
@@ -36,8 +36,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             if (EntityId.HasValue)
                 builder.Append($"&id=%7B{EntityId:D}%7D");
-            if (!string.IsNullOrEmpty(appId))
-                builder.Append($"&appid={appId}");
+            if (appId.HasValue)
+                builder.Append($"&appid={appId:D}");
 
             StringBuilder extraQueryParameters = new StringBuilder();
             if(Parent != null)

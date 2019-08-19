@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -11,11 +12,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         private readonly ButtonTexts _buttonTexts;
         private Dictionary<BrowserType, Dictionary<string, UCIBrowser>> _browserCache;
+        private Lazy<CrmModelApps> _appCache;
 
         public BrowserManager(ButtonTexts buttonTexts)
         {
             _browserCache = new Dictionary<BrowserType, Dictionary<string, UCIBrowser>>();
             _buttonTexts = buttonTexts;
+            _appCache = new Lazy<CrmModelApps>(InitializeCache);
         }
 
         public UCIBrowser GetBrowser(BrowserOptions options, UserDetails userDetails, Uri uri)
@@ -32,11 +35,17 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 Logger.WriteLine($"Browser for {userDetails.Username} doesn't exist. Creating new browser session");
 
-                browser = new UCIBrowser(options, _buttonTexts);
+                browser = new UCIBrowser(options, _buttonTexts, _appCache.Value);
                 dic.Add(userDetails.Username, browser);
                 browser.Login(uri, userDetails);
             }
             return browser;
+        }
+
+        private CrmModelApps InitializeCache()
+        {
+            Logger.WriteLine("Initializing App Cache");
+            return CrmModelApps.GetApps(GlobalTestingContext.ConnectionManager.AdminConnection);
         }
 
         #region IDisposable Support
