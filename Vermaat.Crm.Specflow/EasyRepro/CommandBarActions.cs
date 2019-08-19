@@ -65,7 +65,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 var button = container.FindElement(By.XPath(Constants.XPath.DIALOG_OK));
 
                 button.Click();
-                _app.Client.Browser.ThinkTime(1000);
+                _app.Client.Browser.ThinkTime(2000);
                 HelperMethods.WaitForFormLoad(driver);
 
                 return true;
