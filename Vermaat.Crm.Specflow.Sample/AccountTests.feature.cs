@@ -17,7 +17,7 @@ namespace Vermaat.Crm.Specflow.Sample
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [TechTalk.SpecRun.FeatureAttribute("AccountTests", Description="    Some tests involving the account entity", SourceFile="AccountTests.feature", SourceLine=0)]
+    [TechTalk.SpecRun.FeatureAttribute("AccountTests", Description="\tSome tests involving the account entity", SourceFile="AccountTests.feature", SourceLine=0)]
     public partial class AccountTestsFeature
     {
         
@@ -30,7 +30,7 @@ namespace Vermaat.Crm.Specflow.Sample
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "AccountTests", "    Some tests involving the account entity", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "AccountTests", "\tSome tests involving the account entity", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -610,9 +610,6 @@ this.ScenarioInitialize(scenarioInfo);
                         "Property",
                         "Value"});
             table24.AddRow(new string[] {
-                        "Account Name",
-                        "ParentAccount"});
-            table24.AddRow(new string[] {
                         "Main Phone",
                         "0612345678"});
             table24.AddRow(new string[] {
@@ -633,6 +630,9 @@ this.ScenarioInitialize(scenarioInfo);
             table24.AddRow(new string[] {
                         "Address 1: State/Province",
                         "State"});
+            table24.AddRow(new string[] {
+                        "Account Name",
+                        "ParentAccount"});
 #line 163
 testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table24, "Given ");
 #line hidden

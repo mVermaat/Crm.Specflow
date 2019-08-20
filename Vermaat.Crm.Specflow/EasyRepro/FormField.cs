@@ -6,6 +6,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenQA.Selenium.Interactions;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -254,15 +255,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 if (input != null)
                 {
-                    string currentValue = input.GetAttribute("value");
-
-                    input.Click();
-                    if (!string.IsNullOrWhiteSpace(currentValue))
-                    {
-                        input.SendKeys(Keys.Control + "a");
-                        input.SendKeys(Keys.Backspace);
-                    }
-
+                    input.SendKeys(Keys.Control + "a");
+                    input.SendKeys(Keys.Backspace);
+                
                     if (!string.IsNullOrWhiteSpace(value))
                     {
                         input.SendKeys(value);
