@@ -113,7 +113,8 @@ namespace Vermaat.Crm.Specflow
                 string fileNameBase = string.Format("error_{0}_{1}_{2}",
                                                     _featureContext.FeatureInfo.Title,
                                                     _scenarioContext.ScenarioInfo.Title,
-                                                    DateTime.Now.ToString("yyyyMMdd_HHmmss"));
+                                                     DateTime.Now.ToString("yyyyMMdd_HHmmss"))
+                                                    .Replace(' ', '_');
 
                 var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
                 if(!directory.Name.Equals("TestResults", StringComparison.InvariantCultureIgnoreCase))

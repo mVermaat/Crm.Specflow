@@ -126,10 +126,14 @@ namespace Vermaat.Crm.Specflow
 
                 try
                 {
+                    Logger.WriteLine($"Deleting {record.Key}. ID: {record.Value.Id} Entity: {record.Value.LogicalName}");
                     service.Delete(record.Value);
                 }
-                // Some records can be deleted due to cascading behavior
-                catch { }
+                // Some records can't be deleted due to cascading behavior
+                catch(Exception ex)
+                {
+                    Logger.WriteLine($"Delete failed: Error: {ex.Message}");
+                }
             }
             _aliasedRecords.Clear();
         }
