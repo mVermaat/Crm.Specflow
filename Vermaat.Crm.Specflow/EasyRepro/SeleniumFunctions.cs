@@ -34,7 +34,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     throw new TestExecutionException(Constants.ErrorCodes.MORE_COMMANDS_NOT_FOUND);
                 moreCommands.Click();
 
-                var flyout = driver.FindElement(Selectors.GetIdSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
+                var flyout = driver.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
                 flyout.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid_Button, subgridButtonId)).Click();
 
                 return true;
@@ -67,7 +67,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 if(notificationBar.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_ExpandButton), out var expandButton))
                 {
                     expandButton.Click();
-                    notificationBar = driver.FindElement(Selectors.GetIdSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
+                    notificationBar = driver.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
                 }
 
                 var notificationList = notificationBar.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationList));
@@ -102,19 +102,19 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         }
 
 
-        public static bool TryFindElement(this IWebDriver driver, By by, out IWebElement element)
-        {
-            try
+            public static bool TryFindElement(this IWebDriver driver, By by, out IWebElement element)
             {
-                element = driver.FindElement(by);
-                return true;
+                try
+                {
+                    element = driver.FindElement(by);
+                    return true;
+                }
+                catch (NoSuchElementException)
+                {
+                    element = null;
+                    return false;
+                }
             }
-            catch (NoSuchElementException)
-            {
-                element = null;
-                return false;
-            }
-        }
 
         public static bool HasClass(this IWebElement element, string className)
         {

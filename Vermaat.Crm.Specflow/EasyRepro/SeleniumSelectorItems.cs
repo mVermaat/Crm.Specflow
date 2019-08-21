@@ -22,6 +22,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Entity_SubGrid_Button,
         Entity_SubGrid_ButtonList,
 
+        Entity_MoreTabs,
 
         FlyoutRoot
 

@@ -212,6 +212,7 @@
     <Compile Include="EasyRepro\SeleniumFunctions.cs" />
     <Compile Include="EasyRepro\SeleniumSelectorData.cs" />
     <Compile Include="EasyRepro\SeleniumSelectorItems.cs" />
+    <Compile Include="EasyRepro\TemporaryFixes.cs" />
     <Compile Include="Entities\CrmModelApps.cs" />
     <Compile Include="Entities\Lead.cs" />
     <Compile Include="Entities\UserSettings.cs" />

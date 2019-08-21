@@ -19,9 +19,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_SubGrid, "//div[@id=\"dataSetRoot_[NAME]\"]" },
             { SeleniumSelectorItems.Entity_SubGrid_ButtonList, ".//ul[@data-id='CommandBar']" },
             { SeleniumSelectorItems.Entity_SubGrid_Button, ".//button[contains(@data-id,'[NAME]')]" },
-            { SeleniumSelectorItems.FlyoutRoot, "__flyoutRootNode" },
+            { SeleniumSelectorItems.FlyoutRoot, "//div[@id='__flyoutRootNode']" },
             { SeleniumSelectorItems.Entity_ScriptErrorDialog, "//*[@id='dialogTitleText']" },
-            { SeleniumSelectorItems.Entity_FormLoad, "id(\"tablist\")" }
+            { SeleniumSelectorItems.Entity_FormLoad, "id(\"tablist\")" },
+            { SeleniumSelectorItems.Entity_MoreTabs, ".//button[@data-id='more_button']" },
         };
 
         public By GetXPathSeleniumSelector(SeleniumSelectorItems itemName)
@@ -32,11 +33,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public By GetXPathSeleniumSelector(SeleniumSelectorItems itemName, string nameReplacement)
         {
             return By.XPath(selectors[itemName].Replace("[NAME]", nameReplacement));
-        }
-
-        public By GetIdSeleniumSelector(SeleniumSelectorItems itemName)
-        {
-            return By.Id(selectors[itemName]);
         }
     }
 }
