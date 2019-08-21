@@ -24,6 +24,8 @@ namespace Vermaat.Crm.Specflow
             BrowserOptions = new BrowserOptions()
             {
                 CleanSession = true,
+                StartMaximized = true,
+                UCITestMode = true,
             };
             CurrentApp = HelperMethods.GetAppSettingsValue("AppName", true);
 
