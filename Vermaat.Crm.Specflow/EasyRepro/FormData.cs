@@ -46,7 +46,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void ExpandTab(string tabLabel)
         {
             Logger.WriteLine($"Expanding tab {tabLabel}");
-            _app.Client.SelectTab(tabLabel);
+            _app.Client.SelectTabFix(tabLabel);
         }
 
         public string GetErrorDialogMessage()

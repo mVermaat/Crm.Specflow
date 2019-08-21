@@ -194,11 +194,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (((DateTimeAttributeMetadata)_metadata).DateTimeBehavior == DateTimeBehavior.UserLocal)
             {
                 var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(fieldValue);
-                _app.Client.SetValue(_metadata.LogicalName, fieldValue.Add(offset), format);
+                _app.Client.SetValueFix(_metadata.LogicalName, fieldValue.Add(offset), format);
             }
             else
             {
-                _app.Client.SetValue(_metadata.LogicalName, fieldValue, format);
+                _app.Client.SetValueFix(_metadata.LogicalName, fieldValue, format);
             }            
         }
 
@@ -217,7 +217,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (string.IsNullOrWhiteSpace(fieldValue))
                 _app.App.Entity.ClearValue(_metadata.LogicalName);
             else
-                _app.Client.SetValue(_metadata.LogicalName, fieldValue);
+                _app.Client.SetValueFix(_metadata.LogicalName, fieldValue);
         }
 
         private void SetLookupValue(EntityReference fieldValue)

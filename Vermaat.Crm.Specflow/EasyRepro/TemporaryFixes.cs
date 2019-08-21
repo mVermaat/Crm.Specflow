@@ -17,7 +17,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         /// <param name="field">The field</param>
         /// <param name="value">The value</param>
         /// <example>xrmApp.Entity.SetValue("firstname", "Test");</example>
-        public static BrowserCommandResult<bool> SetValue(this WebClient client, string field, string value)
+        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, string value)
         {
             return client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
@@ -62,7 +62,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         /// <param name="date">DateTime value.</param>
         /// <param name="format">Datetime format matching Short Date & Time formatting personal options.</param>
         /// <example>xrmApp.Entity.SetValue("birthdate", DateTime.Parse("11/1/1980"));</example>
-        public static BrowserCommandResult<bool> SetValue(this WebClient client, string field, DateTime date, string format = "M/d/yyyy h:mm tt")
+        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, DateTime date, string format = "M/d/yyyy h:mm tt")
         {
             return client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
@@ -108,7 +108,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         /// </summary>
         /// <param name="by">The xpath of the HTML item as a By object</param>
         /// <returns>True on success, Exception on failure to invoke any action</returns>
-        public static BrowserCommandResult<bool> SelectTab(this WebClient client, string tabName, string subTabName = "", int thinkTime = Microsoft.Dynamics365.UIAutomation.Browser.Constants.DefaultThinkTime)
+        public static BrowserCommandResult<bool> SelectTabFix(this WebClient client, string tabName, string subTabName = "", int thinkTime = Microsoft.Dynamics365.UIAutomation.Browser.Constants.DefaultThinkTime)
         {
             client.Browser.ThinkTime(thinkTime);
 
