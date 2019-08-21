@@ -194,11 +194,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (((DateTimeAttributeMetadata)_metadata).DateTimeBehavior == DateTimeBehavior.UserLocal)
             {
                 var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(fieldValue);
-                _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue.Add(offset), format);
+                SetValueFix(_metadata.LogicalName, fieldValue.Add(offset), format);
             }
             else
             {
-                _app.App.Entity.SetValue(_metadata.LogicalName, fieldValue, format);
+                SetValueFix(_metadata.LogicalName, fieldValue, format);
             }            
         }
 
@@ -265,6 +265,54 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                     input.SendKeys(Keys.Tab + Keys.Tab);
                 }
+
+                return true;
+            });
+        }
+
+        /// <summary>
+        /// Sets the value of a Date Field.
+        /// </summary>
+        /// <param name="field">Date field name.</param>
+        /// <param name="date">DateTime value.</param>
+        /// <param name="format">Datetime format matching Short Date & Time formatting personal options.</param>
+        /// <example>xrmApp.Entity.SetValue("birthdate", DateTime.Parse("11/1/1980"));</example>
+        public BrowserCommandResult<bool> SetValueFix(string field, DateTime date, string format = "M/d/yyyy h:mm tt")
+        {
+            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
+            {
+                driver.WaitForTransaction();
+
+                var dateField = AppElements.Xpath[AppReference.Entity.FieldControlDateTimeInputUCI].Replace("[FIELD]", field);
+
+                if (driver.HasElement(By.XPath(dateField)))
+                {
+                    var fieldElement = driver.WaitUntilAvailable(By.XPath(dateField));
+
+                    fieldElement.SendKeys(Keys.Control + "a");
+                    fieldElement.SendKeys(Keys.Backspace);
+
+                    var timefields = driver.FindElements(By.XPath(AppElements.Xpath[AppReference.Entity.FieldControlDateTimeTimeInputUCI].Replace("[FIELD]", field)));
+                    if (timefields.Any())
+                    {
+                        driver.ClearFocus();
+                        driver.WaitForTransaction();
+                    }
+
+                    fieldElement.SendKeys(date.ToString(format));
+
+                    try
+                    {
+                        driver.WaitFor(d => fieldElement.GetAttribute("value") == date.ToString(format));
+                    }
+                    catch (WebDriverTimeoutException ex)
+                    {
+                        throw new InvalidOperationException($"Timeout after 30 seconds. Expected: {date.ToString(format)}. Actual: {fieldElement.GetAttribute("value")}", ex);
+                    }
+                    driver.ClearFocus();
+                }
+                else
+                    throw new InvalidOperationException($"Field: {field} Does not exist");
 
                 return true;
             });
