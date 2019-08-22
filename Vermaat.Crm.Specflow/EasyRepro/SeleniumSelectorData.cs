@@ -23,6 +23,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_ScriptErrorDialog, "//*[@id='dialogTitleText']" },
             { SeleniumSelectorItems.Entity_FormLoad, "id(\"tablist\")" },
             { SeleniumSelectorItems.Entity_MoreTabs, ".//button[@data-id='more_button']" },
+            { SeleniumSelectorItems.Entity_DateContainer, "//div[contains(@data-id,'[NAME].fieldControl._datecontrol-date-container')]" }
         };
 
         public By GetXPathSeleniumSelector(SeleniumSelectorItems itemName)

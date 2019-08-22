@@ -11,6 +11,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Dialog_Subtitle,
         Entity_ScriptErrorDialog,
 
+        Entity_DateContainer,
+
         Entity_FormLoad,
 
         Entity_FormNotifcation_NotificationBar,

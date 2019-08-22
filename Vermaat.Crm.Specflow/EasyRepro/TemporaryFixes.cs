@@ -68,11 +68,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 driver.WaitForTransaction();
 
+                var dateContainer = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_DateContainer, field);
                 var dateField = AppElements.Xpath[AppReference.Entity.FieldControlDateTimeInputUCI].Replace("[FIELD]", field);
 
-                if (driver.HasElement(By.XPath(dateField)))
+                if (driver.HasElement(dateContainer))
                 {
-                    var fieldElement = driver.WaitUntilAvailable(By.XPath(dateField));
+                    var container = driver.WaitUntilAvailable(dateContainer);
+                    var fieldElement = container.FindElement(By.XPath("." + dateField));
 
                     fieldElement.SendKeys(Keys.Control + "a");
                     fieldElement.SendKeys(Keys.Backspace);
