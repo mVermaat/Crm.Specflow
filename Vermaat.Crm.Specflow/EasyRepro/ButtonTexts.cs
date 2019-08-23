@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    public class ButtonTexts
+    public partial class ButtonTexts
     {
         public ButtonTexts(bool setDefaults = true)
         {
