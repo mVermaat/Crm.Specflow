@@ -218,6 +218,7 @@
     <Compile Include="Entities\UserSettings.cs" />
     <Compile Include="EntityReferenceComparer.cs" />
     <Compile Include="ErrorCodes.cs" />
+    <Compile Include="FormLoadConditions.cs" />
     <Compile Include="GlobalTestingContext.cs" />
     <Compile Include="TestExecutionException.cs" />
     <Compile Include="UserDetails.cs" />

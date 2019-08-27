@@ -89,14 +89,56 @@ namespace Vermaat.Crm.Specflow
             return value;
         }
 
-        public static void WaitForFormLoad(IWebDriver driver)
+        public static void WaitForFormLoad(IWebDriver driver, FormLoadConditions additionalConditionsToWaitFor = null)
         {
-            driver.WaitForPageToLoad();
-            driver.WaitUntilClickable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormLoad),
-                new TimeSpan(0, 0, 30),
-                null,
-                d => { throw new TestExecutionException(Constants.ErrorCodes.FORM_LOAD_TIMEOUT); }
-            );
+            DateTime timeout = DateTime.Now.AddSeconds(30);
+
+            bool loadComplete = false;
+            while(!loadComplete)
+            {
+                loadComplete = true;
+
+                TimeSpan timeLeft = timeout.Subtract(DateTime.Now);
+                if (timeLeft.TotalMilliseconds > 0)
+                {
+                    driver.WaitForPageToLoad();
+                    driver.WaitUntilClickable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormLoad),
+                        timeLeft,
+                        null,
+                        d => { throw new TestExecutionException(Constants.ErrorCodes.FORM_LOAD_TIMEOUT); }
+                    );
+
+                    if (additionalConditionsToWaitFor != null)
+                    {
+
+                        if (!string.IsNullOrEmpty(additionalConditionsToWaitFor.EntityName))
+                        {
+                            var entityName = driver.ExecuteScript("return Xrm.Page.data.entity.getEntityName();") as string;
+                            if (string.IsNullOrEmpty(entityName) ||
+                                !entityName.Equals(additionalConditionsToWaitFor.EntityName, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                loadComplete = false;
+                            }
+                        }
+                        if (additionalConditionsToWaitFor.RecordId.HasValue)
+                        {
+                            var entityId = driver.ExecuteScript("return Xrm.Page.data.entity.getId();") as string;
+                            if(!Guid.TryParse(entityId, out Guid parsedId) || parsedId != additionalConditionsToWaitFor.RecordId.Value)
+                            {
+                                loadComplete = false;
+                            }
+                        }
+                    }
+
+                    if (!loadComplete)
+                        Thread.Sleep(100);
+                }
+                else
+                {
+                    throw new TestExecutionException(Constants.ErrorCodes.FORM_LOAD_TIMEOUT);
+                }
+
+            }           
         }
 
     }

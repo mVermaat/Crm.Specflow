@@ -70,8 +70,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 var button = container.FindElement(By.XPath(Constants.XPath.DIALOG_OK));
 
                 button.Click();
-                _app.Client.Browser.ThinkTime(2000);
-                HelperMethods.WaitForFormLoad(driver);
+                HelperMethods.WaitForFormLoad(driver, new FormLoadConditions { EntityName = "salesorder" });
 
                 return true;
             });
