@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Linq;
 using System.Threading;
 using Vermaat.Crm.Specflow.EasyRepro;
+using Vermaat.Crm.Specflow.FormLoadConditions;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -89,7 +90,7 @@ namespace Vermaat.Crm.Specflow
             return value;
         }
 
-        public static void WaitForFormLoad(IWebDriver driver, FormLoadConditions additionalConditionsToWaitFor = null)
+        public static void WaitForFormLoad(IWebDriver driver, params IFormLoadCondition[] additionalConditions)
         {
             DateTime timeout = DateTime.Now.AddSeconds(30);
 
@@ -108,37 +109,26 @@ namespace Vermaat.Crm.Specflow
                         d => { throw new TestExecutionException(Constants.ErrorCodes.FORM_LOAD_TIMEOUT); }
                     );
 
-                    if (additionalConditionsToWaitFor != null)
+                    if(additionalConditions != null)
                     {
-
-                        if (!string.IsNullOrEmpty(additionalConditionsToWaitFor.EntityName))
+                        foreach(var condition in additionalConditions)
                         {
-                            var entityName = driver.ExecuteScript("return Xrm.Page.data.entity.getEntityName();") as string;
-                            if (string.IsNullOrEmpty(entityName) ||
-                                !entityName.Equals(additionalConditionsToWaitFor.EntityName, StringComparison.CurrentCultureIgnoreCase))
+                            if(!condition.Evaluate(driver))
                             {
+                                Logger.WriteLine("Evaluation failed. Waiting for next attempt");
                                 loadComplete = false;
-                            }
-                        }
-                        if (additionalConditionsToWaitFor.RecordId.HasValue)
-                        {
-                            var entityId = driver.ExecuteScript("return Xrm.Page.data.entity.getId();") as string;
-                            if(!Guid.TryParse(entityId, out Guid parsedId) || parsedId != additionalConditionsToWaitFor.RecordId.Value)
-                            {
-                                loadComplete = false;
+                                Thread.Sleep(100);
+                                break;
                             }
                         }
                     }
-
-                    if (!loadComplete)
-                        Thread.Sleep(100);
                 }
                 else
                 {
                     throw new TestExecutionException(Constants.ErrorCodes.FORM_LOAD_TIMEOUT);
                 }
-
-            }           
+            }
+            Logger.WriteLine("Form load completed");
         }
 
     }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vermaat.Crm.Specflow.FormLoadConditions;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -70,7 +71,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 var button = container.FindElement(By.XPath(Constants.XPath.DIALOG_OK));
 
                 button.Click();
-                HelperMethods.WaitForFormLoad(driver, new FormLoadConditions { EntityName = "salesorder" });
+                HelperMethods.WaitForFormLoad(driver, new FormIsOfEntity("salesorder"));
 
                 return true;
             });
