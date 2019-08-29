@@ -118,7 +118,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 }
                 else if(!string.IsNullOrEmpty(footerElement.Text) && footerElement.Text.ToLower() == "unsaved changes")
                 {
-                    throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, "Detected Unsaved changes");
+                    var formNotifications = GetFormNotifications();
+                    throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
                 }
                 else
                 {
