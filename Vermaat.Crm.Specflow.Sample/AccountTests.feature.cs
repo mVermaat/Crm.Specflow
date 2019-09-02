@@ -882,6 +882,49 @@ testRunner.Then("the following error message appears: \'Website refers to error.
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Assigning alias to a lookup value", new string[] {
+                "API",
+                "Cleanup"}, SourceLine=250)]
+        public virtual void AssigningAliasToALookupValue()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Assigning alias to a lookup value", null, new string[] {
+                        "API",
+                        "Cleanup"});
+#line 251
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table38.AddRow(new string[] {
+                        "Account Name",
+                        "Multiple Notifications"});
+            table38.AddRow(new string[] {
+                        "Credit Limit",
+                        "10000"});
+            table38.AddRow(new string[] {
+                        "Industry",
+                        "Brokers"});
+#line 252
+testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table38, "Given ");
+#line 257
+testRunner.When("all asynchronous processes for TestAccount are finished", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 258
+testRunner.Then("TestAccount\'s Auto Generated is named AutoGenRecord", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table39 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table39.AddRow(new string[] {
+                        "Credit Limit",
+                        "10000"});
+#line 259
+testRunner.And("AutoGenRecord has the following values", ((string)(null)), table39, "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

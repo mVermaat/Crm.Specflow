@@ -245,3 +245,17 @@ When an account named TestAccount is created with the following values
 		 | Account Name | Test              |
 		 | Website      | https://error.com |
 Then the following error message appears: 'Website refers to error.com'
+
+
+@API @Cleanup
+Scenario: Assigning alias to a lookup value
+Given an account named TestAccount with the following values
+	| Property     | Value                  |
+	| Account Name | Multiple Notifications |
+	| Credit Limit | 10000                  |
+	| Industry     | Brokers                |
+When all asynchronous processes for TestAccount are finished
+Then TestAccount's Auto Generated is named AutoGenRecord
+And AutoGenRecord has the following values
+	| Property     | Value |
+	| Credit Limit | 10000 |

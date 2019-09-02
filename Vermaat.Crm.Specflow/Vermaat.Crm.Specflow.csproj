@@ -182,6 +182,7 @@
     <Compile Include="Commands\CreateRelatedRecordCommand.cs" />
     <Compile Include="Commands\MergeRecordsCommand.cs" />
     <Compile Include="Commands\ReviseQuoteCommand.cs" />
+    <Compile Include="Commands\SetLookupAsAliasCommand.cs" />
     <Compile Include="ConnectionManager.cs" />
     <Compile Include="ConvertedObjectType.cs" />
     <Compile Include="EasyRepro\BrowserManager.cs" />

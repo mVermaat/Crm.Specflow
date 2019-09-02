@@ -59,6 +59,8 @@ namespace Vermaat.Crm.Specflow
             public const int UNABLE_TO_LOGIN = 27;
             public const int FORM_NOT_FOUND = 28;
             public const int APP_NOT_FOUND = 29;
+            public const int INVALID_DATATYPE = 30;
+            public const int VALUE_NULL = 31;
         }
 
         public class XPath

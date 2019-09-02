@@ -80,68 +80,6 @@ namespace Vermaat.Crm.Specflow.Sample
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table61 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table61.AddRow(new string[] {
-                        "Name",
-                        "Testing Dates"});
-            table61.AddRow(new string[] {
-                        "Date Only",
-                        "1-1-2010"});
-            table61.AddRow(new string[] {
-                        "User Local Date Only",
-                        "1-1-2010"});
-            table61.AddRow(new string[] {
-                        "User Local Date Time",
-                        "1-1-2010 10:00"});
-            table61.AddRow(new string[] {
-                        "Time Zone Independent Date Only",
-                        "1-1-2010"});
-            table61.AddRow(new string[] {
-                        "Time Zone Independent Date Time",
-                        "1-1-2010 10:00"});
-#line 7
-testRunner.Given("a mv_datetester named TestDateTime with the following values", ((string)(null)), table61, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table62 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table62.AddRow(new string[] {
-                        "Date Only",
-                        "1-1-2010"});
-            table62.AddRow(new string[] {
-                        "User Local Date Only",
-                        "1-1-2010"});
-            table62.AddRow(new string[] {
-                        "User Local Date Time",
-                        "1-1-2010 10:00"});
-            table62.AddRow(new string[] {
-                        "Time Zone Independent Date Only",
-                        "1-1-2010"});
-            table62.AddRow(new string[] {
-                        "Time Zone Independent Date Time",
-                        "1-1-2010 10:00"});
-#line 15
-testRunner.Then("TestDateTime has the following values", ((string)(null)), table62, "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [TechTalk.SpecRun.ScenarioAttribute("Test updating all Date and Time formats", new string[] {
-                "Cleanup",
-                "API",
-                "Chrome"}, SourceLine=23)]
-        public virtual void TestUpdatingAllDateAndTimeFormats()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Test updating all Date and Time formats", null, new string[] {
-                        "Cleanup",
-                        "API",
-                        "Chrome"});
-#line 24
-this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line hidden
             TechTalk.SpecFlow.Table table63 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
@@ -163,7 +101,7 @@ this.ScenarioInitialize(scenarioInfo);
             table63.AddRow(new string[] {
                         "Time Zone Independent Date Time",
                         "1-1-2010 10:00"});
-#line 25
+#line 7
 testRunner.Given("a mv_datetester named TestDateTime with the following values", ((string)(null)), table63, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table64 = new TechTalk.SpecFlow.Table(new string[] {
@@ -171,42 +109,104 @@ testRunner.Given("a mv_datetester named TestDateTime with the following values",
                         "Value"});
             table64.AddRow(new string[] {
                         "Date Only",
-                        "1-1-2011"});
+                        "1-1-2010"});
             table64.AddRow(new string[] {
                         "User Local Date Only",
-                        "1-1-2011"});
+                        "1-1-2010"});
             table64.AddRow(new string[] {
                         "User Local Date Time",
-                        "1-1-2011 10:00"});
+                        "1-1-2010 10:00"});
             table64.AddRow(new string[] {
                         "Time Zone Independent Date Only",
-                        "1-1-2011"});
+                        "1-1-2010"});
             table64.AddRow(new string[] {
                         "Time Zone Independent Date Time",
-                        "1-1-2011 10:00"});
-#line 33
-testRunner.When("TestDateTime is updated with the following values", ((string)(null)), table64, "When ");
+                        "1-1-2010 10:00"});
+#line 15
+testRunner.Then("TestDateTime has the following values", ((string)(null)), table64, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Test updating all Date and Time formats", new string[] {
+                "Cleanup",
+                "API",
+                "Chrome"}, SourceLine=23)]
+        public virtual void TestUpdatingAllDateAndTimeFormats()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Test updating all Date and Time formats", null, new string[] {
+                        "Cleanup",
+                        "API",
+                        "Chrome"});
+#line 24
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
 #line hidden
             TechTalk.SpecFlow.Table table65 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table65.AddRow(new string[] {
+                        "Name",
+                        "Testing Dates"});
+            table65.AddRow(new string[] {
                         "Date Only",
-                        "1-1-2011"});
+                        "1-1-2010"});
             table65.AddRow(new string[] {
                         "User Local Date Only",
-                        "1-1-2011"});
+                        "1-1-2010"});
             table65.AddRow(new string[] {
                         "User Local Date Time",
-                        "1-1-2011 10:00"});
+                        "1-1-2010 10:00"});
             table65.AddRow(new string[] {
                         "Time Zone Independent Date Only",
-                        "1-1-2011"});
+                        "1-1-2010"});
             table65.AddRow(new string[] {
+                        "Time Zone Independent Date Time",
+                        "1-1-2010 10:00"});
+#line 25
+testRunner.Given("a mv_datetester named TestDateTime with the following values", ((string)(null)), table65, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table66 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table66.AddRow(new string[] {
+                        "Date Only",
+                        "1-1-2011"});
+            table66.AddRow(new string[] {
+                        "User Local Date Only",
+                        "1-1-2011"});
+            table66.AddRow(new string[] {
+                        "User Local Date Time",
+                        "1-1-2011 10:00"});
+            table66.AddRow(new string[] {
+                        "Time Zone Independent Date Only",
+                        "1-1-2011"});
+            table66.AddRow(new string[] {
+                        "Time Zone Independent Date Time",
+                        "1-1-2011 10:00"});
+#line 33
+testRunner.When("TestDateTime is updated with the following values", ((string)(null)), table66, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table67 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table67.AddRow(new string[] {
+                        "Date Only",
+                        "1-1-2011"});
+            table67.AddRow(new string[] {
+                        "User Local Date Only",
+                        "1-1-2011"});
+            table67.AddRow(new string[] {
+                        "User Local Date Time",
+                        "1-1-2011 10:00"});
+            table67.AddRow(new string[] {
+                        "Time Zone Independent Date Only",
+                        "1-1-2011"});
+            table67.AddRow(new string[] {
                         "Time Zone Independent Date Time",
                         "1-1-2011 10:00"});
 #line 40
-testRunner.Then("TestDateTime has the following values", ((string)(null)), table65, "Then ");
+testRunner.Then("TestDateTime has the following values", ((string)(null)), table67, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -225,71 +225,71 @@ testRunner.Then("TestDateTime has the following values", ((string)(null)), table
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table66 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table66.AddRow(new string[] {
-                        "Name",
-                        "Testing Dates"});
-            table66.AddRow(new string[] {
-                        "Date Only",
-                        "1-1-2010"});
-            table66.AddRow(new string[] {
-                        "User Local Date Only",
-                        "1-1-2010"});
-            table66.AddRow(new string[] {
-                        "User Local Date Time",
-                        "1-1-2010 10:00"});
-            table66.AddRow(new string[] {
-                        "Time Zone Independent Date Only",
-                        "1-1-2010"});
-            table66.AddRow(new string[] {
-                        "Time Zone Independent Date Time",
-                        "1-1-2010 10:00"});
-#line 50
-testRunner.Given("a mv_datetester named TestDateTime with the following values", ((string)(null)), table66, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table67 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table67.AddRow(new string[] {
-                        "Date Only",
-                        ""});
-            table67.AddRow(new string[] {
-                        "User Local Date Only",
-                        ""});
-            table67.AddRow(new string[] {
-                        "User Local Date Time",
-                        ""});
-            table67.AddRow(new string[] {
-                        "Time Zone Independent Date Only",
-                        ""});
-            table67.AddRow(new string[] {
-                        "Time Zone Independent Date Time",
-                        ""});
-#line 58
-testRunner.When("TestDateTime is updated with the following values", ((string)(null)), table67, "When ");
-#line hidden
             TechTalk.SpecFlow.Table table68 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table68.AddRow(new string[] {
+                        "Name",
+                        "Testing Dates"});
+            table68.AddRow(new string[] {
                         "Date Only",
-                        ""});
+                        "1-1-2010"});
             table68.AddRow(new string[] {
                         "User Local Date Only",
-                        ""});
+                        "1-1-2010"});
             table68.AddRow(new string[] {
                         "User Local Date Time",
-                        ""});
+                        "1-1-2010 10:00"});
             table68.AddRow(new string[] {
                         "Time Zone Independent Date Only",
-                        ""});
+                        "1-1-2010"});
             table68.AddRow(new string[] {
+                        "Time Zone Independent Date Time",
+                        "1-1-2010 10:00"});
+#line 50
+testRunner.Given("a mv_datetester named TestDateTime with the following values", ((string)(null)), table68, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table69 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table69.AddRow(new string[] {
+                        "Date Only",
+                        ""});
+            table69.AddRow(new string[] {
+                        "User Local Date Only",
+                        ""});
+            table69.AddRow(new string[] {
+                        "User Local Date Time",
+                        ""});
+            table69.AddRow(new string[] {
+                        "Time Zone Independent Date Only",
+                        ""});
+            table69.AddRow(new string[] {
+                        "Time Zone Independent Date Time",
+                        ""});
+#line 58
+testRunner.When("TestDateTime is updated with the following values", ((string)(null)), table69, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table70 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table70.AddRow(new string[] {
+                        "Date Only",
+                        ""});
+            table70.AddRow(new string[] {
+                        "User Local Date Only",
+                        ""});
+            table70.AddRow(new string[] {
+                        "User Local Date Time",
+                        ""});
+            table70.AddRow(new string[] {
+                        "Time Zone Independent Date Only",
+                        ""});
+            table70.AddRow(new string[] {
                         "Time Zone Independent Date Time",
                         ""});
 #line 65
-testRunner.Then("TestDateTime has the following values", ((string)(null)), table68, "Then ");
+testRunner.Then("TestDateTime has the following values", ((string)(null)), table70, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -171,6 +171,12 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssertNNRelationshipCommand(_crmContext, alias, relatedEntityName, records));
         }
 
+        [Then(@"(.*)'s (.*) is named (.*)")]
+        public void ThenAliasFieldIsAliased(string alias, string lookupField, string lookupAlias)
+        {
+            _crmContext.CommandProcessor.Execute(new SetLookupAsAliasCommand(_crmContext, alias, lookupField, lookupAlias));
+        }
+
         #endregion
 
     }
