@@ -49,7 +49,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.APP_NOT_FOUND, "App {0} not found");
             AddError(Constants.ErrorCodes.INVALID_DATATYPE, "Invalid datatype for field {0}. Expected {1}");
             AddError(Constants.ErrorCodes.VALUE_NULL, "Field {0} requires a value, but it is empty");
-
+            AddError(Constants.ErrorCodes.ELEMENT_NOT_INTERACTABLE, "Element not interactable. {0}");
         }
 
         public void AddError(int errorCode, string message)

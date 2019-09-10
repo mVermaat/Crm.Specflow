@@ -1,6 +1,7 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             return client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
-                IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field)));
+                var query = By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field));
+                IWebElement fieldContainer = WaitUntilClickable(driver, query, TimeSpan.FromSeconds(5), null, null);
+
+                if (fieldContainer == null)
+                {
+                    throw new TestExecutionException(Constants.ErrorCodes.ELEMENT_NOT_INTERACTABLE, $"Field {field} is probably locked or invisible");
+                }
 
                 IWebElement input;
                 if (fieldContainer.FindElements(By.TagName("input")).Count > 0)
@@ -156,6 +163,36 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 throw new Exception($"The tab with name: {name} does not exist");
             }
 
+        }
+
+        private static IWebElement WaitUntilClickable(IWebDriver driver, By by, TimeSpan timeout, Action<IWebDriver> successCallback, Action<IWebDriver> failureCallback)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, timeout);
+            bool? success;
+            IWebElement returnElement = null;
+
+            wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+
+            try
+            {
+                returnElement = wait.Until(ExpectedConditions.ElementToBeClickable(by));
+                success = true;
+            }
+            catch (NoSuchElementException)
+            {
+                success = false;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                success = false;
+            }
+
+            if (success.HasValue && success.Value && successCallback != null)
+                successCallback(driver);
+            else if (success.HasValue && !success.Value && failureCallback != null)
+                failureCallback(driver);
+
+            return returnElement;
         }
     }
 }
