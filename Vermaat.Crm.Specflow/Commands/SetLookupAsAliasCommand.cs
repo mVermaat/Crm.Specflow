@@ -38,7 +38,7 @@ namespace Vermaat.Crm.Specflow.Commands
             {
                 throw new TestExecutionException(Constants.ErrorCodes.INVALID_DATATYPE, attribute.LogicalName, "lookup");
             }
-            _crmContext.RecordCache.Add(_lookupAlias, (EntityReference)value);
+            _crmContext.RecordCache.Add(_lookupAlias, (EntityReference)value, false);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Vermaat.Crm.Specflow
         /// </summary>
         /// <param name="alias">Alias of the record. The record can be retrieved by this alias after it had been added. </param>
         /// <param name="reference">EntityReference of the record</param>
-        public void Add(string alias, EntityReference reference)
+        public void Add(string alias, EntityReference reference, bool deleteRecordOnCleanup = true)
         {
             if(string.IsNullOrEmpty(reference.Name))
             {
@@ -45,6 +45,9 @@ namespace Vermaat.Crm.Specflow
 
             Logger.WriteLine($"Adding alias {alias} to cache. {reference?.Id}");
             _aliasedRecords.Add(alias, reference);
+
+            if (!deleteRecordOnCleanup)
+                DoNotDeleteAlias(alias);
         }
 
         /// <summary>
@@ -52,10 +55,10 @@ namespace Vermaat.Crm.Specflow
         /// </summary>
         /// <param name="alias">Alias of the record. The record can be retrieved by this alias after it had been added. </param>
         /// <param name="entity">The record to add</param>
-        public void Add(string alias, Entity entity)
+        public void Add(string alias, Entity entity, bool deleteRecordOnCleanup = true)
         {
             var md = _metadataCache.GetEntityMetadata(entity.LogicalName);
-            Add(alias, entity.ToEntityReference(md.PrimaryNameAttribute));
+            Add(alias, entity.ToEntityReference(md.PrimaryNameAttribute), deleteRecordOnCleanup);
         }
 
         /// <summary>

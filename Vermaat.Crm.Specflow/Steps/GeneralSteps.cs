@@ -27,7 +27,7 @@ namespace Vermaat.Crm.Specflow.Steps
         public void GivenExistingWithValues(string entityName, string alias, Table criteria)
         {
             Entity entity = ThenRecordExists(entityName, criteria);
-            _crmContext.RecordCache.Add(alias, entity);
+            _crmContext.RecordCache.Add(alias, entity, false);
         }
 
         [Given(@"a ([^\s]+) named (.*) with the following values")]
@@ -160,7 +160,7 @@ namespace Vermaat.Crm.Specflow.Steps
             DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_crmContext, entityName, criteria));
             Assert.AreEqual(1, records.Count, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Count));
 
-            _crmContext.RecordCache.Add(alias, records[0]);
+            _crmContext.RecordCache.Add(alias, records[0], false);
 
             return records[0];
         }
