@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    class FormState
+    enum FormVisibility
     {
-        public FormVisibility? Visible { get; set; }
-        public bool? Locked { get; set; }
-        public RequiredState? Required { get; set; }
+        NotOnForm, Visible, Invisible
     }
 }
