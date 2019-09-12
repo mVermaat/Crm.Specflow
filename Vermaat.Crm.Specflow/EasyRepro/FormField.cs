@@ -119,7 +119,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 switch (_metadata.AttributeType.Value)
                 {
                     case AttributeTypeCode.Boolean:
-                        SetTwoOptionField((bool)fieldValue, fieldValueText);
+                        SetTwoOptionField((bool)fieldValue);
                         break;
                     case AttributeTypeCode.DateTime:
                         SetDateTimeField((DateTime)fieldValue);
@@ -135,7 +135,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         SetMoneyField((Money)fieldValue);
                         break;
                     case AttributeTypeCode.Virtual:
-                        SetVirtualField(fieldValue, fieldValueText);
+                        SetVirtualField(fieldValueText);
                         break;
                     case AttributeTypeCode.Integer:
                     case AttributeTypeCode.Double:
@@ -151,11 +151,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             else
             {
                 Logger.WriteLine($"Clearing field value");
-                ClearValue(crmContext);
+                ClearValue();
             }
         }
 
-        private void SetVirtualField(object fieldValue, string fieldValueText)
+        private void SetVirtualField(string fieldValueText)
         {
             if (_metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
                 _app.App.Entity.SetValue(new MultiValueOptionSet { Name = _metadata.LogicalName, Values = fieldValueText.Split(',').Select(v => v.Trim()).ToArray() });
@@ -163,7 +163,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 throw new NotImplementedException(string.Format("Virtual type {0} not implemented", _metadata.AttributeTypeName.Value));
         }
 
-        private void ClearValue(CrmTestingContext crmContext)
+        private void ClearValue()
         {
             switch (_metadata.AttributeType.Value)
             {
@@ -182,7 +182,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
         }
 
-        private void SetTwoOptionField(bool fieldValueBool, string fieldValueText)
+        private void SetTwoOptionField(bool fieldValueBool)
         {
             _app.App.Entity.SetValue(new BooleanItem { Name = _metadata.LogicalName, Value = fieldValueBool });
         }
