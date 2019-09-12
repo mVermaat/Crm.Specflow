@@ -9,9 +9,8 @@ namespace Vermaat.Crm.Specflow
 {
     public class TableConverter
     {
-        private CrmTestingContext _context;
+        private readonly CrmTestingContext _context;
 
-        
         public event EventHandler<TableEventArgs> OnTableProcessing;
         public event EventHandler<TableEventArgs> OnTableProcessed;
 

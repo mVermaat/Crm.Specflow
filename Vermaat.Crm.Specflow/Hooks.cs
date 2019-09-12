@@ -30,7 +30,7 @@ namespace Vermaat.Crm.Specflow
         [AfterScenario("Cleanup")]
         public void Cleanup()
         {
-            _crmContext.RecordCache.DeleteAllCachedRecords(GlobalTestingContext.ConnectionManager.CurrentConnection);
+            _crmContext.RecordCache.DeleteAllCachedRecords(GlobalTestingContext.ConnectionManager.AdminConnection);
         }
 
         [BeforeScenario("API")]
@@ -128,9 +128,8 @@ namespace Vermaat.Crm.Specflow
                 File.WriteAllText(sourceFilePath, pageSource, Encoding.UTF8);
                 Console.WriteLine("Page source: {0}", new Uri(sourceFilePath));
 
-                ITakesScreenshot takesScreenshot = driver as ITakesScreenshot;
 
-                if (takesScreenshot != null)
+                if (driver is ITakesScreenshot takesScreenshot)
                 {
                     var screenshot = takesScreenshot.GetScreenshot();
 
