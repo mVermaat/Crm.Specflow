@@ -46,7 +46,7 @@ namespace Vermaat.Crm.Specflow
                 if (!HandleException(ex))
                     throw;
                 else
-                    return default(TResult);
+                    return default;
             }
         }
 

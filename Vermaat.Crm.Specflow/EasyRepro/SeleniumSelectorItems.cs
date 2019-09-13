@@ -13,6 +13,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_DateContainer,
 
+        Entity_Footer_Status,
+
         Entity_FormLoad,
 
         Entity_FormNotifcation_NotificationBar,

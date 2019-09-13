@@ -134,6 +134,7 @@
     <None Include="Default.srprofile">
       <SubType>Designer</SubType>
     </None>
+    <None Include="OpportunityTests.feature" />
     <None Include="runtests.cmd" />
     <None Include="SalesFlow.feature" />
     <None Include="packages.config" />

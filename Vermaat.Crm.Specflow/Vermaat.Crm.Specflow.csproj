@@ -177,6 +177,7 @@
     <Compile Include="Commands\AssertFormNotificationsCommand.cs" />
     <Compile Include="Commands\AssertNNRelationshipCommand.cs" />
     <Compile Include="Commands\AssociateToNNRelationshipCommand.cs" />
+    <Compile Include="Commands\CloseOpportunityCommand.cs" />
     <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
     <Compile Include="Commands\ClickSubgridButtonCommand.cs" />
     <Compile Include="Commands\CreateRelatedRecordCommand.cs" />
@@ -223,7 +224,9 @@
     <Compile Include="FormLoadConditions\FormIsId.cs" />
     <Compile Include="FormLoadConditions\FormIsOfEntity.cs" />
     <Compile Include="FormLoadConditions\IFormLoadCondition.cs" />
+    <Compile Include="FormLoadConditions\RecordHasStatus.cs" />
     <Compile Include="GlobalTestingContext.cs" />
+    <Compile Include="Steps\OpportunitySteps.cs" />
     <Compile Include="TestExecutionException.cs" />
     <Compile Include="UserDetails.cs" />
     <Compile Include="Constants.cs" />
