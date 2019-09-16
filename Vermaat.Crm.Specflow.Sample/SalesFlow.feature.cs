@@ -82,64 +82,34 @@ namespace Vermaat.Crm.Specflow.Sample
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table75 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table75.AddRow(new string[] {
-                        "First Name",
-                        "Qualify"});
-            table75.AddRow(new string[] {
-                        "Last Name",
-                        "Test"});
-            table75.AddRow(new string[] {
-                        "Topic",
-                        "Qualification Test"});
-            table75.AddRow(new string[] {
-                        "Company Name",
-                        "Qualify Account"});
-#line 6
-testRunner.Given("a lead named ToQualify with the following values", ((string)(null)), table75, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table76 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Account",
-                        "Opportunity",
-                        "Contact"});
-            table76.AddRow(new string[] {
-                        "true",
-                        "true",
-                        "true"});
-#line 12
-testRunner.When("ToQualify is qualified to a", ((string)(null)), table76, "When ");
-#line hidden
             TechTalk.SpecFlow.Table table77 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table77.AddRow(new string[] {
-                        "Originating Lead",
-                        "ToQualify"});
-            table77.AddRow(new string[] {
-                        "Account Name",
-                        "Qualify Account"});
-#line 15
-testRunner.Then("an account named QualifyAccount exists with the following values", ((string)(null)), table77, "Then ");
-#line hidden
-            TechTalk.SpecFlow.Table table78 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table78.AddRow(new string[] {
-                        "Originating Lead",
-                        "ToQualify"});
-            table78.AddRow(new string[] {
-                        "Company Name",
-                        "QualifyAccount"});
-            table78.AddRow(new string[] {
                         "First Name",
                         "Qualify"});
-            table78.AddRow(new string[] {
+            table77.AddRow(new string[] {
                         "Last Name",
                         "Test"});
-#line 19
-testRunner.And("a contact exists with the following values", ((string)(null)), table78, "And ");
+            table77.AddRow(new string[] {
+                        "Topic",
+                        "Qualification Test"});
+            table77.AddRow(new string[] {
+                        "Company Name",
+                        "Qualify Account"});
+#line 6
+testRunner.Given("a lead named ToQualify with the following values", ((string)(null)), table77, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table78 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Account",
+                        "Opportunity",
+                        "Contact"});
+            table78.AddRow(new string[] {
+                        "true",
+                        "true",
+                        "true"});
+#line 12
+testRunner.When("ToQualify is qualified to a", ((string)(null)), table78, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table79 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
@@ -148,10 +118,40 @@ testRunner.And("a contact exists with the following values", ((string)(null)), t
                         "Originating Lead",
                         "ToQualify"});
             table79.AddRow(new string[] {
+                        "Account Name",
+                        "Qualify Account"});
+#line 15
+testRunner.Then("an account named QualifyAccount exists with the following values", ((string)(null)), table79, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table80 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table80.AddRow(new string[] {
+                        "Originating Lead",
+                        "ToQualify"});
+            table80.AddRow(new string[] {
+                        "Company Name",
+                        "QualifyAccount"});
+            table80.AddRow(new string[] {
+                        "First Name",
+                        "Qualify"});
+            table80.AddRow(new string[] {
+                        "Last Name",
+                        "Test"});
+#line 19
+testRunner.And("a contact exists with the following values", ((string)(null)), table80, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table81 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table81.AddRow(new string[] {
+                        "Originating Lead",
+                        "ToQualify"});
+            table81.AddRow(new string[] {
                         "Topic",
                         "Qualification Test"});
 #line 25
-testRunner.And("an opportunity exists with the following values", ((string)(null)), table79, "And ");
+testRunner.And("an opportunity exists with the following values", ((string)(null)), table81, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -170,42 +170,42 @@ testRunner.And("an opportunity exists with the following values", ((string)(null
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table80 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table80.AddRow(new string[] {
-                        "Account Name",
-                        "TestAccount"});
-#line 32
-testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table80, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table81 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table81.AddRow(new string[] {
-                        "Topic",
-                        "Test Opp Money"});
-            table81.AddRow(new string[] {
-                        "Budget Amount",
-                        "12345"});
-#line 35
-testRunner.When("a related opportunity from TestAccount named TestOpp is created with the followin" +
-                    "g values", ((string)(null)), table81, "When ");
-#line hidden
             TechTalk.SpecFlow.Table table82 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table82.AddRow(new string[] {
+                        "Account Name",
+                        "TestAccount"});
+#line 32
+testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table82, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table83 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table83.AddRow(new string[] {
                         "Topic",
                         "Test Opp Money"});
-            table82.AddRow(new string[] {
+            table83.AddRow(new string[] {
                         "Budget Amount",
                         "12345"});
-            table82.AddRow(new string[] {
+#line 35
+testRunner.When("a related opportunity from TestAccount named TestOpp is created with the followin" +
+                    "g values", ((string)(null)), table83, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table84 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table84.AddRow(new string[] {
+                        "Topic",
+                        "Test Opp Money"});
+            table84.AddRow(new string[] {
+                        "Budget Amount",
+                        "12345"});
+            table84.AddRow(new string[] {
                         "Account",
                         "TestAccount"});
 #line 39
-testRunner.Then("TestOpp has the following values", ((string)(null)), table82, "Then ");
+testRunner.Then("TestOpp has the following values", ((string)(null)), table84, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -224,49 +224,49 @@ testRunner.Then("TestOpp has the following values", ((string)(null)), table82, "
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table83 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table83.AddRow(new string[] {
-                        "Account Name",
-                        "QuoteTesting"});
-#line 47
-testRunner.Given("an account named QuoteTesting with the following values", ((string)(null)), table83, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table84 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table84.AddRow(new string[] {
-                        "Name",
-                        "AT Quote"});
-            table84.AddRow(new string[] {
-                        "Price List",
-                        "Automated Testing PL"});
-            table84.AddRow(new string[] {
-                        "Potential Customer",
-                        "QuoteTesting"});
-#line 50
-testRunner.And("a quote named TestQuote with the following values", ((string)(null)), table84, "And ");
-#line 56
-testRunner.When("TestQuote is activated and converted to a sales order named TestOrder", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
             TechTalk.SpecFlow.Table table85 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table85.AddRow(new string[] {
+                        "Account Name",
+                        "QuoteTesting"});
+#line 47
+testRunner.Given("an account named QuoteTesting with the following values", ((string)(null)), table85, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table86 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table86.AddRow(new string[] {
                         "Name",
                         "AT Quote"});
-            table85.AddRow(new string[] {
+            table86.AddRow(new string[] {
                         "Price List",
                         "Automated Testing PL"});
-            table85.AddRow(new string[] {
+            table86.AddRow(new string[] {
+                        "Potential Customer",
+                        "QuoteTesting"});
+#line 50
+testRunner.And("a quote named TestQuote with the following values", ((string)(null)), table86, "And ");
+#line 56
+testRunner.When("TestQuote is activated and converted to a sales order named TestOrder", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table87 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table87.AddRow(new string[] {
+                        "Name",
+                        "AT Quote"});
+            table87.AddRow(new string[] {
+                        "Price List",
+                        "Automated Testing PL"});
+            table87.AddRow(new string[] {
                         "Customer",
                         "QuoteTesting"});
-            table85.AddRow(new string[] {
+            table87.AddRow(new string[] {
                         "Quote",
                         "TestQuote"});
 #line 57
-testRunner.Then("TestOrder has the following values", ((string)(null)), table85, "Then ");
+testRunner.Then("TestOrder has the following values", ((string)(null)), table87, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -285,48 +285,48 @@ testRunner.Then("TestOrder has the following values", ((string)(null)), table85,
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table86 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table88 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table86.AddRow(new string[] {
+            table88.AddRow(new string[] {
                         "Account Name",
                         "QuoteTesting"});
 #line 66
-testRunner.Given("an account named QuoteTesting with the following values", ((string)(null)), table86, "Given ");
+testRunner.Given("an account named QuoteTesting with the following values", ((string)(null)), table88, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table87 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table89 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table87.AddRow(new string[] {
+            table89.AddRow(new string[] {
                         "Name",
                         "AT Quote to Revise"});
-            table87.AddRow(new string[] {
+            table89.AddRow(new string[] {
                         "Price List",
                         "Automated Testing PL"});
-            table87.AddRow(new string[] {
+            table89.AddRow(new string[] {
                         "Potential Customer",
                         "QuoteTesting"});
 #line 69
-testRunner.And("a quote named TestQuote with the following values", ((string)(null)), table87, "And ");
+testRunner.And("a quote named TestQuote with the following values", ((string)(null)), table89, "And ");
 #line 74
 testRunner.When("the quote TestQuote is activated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 75
 testRunner.And("TestQuote is revised and its revised quote is named RevisiedQuote", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table88 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table90 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table88.AddRow(new string[] {
+            table90.AddRow(new string[] {
                         "Name",
                         "AT Quote to Revise"});
-            table88.AddRow(new string[] {
+            table90.AddRow(new string[] {
                         "Price List",
                         "Automated Testing PL"});
-            table88.AddRow(new string[] {
+            table90.AddRow(new string[] {
                         "Potential Customer",
                         "QuoteTesting"});
 #line 76
-testRunner.Then("RevisiedQuote has the following values", ((string)(null)), table88, "Then ");
+testRunner.Then("RevisiedQuote has the following values", ((string)(null)), table90, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -24,9 +24,9 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public override void Execute()
         {
-            var aliasRef = _crmContext.RecordCache.Get(_alias, true);
+            var form = GetFormData();
 
-            var form = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(aliasRef));
+            
             var notifications = form.GetFormNotifications();
             Logger.WriteLine($"Found {notifications.Count} notifications");
 
@@ -42,6 +42,19 @@ namespace Vermaat.Crm.Specflow.Commands
                 Assert.AreEqual(notification.Type.ToString().ToLower(), row[Constants.SpecFlow.TABLE_FORMNOTIFICATION_LEVEL]?.ToLower(), $"Notification {notification.Message} has a wrong level");
             }
 
+        }
+
+        private FormData GetFormData()
+        {
+            if(string.IsNullOrEmpty(_alias))
+            {
+                return _seleniumContext.GetBrowser().LastFormData;
+            }
+            else
+            {
+                var aliasRef = _crmContext.RecordCache.Get(_alias, true);
+                return _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(aliasRef));
+            }
         }
     }
 }

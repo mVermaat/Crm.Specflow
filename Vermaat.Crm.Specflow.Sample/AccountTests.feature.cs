@@ -851,16 +851,16 @@ testRunner.Then("NotificationAccount has the following form notifications", ((st
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Verify error popup", new string[] {
+        [TechTalk.SpecRun.ScenarioAttribute("Required field not filled error notification", new string[] {
+                "Chrome",
                 "Cleanup",
-                "ExpectedError",
-                "Chrome"}, SourceLine=241)]
-        public virtual void VerifyErrorPopup()
+                "ExpectedError"}, SourceLine=241)]
+        public virtual void RequiredFieldNotFilledErrorNotification()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error popup", null, new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Required field not filled error notification", null, new string[] {
+                        "Chrome",
                         "Cleanup",
-                        "ExpectedError",
-                        "Chrome"});
+                        "ExpectedError"});
 #line 242
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
@@ -870,13 +870,54 @@ this.ScenarioInitialize(scenarioInfo);
                         "Value"});
             table37.AddRow(new string[] {
                         "Account Name",
-                        "Test"});
+                        ""});
             table37.AddRow(new string[] {
+                        "Industry",
+                        "Brokers"});
+#line 243
+testRunner.When("an account named NotificationAccount is created with the following values", ((string)(null)), table37, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Message",
+                        "Level"});
+            table38.AddRow(new string[] {
+                        "Account Name : Required fields must be filled in.",
+                        "Error"});
+            table38.AddRow(new string[] {
+                        "This account is from the broker industry. Additional rules applicable.",
+                        "Warning"});
+#line 247
+testRunner.Then("the following form notifications are on the current form", ((string)(null)), table38, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Verify error popup", new string[] {
+                "Cleanup",
+                "ExpectedError",
+                "Chrome"}, SourceLine=252)]
+        public virtual void VerifyErrorPopup()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error popup", null, new string[] {
+                        "Cleanup",
+                        "ExpectedError",
+                        "Chrome"});
+#line 253
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table39 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table39.AddRow(new string[] {
+                        "Account Name",
+                        "Test"});
+            table39.AddRow(new string[] {
                         "Website",
                         "https://error.com"});
-#line 243
-testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table37, "When ");
-#line 247
+#line 254
+testRunner.When("an account named TestAccount is created with the following values", ((string)(null)), table39, "When ");
+#line 258
 testRunner.Then("the following error message appears: \'Website refers to error.com\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -884,43 +925,43 @@ testRunner.Then("the following error message appears: \'Website refers to error.
         
         [TechTalk.SpecRun.ScenarioAttribute("Assigning alias to a lookup value", new string[] {
                 "API",
-                "Cleanup"}, SourceLine=250)]
+                "Cleanup"}, SourceLine=262)]
         public virtual void AssigningAliasToALookupValue()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Assigning alias to a lookup value", null, new string[] {
                         "API",
                         "Cleanup"});
-#line 251
+#line 263
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table40 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table38.AddRow(new string[] {
+            table40.AddRow(new string[] {
                         "Account Name",
                         "Multiple Notifications"});
-            table38.AddRow(new string[] {
+            table40.AddRow(new string[] {
                         "Credit Limit",
                         "10000"});
-            table38.AddRow(new string[] {
+            table40.AddRow(new string[] {
                         "Industry",
                         "Brokers"});
-#line 252
-testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table38, "Given ");
-#line 257
+#line 264
+testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table40, "Given ");
+#line 269
 testRunner.When("all asynchronous processes for TestAccount are finished", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 258
+#line 270
 testRunner.Then("TestAccount\'s Auto Generated is named AutoGenRecord", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-            TechTalk.SpecFlow.Table table39 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table41 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
-            table39.AddRow(new string[] {
+            table41.AddRow(new string[] {
                         "Credit Limit",
                         "10000"});
-#line 259
-testRunner.And("AutoGenRecord has the following values", ((string)(null)), table39, "And ");
+#line 271
+testRunner.And("AutoGenRecord has the following values", ((string)(null)), table41, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

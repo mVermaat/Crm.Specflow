@@ -41,6 +41,12 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssertFormNotificationsCommand(_crmContext, _seleniumContext, alias, formNotifications));
         }
 
+        [Then(@"the following form notifications are on the current form")]
+        public void ThenCurrentFormNotificationExist(Table formNotifications)
+        {
+            _crmContext.CommandProcessor.Execute(new AssertFormNotificationsCommand(_crmContext, _seleniumContext, null, formNotifications));
+        }
+
         [Then(@"the following error message appears: '(.*)'")]
         public void ThenErrorAppears(string errorMessage)
         {

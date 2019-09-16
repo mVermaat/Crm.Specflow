@@ -238,6 +238,17 @@ Then NotificationAccount has the following form notifications
 	| The credit limit of this account is under 1.000.000                    | Warning |
 	| This account is from the broker industry. Additional rules applicable. | Warning |
 
+@Chrome @Cleanup @ExpectedError
+Scenario: Required field not filled error notification
+When an account named NotificationAccount is created with the following values
+	| Property     | Value   |
+	| Account Name |         |
+	| Industry     | Brokers |
+Then the following form notifications are on the current form
+	| Message                                                                | Level   |
+	| Account Name : Required fields must be filled in.                      | Error   |
+	| This account is from the broker industry. Additional rules applicable. | Warning |
+
 @Cleanup @ExpectedError @Chrome
 Scenario: Verify error popup
 When an account named TestAccount is created with the following values
@@ -245,6 +256,7 @@ When an account named TestAccount is created with the following values
 		 | Account Name | Test              |
 		 | Website      | https://error.com |
 Then the following error message appears: 'Website refers to error.com'
+
 
 
 @API @Cleanup

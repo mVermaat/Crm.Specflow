@@ -81,32 +81,14 @@ namespace Vermaat.Crm.Specflow.Sample
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table71 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table71.AddRow(new string[] {
-                        "Account Name",
-                        "TestAccount"});
-#line 6
-testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table71, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table72 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Property",
-                        "Value"});
-            table72.AddRow(new string[] {
-                        "Topic",
-                        "Test Opp Money"});
-#line 9
-testRunner.And("a related opportunity from TestAccount named TestOpp with the following values", ((string)(null)), table72, "And ");
-#line hidden
             TechTalk.SpecFlow.Table table73 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
                         "Value"});
             table73.AddRow(new string[] {
-                        "Status Reason",
-                        string.Format("{0}", statusReason)});
-#line 12
-testRunner.When("the opportunity TestOpp is closed with the following values", ((string)(null)), table73, "When ");
+                        "Account Name",
+                        "TestAccount"});
+#line 6
+testRunner.Given("an account named TestAccount with the following values", ((string)(null)), table73, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table74 = new TechTalk.SpecFlow.Table(new string[] {
                         "Property",
@@ -114,14 +96,32 @@ testRunner.When("the opportunity TestOpp is closed with the following values", (
             table74.AddRow(new string[] {
                         "Topic",
                         "Test Opp Money"});
-            table74.AddRow(new string[] {
+#line 9
+testRunner.And("a related opportunity from TestAccount named TestOpp with the following values", ((string)(null)), table74, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table75 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table75.AddRow(new string[] {
+                        "Status Reason",
+                        string.Format("{0}", statusReason)});
+#line 12
+testRunner.When("the opportunity TestOpp is closed with the following values", ((string)(null)), table75, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table76 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Value"});
+            table76.AddRow(new string[] {
+                        "Topic",
+                        "Test Opp Money"});
+            table76.AddRow(new string[] {
                         "Status",
                         string.Format("{0}", status)});
-            table74.AddRow(new string[] {
+            table76.AddRow(new string[] {
                         "Status Reason",
                         string.Format("{0}", statusReason)});
 #line 15
-testRunner.Then("TestOpp has the following values", ((string)(null)), table74, "Then ");
+testRunner.Then("TestOpp has the following values", ((string)(null)), table76, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
