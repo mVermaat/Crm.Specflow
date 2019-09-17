@@ -122,23 +122,33 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AccountTests.feature" />
-    <None Include="ActivityTests.feature" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="appsettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="DateTesting.feature" />
+    <None Include="DataTypes\BooleanDataType.feature" />
+    <None Include="DataTypes\CurrencyDataType.feature" />
+    <None Include="DataTypes\DateTimeDataType.feature" />
+    <None Include="DataTypes\LookupDataType.feature" />
+    <None Include="DataTypes\StringDataType.feature" />
     <None Include="Default.srprofile">
       <SubType>Designer</SubType>
     </None>
-    <None Include="OpportunityTests.feature" />
+    <None Include="EntityTests\QuoteTests.feature" />
+    <None Include="General\Defaults.feature" />
+    <None Include="General\FormStates.feature" />
+    <None Include="EntityTests\LeadTests.feature" />
+    <None Include="General\AsyncProcesses.feature" />
+    <None Include="General\Merging.feature" />
+    <None Include="General\NotificationsAndErrors.feature" />
+    <None Include="EntityTests\OpportunityTests.feature" />
+    <None Include="General\RelatedRecords.feature" />
+    <None Include="General\SwitchTabs.feature" />
+    <None Include="General\UpdateData.feature" />
     <None Include="runtests.cmd" />
-    <None Include="SalesFlow.feature" />
     <None Include="packages.config" />
-    <None Include="ContactTests.feature" />
     <None Include="SpecRunTestProfile.xsd">
       <SubType>Designer</SubType>
     </None>

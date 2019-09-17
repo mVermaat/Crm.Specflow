@@ -1,5 +1,4 @@
-﻿Feature: DateTesting
-
+﻿Feature: DateTimeDataType
 
 # Make sure your user is a non UTC timezone
 @Cleanup @API @Chrome
