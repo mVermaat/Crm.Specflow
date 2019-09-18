@@ -64,8 +64,6 @@ namespace Vermaat.Crm.Specflow
                     var optionSet = GetOptionSetValue(metadata, value, context);
                     if (objectType == ConvertedObjectType.Primitive)
                         return optionSet.Value;
-                    else if (objectType == ConvertedObjectType.UserInterface)
-                        return value;
                     else
                         return optionSet;
 
@@ -79,7 +77,7 @@ namespace Vermaat.Crm.Specflow
                         return lookup;
 
                 case AttributeTypeCode.Virtual:
-                    return ParseVirtualType(context, metadata, value, objectType);
+                    return ParseVirtualType(context, metadata, value);
 
                 default: throw new NotImplementedException(string.Format("Type {0} not implemented", metadata.AttributeType));
             }
@@ -107,7 +105,7 @@ namespace Vermaat.Crm.Specflow
             }
         }
 
-        private static object ParseVirtualType(CrmTestingContext context, AttributeMetadata metadata, string value, ConvertedObjectType objectType)
+        private static object ParseVirtualType(CrmTestingContext context, AttributeMetadata metadata, string value)
         {
             
             if (metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)

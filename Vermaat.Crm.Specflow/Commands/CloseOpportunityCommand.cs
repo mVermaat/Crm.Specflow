@@ -40,11 +40,12 @@ namespace Vermaat.Crm.Specflow.Commands
         {
             var record = _crmContext.RecordCache.Get(_alias, true);
             var close = OpportunityCloseHelper.Create(_crmContext, _closeData, record);
-            var browser = _seleniumContext.GetBrowser();
 
+            var browser = _seleniumContext.GetBrowser();
             browser.OpenRecord(new OpenFormOptions(record));
-            browser.App.App.Dialogs.CloseOpportunity(close.Win);
-            HelperMethods.WaitForFormLoad(browser.App.WebDriver, new RecordHasStatus(close.Win ? "Won" : "Lost"));
+            var dialog = OpportunityCloseDialog.CreateDialog(browser.App, close.Win);
+            dialog.EnterData(_crmContext, _closeData);
+            dialog.FinishDialog();
         }
 
 

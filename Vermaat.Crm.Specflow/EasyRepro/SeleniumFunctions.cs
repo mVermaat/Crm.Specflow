@@ -101,8 +101,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }).Value;
         }
 
-
-            public static bool TryFindElement(this IWebDriver driver, By by, out IWebElement element)
+        public static bool TryFindElement(this IWebDriver driver, By by, out IWebElement element)
             {
                 try
                 {
@@ -129,6 +128,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             });
         }
 
+       
         
+
     }
 }
