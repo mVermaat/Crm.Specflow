@@ -27,12 +27,6 @@ namespace Vermaat.Crm.Specflow
             _scenarioContext = scenarioContext;
         }
 
-        [AfterScenario("Cleanup")]
-        public void Cleanup()
-        {
-            _crmContext.RecordCache.DeleteAllCachedRecords(GlobalTestingContext.ConnectionManager.AdminConnection);
-        }
-
         [BeforeScenario("API")]
         public void APISetup()
         {
@@ -90,12 +84,12 @@ namespace Vermaat.Crm.Specflow
             }
         }
 
-        [AfterTestRun]
-        public static void AfterTestRunCleanup()
+        [AfterScenario("Cleanup")]
+        public void Cleanup()
         {
-            GlobalTestingContext.BrowserManager.Dispose();
-            GlobalTestingContext.ConnectionManager.Dispose();
+            _crmContext.RecordCache.DeleteAllCachedRecords(GlobalTestingContext.ConnectionManager.AdminConnection);
         }
+
 
         [AfterScenario]
         public void AfterWebTest()
@@ -105,6 +99,15 @@ namespace Vermaat.Crm.Specflow
                 TakeScreenshot(_seleniumContext.GetBrowser().App.WebDriver);
             }
         }
+
+        [AfterTestRun]
+        public static void AfterTestRunCleanup()
+        {
+            GlobalTestingContext.BrowserManager.Dispose();
+            GlobalTestingContext.ConnectionManager.Dispose();
+        }
+
+
 
         private void TakeScreenshot(IWebDriver driver)
         {

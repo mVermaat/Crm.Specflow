@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xrm.Sdk.Metadata;
 using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow
@@ -26,40 +27,54 @@ namespace Vermaat.Crm.Specflow
         {
             OnTableProcessing?.Invoke(this, new TableEventArgs(entityName, table));
 
-            foreach(var row in table.Rows)
+            foreach (var row in table.Rows)
             {
                 OnRowProcessing?.Invoke(this, new TableRowEventArgs(entityName, row));
 
-                row[Constants.SpecFlow.TABLE_KEY] = GlobalTestingContext.Metadata.GetAttributeMetadata(entityName, row[Constants.SpecFlow.TABLE_KEY], _context.LanguageCode).LogicalName;
+                var attribute = GlobalTestingContext.Metadata.GetAttributeMetadata(entityName, row[Constants.SpecFlow.TABLE_KEY], _context.LanguageCode);
+                row[Constants.SpecFlow.TABLE_KEY] = attribute.LogicalName;
+                row[Constants.SpecFlow.TABLE_VALUE] = CheckFormula(attribute, row[Constants.SpecFlow.TABLE_VALUE]);
 
                 OnRowProcessed?.Invoke(this, new TableRowEventArgs(entityName, row));
             }
 
             OnTableProcessed?.Invoke(this, new TableEventArgs(entityName, table));
         }
-    }
 
-    public class TableRowEventArgs : EventArgs
-    {
-        public TableRowEventArgs(string entityName, TableRow row)
+        private string CheckFormula(AttributeMetadata attribute, string value)
         {
-            Row = row;
-            EntityName = entityName;
+            if (string.IsNullOrEmpty(value) || !value.StartsWith("=") || value.Length < 2)
+            {
+                return value;
+            }
+            else
+            {
+                return GlobalTestingContext.FormulaParser.ParseFormula(attribute, value.Substring(1));
+            }
         }
 
-        public TableRow Row { get; private set; }
-        public string EntityName { get; private set; }
-    }
-
-    public class TableEventArgs : EventArgs
-    {
-        public TableEventArgs(string entityName, Table table)
+        public class TableRowEventArgs : EventArgs
         {
-            Table = table;
-            EntityName = entityName;
+            public TableRowEventArgs(string entityName, TableRow row)
+            {
+                Row = row;
+                EntityName = entityName;
+            }
+
+            public TableRow Row { get; private set; }
+            public string EntityName { get; private set; }
         }
 
-        public Table Table { get; private set; }
-        public string EntityName { get; private set; }
+        public class TableEventArgs : EventArgs
+        {
+            public TableEventArgs(string entityName, Table table)
+            {
+                Table = table;
+                EntityName = entityName;
+            }
+
+            public Table Table { get; private set; }
+            public string EntityName { get; private set; }
+        }
     }
 }

@@ -166,6 +166,9 @@
     <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
     </Reference>
+    <Reference Include="Z.Expressions.Eval, Version=2.9.54.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.Expressions.Eval.2.9.54\lib\net45\Z.Expressions.Eval.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AliasedRecordCache.cs" />
@@ -228,6 +231,8 @@
     <Compile Include="FormLoadConditions\FormIsOfEntity.cs" />
     <Compile Include="FormLoadConditions\IFormLoadCondition.cs" />
     <Compile Include="FormLoadConditions\RecordHasStatus.cs" />
+    <Compile Include="Formulas\FormulaParser.cs" />
+    <Compile Include="Formulas\SpecflowFormulas.cs" />
     <Compile Include="GlobalTestingContext.cs" />
     <Compile Include="Steps\OpportunitySteps.cs" />
     <Compile Include="TestExecutionException.cs" />

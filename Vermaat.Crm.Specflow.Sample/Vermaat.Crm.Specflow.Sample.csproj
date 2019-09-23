@@ -137,6 +137,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityTests\QuoteTests.feature" />
+    <None Include="Formulas\DateFormulas.feature" />
     <None Include="General\Defaults.feature" />
     <None Include="General\FormStates.feature" />
     <None Include="EntityTests\LeadTests.feature" />
