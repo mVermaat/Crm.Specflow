@@ -52,3 +52,14 @@ Then TestContact's form has the following form state
     | Last Name                      | Required, Unlocked, Visible    |
     | Job Title                      | Optional, Unlocked, Visible    |
     | Last Date Included in Campaign | Locked, Optional, Visible      |
+
+@Chrome @Cleanup
+Scenario: Ribbon button availability
+Given a account named TestAccount with the following values
+    | Property     | Value        |
+    | Account Name | DynamicHands |
+Then TestAccount's form has the following ribbon state
+    | Property   | State     |
+    | Activate   | Visible   |
+    | Deactivate | Invisible |
+    | Run Report | Visible   |

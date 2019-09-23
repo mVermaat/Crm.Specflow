@@ -52,5 +52,11 @@ namespace Vermaat.Crm.Specflow.Steps
         {
             _crmContext.CommandProcessor.Execute(new AssertErrorDialogCommand(_crmContext, _seleniumContext, errorMessage));
         }
+
+        [Then("(.*)'s form has the following ribbon state")]
+        public void ThenFormHasRibbonItems(string alias, Table table)
+        {
+            _crmContext.CommandProcessor.Execute(new AssertRibbonStateCommand(_crmContext, _seleniumContext, alias, table));
+        }
     }
 }

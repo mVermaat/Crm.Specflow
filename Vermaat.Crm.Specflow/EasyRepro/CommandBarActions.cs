@@ -25,6 +25,51 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _app.App.CommandBar.ClickCommand(buttonText);
         }
 
+
+        public bool IsButtonAvailable(string name)
+        {
+            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Check ribbon button"), driver =>
+            {
+                IWebElement ribbon = null;
+
+                //Find the button in the CommandBar
+                if (driver.HasElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Container])))
+                    ribbon = driver.FindElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Container]));
+
+                if (ribbon == null)
+                {
+                    if (driver.HasElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid])))
+                        ribbon = driver.FindElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid]));
+                    else
+                        throw new InvalidOperationException("Unable to find the ribbon.");
+                }
+
+                //Get the CommandBar buttons
+                var items = ribbon.FindElements(By.TagName("li"));
+
+                //Is the button in the ribbon?
+                if (items.Any(x => x.GetAttribute("aria-label").Equals(name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return true;
+                }
+                else
+                {
+                    //Is the button in More Commands?
+                    if (items.Any(x => x.GetAttribute("aria-label").Equals("More Commands", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        //Click More Commands
+                        items.FirstOrDefault(x => x.GetAttribute("aria-label").Equals("More Commands", StringComparison.OrdinalIgnoreCase)).Click(true);
+                        driver.WaitForTransaction();
+
+                        //Find the button
+                        return driver.HasElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Button].Replace("[NAME]", name)));
+                    }
+                    else
+                        return false;
+                }
+            });
+        }
+
         public void ActivateQuote()
         {
             Logger.WriteLine("Activating Quote");
@@ -60,6 +105,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return new EntityReference("quote", _app.App.Entity.GetObjectId()); ;
             }).Value;            
         }
+
 
 
         private void CreateOrderDialog()

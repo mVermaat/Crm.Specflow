@@ -179,6 +179,7 @@
     <Compile Include="Commands\AssertErrorDialogCommand.cs" />
     <Compile Include="Commands\AssertFormNotificationsCommand.cs" />
     <Compile Include="Commands\AssertNNRelationshipCommand.cs" />
+    <Compile Include="Commands\AssertRibbonStateCommand.cs" />
     <Compile Include="Commands\AssociateToNNRelationshipCommand.cs" />
     <Compile Include="Commands\CloseOpportunityCommand.cs" />
     <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
