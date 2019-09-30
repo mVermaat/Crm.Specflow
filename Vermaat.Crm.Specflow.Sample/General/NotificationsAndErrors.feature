@@ -26,13 +26,13 @@ Then NotificationAccount has the following form notifications
 @Chrome @Cleanup @ExpectedError
 Scenario: Required field not filled error notification
 When an account named NotificationAccount is created with the following values
-	| Property     | Value   |
-	| Account Name |         |
-	| Industry     | Brokers |
+	| Property     | Value |
+	| Account Name |       |
+	| Credit Limit | 10000 |
 Then the following form notifications are on the current form
-	| Message                                                                | Level   |
-	| Account Name : Required fields must be filled in.                      | Error   |
-	| This account is from the broker industry. Additional rules applicable. | Warning |
+	| Message                                             | Level   |
+	| Account Name : Required fields must be filled in.   | Error   |
+	| The credit limit of this account is under 1.000.000 | Warning |
 
 @Cleanup @ExpectedError @Chrome
 Scenario: Verify error popup

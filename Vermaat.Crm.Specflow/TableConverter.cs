@@ -32,8 +32,12 @@ namespace Vermaat.Crm.Specflow
                 OnRowProcessing?.Invoke(this, new TableRowEventArgs(entityName, row));
 
                 var attribute = GlobalTestingContext.Metadata.GetAttributeMetadata(entityName, row[Constants.SpecFlow.TABLE_KEY], _context.LanguageCode);
-                row[Constants.SpecFlow.TABLE_KEY] = attribute.LogicalName;
-                row[Constants.SpecFlow.TABLE_VALUE] = CheckFormula(attribute, row[Constants.SpecFlow.TABLE_VALUE]);
+
+                if(row.ContainsKey(Constants.SpecFlow.TABLE_KEY))
+                    row[Constants.SpecFlow.TABLE_KEY] = attribute.LogicalName;
+
+                if(row.ContainsKey(Constants.SpecFlow.TABLE_VALUE))
+                    row[Constants.SpecFlow.TABLE_VALUE] = CheckFormula(attribute, row[Constants.SpecFlow.TABLE_VALUE]);
 
                 OnRowProcessed?.Invoke(this, new TableRowEventArgs(entityName, row));
             }

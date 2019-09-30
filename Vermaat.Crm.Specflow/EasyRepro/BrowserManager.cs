@@ -49,11 +49,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; 
+        private bool _disposedValue = false; 
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 Logger.WriteLine("Cleaning up Browser sessions");
                 if (disposing)
@@ -69,7 +69,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     _browserCache.Clear();
                 }
 
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

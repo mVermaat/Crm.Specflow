@@ -66,8 +66,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 if(notificationBar.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_ExpandButton), out var expandButton))
                 {
-                    expandButton.Click();
-                    notificationBar = driver.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
+                    if(!Convert.ToBoolean(notificationBar.GetAttribute("aria-expanded")))
+                        expandButton.Click();
+
+                    notificationBar = driver.WaitUntilAvailable(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.FlyoutRoot), TimeSpan.FromSeconds(2), "Failed to open the form notifications");
                 }
 
                 var notificationList = notificationBar.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationList));
