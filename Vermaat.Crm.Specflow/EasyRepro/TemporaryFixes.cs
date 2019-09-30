@@ -154,7 +154,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
 
 
-            if (searchScope.TryFindElement(By.XPath(string.Format(xpath, name)), out IWebElement listItem))
+            if (searchScope != null && searchScope.TryFindElement(By.XPath(string.Format(xpath, name)), out IWebElement listItem))
             {
                 listItem.Click(true);
             }
