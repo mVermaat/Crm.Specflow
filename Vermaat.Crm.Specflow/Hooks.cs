@@ -117,7 +117,8 @@ namespace Vermaat.Crm.Specflow
                                                     _featureContext.FeatureInfo.Title,
                                                     _scenarioContext.ScenarioInfo.Title,
                                                      DateTime.Now.ToString("yyyyMMdd_HHmmss"))
-                                                    .Replace(' ', '_');
+                                                    .Replace(' ', '_')
+                                                    .Replace(":", "");
 
                 var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
                 if(!directory.Name.Equals("TestResults", StringComparison.InvariantCultureIgnoreCase))
