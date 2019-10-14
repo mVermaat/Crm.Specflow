@@ -11,8 +11,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     internal class BrowserManager : IDisposable
     {
         private readonly ButtonTexts _buttonTexts;
-        private Dictionary<BrowserType, Dictionary<string, UCIBrowser>> _browserCache;
-        private Lazy<CrmModelApps> _appCache;
+        private readonly Dictionary<BrowserType, Dictionary<string, UCIBrowser>> _browserCache;
+        private readonly Lazy<CrmModelApps> _appCache;
 
         public BrowserManager(ButtonTexts buttonTexts)
         {

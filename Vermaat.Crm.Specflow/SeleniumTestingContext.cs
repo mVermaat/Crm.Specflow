@@ -19,6 +19,7 @@ namespace Vermaat.Crm.Specflow
 
         public BrowserOptions BrowserOptions { get; }
         public string CurrentApp { get; set; }
+        public bool IsLoggedIn { get; private set; }
 
         public SeleniumTestingContext(CrmTestingContext crmContext)
         {
@@ -42,6 +43,7 @@ namespace Vermaat.Crm.Specflow
 
             var browser = GlobalTestingContext.BrowserManager.GetBrowser(BrowserOptions, GlobalTestingContext.ConnectionManager.CurrentUserDetails, GlobalTestingContext.ConnectionManager.Url);
             browser.ChangeApp(CurrentApp);
+            IsLoggedIn = true;
             return browser;
         }
 

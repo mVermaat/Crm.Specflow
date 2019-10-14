@@ -94,7 +94,7 @@ namespace Vermaat.Crm.Specflow
         [AfterScenario]
         public void AfterWebTest()
         {
-            if (_scenarioContext.TestError != null && !_crmContext.IsTarget("API"))
+            if (_scenarioContext.TestError != null && !_crmContext.IsTarget("API") && _seleniumContext.IsLoggedIn)
             {
                 TakeScreenshot(_seleniumContext.GetBrowser().App.WebDriver);
             }
