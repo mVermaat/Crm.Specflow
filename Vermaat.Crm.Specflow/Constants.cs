@@ -63,13 +63,5 @@ namespace Vermaat.Crm.Specflow
             public const int VALUE_NULL = 31;
             public const int ELEMENT_NOT_INTERACTABLE = 32;
         }
-
-        public class XPath
-        {
-            public const string FIELD_ISLOCKED = "//label[contains(@id, '[NAME]-locked-icon')]";
-            public const string FIELD_ISREQUIREDORRECOMMEND = "//div[contains(@id, '[NAME]-required-icon')]";
-            public const string DIALOG_CONTAINER = "id(\"dialogContentContainer_1\")";
-            public const string DIALOG_OK = "//button[@data-id='ok_id']";
-        }
     }
 }

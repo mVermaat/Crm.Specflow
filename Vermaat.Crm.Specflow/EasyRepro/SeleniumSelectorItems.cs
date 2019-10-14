@@ -8,7 +8,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     internal enum SeleniumSelectorItems
     {
+        Dialog_Container,
+        Dialog_OK,
         Dialog_Subtitle,
+
         Entity_ScriptErrorDialog,
 
         Entity_DateContainer,
@@ -21,6 +24,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Entity_FormNotifcation_ExpandButton,
         Entity_FormNotifcation_NotificationList,
         Entity_FormNotifcation_NotificationTypeIcon,
+
+        Entity_FormState_LockedIcon,
+        Entity_FormState_RequiredOrRecommended,
 
         Entity_SubGrid,
         Entity_SubGrid_Button,

@@ -53,7 +53,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 if (fieldContainer == null)
                     throw new TestExecutionException(Constants.ErrorCodes.FIELD_NOT_ON_FORM, LogicalName);
 
-                if (fieldContainer.TryFindElement(By.XPath(Constants.XPath.FIELD_ISREQUIREDORRECOMMEND.Replace("[NAME]", LogicalName)), out IWebElement requiredElement))
+                if (fieldContainer.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormState_RequiredOrRecommended, LogicalName), out IWebElement requiredElement))
                 {
                     if (requiredElement.GetAttribute("innerText") == "*")
                         return RequiredState.Required;
@@ -86,7 +86,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 if (fieldContainer == null)
                     throw new TestExecutionException(Constants.ErrorCodes.FIELD_NOT_ON_FORM, LogicalName);
 
-                return fieldContainer.TryFindElement(By.XPath(Constants.XPath.FIELD_ISLOCKED.Replace("[NAME]", LogicalName)), out IWebElement requiredElement);
+                return fieldContainer.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormState_LockedIcon, LogicalName), out IWebElement requiredElement);
             }).Value;
         }
 

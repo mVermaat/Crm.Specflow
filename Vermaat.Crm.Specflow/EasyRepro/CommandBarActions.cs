@@ -113,8 +113,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _app.Client.Execute(BrowserOptionHelper.GetOptions($"Create Sales Order"), driver =>
             {
                 
-                var container = driver.WaitUntilAvailable(By.XPath(Constants.XPath.DIALOG_CONTAINER));
-                var button = container.FindElement(By.XPath(Constants.XPath.DIALOG_OK));
+                var container = driver.WaitUntilAvailable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Container));
+                var button = container.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_OK));
 
                 button.Click();
                 HelperMethods.WaitForFormLoad(driver, new FormIsOfEntity("salesorder"));

@@ -17,7 +17,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         private readonly UCIApp _app;
         private readonly EntityMetadata _entityMetadata;
-        private Dictionary<string, FormField> _formFields;
+        private readonly Dictionary<string, FormField> _formFields;
 
         public FormField this[string attributeName] => _formFields[attributeName];
         public CommandBarActions CommandBar { get; }
@@ -98,6 +98,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     ExpandTab(field.GetTabLabel());
                     currentTab = newTab;
                 }
+
+                Assert.IsTrue(field.IsVisible(), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't visible");
+                Assert.IsFalse(field.IsLocked(), $"Field {row[Constants.SpecFlow.TABLE_KEY]} is read-only");
 
                 field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }
