@@ -11,6 +11,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Dialog_Container,
         Dialog_OK,
         Dialog_Subtitle,
+        Dialog_ErrorDialog,
 
         Entity_ScriptErrorDialog,
 

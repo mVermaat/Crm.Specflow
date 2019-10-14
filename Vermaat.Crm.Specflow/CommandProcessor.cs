@@ -63,6 +63,8 @@ namespace Vermaat.Crm.Specflow
             {
                 case Constants.ErrorCodes.FORM_SAVE_FAILED:
                     return true;
+                case Constants.ErrorCodes.BUSINESS_PROCESS_ERROR_WHEN_LOADING:
+                    return true;
 
                 default: return false;
             }

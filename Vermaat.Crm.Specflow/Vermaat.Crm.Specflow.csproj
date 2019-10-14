@@ -231,6 +231,7 @@
     <Compile Include="FormLoadConditions\FormIsId.cs" />
     <Compile Include="FormLoadConditions\FormIsOfEntity.cs" />
     <Compile Include="FormLoadConditions\IFormLoadCondition.cs" />
+    <Compile Include="FormLoadConditions\NoBusinessProcessError.cs" />
     <Compile Include="FormLoadConditions\RecordHasStatus.cs" />
     <Compile Include="Formulas\FormulaParser.cs" />
     <Compile Include="Formulas\SpecflowFormulas.cs" />

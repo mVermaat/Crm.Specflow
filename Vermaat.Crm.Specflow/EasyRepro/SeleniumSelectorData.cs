@@ -12,6 +12,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private readonly Dictionary<SeleniumSelectorItems, string> _selectors = new Dictionary<SeleniumSelectorItems, string>()
         {
             { SeleniumSelectorItems.Dialog_Subtitle, "//h2[@id='subtitle']" },
+            { SeleniumSelectorItems.Dialog_ErrorDialog, "//div[@data-id='errorDialogdialog'" },
             { SeleniumSelectorItems.Entity_FormNotifcation_NotificationBar, "//div[@data-id='notificationWrapper']" },
             { SeleniumSelectorItems.Entity_FormNotifcation_ExpandButton, ".//span[@id='notificationExpandIcon']" },
             { SeleniumSelectorItems.Entity_FormNotifcation_NotificationList, ".//ul[@data-id='notificationList']" },

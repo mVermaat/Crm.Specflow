@@ -45,11 +45,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             return client.Execute(BrowserOptionHelper.GetOptions($"Get error dialog message"), driver =>
             {
-                if (driver.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Subtitle), out IWebElement subTitle))
-                    return subTitle.Text;
-                else
-                    return null;
+                return GetErrorDialogMessage(driver);
             }).Value;
+        }
+
+        public static string GetErrorDialogMessage(IWebDriver driver)
+        {
+            if (driver.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Subtitle), out IWebElement subTitle))
+                return subTitle.Text;
+            else
+                return null;
         }
 
         public static IReadOnlyCollection<FormNotification> GetFormNotifications(this WebClient client)
