@@ -2,6 +2,7 @@
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -175,7 +176,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             try
             {
-                returnElement = wait.Until(ExpectedConditions.ElementToBeClickable(by));
+                returnElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(by));
                 success = true;
             }
             catch (NoSuchElementException)
