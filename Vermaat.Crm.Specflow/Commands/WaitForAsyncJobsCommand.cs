@@ -23,22 +23,23 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
-
-            int SleepForSeconds = int.Parse(HelperMethods.GetAppSettingsValue("SleepForSeconds", true, "30"));
+            int sleepInSeconds = int.Parse(HelperMethods.GetAppSettingsValue("AsyncJobTimeoutInSeconds", true, "30"));
 
             Stopwatch timer = new Stopwatch();
             timer.Start();
 
-            while (timer.Elapsed.TotalSeconds < SleepForSeconds && QueryHelper.HasOpenSystemJobs(aliasRef.Id, GlobalTestingContext.ConnectionManager.AdminConnection))
+            while (QueryHelper.HasOpenSystemJobs(aliasRef.Id, GlobalTestingContext.ConnectionManager.AdminConnection))
             {
                 Logger.WriteLine("Not all system jobs are completed. Waiting");
-                Thread.Sleep(2000);
+
+                if (timer.Elapsed.TotalSeconds < sleepInSeconds)
+                    Thread.Sleep(2000);
+                else
+                    throw new TestExecutionException(Constants.ErrorCodes.ASYNC_TIMEOUT);
             }
             
             timer.Stop();
             Logger.WriteLine("System jobs are finished");
-
-            Assert.AreNotEqual(false, QueryHelper.HasOpenSystemJobs(aliasRef.Id, GlobalTestingContext.ConnectionManager.AdminConnection), "Not all system jobs were finished on time");
         }
     }
 }

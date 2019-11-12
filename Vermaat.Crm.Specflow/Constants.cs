@@ -63,6 +63,7 @@ namespace Vermaat.Crm.Specflow
             public const int VALUE_NULL = 31;
             public const int ELEMENT_NOT_INTERACTABLE = 32;
             public const int BUSINESS_PROCESS_ERROR_WHEN_LOADING = 33;
+            public const int ASYNC_TIMEOUT = 34;
         }
     }
 }

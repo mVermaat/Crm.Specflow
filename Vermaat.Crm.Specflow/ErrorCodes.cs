@@ -51,6 +51,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.VALUE_NULL, "Field {0} requires a value, but it is empty");
             AddError(Constants.ErrorCodes.ELEMENT_NOT_INTERACTABLE, "Element not interactable. {0}");
             AddError(Constants.ErrorCodes.BUSINESS_PROCESS_ERROR_WHEN_LOADING, "Business Process Error: {0}");
+            AddError(Constants.ErrorCodes.ASYNC_TIMEOUT, "Not all Asynchronous jobs are completed on time");
         }
 
         public void AddError(int errorCode, string message)
