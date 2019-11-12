@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Configuration;
+using System.Diagnostics;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -22,16 +24,21 @@ namespace Vermaat.Crm.Specflow.Commands
         {
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
 
-            int tryCount = 0;
-            while (tryCount < 15 && QueryHelper.HasOpenSystemJobs(aliasRef.Id, GlobalTestingContext.ConnectionManager.AdminConnection))
+            int SleepForSeconds = int.Parse(HelperMethods.GetAppSettingsValue("SleepForSeconds", true, "30"));
+
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+
+            while (timer.Elapsed.TotalSeconds < SleepForSeconds && QueryHelper.HasOpenSystemJobs(aliasRef.Id, GlobalTestingContext.ConnectionManager.AdminConnection))
             {
                 Logger.WriteLine("Not all system jobs are completed. Waiting");
                 Thread.Sleep(2000);
-                tryCount++;
             }
+            
+            timer.Stop();
             Logger.WriteLine("System jobs are finished");
 
-            Assert.AreNotEqual(15, tryCount, "Not all system jobs were finished on time");
+            Assert.AreNotEqual(false, QueryHelper.HasOpenSystemJobs(aliasRef.Id, GlobalTestingContext.ConnectionManager.AdminConnection), "Not all system jobs were finished on time");
         }
     }
 }
