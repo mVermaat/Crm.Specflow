@@ -14,14 +14,14 @@ namespace Vermaat.Crm.Specflow
     public static class HelperMethods
     {
 
-        public static string GetAppSettingsValue(string key, bool emptyAllowed = false)
+        public static string GetAppSettingsValue(string key, bool emptyAllowed = false, string defaultValue = null)
         {
             string value = ConfigurationManager.AppSettings[key];
 
             if (!emptyAllowed && string.IsNullOrEmpty(value))
                 throw new TestExecutionException(Constants.ErrorCodes.APP_SETTINGS_REQUIRED, key);
 
-            return value;
+            return value ?? defaultValue;
         }
         public static bool IsLabel(this Label label, int lcid, string name)
         {
