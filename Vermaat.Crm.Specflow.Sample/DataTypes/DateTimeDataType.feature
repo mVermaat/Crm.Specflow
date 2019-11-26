@@ -31,18 +31,18 @@ Given a mv_datetester named TestDateTime with the following values
 	| Time Zone Independent Date Time | 1-1-2010 10:00 |
 When TestDateTime is updated with the following values
 	| Property                        | Value          |
-	| Date Only                       | 1-1-2011       |
-	| User Local Date Only            | 1-1-2011       |
-	| User Local Date Time            | 1-1-2011 10:00 |
-	| Time Zone Independent Date Only | 1-1-2011       |
-	| Time Zone Independent Date Time | 1-1-2011 10:00 |
+	| Date Only                       | 2-2-2011       |
+	| User Local Date Only            | 2-2-2011       |
+	| User Local Date Time            | 2-2-2011 12:00 |
+	| Time Zone Independent Date Only | 2-2-2011       |
+	| Time Zone Independent Date Time | 2-2-2011 12:00 |
 Then TestDateTime has the following values
 	| Property                        | Value          |
-	| Date Only                       | 1-1-2011       |
-	| User Local Date Only            | 1-1-2011       |
-	| User Local Date Time            | 1-1-2011 10:00 |
-	| Time Zone Independent Date Only | 1-1-2011       |
-	| Time Zone Independent Date Time | 1-1-2011 10:00 |
+	| Date Only                       | 2-2-2011       |
+	| User Local Date Only            | 2-2-2011       |
+	| User Local Date Time            | 2-2-2011 12:00 |
+	| Time Zone Independent Date Only | 2-2-2011       |
+	| Time Zone Independent Date Time | 2-2-2011 12:00 |
 
 @Cleanup @API @Chrome
 Scenario: Test clearing all Date and Time formats

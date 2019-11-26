@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -87,11 +88,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     fieldElement.SendKeys(Keys.Control + "a");
                     fieldElement.SendKeys(Keys.Backspace);
 
-                    var timefields = driver.FindElements(By.XPath(AppElements.Xpath[AppReference.Entity.FieldControlDateTimeTimeInputUCI].Replace("[FIELD]", field)));
-                    if (timefields.Any())
+                    if (driver.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_DateTime_Time_Input, field), out var timeElement))
                     {
                         driver.ClearFocus();
                         driver.WaitForTransaction();
+                        try
+                        {
+                            driver.WaitFor(d => string.IsNullOrWhiteSpace(timeElement.GetAttribute("value")) || timeElement.GetAttribute("value") == "---");
+                        }
+                        catch (WebDriverTimeoutException ex)
+                        {
+                            throw new InvalidOperationException($"Timeout after 30 seconds. Expected cleared DateTime. Actual: {fieldElement.GetAttribute("value")}", ex);
+                        }
                     }
 
                     fieldElement.SendKeys(date.ToString(format));
