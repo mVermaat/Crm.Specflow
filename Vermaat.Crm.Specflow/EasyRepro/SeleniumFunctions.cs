@@ -17,7 +17,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
-                var subGrid = driver.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid, subgridName));
+                var subGrid = driver.WaitUntilAvailable(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid, subgridName), $"Unable to find subgrid: {subgridName}");
+                
                 var menuBar = subGrid.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid_ButtonList));
 
                 var buttons = menuBar.FindElements(By.TagName("button"));
