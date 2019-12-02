@@ -42,12 +42,15 @@ namespace Vermaat.Crm.Specflow
         {
             var entityMd = GetEntityMetadata(entityName);
 
-            var attributeMd = entityMd.Attributes.Where(a => a.DisplayName.IsLabel(languageCode, displayName) || a.LogicalName.Equals(displayName)).FirstOrDefault();
+            var attributeMd = entityMd.Attributes.Where(a => a.DisplayName.IsLabel(languageCode, displayName) || a.LogicalName.Equals(displayName)).ToArray();
 
-            if (attributeMd == null)
+
+            if (attributeMd.Length == 0)
                 throw new TestExecutionException(Constants.ErrorCodes.ATTRIBUTE_DOESNT_EXIST, displayName, entityName);
+            else if (attributeMd.Length > 1)
+                throw new TestExecutionException(Constants.ErrorCodes.MULTIPLE_ATTRIBUTES_FOUND, displayName, string.Join(", ", attributeMd.Select(md => md.LogicalName)));
 
-            return attributeMd;
+            return attributeMd.First();
 
         }
 
