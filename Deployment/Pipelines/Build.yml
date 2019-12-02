@@ -13,13 +13,13 @@ steps:
   displayName: 'Use NuGet 5.0.0'
   inputs:
     versionSpec: 5.0.0
-
 - task: NuGetCommand@2
-  displayName: 'NuGet restore'
   inputs:
+    command: 'restore'
     restoreSolution: '$(Parameters.solution)'
-
-- task: bleddynrichards.Assembly-Info-Task.Assembly-Info-Task.Assembly-Info-NetFramework@2
+    feedsToUse: 'select'
+    
+- task: Assembly-Info-NetFramework@2
   displayName: 'Set Assembly Manifest Data'
   inputs:
     VersionNumber: '$(Build.BuildNumber)'
@@ -29,7 +29,7 @@ steps:
 - task: VSBuild@1
   displayName: 'Build solution **\*.sln'
   inputs:
-    solution: **\*.sln
+    solution: '**\*.sln'
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
@@ -39,7 +39,7 @@ steps:
     command: custom
     versioningScheme: byBuildNumber
     includeSymbols: true
-    arguments: 'pack $(Build.SourcesDirectory)\Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj -OutputDirectory $(build.artifactstagingdirectory) -Properties Configuration=$(BuildConfiguration) -version $(Build.BuildNumber) -Verbosity Detailed -Symbols -SymbolPackageFormat snupkg'
+    arguments: 'pack $(Build.SourcesDirectory)\Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj -OutputDirectory $(build.artifactstagingdirectory) -Properties Configuration=$(BuildConfiguration) -version "$(Build.BuildNumber)$(VersionAddition)" -Verbosity Detailed -Symbols -SymbolPackageFormat snupkg'
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
