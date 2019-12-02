@@ -29,7 +29,7 @@ steps:
 - task: VSBuild@1
   displayName: 'Build solution **\*.sln'
   inputs:
-    solution: **\*.sln
+    solution: '**\*.sln'
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
