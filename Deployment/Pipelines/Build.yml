@@ -39,7 +39,7 @@ steps:
     command: custom
     versioningScheme: byBuildNumber
     includeSymbols: true
-    arguments: 'pack $(Build.SourcesDirectory)\Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj -OutputDirectory $(build.artifactstagingdirectory) -Properties Configuration=$(BuildConfiguration) -version $(Build.BuildNumber) -Verbosity Detailed -Symbols -SymbolPackageFormat snupkg'
+    arguments: 'pack $(Build.SourcesDirectory)\Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj -OutputDirectory $(build.artifactstagingdirectory) -Properties Configuration=$(BuildConfiguration) -version "$(Build.BuildNumber)$(VersionAddition)" -Verbosity Detailed -Symbols -SymbolPackageFormat snupkg'
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
