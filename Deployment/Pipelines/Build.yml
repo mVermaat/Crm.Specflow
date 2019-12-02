@@ -14,9 +14,10 @@ steps:
   inputs:
     versionSpec: 5.0.0
 - task: NuGetCommand@2
+  displayName: NuGet Restore
   inputs:
     command: 'restore'
-    restoreSolution: '$(Parameters.solution)'
+    restoreSolution: '**\*.sln'
     feedsToUse: 'select'
 
 - task: PowerShell@2
