@@ -13,11 +13,11 @@ steps:
   displayName: 'Use NuGet 5.0.0'
   inputs:
     versionSpec: 5.0.0
-
 - task: NuGetCommand@2
-  displayName: 'NuGet restore'
   inputs:
+    command: 'restore'
     restoreSolution: '$(Parameters.solution)'
+    feedsToUse: 'select'
     
 - task: Assembly-Info-NetFramework@2
   displayName: 'Set Assembly Manifest Data'
