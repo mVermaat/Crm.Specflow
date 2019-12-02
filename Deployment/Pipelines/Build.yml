@@ -18,8 +18,8 @@ steps:
   displayName: 'NuGet restore'
   inputs:
     restoreSolution: '$(Parameters.solution)'
-
-- task: bleddynrichards.Assembly-Info-Task.Assembly-Info-Task.Assembly-Info-NetFramework@2
+    
+- task: Assembly-Info-NetFramework@2
   displayName: 'Set Assembly Manifest Data'
   inputs:
     VersionNumber: '$(Build.BuildNumber)'
