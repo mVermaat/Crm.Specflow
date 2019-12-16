@@ -35,7 +35,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _apps = apps;
         }
 
-        public void Login(Uri uri, UserDetails connectionString)
+        public void Login(Uri uri, UserDetails userDetails)
         {
             Logger.WriteLine("Logging in CRM");
             if(bool.Parse(HelperMethods.GetAppSettingsValue("UCIOnly")))
@@ -44,7 +44,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 AppElements.Xpath[AppReference.Navigation.AppMenuButton] = "//button[@data-id='navbar-switch-app']";
             }
 
-            App.App.OnlineLogin.Login(uri, connectionString.Username.ToSecureString(), connectionString.Password.ToSecureString());
+            App.App.OnlineLogin.Login(uri, userDetails.Username.ToSecureString(), userDetails.Password.ToSecureString());
         }
 
         public void ChangeApp(string appUniqueName)

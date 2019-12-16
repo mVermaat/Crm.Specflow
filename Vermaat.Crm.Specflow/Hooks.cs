@@ -19,7 +19,7 @@ namespace Vermaat.Crm.Specflow
         private readonly ScenarioContext _scenarioContext;
 
         public Hooks(SeleniumTestingContext seleniumTestingContext, CrmTestingContext crmContext,
-                     FeatureContext featureContext,  ScenarioContext scenarioContext)
+                     FeatureContext featureContext, ScenarioContext scenarioContext)
         {
             _seleniumContext = seleniumTestingContext;
             _crmContext = crmContext;
@@ -67,20 +67,27 @@ namespace Vermaat.Crm.Specflow
             {
                 _seleniumContext.BrowserOptions.BrowserType = BrowserType.IE;
             }
-        }     
+        }
 
         [BeforeScenario]
         public void SetDefaultConnection()
         {
-            var details = new UserDetails
+            var authType = HelperMethods.GetAppSettingsValue("AuthType", true);
+            dynamic connectionStringHelper;
+            switch (authType)
             {
-                Username = HelperMethods.GetAppSettingsValue("Username", true),
-                Password = HelperMethods.GetAppSettingsValue("Password", true),
-            };
-            if(!string.IsNullOrEmpty(details.Username) && !string.IsNullOrEmpty(details.Password))
+                default:
+                    connectionStringHelper = new DefaultConnectionStringHelper();
+                    break;
+                case "ClientSecret":
+                    connectionStringHelper = new AppConnectionStringHelper();
+                    break;
+            }
+           
+            if (connectionStringHelper.IsValid())
             {
-                GlobalTestingContext.ConnectionManager.SetAdminConnection(details);
-                GlobalTestingContext.ConnectionManager.SetCurrentConnection(details);
+                GlobalTestingContext.ConnectionManager.SetAdminConnection(connectionStringHelper);
+                GlobalTestingContext.ConnectionManager.SetCurrentConnection(connectionStringHelper);
             }
         }
 
@@ -121,7 +128,7 @@ namespace Vermaat.Crm.Specflow
                                                     .Replace(":", "");
 
                 var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
-                if(!directory.Name.Equals("TestResults", StringComparison.InvariantCultureIgnoreCase))
+                if (!directory.Name.Equals("TestResults", StringComparison.InvariantCultureIgnoreCase))
                 {
                     directory = directory.CreateSubdirectory("TestResults");
                 }
