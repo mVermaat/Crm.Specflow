@@ -58,7 +58,7 @@ namespace Vermaat.Crm.Specflow
                     Service = new CrmService(connectionStringHelper.GetConnectionString()),
                     UserDetails = new UserDetails { Username = GetDetails().Username, Password = GetDetails().Password }
                 };
-                connectionCache.UserDetails.UserSettings = UserSettings.GetUserSettings(connectionCache.Service);
+                connectionCache.UserDetails.UserSettings = UserSettings.GetUserSettings(connectionCache.Service, GetDetails().Username);
                 _connectionCache.Add(GetDetails().Username, connectionCache);
             }
 
