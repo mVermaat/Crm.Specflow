@@ -1,10 +1,5 @@
-﻿using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow
@@ -17,8 +12,6 @@ namespace Vermaat.Crm.Specflow
             public UserDetails UserDetails { get; set; }
         }
 
-
-        private readonly string _authType;
         private readonly Dictionary<string, ConnectionCache> _connectionCache;
 
         public CrmService CurrentConnection { get; private set; }
@@ -26,55 +19,50 @@ namespace Vermaat.Crm.Specflow
         public UserDetails CurrentUserDetails { get; private set; }
         public Uri Url { get; }
 
-        public ConnectionManager()
+        public void SetAdminConnection(IConnectionStringHelper connectionStringHelper)
         {
-            Url = new Uri(HelperMethods.GetAppSettingsValue("Url"));
-            _authType = HelperMethods.GetAppSettingsValue("AuthType");
-            _connectionCache = new Dictionary<string, ConnectionCache>();
-        }
-
-        public void SetAdminConnection(UserDetails userDetails)
-        {
-            ConnectionCache connectionCache = GetConnectionCache(userDetails, "admin");
+            ConnectionCache connectionCache = GetConnectionCache(connectionStringHelper, "admin");
             AdminConnection = connectionCache.Service;
         }
 
-        public void SetCurrentConnection(UserDetails userDetails)
+        public void SetCurrentConnection(IConnectionStringHelper connectionStringHelper)
         {
-            ConnectionCache connectionCache = GetConnectionCache(userDetails, "current");
+            ConnectionCache connectionCache = GetConnectionCache(connectionStringHelper, "current");
             CurrentConnection = connectionCache.Service;
             CurrentUserDetails = connectionCache.UserDetails;
         }
 
-        private ConnectionCache GetConnectionCache(UserDetails userDetails, string connectionType)
+        public ConnectionManager()
         {
-            Logger.WriteLine($"Changing {connectionType} connection to {userDetails.Username}");
-            if (!_connectionCache.TryGetValue(userDetails.Username, out ConnectionCache connectionCache))
+            Url = new Uri(HelperMethods.GetAppSettingsValue("Url"));
+            _connectionCache = new Dictionary<string, ConnectionCache>();
+        }
+        
+        public UserDetails GetDetails()
+        {
+            return new UserDetails
+            {
+                Username = HelperMethods.GetAppSettingsValue("Username", true),
+                Password = HelperMethods.GetAppSettingsValue("Password", true)
+            };
+        }
+
+        private ConnectionCache GetConnectionCache(IConnectionStringHelper connectionStringHelper, string connectionType)
+        {
+            Logger.WriteLine($"Changing {connectionType} connection to {GetDetails().Username}");
+            if (!_connectionCache.TryGetValue(GetDetails().Username, out ConnectionCache connectionCache))
             {
                 Logger.WriteLine("Connection doesn't exist. Creating new API connection");
-                connectionCache = new ConnectionCache()
+                connectionCache = new ConnectionCache
                 {
-                    Service = new CrmService(ToCrmClientString(userDetails)),
-                    UserDetails = new UserDetails { Username = userDetails.Username, Password = userDetails.Password }
+                    Service = new CrmService(connectionStringHelper.GetConnectionString()),
+                    UserDetails = new UserDetails { Username = GetDetails().Username, Password = GetDetails().Password }
                 };
-                connectionCache.UserDetails.UserSettings = UserSettings.GetUserSettings(connectionCache.Service);
-                _connectionCache.Add(userDetails.Username, connectionCache);
-
+                connectionCache.UserDetails.UserSettings = UserSettings.GetUserSettings(connectionCache.Service, GetDetails().Username);
+                _connectionCache.Add(GetDetails().Username, connectionCache);
             }
 
             return connectionCache;
-        }
-
-        private string ToCrmClientString(UserDetails userDetails)
-        {
-            var builder = new StringBuilder($"AuthType={_authType};Url={Url};RequireNewInstance=True");
-
-            if (!string.IsNullOrWhiteSpace(userDetails.Username))
-                builder.Append($";Username={userDetails.Username}");
-            if (!string.IsNullOrWhiteSpace(userDetails.Password))
-                builder.Append($";Password={userDetails.Password}");
-
-            return builder.ToString();
         }
 
         #region IDisposable Support

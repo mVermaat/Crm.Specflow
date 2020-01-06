@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using OpenQA.Selenium;
 
 namespace Vermaat.Crm.Specflow.Entities
 {
@@ -26,16 +27,40 @@ namespace Vermaat.Crm.Specflow.Entities
             TimeZoneInfo = timeZoneInfo;
         }
 
-        public static UserSettings GetUserSettings(CrmService service)
+        /// <summary>
+        /// Gets setting of the specified user.
+        /// </summary>
+        /// <param name="service">The service client.</param>
+        /// <param name="userName">The user name.</param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException">Thrown when user can't be found.</exception>
+        public static UserSettings GetUserSettings(CrmService service, string userName)
         {
-            var query = new QueryExpression("usersettings");
-            query.TopCount = 1;
-            query.ColumnSet.AllColumns = true;
-            query.Criteria.AddCondition("systemuserid", ConditionOperator.EqualUserId);
+            var userQuery = new QueryExpression("systemuser")
+            {
+                ColumnSet = { AllColumns = true }, TopCount = 1
+            };
+            userQuery.Criteria.AddCondition("domainname", ConditionOperator.Equal, userName);
+            var userEntity = service.RetrieveMultiple(userQuery);
+
+            if (!userEntity.Entities.Any())
+            {
+                throw new NotFoundException($"The user with domainname '{userName}' is not found!");
+            }
+
+            var userGuid = userEntity.Entities[0]["systemuserid"];
+            var query = new QueryExpression("usersettings")
+            {
+                TopCount = 1,
+                ColumnSet = { AllColumns = true }
+            };
+            query.Criteria.AddCondition("systemuserid", ConditionOperator.Equal, userGuid);
             var settingsEntity = service.RetrieveMultiple(query).Entities[0];
 
-            query = new QueryExpression("timezonedefinition");
-            query.TopCount = 1;
+            query = new QueryExpression("timezonedefinition")
+            {
+                TopCount = 1
+            };
             query.ColumnSet.AddColumn("standardname");
             query.Criteria.AddCondition("timezonecode", ConditionOperator.Equal, settingsEntity["timezonecode"]);
             var timeZoneEntity = service.RetrieveMultiple(query).Entities[0];
