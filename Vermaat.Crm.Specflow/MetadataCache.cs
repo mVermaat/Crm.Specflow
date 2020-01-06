@@ -13,11 +13,11 @@ namespace Vermaat.Crm.Specflow
 {
     public class MetadataCache
     {
-        private ConnectionManager _connectionManager;
-
-        private Dictionary<string, Dictionary<EntityFilters, EntityMetadata>> _entityMetadataCache;
-        private Dictionary<string, DataCollection<Entity>> _attributeMapCache;
-        private Dictionary<string, Guid> _formCache;
+        private readonly ConnectionManager _connectionManager;
+                 
+        private readonly Dictionary<string, Dictionary<EntityFilters, EntityMetadata>> _entityMetadataCache;
+        private readonly Dictionary<string, DataCollection<Entity>> _attributeMapCache;
+        private readonly Dictionary<string, Guid> _formCache;
 
         public MetadataCache(ConnectionManager connectionManager)
         {
@@ -100,8 +100,10 @@ namespace Vermaat.Crm.Specflow
         {
             if(!_formCache.TryGetValue($"{entityName}_{formName}", out Guid formId))
             {
-                var query = new QueryExpression("systemform");
-                query.TopCount = 1;
+                var query = new QueryExpression("systemform")
+                {
+                    TopCount = 1
+                };
                 query.ColumnSet.AddColumn("formid");
                 query.Criteria.AddCondition("objecttypecode", ConditionOperator.Equal, entityName);
                 query.Criteria.AddCondition("name", ConditionOperator.Equal, formName);
