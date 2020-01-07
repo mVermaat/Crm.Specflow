@@ -1,18 +1,19 @@
 $sourceNugetExe = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 $targetNugetExe = ".\nuget.exe"
-$toolsFolder = ".\Tools"
+$toolsFolder = "..\Tools"
 
 function Install-NuGetPackage {
 
     param(
        [string]$packageName,
-       $folderName
+       [string]$rootFolder,
+       [string]$folderName
     )
 
     ./nuget install $packageName -O $toolsFolder -Source "https://api.nuget.org/v3/index.json"
     md $toolsFolder\$folderName
     $prtFolder = Get-ChildItem $toolsFolder | Where-Object {$_.Name -match "$packageName."}
-    move $toolsFolder\$prtFolder\tools\*.* $toolsFolder\$folderName
+    move $toolsFolder\$prtFolder\$rootFolder\*.* $toolsFolder\$folderName
     Remove-Item $toolsFolder\$prtFolder -Force -Recurse
 }
 
@@ -27,7 +28,9 @@ Set-Alias nuget $targetNugetExe -Scope Global -Verbose
 ##
 #Install-NuGetPackage -packageName "Microsoft.CrmSdk.XrmTooling.PluginRegistrationTool" -folderName "PluginRegistration"
 #Install-NuGetPackage -packageName "Microsoft.CrmSdk.XrmTooling.PackageDeployment.WPF" -folderName "PackageDeployment"
-Install-NuGetPackage -packageName "Microsoft.CrmSdk.XrmTooling.ConfigurationMigration.Wpf" -folderName "ConfigurationMigration"
+#Install-NuGetPackage -packageName "Microsoft.CrmSdk.XrmTooling.ConfigurationMigration.Wpf" -folderName "ConfigurationMigration"
+Install-NuGetPackage -packageName "Microsoft.CrmSdk.CoreTools" -rootFolder "content\bin\coretools" -folderName "CoreTools"
+
 
 ##
 ##Remove NuGet.exe

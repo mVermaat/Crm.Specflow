@@ -66,11 +66,11 @@ namespace Vermaat.Crm.Specflow
         }
 
         #region IDisposable Support
-        private bool disposedValue = false;
+        private bool _disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 Logger.WriteLine("Cleaning up CRM API sessions");
                 if (disposing)
@@ -78,7 +78,7 @@ namespace Vermaat.Crm.Specflow
                     _connectionCache.Clear();
                 }
 
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

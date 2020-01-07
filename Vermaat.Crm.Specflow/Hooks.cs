@@ -73,7 +73,7 @@ namespace Vermaat.Crm.Specflow
         public void SetDefaultConnection()
         {
             var authType = HelperMethods.GetAppSettingsValue("AuthType", true);
-            dynamic connectionStringHelper;
+            IConnectionStringHelper connectionStringHelper;
             switch (authType)
             {
                 default:
@@ -83,11 +83,16 @@ namespace Vermaat.Crm.Specflow
                     connectionStringHelper = new AppConnectionStringHelper();
                     break;
             }
-           
-            if (connectionStringHelper.IsValid())
+
+            var result = connectionStringHelper.Validate();
+            if (result.IsValid)
             {
                 GlobalTestingContext.ConnectionManager.SetAdminConnection(connectionStringHelper);
                 GlobalTestingContext.ConnectionManager.SetCurrentConnection(connectionStringHelper);
+            }
+            else
+            {
+                throw new TestExecutionException(Constants.ErrorCodes.INVALID_CONNECTIONSTRING, string.Join(", ", result.Errors));
             }
         }
 

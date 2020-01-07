@@ -65,6 +65,7 @@ namespace Vermaat.Crm.Specflow
             public const int BUSINESS_PROCESS_ERROR_WHEN_LOADING = 33;
             public const int ASYNC_TIMEOUT = 34;
             public const int MULTIPLE_ATTRIBUTES_FOUND = 35;
+            public const int INVALID_CONNECTIONSTRING = 36;
         }
     }
 }
