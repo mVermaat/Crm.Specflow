@@ -30,6 +30,7 @@ Set-Alias nuget $targetNugetExe -Scope Global -Verbose
 #Install-NuGetPackage -packageName "Microsoft.CrmSdk.XrmTooling.PackageDeployment.WPF" -folderName "PackageDeployment"
 #Install-NuGetPackage -packageName "Microsoft.CrmSdk.XrmTooling.ConfigurationMigration.Wpf" -folderName "ConfigurationMigration"
 Install-NuGetPackage -packageName "Microsoft.CrmSdk.CoreTools" -rootFolder "content\bin\coretools" -folderName "CoreTools"
+Install-NuGetPackage -packageName "XrmCIFramework" -rootFolder "Tools" -folderName "XrmCIFramework"
 
 
 ##
