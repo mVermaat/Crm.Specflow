@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppModule>
+  <UniqueName>mv_SpecFlowDemo</UniqueName>
+  <IntroducedVersion>3.0.0.0</IntroducedVersion>
+  <WebResourceId>953b9fac-1e5e-e611-80d6-00155ded156f</WebResourceId>
+  <FormFactor>1</FormFactor>
+  <ClientType>4</ClientType>
+  <NavigationType>0</NavigationType>
+  <AppModuleComponents>
+    <AppModuleComponent type="62" schemaName="mv_SpecFlowDemo" />
+    <AppModuleComponent type="60" id="{d1f511a8-1ead-e211-bb72-00155da9a201}" />
+    <AppModuleComponent type="1" schemaName="account" />
+    <AppModuleComponent type="60" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000000666000}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001200}" />
+    <AppModuleComponent type="26" id="{a9af0ab8-861d-4cfa-92a5-c6281fed7fab}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001002}" />
+    <AppModuleComponent type="26" id="{65ffaf9a-e8c5-432d-860b-32f841b00d87}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001031}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001001}" />
+    <AppModuleComponent type="59" id="{74a622c0-5193-de11-97d4-00155da3b01e}" />
+    <AppModuleComponent type="1" schemaName="actioncard" />
+    <AppModuleComponent type="26" id="{92afd454-0f2e-4397-a1c8-05e37c6ad699}" />
+    <AppModuleComponent type="1" schemaName="activitypointer" />
+    <AppModuleComponent type="26" id="{2fcd7d4b-531d-4232-82c4-a491da528744}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000000666100}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001902}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001899}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001900}" />
+    <AppModuleComponent type="1" schemaName="campaign" />
+    <AppModuleComponent type="26" id="{0e76dc73-2052-484e-8c00-a760f8d522ec}" />
+    <AppModuleComponent type="1" schemaName="incident" />
+    <AppModuleComponent type="26" id="{ebd1d24a-eea7-e211-9fb6-00155dd0ea05}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001028}" />
+    <AppModuleComponent type="59" id="{f10375a6-4893-de11-97d4-00155da3b01e}" />
+    <AppModuleComponent type="1" schemaName="competitor" />
+    <AppModuleComponent type="26" id="{57bca9ac-87a0-4c28-adc8-2d0a4645f29e}" />
+    <AppModuleComponent type="1" schemaName="connection" />
+    <AppModuleComponent type="26" id="{4e3600fa-b9c8-49f4-b69a-51eba06d9bdf}" />
+    <AppModuleComponent type="26" id="{fe4bc089-8901-466c-a41b-1c1090f204d4}" />
+    <AppModuleComponent type="1" schemaName="connectionrole" />
+    <AppModuleComponent type="26" id="{04c66e75-f7c7-475c-9151-6284249fbbb7}" />
+    <AppModuleComponent type="1" schemaName="contact" />
+    <AppModuleComponent type="60" id="{29de27bc-a257-4f29-99cf-bab4a84e688f}" />
+    <AppModuleComponent type="60" id="{1fed44d1-ae68-4a41-bd2b-f13acac4acfa}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001004}" />
+    <AppModuleComponent type="26" id="{73bc2d9b-4e0e-424c-8839-ed59d6817e3a}" />
+    <AppModuleComponent type="26" id="{0d5d377b-5e7c-47b5-bab1-a5cb8b4ac105}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001210}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000000666400}" />
+    <AppModuleComponent type="26" id="{a2d479c5-53e3-4c69-addd-802327e67a0d}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001033}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001003}" />
+    <AppModuleComponent type="1" schemaName="email" />
+    <AppModuleComponent type="26" id="{f5645881-ded8-4078-bd03-3cadefa1a555}" />
+    <AppModuleComponent type="1" schemaName="entitlement" />
+    <AppModuleComponent type="26" id="{aa69e7e2-913a-4a5a-8609-8ca443554909}" />
+    <AppModuleComponent type="26" id="{961bf8aa-042f-4f4d-bcca-935bfc9a6994}" />
+    <AppModuleComponent type="59" id="{fdb919bb-c6fc-4fc8-8fa5-67ace68e41d1}" />
+    <AppModuleComponent type="1" schemaName="lead" />
+    <AppModuleComponent type="60" id="{e3b6ddb7-8df0-4410-ac7b-fd32e5053d38}" />
+    <AppModuleComponent type="26" id="{5a926b99-3a5f-df11-ae90-00155d2e3002}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001009}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000000666700}" />
+    <AppModuleComponent type="26" id="{f7ba26ee-3f8e-4cf2-8e02-0b4bbcd16da8}" />
+    <AppModuleComponent type="26" id="{ecbac1a3-f8d8-4423-8f7e-10b11119739a}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001005}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001006}" />
+    <AppModuleComponent type="1" schemaName="opportunity" />
+    <AppModuleComponent type="60" id="{a837e4a7-01b8-4f82-a475-be9abd67e667}" />
+    <AppModuleComponent type="26" id="{c6f6fc1b-1b3e-e711-80e1-00155d871bb4}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010003006}" />
+    <AppModuleComponent type="26" id="{31dae384-a86f-df11-986c-00155d2e3002}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010003000}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010003001}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000000666800}" />
+    <AppModuleComponent type="26" id="{00000000-0000-0000-00aa-000010001203}" />
+    <AppModuleComponent type="26" id="{9eb361b4-67ac-4830-8abf-2d29efbaee2c}" />
+    <AppModuleComponent type="26" id="{9c3f7ee8-eca7-e211-9fb6-00155dd0ea05}" />
+    <AppModuleComponent type="59" id="{8bc5fb18-48f2-4782-9e16-3d452fa4ddce}" />
+    <AppModuleComponent type="59" id="{87293554-2482-de11-9ff3-00155da3b012}" />
+    <AppModuleComponent type="1" schemaName="opportunityproduct" />
+    <AppModuleComponent type="26" id="{e175dfbf-8eae-4af2-9dd2-68c43c14d40f}" />
+    <AppModuleComponent type="26" id="{01010de7-749e-4fe6-8037-aca560a4fcbe}" />
+    <AppModuleComponent type="1" schemaName="quote" />
+    <AppModuleComponent type="26" id="{61a4c932-d775-e211-b420-00155d806600}" />
+    <AppModuleComponent type="1" schemaName="systemuser" />
+    <AppModuleComponent type="26" id="{e88ca999-0b16-4ae9-b6a9-9edc840d42d8}" />
+  </AppModuleComponents>
+  <AppModuleRoleMaps>
+    <Role id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+    <Role id="{627090ff-40a3-4053-8790-584edc5be201}" />
+  </AppModuleRoleMaps>
+  <LocalizedNames>
+    <LocalizedName description="SpecFlow Demo" languagecode="1033" />
+  </LocalizedNames>
+</AppModule>

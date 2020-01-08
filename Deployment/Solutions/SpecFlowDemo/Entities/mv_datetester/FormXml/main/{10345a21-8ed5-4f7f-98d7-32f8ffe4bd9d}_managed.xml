@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{10345a21-8ed5-4f7f-98d7-32f8ffe4bd9d}</formid>
+    <IntroducedVersion>1.0.0.76</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{7c014424-108b-4a8c-bc66-cf1e52e6a164}" IsUserDefined="1" name="{7c014424-108b-4a8c-bc66-cf1e52e6a164}" locklevel="0" expanded="true" showlabel="true">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{c6922df8-33e6-4213-8b3f-6c0ebfcf36fa}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{076bd602-6cf5-4566-9a3d-b12aa0bdd5b7}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="mv_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="mv_name" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{bc7750a8-1327-0a73-b7e2-a9bd9e16ee05}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="mv_dateonly" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="mv_dateonly" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{7485633d-0052-4187-d72e-9a9229c010ee}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="mv_userlocaldateonly" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="mv_userlocaldateonly" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{977425c7-e08d-2dc9-aca5-163e29ed43c0}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="mv_timezoneindependentdateonly" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="mv_timezoneindependentdateonly" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="{7c014424-108b-4a8c-bc66-cf1e52e6a164}_section_2" showlabel="false" showbar="false" locklevel="0" id="{47ed3829-808b-768e-8765-786e336cc652}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115">
+                  <labels>
+                    <label description="Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{7bf3d7f7-abf7-4afc-9e36-2753d399cc34}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c7242c0b-cd0c-66a4-016c-1726d74ca9e7}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="mv_userlocaldatetime" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="mv_userlocaldatetime" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{17da29a1-ba3c-86d4-741e-ec867d4be15a}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="mv_timezoneindependentdatetime" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="mv_timezoneindependentdatetime" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title LCID="1033" Text="Common" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title LCID="1033" Text="Sales" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title LCID="1033" Text="Service" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title LCID="1033" Text="Marketing" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title LCID="1033" Text="Process Sessions" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>
