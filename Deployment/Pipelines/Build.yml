@@ -6,7 +6,7 @@ variables:
 - name: BuildPlatform
   value: 'Any CPU'
 - name: BuildConfiguration
-  value: 'NuGetRelease'
+  value: 'Release'
 
 steps:
 - template: 'Template_Build.yml'
