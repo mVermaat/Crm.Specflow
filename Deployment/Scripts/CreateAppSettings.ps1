@@ -5,4 +5,4 @@ $output = "<appSettings>" +
 "<add key=""Password"" value="""" />" +
 "</appSettings>"
 
-Out-File -FilePath "$(system.defaultworkingdirectory)\Vermaat.Crm.Specflow.Sample\appsettings.config" -InputObject $output
+Out-File -FilePath "$env:system.defaultworkingdirectory\Vermaat.Crm.Specflow.Sample\appsettings.config" -InputObject $output
