@@ -29,6 +29,7 @@ steps:
     SourceFolder: '$(system.defaultworkingdirectory)'
     Contents: '**\Vermaat.Crm.Specflow.Sample\bin\$(BuildConfiguration)\**'
     TargetFolder: '$(build.artifactstagingdirectory)\SpecFlow'
+    flattenFolders: true
 
 - task: CopyFiles@2
   displayName: 'Copy SpecRun'
@@ -42,7 +43,6 @@ steps:
     projectFilePath: Vermaat.Crm.Specflow.Sample/Vermaat.Crm.Specflow.Sample.csproj
     projectName: 'SpecFlow Demo'
     projectLanguage: en
-
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
