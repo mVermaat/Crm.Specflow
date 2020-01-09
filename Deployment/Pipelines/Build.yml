@@ -9,26 +9,6 @@ variables:
   value: 'NuGetRelease'
 
 steps:
-- task: PowerShell@2
-  inputs:
-    filePath: 'Deployment/Scripts/SetNuGetPackageVersion.ps1'
-    arguments: '-branch "$(Build.SourceBranch)" -buildNumber "$(Build.BuildNumber)"'
-
-- template: 'Templates_Build.yml'
+- template: 'Template_Build.yml'
   parameters:
     solutions: '**\\*.sln'
-
-- task: NuGetCommand@2
-  displayName: 'NuGet custom'
-  inputs:
-    command: custom
-    versioningScheme: byBuildNumber
-    includeSymbols: true
-    arguments: 'pack $(Build.SourcesDirectory)\Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj -OutputDirectory $(build.artifactstagingdirectory) -Properties Configuration=$(BuildConfiguration) -version "$(NuGetVersion)" -Verbosity Detailed -Symbols -SymbolPackageFormat snupkg'
-
-- task: NuGetCommand@2
-  displayName: 'NuGet push'
-  inputs:
-    command: push
-    nuGetFeedType: external
-    publishFeedCredentials: NuGet.org
