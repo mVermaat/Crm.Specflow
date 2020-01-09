@@ -34,7 +34,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Solution File'
   inputs:
-    SourceFolder: '$(system.defaultworkingdirectory)\Deployment\Solutions\SpecFlowDemo'
+    SourceFolder: '$(system.defaultworkingdirectory)\Deployment\Solutions'
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)\Solution'
 
