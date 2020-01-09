@@ -1,4 +1,4 @@
-$result = Get-ChildItem -Path "$env:system.defaultworkingdirectory\packages" -Directory -Filter "SpecRun.Runner.*"
+$result = Get-ChildItem -Path "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\packages" -Directory -Filter "SpecRun.Runner.*"
 
 if($result.Length -gt 0) {
     Write-Host "Setting variable to $($result[0].FullName)"
