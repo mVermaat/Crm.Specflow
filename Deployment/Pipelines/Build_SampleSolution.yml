@@ -32,6 +32,13 @@ steps:
     flattenFolders: true
 
 - task: CopyFiles@2
+  displayName: 'Copy Solution File'
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)\Deployment\Solutions\SpecFlowDemo'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)\Solution'
+
+- task: CopyFiles@2
   displayName: 'Copy SpecRun'
   inputs:
     SourceFolder: '$(SpecRunFolder)\tools'
