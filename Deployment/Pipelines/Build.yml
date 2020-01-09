@@ -9,35 +9,14 @@ variables:
   value: 'NuGetRelease'
 
 steps:
-- task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 5.0.0'
-  inputs:
-    versionSpec: 5.0.0
-- task: NuGetCommand@2
-  displayName: NuGet Restore
-  inputs:
-    command: 'restore'
-    restoreSolution: '**\*.sln'
-    feedsToUse: 'select'
-
 - task: PowerShell@2
   inputs:
     filePath: 'Deployment/Scripts/SetNuGetPackageVersion.ps1'
     arguments: '-branch "$(Build.SourceBranch)" -buildNumber "$(Build.BuildNumber)"'
-    
-- task: Assembly-Info-NetFramework@2
-  displayName: 'Set Assembly Manifest Data'
-  inputs:
-    VersionNumber: '$(Build.BuildNumber)'
-    FileVersionNumber: '$(Build.BuildNumber)'
-    InformationalVersion: '$(Build.BuildNumber)'
 
-- task: VSBuild@1
-  displayName: 'Build solution **\*.sln'
-  inputs:
-    solution: '**\*.sln'
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
+- template: 'Templates_Build.yml'
+  parameters:
+    solutions: '**\\*.sln'
 
 - task: NuGetCommand@2
   displayName: 'NuGet custom'
@@ -53,17 +32,3 @@ steps:
     command: push
     nuGetFeedType: external
     publishFeedCredentials: NuGet.org
-
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  inputs:
-    SourceFolder: '$(system.defaultworkingdirectory)'
-    Contents: '**\bin\$(BuildConfiguration)\**'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-  condition: succeededOrFailed()
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-  condition: succeededOrFailed()

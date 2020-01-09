@@ -1,0 +1,42 @@
+parameters:
+  solutions: ''
+
+steps:
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 5.0.0'
+  inputs:
+    versionSpec: 5.0.0
+
+- task: NuGetCommand@2
+  displayName: NuGet Restore
+  inputs:
+    command: 'restore'
+    restoreSolution: '${{ parameters.solutions }}'
+    feedsToUse: 'select'
+    
+- task: Assembly-Info-NetFramework@2
+  displayName: 'Set Assembly Manifest Data'
+  inputs:
+    VersionNumber: '$(Build.BuildNumber)'
+    FileVersionNumber: '$(Build.BuildNumber)'
+    InformationalVersion: '$(Build.BuildNumber)'
+
+- task: VSBuild@1
+  displayName: 'Build solution ${{ parameters.solutions }}'
+  inputs:
+    solution: '${{ parameters.solutions }}'
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)'
+    Contents: '**\bin\$(BuildConfiguration)\**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: CI
