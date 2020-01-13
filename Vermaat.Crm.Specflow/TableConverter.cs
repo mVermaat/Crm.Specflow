@@ -36,25 +36,10 @@ namespace Vermaat.Crm.Specflow
                 if(row.ContainsKey(Constants.SpecFlow.TABLE_KEY))
                     row[Constants.SpecFlow.TABLE_KEY] = attribute.LogicalName;
 
-                if(row.ContainsKey(Constants.SpecFlow.TABLE_VALUE))
-                    row[Constants.SpecFlow.TABLE_VALUE] = CheckFormula(attribute, row[Constants.SpecFlow.TABLE_VALUE]);
-
                 OnRowProcessed?.Invoke(this, new TableRowEventArgs(entityName, row));
             }
 
             OnTableProcessed?.Invoke(this, new TableEventArgs(entityName, table));
-        }
-
-        private string CheckFormula(AttributeMetadata attribute, string value)
-        {
-            if (string.IsNullOrEmpty(value) || !value.StartsWith("=") || value.Length < 2)
-            {
-                return value;
-            }
-            else
-            {
-                return GlobalTestingContext.FormulaParser.ParseFormula(attribute, value.Substring(1));
-            }
         }
 
         public class TableRowEventArgs : EventArgs
