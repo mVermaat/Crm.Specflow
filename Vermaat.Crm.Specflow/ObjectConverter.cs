@@ -22,7 +22,7 @@ namespace Vermaat.Crm.Specflow
         static ObjectConverter()
         {
             _dateonlyFormat = HelperMethods.GetAppSettingsValue("DateFormat", false);
-            _datetimeFormat = HelperMethods.GetAppSettingsValue("DateTimeFormat", false);
+            _datetimeFormat = $"{_dateonlyFormat} {HelperMethods.GetAppSettingsValue("TimeFormat", false)}";
         }
 
         public static object ToCrmObject(string entityName, string attributeName, string value, CrmTestingContext context, ConvertedObjectType objectType = ConvertedObjectType.Default)
@@ -93,11 +93,9 @@ namespace Vermaat.Crm.Specflow
 
             if (((DateTimeAttributeMetadata)metadata).DateTimeBehavior == DateTimeBehavior.UserLocal)
             {
-                var dateTime = DateTime.ParseExact(value, format, CultureInfo.InvariantCulture,
-                DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
-
-                var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(dateTime);
-                return dateTime.Subtract(offset);
+                return TimeZoneInfo.ConvertTimeToUtc(
+                    DateTime.ParseExact(value, format, CultureInfo.InvariantCulture), 
+                    GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo);
             }
             else
             {

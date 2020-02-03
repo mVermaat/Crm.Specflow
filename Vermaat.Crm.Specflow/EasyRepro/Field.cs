@@ -90,6 +90,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 case AttributeTypeCode.Picklist:
                     App.App.Entity.ClearValue(new OptionSet { Name = LogicalName });
                     break;
+                case AttributeTypeCode.DateTime:
+                    App.Client.SetValueFix(LogicalName, null, null, null);
+                    break;
                 default:
                     SetTextField(null);
                     break;
@@ -103,19 +106,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         protected virtual void SetDateTimeField(DateTime fieldValue, string fieldValueText)
         {
-            string format = ((DateTimeAttributeMetadata)Metadata).Format == DateTimeFormat.DateAndTime
-                ? GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.DateTimeFormat
-                : GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.DateFormat;
+            DateTime dateTime = fieldValue;
 
             if (((DateTimeAttributeMetadata)Metadata).DateTimeBehavior == DateTimeBehavior.UserLocal)
             {
                 var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(fieldValue);
-                App.Client.SetValueFix(LogicalName, fieldValue.Add(offset), format);
+                dateTime = dateTime.Add(offset);
             }
-            else
-            {
-                App.Client.SetValueFix(LogicalName, fieldValue, format);
-            }
+
+            App.Client.SetValueFix(LogicalName, dateTime, GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.DateFormat, GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeFormat);
         }
 
         protected virtual void SetOptionSetField(OptionSetValue optionSetNumber, string optionSetLabel)

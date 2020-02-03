@@ -68,57 +68,102 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         /// Sets the value of a Date Field.
         /// </summary>
         /// <param name="field">Date field name.</param>
-        /// <param name="date">DateTime value.</param>
-        /// <param name="format">Datetime format matching Short Date & Time formatting personal options.</param>
+        /// <param name="value">DateTime value.</param>
+        /// <param name="formatDate">Datetime format matching Short Date formatting personal options.</param>
+        /// <param name="formatTime">Datetime format matching Short Time formatting personal options.</param>
         /// <example>xrmApp.Entity.SetValue("birthdate", DateTime.Parse("11/1/1980"));</example>
-        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, DateTime date, string format = "M/d/yyyy h:mm tt")
+        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, DateTime? value, string formatDate = null, string formatTime = null)
         {
-            return client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
+            return client.Execute(BrowserOptionHelper.GetOptions($"Set Date/Time Value: {field}"), driver =>
             {
                 driver.WaitForTransaction();
+                var xPath = By.XPath(AppElements.Xpath[AppReference.Entity.FieldControlDateTimeInputUCI].Replace("[FIELD]", field));
 
-                var dateContainer = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_DateContainer, field);
-                var dateField = AppElements.Xpath[AppReference.Entity.FieldControlDateTimeInputUCI].Replace("[FIELD]", field);
-
-                if (driver.HasElement(dateContainer))
+                var dateField = driver.WaitUntilAvailable(xPath, $"Field: {field} Does not exist");
+                try
                 {
-                    var container = driver.WaitUntilAvailable(dateContainer);
-                    var fieldElement = container.FindElement(By.XPath("." + dateField));
-
-                    fieldElement.SendKeys(Keys.Control + "a");
-                    fieldElement.SendKeys(Keys.Backspace);
-
-                    if (driver.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_DateTime_Time_Input, field), out var timeElement))
+                    var date = value.HasValue ? formatDate == null ? value.Value.ToShortDateString() : value.Value.ToString(formatDate) : string.Empty;
+                    driver.RepeatUntil(() =>
                     {
-                        driver.ClearFocus();
-                        driver.WaitForTransaction();
-                        try
-                        {
-                            driver.WaitFor(d => string.IsNullOrWhiteSpace(timeElement.GetAttribute("value")) || timeElement.GetAttribute("value") == "---");
-                        }
-                        catch (WebDriverTimeoutException ex)
-                        {
-                            throw new InvalidOperationException($"Timeout after 30 seconds. Expected cleared DateTime. Actual: {fieldElement.GetAttribute("value")}", ex);
-                        }
-                    }
-
-                    fieldElement.SendKeys(date.ToString(format));
-
-                    try
-                    {
-                        driver.WaitFor(d => fieldElement.GetAttribute("value") == date.ToString(format));
-                    }
-                    catch (WebDriverTimeoutException ex)
-                    {
-                        throw new InvalidOperationException($"Timeout after 30 seconds. Expected: {date.ToString(format)}. Actual: {fieldElement.GetAttribute("value")}", ex);
-                    }
-                    driver.ClearFocus();
+                        ClearFieldValue(dateField, client.Browser);
+                        dateField.SendKeys(date);
+                    },
+                        d => dateField.GetAttribute("value") == date,
+                        new TimeSpan(0, 0, 9), 3
+                    );
+                    driver.WaitForTransaction();
                 }
-                else
-                    throw new InvalidOperationException($"Field: {field} Does not exist");
+                catch (WebDriverTimeoutException ex)
+                {
+                    throw new InvalidOperationException($"Timeout after 10 seconds. Expected: {value}. Actual: {dateField.GetAttribute("value")}", ex);
+                }
+                // Try Set Time
+                var timeFieldXPath = By.XPath($"//div[contains(@data-id,'{field}.fieldControl._timecontrol-datetime-container')]/div/div/input");
+                bool success = driver.TryFindElement(timeFieldXPath, out var timeField);
+                if (!success || timeField == null)
+                    return true;
+                try
+                {
+                    var time = value.HasValue ? formatTime == null ? value.Value.ToShortTimeString() : value.Value.ToString(formatTime) : string.Empty;
+                    driver.RepeatUntil(() =>
+                    {
+                        ClearFieldValue(timeField, client.Browser);
+                        timeField.SendKeys(time + Keys.Tab);
+                    },
+                        d => timeField.GetAttribute("value") == time,
+                        new TimeSpan(0, 0, 9), 3
+                    );
+                    driver.WaitForTransaction();
+
+                }
+                catch (WebDriverTimeoutException ex)
+                {
+                    throw new InvalidOperationException($"Timeout after 10 seconds. Expected: {value}. Actual: {timeField.GetAttribute("value")}", ex);
+                }
 
                 return true;
             });
+        }
+
+        private static void ClearFieldValue(IWebElement field, InteractiveBrowser browser)
+        {
+            if (field.GetAttribute("value").Length > 0)
+            {
+                field.SendKeys(Keys.Control + "a");
+                field.SendKeys(Keys.Backspace);
+            }
+            browser.ThinkTime(2000);
+        }
+
+        public static bool RepeatUntil(this IWebDriver driver, Action action, Predicate<IWebDriver> predicate,
+                                       TimeSpan? timeout = null,
+                                       int attemps = 2,
+                                       Action successCallback = null, Action failureCallback = null)
+        {
+            timeout = timeout ?? new TimeSpan(0,0,30);
+            var waittime = new TimeSpan(timeout.Value.Ticks / attemps);
+
+            WebDriverWait wait = new WebDriverWait(driver, waittime);
+            wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+
+            bool success = predicate(driver);
+            while (!success && attemps > 0)
+            {
+                try
+                {
+                    action();
+                    attemps--;
+                    success = wait.Until(d => predicate(d));
+                }
+                catch (WebDriverTimeoutException) { }
+            }
+
+            if (success)
+                successCallback?.Invoke();
+            else
+                failureCallback?.Invoke();
+
+            return success;
         }
 
         /// <summary>
