@@ -104,16 +104,16 @@ stages:
             displayName: 'Pack SpecFlowDemo'
             inputs:
               crmSdkVersion: '9.0.0'
-              unpackedFilesFolder: '$(System.ArtifactsDirectory)/SampleSolution/Solution/SpecFlowDemo'
-              mappingFile: '$(System.ArtifactsDirectory)/SampleSolution/Solution/EmptyMapping.xml'
+              unpackedFilesFolder: '$(Agent.BuildDirectory)/SampleSolution/Solution/SpecFlowDemo'
+              mappingFile: '$(Agent.BuildDirectory)/SampleSolution/Solution/EmptyMapping.xml'
               packageType: 'Managed'
-              outputPath: '$(System.ArtifactsDirectory)/SampleSolution/Solution'
+              outputPath: '$(Agent.BuildDirectory)/SampleSolution/Solution'
 
           - task: MSCRMImportSolution@11
             displayName: 'Import SpecFlowDemo'
             inputs:
               crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);Username=$(Username);Password=$(Password)'
-              solutionFile: '$(System.ArtifactsDirectory)/SampleSolution/Solution/SpecFlowDemo_managed.zip'
+              solutionFile: '$(Agent.BuildDirectory)/SampleSolution/Solution/SpecFlowDemo_managed.zip'
               publishWorkflows: true
               overwriteUnmanagedCustomizations: true
               holdingSolution: true
@@ -128,8 +128,8 @@ stages:
           - task: PowerShell@2
             displayName: 'Update AppSettings.config'
             inputs:
-              filePath: '$(System.ArtifactsDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
-              arguments: '-url $(Url) -username $(Username) -password $(Password) -appsettingsPath "$(System.ArtifactsDirectory)/SampleSolution/SpecFlow/appsettings.config"'
+              filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
+              arguments: '-url $(Url) -username $(Username) -password $(Password) -appsettingsPath "$(Agent.BuildDirectory)/SampleSolution/SpecFlow/appsettings.config"'
           
           - task: VSTest@2
             displayName: 'Run SpecFlow Tests'
