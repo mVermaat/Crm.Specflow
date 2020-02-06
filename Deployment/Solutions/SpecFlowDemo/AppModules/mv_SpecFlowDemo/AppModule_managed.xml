@@ -3,6 +3,7 @@
   <UniqueName>mv_SpecFlowDemo</UniqueName>
   <IntroducedVersion>3.0.0.0</IntroducedVersion>
   <WebResourceId>953b9fac-1e5e-e611-80d6-00155ded156f</WebResourceId>
+  <OptimizedFor></OptimizedFor>
   <FormFactor>1</FormFactor>
   <ClientType>4</ClientType>
   <NavigationType>0</NavigationType>
