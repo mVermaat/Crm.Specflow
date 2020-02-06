@@ -5,7 +5,7 @@ namespace Vermaat.Crm.Specflow.Commands
     public abstract class BrowserOnlyCommandFunc<TResult> : ICommandFunc<TResult>
     {
         protected readonly CrmTestingContext _crmContext;
-        private readonly SeleniumTestingContext _seleniumContext;
+        protected readonly SeleniumTestingContext _seleniumContext;
 
         public BrowserOnlyCommandFunc(CrmTestingContext crmContext, SeleniumTestingContext seleniumContext)
         {

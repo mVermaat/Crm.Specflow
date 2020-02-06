@@ -52,6 +52,8 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.ELEMENT_NOT_INTERACTABLE, "Element not interactable. {0}");
             AddError(Constants.ErrorCodes.BUSINESS_PROCESS_ERROR_WHEN_LOADING, "Business Process Error: {0}");
             AddError(Constants.ErrorCodes.ASYNC_TIMEOUT, "Not all Asynchronous jobs are completed on time");
+            AddError(Constants.ErrorCodes.MULTIPLE_ATTRIBUTES_FOUND, "Multiple attributes found for {0}. Results: {1}");
+            AddError(Constants.ErrorCodes.INVALID_CONNECTIONSTRING, "Error in connection string: {0}");
         }
 
         public void AddError(int errorCode, string message)

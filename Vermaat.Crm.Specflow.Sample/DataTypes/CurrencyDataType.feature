@@ -10,7 +10,7 @@ When a related opportunity from TestAccount named TestOpp is created with the fo
 	| Topic         | Test Opp Money |
 	| Budget Amount | 12345          |
 Then TestOpp has the following values
-	| Property      | Value          |
-	| Topic         | Test Opp Money |
-	| Budget Amount | 12345          |
-	| Account       | TestAccount    |
+	| Property        | Value          |
+	| Topic           | Test Opp Money |
+	| Budget Amount   | 12345          |
+	| parentaccountid | TestAccount    |

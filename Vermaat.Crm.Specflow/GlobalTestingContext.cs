@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro;
-using Vermaat.Crm.Specflow.Formulas;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -14,7 +13,6 @@ namespace Vermaat.Crm.Specflow
         public static MetadataCache Metadata { get; }
         public static ButtonTexts ButtonTexts { get; }
         public static ErrorCodes ErrorCodes { get; }
-        public static FormulaParser FormulaParser { get; }
 
         internal static BrowserManager BrowserManager { get; }
 
@@ -25,7 +23,6 @@ namespace Vermaat.Crm.Specflow
             ButtonTexts = new ButtonTexts();
             BrowserManager = new BrowserManager(ButtonTexts);
             ErrorCodes = new ErrorCodes();
-            FormulaParser = new FormulaParser();
         }
 
     }

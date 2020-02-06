@@ -1,0 +1,7 @@
+{
+	"AppsettingsPath": "..\\..\\Vermaat.Crm.Specflow.Sample\\appsettings.config",
+	"ExportSolutionOutputPath": "..\\Solutions",
+	"Solutions": [
+		"SpecFlowDemo"
+	]
+}

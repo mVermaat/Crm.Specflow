@@ -6,19 +6,31 @@ namespace Vermaat.Crm.Specflow
     {
         public string GetConnectionString()
         {
-            var authType = HelperMethods.GetAppSettingsValue("AuthType", true);
+            var authType = HelperMethods.GetAppSettingsValue("AuthType", false);
             var userName = HelperMethods.GetAppSettingsValue("Username", true);
             var password = HelperMethods.GetAppSettingsValue("Password", true);
-            var url = HelperMethods.GetAppSettingsValue("Url", true);
+            var url = HelperMethods.GetAppSettingsValue("Url", false);
 
             return ToCrmClientString(authType, url, userName, password);
         }
 
-        public bool IsValid()
+        public ValidationResult Validate()
         {
+            var result = new ValidationResult();
+
+            var authType = HelperMethods.GetAppSettingsValue("AuthType", false);
             var userName = HelperMethods.GetAppSettingsValue("Username", true);
             var password = HelperMethods.GetAppSettingsValue("Password", true);
-            return !string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(password);
+
+            if(authType.Equals("Office365", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (string.IsNullOrEmpty(userName))
+                    result.AddError("Username is required");
+                if (string.IsNullOrEmpty(password))
+                    result.AddError("Password is required");
+            }
+
+            return result;
         }
 
         private string ToCrmClientString(string authType, string url, string userName, string password)

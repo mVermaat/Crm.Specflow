@@ -4,6 +4,6 @@
     {
         string GetConnectionString();
 
-        bool IsValid();
+        ValidationResult Validate();
     }
 }

@@ -46,7 +46,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void ExpandTab(string tabLabel)
         {
             Logger.WriteLine($"Expanding tab {tabLabel}");
-            _app.Client.SelectTabFix(tabLabel);
+            _app.App.Entity.SelectTab(tabLabel);
         }
 
         public string GetErrorDialogMessage()
@@ -137,18 +137,19 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void ConfirmDuplicate(bool saveIfDuplicate)
         {
-            _app.WebDriver.WaitUntilAvailable(By.XPath("//div[contains(@id,'dialogFooterContainer_')]"), new TimeSpan(0, 0, 5),
-                d =>
+            var element = _app.WebDriver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionIgnoreAndSaveButton]), new TimeSpan(0, 0, 5));
+
+            if(element != null)
+            {
+                if (saveIfDuplicate)
                 {
-                    if (saveIfDuplicate)
-                    {
-                        d.ClickWhenAvailable(By.Id("id-125fc733-aabe-4bd2-807e-fd7b6da72779-4"));
-                    }
-                    else
-                    {
-                        throw new TestExecutionException(Constants.ErrorCodes.DUPLICATE_RECORD_DETECTED);
-                    }
-                });
+                    _app.WebDriver.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionIgnoreAndSaveButton]));
+                }
+                else
+                {
+                    throw new TestExecutionException(Constants.ErrorCodes.DUPLICATE_RECORD_DETECTED);
+                }
+            }
         }
 
         private Dictionary<string, FormField> InitializeFormData()
