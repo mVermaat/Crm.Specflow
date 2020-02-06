@@ -6,11 +6,20 @@ param(
 
 ######################### Script #########################
 
-$branchName = $branch.Replace("refs/heads/","")
+Write-Host "Branch: $branch"
+Write-Host "Build: $buildNumber"
 
-if($branchName -eq "master") {
-	Write-Host "##vso[task.setvariable variable=NuGetVersion;]$buildNumber"  
+
+if($branch -eq "refs/heads/master") {
+    Write-Host "##vso[task.setvariable variable=NuGetVersion;]$buildNumber"
+    Write-Host "##vso[task.setvariable variable=CreateNuGetPackage;]true"    
+}
+elseif($branch.StartsWith("refs/heads/")) {
+    $branchName = $branch.Substring($branch.LastIndexOf('/') + 1)
+
+    Write-Host "##vso[task.setvariable variable=NuGetVersion;]$buildNumber-$branchName"
+    Write-Host "##vso[task.setvariable variable=CreateNuGetPackage;]true"     
 }
 else {
-	Write-Host "##vso[task.setvariable variable=NuGetVersion;]$buildNumber-Prerelease"  
+    Write-Host "##vso[task.setvariable variable=CreateNuGetPackage;]false"   
 }
