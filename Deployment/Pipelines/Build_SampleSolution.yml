@@ -137,5 +137,6 @@ stages:
             inputs:
               testSelector: 'testAssemblies'
               testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
-              testRunTitle: SpecFlow
+              searchFolder: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow'
+              testRunTitle: 'SpecFlow'
               diagnosticsEnabled: true
