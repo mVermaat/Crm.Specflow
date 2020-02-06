@@ -38,12 +38,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void Login(Uri uri, UserDetails userDetails)
         {
             Logger.WriteLine("Logging in CRM");
-            if(bool.Parse(HelperMethods.GetAppSettingsValue("UCIOnly")))
-            {
-                Elements.Xpath[Reference.Login.CrmMainPage] = "//*[@data-id='topBar']";
-                AppElements.Xpath[AppReference.Navigation.AppMenuButton] = "//button[@data-id='navbar-switch-app']";
-            }
-
             App.App.OnlineLogin.Login(uri, userDetails.Username.ToSecureString(), userDetails.Password.ToSecureString());
         }
 

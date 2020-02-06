@@ -166,59 +166,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return success;
         }
 
-        /// <summary>
-        /// Generic method to help click on any item which is clickable or uniquely discoverable with a By object.
-        /// </summary>
-        /// <param name="by">The xpath of the HTML item as a By object</param>
-        /// <returns>True on success, Exception on failure to invoke any action</returns>
-        public static BrowserCommandResult<bool> SelectTabFix(this WebClient client, string tabName, string subTabName = "", int thinkTime = Microsoft.Dynamics365.UIAutomation.Browser.Constants.DefaultThinkTime)
-        {
-            client.Browser.ThinkTime(thinkTime);
-
-            return client.Execute(BrowserOptionHelper.GetOptions($"Select Tab"), driver =>
-            {
-                IWebElement tabList = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TabList]));
-
-                ClickTab(driver, tabList, ".//li[@title='{0}']", tabName);
-
-                //Click Sub Tab if provided
-                if (!string.IsNullOrEmpty(subTabName))
-                {
-                    ClickTab(driver, tabList, AppElements.Xpath[AppReference.Entity.SubTab], subTabName);
-                }
-
-                driver.WaitForTransaction();
-                return true;
-            });
-        }
-
-        private static void ClickTab(IWebDriver driver, IWebElement tabList, string xpath, string name)
-        {
-            // Look for the tab in the tab list, else in the more tabs menu
-            IWebElement searchScope = null;
-            if (tabList.HasElement(By.XPath(string.Format(xpath, name))))
-            {
-                searchScope = tabList;
-
-            }
-            else if (tabList.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_MoreTabs), out IWebElement moreTabsButton))
-            {
-                moreTabsButton.Click();
-                searchScope = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.FlyoutRoot));
-            }
-
-
-            if (searchScope != null && searchScope.TryFindElement(By.XPath(string.Format(xpath, name)), out IWebElement listItem))
-            {
-                listItem.Click(true);
-            }
-            else
-            {
-                throw new Exception($"The tab with name: {name} does not exist");
-            }
-
-        }
-
+       
         private static IWebElement WaitUntilClickable(IWebDriver driver, By by, TimeSpan timeout, Action<IWebDriver> successCallback, Action<IWebDriver> failureCallback)
         {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
