@@ -104,16 +104,16 @@ stages:
             displayName: 'Pack SpecFlowDemo'
             inputs:
               crmSdkVersion: '9.0.0'
-              unpackedFilesFolder: '$(System.DefaultWorkingDirectory)/SampleSolution/Solution/SpecFlowDemo'
-              mappingFile: '$(System.DefaultWorkingDirectory)/SampleSolution/Solution/EmptyMapping.xml'
+              unpackedFilesFolder: '$(System.ArtifactsDirectory)/SampleSolution/Solution/SpecFlowDemo'
+              mappingFile: '$(System.ArtifactsDirectory)/SampleSolution/Solution/EmptyMapping.xml'
               packageType: 'Managed'
-              outputPath: '$(System.DefaultWorkingDirectory)/SampleSolution/Solution'
+              outputPath: '$(System.ArtifactsDirectory)/SampleSolution/Solution'
 
           - task: MSCRMImportSolution@11
             displayName: 'Import SpecFlowDemo'
             inputs:
               crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);Username=$(Username);Password=$(Password)'
-              solutionFile: '$(System.DefaultWorkingDirectory)/SampleSolution/Solution/SpecFlowDemo_managed.zip'
+              solutionFile: '$(System.ArtifactsDirectory)/SampleSolution/Solution/SpecFlowDemo_managed.zip'
               publishWorkflows: true
               overwriteUnmanagedCustomizations: true
               holdingSolution: true
@@ -128,8 +128,8 @@ stages:
           - task: PowerShell@2
             displayName: 'Update AppSettings.config'
             inputs:
-              filePath: '$(System.DefaultWorkingDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
-              arguments: '-url $(Url) -username $(Username) -password $(Password) -appsettingsPath "$(System.DefaultWorkingDirectory)/SampleSolution/SpecFlow/appsettings.config"'
+              filePath: '$(System.ArtifactsDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
+              arguments: '-url $(Url) -username $(Username) -password $(Password) -appsettingsPath "$(System.ArtifactsDirectory)/SampleSolution/SpecFlow/appsettings.config"'
           
           - task: VSTest@2
             displayName: 'Run SpecFlow Tests'
