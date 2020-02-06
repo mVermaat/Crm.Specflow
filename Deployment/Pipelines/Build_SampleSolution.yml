@@ -57,6 +57,18 @@ stages:
           SourceFolder: '$(SpecRunFolder)\tools'
           TargetFolder: '$(build.artifactstagingdirectory)\SpecFlow\SpecFlowPlusRunner'
       
+      - task: CopyFiles@2
+        displayName: 'Copy Scripts'
+        inputs:
+          SourceFolder: '$(system.defaultworkingdirectory)\Deployment\Scripts'
+          TargetFolder: '$(build.artifactstagingdirectory)\Scripts'
+
+      - task: CopyFiles@2
+        displayName: 'Copy Data'
+        inputs:
+          SourceFolder: '$(system.defaultworkingdirectory)\Deployment\Data'
+          TargetFolder: '$(build.artifactstagingdirectory)\Data'
+      
       - task: SpecFlowPlus@0
         displayName: 'SpecFlow+ Documentation'
         inputs:
