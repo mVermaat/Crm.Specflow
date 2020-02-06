@@ -1,6 +1,13 @@
 name: $(Major).$(Minor)$(Rev:.r)
 pool:
   vmImage: 'windows-latest'
+trigger:
+  batch: true
+  paths:
+    exclude:
+    - Deployment
+        
+
 variables:
 - group: Versioning
 - name: BuildPlatform
