@@ -10,6 +10,7 @@ variables:
 
 steps:
 - task: PowerShell@2
+  displayName: 'Set NuGet Package Version Number'
   inputs:
     filePath: 'Deployment/Scripts/SetNuGetPackageVersion.ps1'
     arguments: '-branch "$(Build.SourceBranch)" -buildNumber "$(Build.BuildNumber)"'
@@ -20,6 +21,7 @@ steps:
 
 - task: NuGetCommand@2
   displayName: 'NuGet custom'
+  condition: and(succeeded(), eq(variables.CreateNuGetPackage, 'true'))
   inputs:
     command: custom
     versioningScheme: byBuildNumber
@@ -28,6 +30,7 @@ steps:
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
+  condition: and(succeeded(), eq(variables.CreateNuGetPackage, 'true'))
   inputs:
     command: push
     nuGetFeedType: external
