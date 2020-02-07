@@ -1,58 +1,147 @@
 name: $(Major).$(Minor)$(Rev:.r)
-pool:
-  vmImage: 'windows-latest'
+
 variables:
 - group: Versioning
-- name: BuildPlatform
-  value: 'Any CPU'
-- name: BuildConfiguration
-  value: 'Release'
 
-steps:
-- task: PowerShell@2
-  inputs:
-    filePath: 'Deployment/Scripts/CreateAppSettings.ps1'
-    arguments: ''
+stages:
+- stage: Build
+  displayName: 'Build Stage'
+  jobs:
+    - job: Build
+      displayName: 'Build Sample Solution'
+      pool:
+        vmImage: 'windows-latest'
+      variables:
+      - name: BuildPlatform
+        value: 'Any CPU'
+      - name: BuildConfiguration
+        value: 'Release'
 
-- template: 'Template_Build.yml'
-  parameters:
-    solutions: '**\\*.sln'
+      steps:
+      - checkout: self
+        clean: true
+        persistCredentials: true
 
-- task: PowerShell@2
-  inputs:
-    filePath: 'Deployment/Scripts/FindSpecRunFolder.ps1'
-    arguments: ''
+      - task: PowerShell@2
+        inputs:
+          filePath: 'Deployment/Scripts/CreateAppSettings.ps1'
+          arguments: ''
+      
+      - template: 'Template_Build.yml'
+        parameters:
+          solutions: '**\\*.sln'
+      
+      - task: PowerShell@2
+        inputs:
+          filePath: 'Deployment/Scripts/FindSpecRunFolder.ps1'
+          arguments: ''
+      
+      - task: CopyFiles@2
+        displayName: 'Copy Sample Project'
+        inputs:
+          SourceFolder: '$(system.defaultworkingdirectory)'
+          Contents: '**\Vermaat.Crm.Specflow.Sample\bin\$(BuildConfiguration)\**'
+          TargetFolder: '$(build.artifactstagingdirectory)\SpecFlow'
+          flattenFolders: true
+      
+      - task: CopyFiles@2
+        displayName: 'Copy Solution File'
+        inputs:
+          SourceFolder: '$(system.defaultworkingdirectory)\Deployment\Solutions'
+          Contents: '**'
+          TargetFolder: '$(build.artifactstagingdirectory)\Solution'
+      
+      - task: CopyFiles@2
+        displayName: 'Copy SpecRun'
+        inputs:
+          SourceFolder: '$(SpecRunFolder)\tools'
+          TargetFolder: '$(build.artifactstagingdirectory)\SpecFlow\SpecFlowPlusRunner'
+      
+      - task: CopyFiles@2
+        displayName: 'Copy Scripts'
+        inputs:
+          SourceFolder: '$(system.defaultworkingdirectory)\Deployment\Scripts'
+          TargetFolder: '$(build.artifactstagingdirectory)\Scripts'
 
-- task: CopyFiles@2
-  displayName: 'Copy Sample Project'
-  inputs:
-    SourceFolder: '$(system.defaultworkingdirectory)'
-    Contents: '**\Vermaat.Crm.Specflow.Sample\bin\$(BuildConfiguration)\**'
-    TargetFolder: '$(build.artifactstagingdirectory)\SpecFlow'
-    flattenFolders: true
+      - task: CopyFiles@2
+        displayName: 'Copy Data'
+        inputs:
+          SourceFolder: '$(system.defaultworkingdirectory)\Deployment\Data'
+          TargetFolder: '$(build.artifactstagingdirectory)\Data'
+      
+      - task: SpecFlowPlus@0
+        displayName: 'SpecFlow+ Documentation'
+        inputs:
+          projectFilePath: Vermaat.Crm.Specflow.Sample/Vermaat.Crm.Specflow.Sample.csproj
+          projectName: 'SpecFlow Demo'
+          projectLanguage: en
+      
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact'
+        inputs:
+          PathtoPublish: '$(build.artifactstagingdirectory)'
+          ArtifactName: SampleSolution
 
-- task: CopyFiles@2
-  displayName: 'Copy Solution File'
-  inputs:
-    SourceFolder: '$(system.defaultworkingdirectory)\Deployment\Solutions'
-    Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)\Solution'
+- stage: Deploy
+  displayName: 'Deployment Stage'
+  jobs:
+  - deployment: 'Deployment'
+    displayName: 'Deploy Sample Solution'
+    timeoutInMinutes: 600
+    pool:
+      vmImage: 'windows-latest'
+    variables:
+    - group: 'TST'
+    environment: 'TST'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: MSCRMToolInstaller@9
+            displayName: 'MSCRM Tool Installer'
+          
+          - task: MSCRMPackSolution@10
+            displayName: 'Pack SpecFlowDemo'
+            inputs:
+              crmSdkVersion: '9.0.0'
+              unpackedFilesFolder: '$(Agent.BuildDirectory)/SampleSolution/Solution/SpecFlowDemo'
+              mappingFile: '$(Agent.BuildDirectory)/SampleSolution/Solution/EmptyMapping.xml'
+              packageType: 'Managed'
+              outputPath: '$(Agent.BuildDirectory)/SampleSolution/Solution'
 
-- task: CopyFiles@2
-  displayName: 'Copy SpecRun'
-  inputs:
-    SourceFolder: '$(SpecRunFolder)\tools'
-    TargetFolder: '$(build.artifactstagingdirectory)\SpecFlow\SpecFlowPlusRunner'
+          - task: MSCRMImportSolution@11
+            displayName: 'Import SpecFlowDemo'
+            inputs:
+              crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);Username=$(Username);Password=$(Password)'
+              solutionFile: '$(Agent.BuildDirectory)/SampleSolution/Solution/SpecFlowDemo_managed.zip'
+              publishWorkflows: true
+              overwriteUnmanagedCustomizations: true
+              holdingSolution: true
 
-- task: SpecFlowPlus@0
-  displayName: 'SpecFlow+ Documentation'
-  inputs:
-    projectFilePath: Vermaat.Crm.Specflow.Sample/Vermaat.Crm.Specflow.Sample.csproj
-    projectName: 'SpecFlow Demo'
-    projectLanguage: en
+          - task: MSCRMApplySolution@10
+            displayName: 'Apply SpecFlowDemo'
+            inputs:
+              crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);Username=$(Username);Password=$(Password)'
+              solutionName: 'SpecFlowDemo'
+              useAsyncMode: true
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-    ArtifactName: SampleSolution
+          - task: MSCRMImportCMData@9
+            inputs:
+              crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);Username=$(Username);Password=$(Password)'
+              dataFile: '$(Agent.BuildDirectory)/SampleSolution/Data/CMData.zip'
+
+          - task: PowerShell@2
+            displayName: 'Update AppSettings.config'
+            inputs:
+              filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
+              arguments: '-url $(Url) -username $(Username) -password $(Password) -appsettingsPath "$(Agent.BuildDirectory)/SampleSolution/SpecFlow/appsettings.config"'
+          
+          - task: VSTest@2
+            displayName: 'Run SpecFlow Tests'
+            continueOnError: true
+            inputs:
+              testSelector: 'testAssemblies'
+              testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
+              searchFolder: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow'
+              testRunTitle: 'SpecFlow'
+              diagnosticsEnabled: true

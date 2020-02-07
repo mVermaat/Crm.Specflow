@@ -5,12 +5,13 @@ $toolsFolder = "..\Tools"
 function Install-NuGetPackage {
 
     param(
+       [string]$source,
        [string]$packageName,
        [string]$rootFolder,
        [string]$folderName
     )
 
-    ./nuget install $packageName -O $toolsFolder -Source "https://api.nuget.org/v3/index.json"
+    ./nuget install $packageName -O $toolsFolder -Source $source
     md $toolsFolder\$folderName
     $prtFolder = Get-ChildItem $toolsFolder | Where-Object {$_.Name -match "$packageName."}
     move $toolsFolder\$prtFolder\$rootFolder\*.* $toolsFolder\$folderName
@@ -23,15 +24,17 @@ Invoke-WebRequest $sourceNugetExe -OutFile $targetNugetExe
 Set-Alias nuget $targetNugetExe -Scope Global -Verbose
 
 
-##
-##Download Plugin Registration Tool
-##
-#Install-NuGetPackage -packageName "Microsoft.CrmSdk.XrmTooling.PluginRegistrationTool" -folderName "PluginRegistration"
-#Install-NuGetPackage -packageName "Microsoft.CrmSdk.XrmTooling.PackageDeployment.WPF" -folderName "PackageDeployment"
-#Install-NuGetPackage -packageName "Microsoft.CrmSdk.XrmTooling.ConfigurationMigration.Wpf" -folderName "ConfigurationMigration"
-Install-NuGetPackage -packageName "Microsoft.CrmSdk.CoreTools" -rootFolder "content\bin\coretools" -folderName "CoreTools"
-Install-NuGetPackage -packageName "XrmCIFramework" -rootFolder "Tools" -folderName "XrmCIFramework"
+$nugetSource = "https://api.nuget.org/v3/index.json"
+$psGallerySource = "https://www.powershellgallery.com/api/v2"
 
+#Install-NuGetPackage -source $nugetSource -packageName "Microsoft.CrmSdk.XrmTooling.PluginRegistrationTool" -folderName "PluginRegistration"
+#Install-NuGetPackage -source $nugetSource -packageName "Microsoft.CrmSdk.XrmTooling.PackageDeployment.WPF" -folderName "PackageDeployment"
+Install-NuGetPackage -source $nugetSource -packageName "Microsoft.CrmSdk.XrmTooling.ConfigurationMigration.Wpf" -rootFolder "Tools" -folderName "ConfigurationMigration\UI"
+#Install-NuGetPackage -source $nugetSource -packageName "Microsoft.CrmSdk.XrmTooling.CrmConnector.PowerShell" -rootFolder "tools\Microsoft.Xrm.Tooling.CrmConnector.PowerShell" -folderName "CrmConnector"
+#Install-NuGetPackage -source $nugetSource -packageName "Microsoft.CrmSdk.XrmTooling.PackageDeployment.PowerShell" -rootFolder "Tools\Microsoft.Xrm.Tooling.PackageDeployment.Powershell" -folderName "PackageDeploymentPowershell"
+Install-NuGetPackage -source $nugetSource -packageName "Microsoft.CrmSdk.CoreTools" -rootFolder "content\bin\coretools" -folderName "CoreTools"
+Install-NuGetPackage -source $nugetSource -packageName "XrmCIFramework" -rootFolder "Tools" -folderName "XrmCIFramework"
+#Install-NuGetPackage -source $psGallerySource -packageName "microsoft.xrm.tooling.configurationmigration" -rootFolder "" -folderName "ConfigurationMigration\PS"
 
 ##
 ##Remove NuGet.exe

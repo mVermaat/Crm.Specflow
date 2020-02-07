@@ -1,8 +1,14 @@
 ######################### Parameters #########################
 ######################### Script #########################
 
-$solutionPath = "..\Solutions\SpecFlowDemo"
-$packPath = "..\Tools\XrmCIFramework\PackSolution.ps1"
-$coreToolsPath = "..\Tools\CoreTools"
 
-& $packPath -UnpackedFilesFolder $solutionPath -PackageType "Both" -CoreToolsPath $coreToolsPath -OutputPath ".\"
+. ".\Common.ps1"
+$settings = Get-SettingsJson
+
+Foreach($solution in $settings.Solutions)
+{
+    Write-Host "Processing $solution"
+    & $settings.PackSolutionScriptPath -UnpackedFilesFolder "$($settings.ExportSolutionOutputPath)\$solution" -PackageType "Both" -CoreToolsPath $settings.CoreToolsDirectory -OutputPath ".\"
+}
+
+

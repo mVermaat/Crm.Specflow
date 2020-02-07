@@ -1,6 +1,9 @@
 {
 	"AppsettingsPath": "..\\..\\Vermaat.Crm.Specflow.Sample\\appsettings.config",
+	"CoreToolsDirectory":  "..\\Tools\\CoreTools",
 	"ExportSolutionOutputPath": "..\\Solutions",
+	"ExtractSolutionScriptPath": "..\\Tools\\XrmCIFramework\\ExtractSolution.ps1",
+	"PackSolutionScriptPath": "..\\Tools\\XrmCIFramework\\PackSolution.ps1",
 	"Solutions": [
 		"SpecFlowDemo"
 	]
