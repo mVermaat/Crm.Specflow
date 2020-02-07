@@ -125,6 +125,11 @@ stages:
               solutionName: 'SpecFlowDemo'
               useAsyncMode: true
 
+          - task: MSCRMImportCMData@9
+            inputs:
+              crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);Username=$(Username);Password=$(Password)'
+              dataFile: '$(Agent.BuildDirectory)/SampleSolution/Data/CMData.zip'
+
           - task: PowerShell@2
             displayName: 'Update AppSettings.config'
             inputs:
