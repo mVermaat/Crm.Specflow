@@ -37,29 +37,22 @@ namespace Vermaat.Crm.Specflow
             Url = new Uri(HelperMethods.GetAppSettingsValue("Url"));
             _connectionCache = new Dictionary<string, ConnectionCache>();
         }
-        
-        public UserDetails GetDetails()
-        {
-            return new UserDetails
-            {
-                Username = HelperMethods.GetAppSettingsValue("Username", true),
-                Password = HelperMethods.GetAppSettingsValue("Password", true)
-            };
-        }
+       
 
         private ConnectionCache GetConnectionCache(IConnectionStringHelper connectionStringHelper, string connectionType)
         {
-            Logger.WriteLine($"Changing {connectionType} connection to {GetDetails().Username}");
-            if (!_connectionCache.TryGetValue(GetDetails().Username, out ConnectionCache connectionCache))
+            Logger.WriteLine($"Changing {connectionType} connection to {connectionStringHelper.UserDetails.Username}");
+            if (!_connectionCache.TryGetValue(connectionStringHelper.UserDetails.Username, out ConnectionCache connectionCache))
             {
                 Logger.WriteLine("Connection doesn't exist. Creating new API connection");
                 connectionCache = new ConnectionCache
                 {
                     Service = new CrmService(connectionStringHelper.GetConnectionString()),
-                    UserDetails = new UserDetails { Username = GetDetails().Username, Password = GetDetails().Password }
+                    UserDetails = new UserDetails { Username = connectionStringHelper.UserDetails.Username, 
+                        Password = connectionStringHelper.UserDetails.Password }
                 };
-                connectionCache.UserDetails.UserSettings = UserSettings.GetUserSettings(connectionCache.Service, GetDetails().Username);
-                _connectionCache.Add(GetDetails().Username, connectionCache);
+                connectionCache.UserDetails.UserSettings = UserSettings.GetUserSettings(connectionCache.Service, connectionStringHelper.UserDetails.Username);
+                _connectionCache.Add(connectionStringHelper.UserDetails.Username, connectionCache);
             }
 
             return connectionCache;

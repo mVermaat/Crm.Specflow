@@ -4,6 +4,22 @@ namespace Vermaat.Crm.Specflow
 {
     public class AppConnectionStringHelper : IConnectionStringHelper
     {
+        public UserDetails UserDetails { get; }
+
+        public AppConnectionStringHelper()
+        {
+            UserDetails = new UserDetails
+            {
+                Username = HelperMethods.GetAppSettingsValue("Username", true),
+                Password = HelperMethods.GetAppSettingsValue("Password", true),
+            };
+        }
+
+        public AppConnectionStringHelper(UserDetails userDetails)
+        {
+            UserDetails = userDetails;
+        }
+
         public string GetConnectionString()
         {
             var authType = HelperMethods.GetAppSettingsValue("AuthType", false);

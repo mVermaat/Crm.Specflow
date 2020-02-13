@@ -5,5 +5,7 @@
         string GetConnectionString();
 
         ValidationResult Validate();
+
+        UserDetails UserDetails { get; }
     }
 }
