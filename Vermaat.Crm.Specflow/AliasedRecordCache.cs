@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vermaat.Crm.Specflow.Connectivity;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -17,15 +18,13 @@ namespace Vermaat.Crm.Specflow
         private readonly Dictionary<string, EntityReference> _aliasedRecords;
         private readonly List<string> _entitiesToIgnore;
         private readonly List<string> _aliasesToIgnore;
-        private readonly ConnectionManager _connectionManager;
         private readonly MetadataCache _metadataCache;
 
-        internal AliasedRecordCache(ConnectionManager connectionManager, MetadataCache metadataCache)
+        internal AliasedRecordCache(MetadataCache metadataCache)
         {
             _aliasedRecords = new Dictionary<string, EntityReference>();
             _entitiesToIgnore = new List<string>();
             _aliasesToIgnore = new List<string>();
-            _connectionManager = connectionManager;
             _metadataCache = metadataCache;
         }
 
@@ -39,7 +38,7 @@ namespace Vermaat.Crm.Specflow
             if(string.IsNullOrEmpty(reference.Name))
             {
                 var md = _metadataCache.GetEntityMetadata(reference.LogicalName);
-                var entity = _connectionManager.CurrentConnection.Retrieve(reference, new ColumnSet(md.PrimaryNameAttribute));
+                var entity = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(reference, new ColumnSet(md.PrimaryNameAttribute));
                 reference.Name = entity.GetAttributeValue<string>(md.PrimaryNameAttribute);
             }
 
@@ -119,7 +118,7 @@ namespace Vermaat.Crm.Specflow
         /// Deletes are records from the cache and deletes them in CRM
         /// </summary>
         /// <param name="service"></param>
-        public void DeleteAllCachedRecords(CrmService service)
+        public void DeleteAllCachedRecords()
         {
             Logger.WriteLine("Clearing cache");
             foreach (var record in _aliasedRecords)
@@ -130,7 +129,7 @@ namespace Vermaat.Crm.Specflow
                 try
                 {
                     Logger.WriteLine($"Deleting {record.Key}. ID: {record.Value.Id} Entity: {record.Value.LogicalName}");
-                    service.Delete(record.Value);
+                    GlobalTestingContext.ConnectionManager.AdminConnection.Delete(record.Value);
                 }
                 // Some records can't be deleted due to cascading behavior
                 catch(Exception ex)

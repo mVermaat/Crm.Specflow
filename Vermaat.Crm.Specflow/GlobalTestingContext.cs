@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vermaat.Crm.Specflow.Connectivity;
 using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow
@@ -19,7 +20,7 @@ namespace Vermaat.Crm.Specflow
         static GlobalTestingContext()
         {
             ConnectionManager = new ConnectionManager();
-            Metadata = new MetadataCache(ConnectionManager);
+            Metadata = new MetadataCache();
             ButtonTexts = new ButtonTexts();
             BrowserManager = new BrowserManager(ButtonTexts);
             ErrorCodes = new ErrorCodes();

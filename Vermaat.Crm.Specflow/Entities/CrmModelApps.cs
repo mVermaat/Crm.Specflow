@@ -10,7 +10,7 @@ namespace Vermaat.Crm.Specflow.Entities
 {
     public class CrmModelApps
     {
-        private Dictionary<string, Entity> _apps;
+        private readonly Dictionary<string, Entity> _apps;
 
         private CrmModelApps(IEnumerable<Entity> apps)
         {
@@ -25,12 +25,12 @@ namespace Vermaat.Crm.Specflow.Entities
             return _apps[uniqueAppName].Id;
         }
 
-        public static CrmModelApps GetApps(CrmService service)
+        public static CrmModelApps GetApps()
         {
             var query = new QueryExpression("appmodule");
             query.ColumnSet.AddColumns("uniquename");
 
-            var result = service.RetrieveMultiple(query);
+            var result = GlobalTestingContext.ConnectionManager.AdminConnection.RetrieveMultiple(query);
 
             return new CrmModelApps(result.Entities);
         }

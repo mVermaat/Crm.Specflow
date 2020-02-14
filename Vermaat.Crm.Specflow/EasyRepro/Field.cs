@@ -110,11 +110,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             if (((DateTimeAttributeMetadata)Metadata).DateTimeBehavior == DateTimeBehavior.UserLocal)
             {
-                var offset = GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo.GetUtcOffset(fieldValue);
+                var offset = GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeZoneInfo.GetUtcOffset(fieldValue);
                 dateTime = dateTime.Add(offset);
             }
 
-            App.Client.SetValueFix(LogicalName, dateTime, GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.DateFormat, GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeFormat);
+            App.Client.SetValueFix(LogicalName, dateTime, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
         }
 
         protected virtual void SetOptionSetField(OptionSetValue optionSetNumber, string optionSetLabel)
