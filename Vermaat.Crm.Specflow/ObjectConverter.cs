@@ -95,7 +95,7 @@ namespace Vermaat.Crm.Specflow
             {
                 return TimeZoneInfo.ConvertTimeToUtc(
                     DateTime.ParseExact(value, format, CultureInfo.InvariantCulture), 
-                    GlobalTestingContext.ConnectionManager.CurrentUserDetails.UserSettings.TimeZoneInfo);
+                    GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeZoneInfo);
             }
             else
             {

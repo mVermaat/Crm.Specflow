@@ -5,8 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xrm.Sdk.Query;
+using Vermaat.Crm.Specflow.Entities;
+using OpenQA.Selenium;
+using System.Net;
+using Microsoft.Xrm.Tooling.Connector;
+using Microsoft.Crm.Sdk.Messages;
 
-namespace Vermaat.Crm.Specflow
+namespace Vermaat.Crm.Specflow.Connectivity
 {
     /// <summary>
     /// Connection to Dynamics CRM
@@ -14,23 +19,19 @@ namespace Vermaat.Crm.Specflow
     public class CrmService : IOrganizationService
     {
         private readonly Lazy<IOrganizationService> _service;
+        private readonly Lazy<UserSettings> _userSettings;
         private readonly string _connectionString;
+
         private IOrganizationService Service => _service.Value;
 
-        public ICrmConnectionProvider ConnectionProvider { get; set; }
+        public UserSettings UserSettings => _userSettings.Value;
         
 
         public CrmService(string connectionString)
-            : this(connectionString, new DefaultCrmConnectionProvider())
-        {
-           
-        }
-
-        public CrmService(string connectionString, ICrmConnectionProvider provider)
         {
             _connectionString = connectionString;
-            ConnectionProvider = provider;
             _service = new Lazy<IOrganizationService>(ConnectToCrm);
+            _userSettings = new Lazy<UserSettings>(GetUserSettings);
         }
 
         public void Create(Entity entity, string alias, AliasedRecordCache recordCache)
@@ -84,6 +85,51 @@ namespace Vermaat.Crm.Specflow
             Service.Update(entity);
         }
 
+
+        public UserSettings GetUserSettings()
+        {
+            string username = GetDomainName();
+            var userQuery = new QueryExpression("systemuser")
+            {
+                ColumnSet = { AllColumns = true },
+                TopCount = 1
+            };
+            userQuery.Criteria.AddCondition("domainname", ConditionOperator.Equal, username);
+            var userEntity = RetrieveMultiple(userQuery);
+
+            if (!userEntity.Entities.Any())
+            {
+                throw new NotFoundException($"The user with domainname '{username}' is not found!");
+            }
+
+            var userGuid = userEntity.Entities[0]["systemuserid"];
+            var query = new QueryExpression("usersettings")
+            {
+                TopCount = 1,
+                ColumnSet = { AllColumns = true }
+            };
+            query.Criteria.AddCondition("systemuserid", ConditionOperator.Equal, userGuid);
+            var settingsEntity = RetrieveMultiple(query).Entities[0];
+
+            query = new QueryExpression("timezonedefinition")
+            {
+                TopCount = 1
+            };
+            query.ColumnSet.AddColumn("standardname");
+            query.Criteria.AddCondition("timezonecode", ConditionOperator.Equal, settingsEntity["timezonecode"]);
+            var timeZoneEntity = RetrieveMultiple(query).Entities[0];
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZoneEntity.GetAttributeValue<string>("standardname"));
+
+            return new UserSettings(settingsEntity, timeZoneInfo);
+        }
+
+        private string GetDomainName()
+        {
+            var resp = Execute<WhoAmIResponse>(new WhoAmIRequest());
+            var user = Retrieve("systemuser", resp.UserId, new ColumnSet("domainname"));
+            return user.GetAttributeValue<string>("domainname");
+        }
+
         #region IOrganizationService
 
         Guid IOrganizationService.Create(Entity entity)
@@ -110,7 +156,15 @@ namespace Vermaat.Crm.Specflow
 
         private IOrganizationService ConnectToCrm()
         {
-            return ConnectionProvider.CreateCrmConnection(_connectionString);
+            Logger.WriteLine("Connecting to Dynamics CRM API");
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            var client = new CrmServiceClient(_connectionString);
+
+            if (!client.IsReady)
+                throw new TestExecutionException(Constants.ErrorCodes.UNABLE_TO_LOGIN, client.LastCrmException, client.LastCrmError);
+
+            return client;
+            
         }
     }
 }

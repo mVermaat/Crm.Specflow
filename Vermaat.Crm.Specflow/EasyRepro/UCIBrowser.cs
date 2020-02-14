@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Vermaat.Crm.Specflow.Connectivity;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -35,10 +36,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _apps = apps;
         }
 
-        public void Login(Uri uri, UserDetails userDetails)
+        public void Login(BrowserLoginDetails loginDetails)
         {
             Logger.WriteLine("Logging in CRM");
-            App.App.OnlineLogin.Login(uri, userDetails.Username.ToSecureString(), userDetails.Password.ToSecureString());
+            App.App.OnlineLogin.Login(new Uri(loginDetails.Url), loginDetails.Username.ToSecureString(), loginDetails.Password);
         }
 
         public void ChangeApp(string appUniqueName)

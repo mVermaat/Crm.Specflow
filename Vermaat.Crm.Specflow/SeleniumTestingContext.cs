@@ -32,7 +32,7 @@ namespace Vermaat.Crm.Specflow
             if (_crmContext.IsTarget("API"))
                 throw new TestExecutionException(Constants.ErrorCodes.CANT_START_BROWSER_FOR_API_TESTS);
 
-            var browser = GlobalTestingContext.BrowserManager.GetBrowser(BrowserOptions, GlobalTestingContext.ConnectionManager.CurrentUserDetails, GlobalTestingContext.ConnectionManager.Url);
+            var browser = GlobalTestingContext.BrowserManager.GetBrowser(BrowserOptions, GlobalTestingContext.ConnectionManager.CurrentBrowserLoginDetails);
             browser.ChangeApp(CurrentApp);
             IsLoggedIn = true;
             return browser;

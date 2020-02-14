@@ -28,7 +28,7 @@ namespace Vermaat.Crm.Specflow.Commands
             Stopwatch timer = new Stopwatch();
             timer.Start();
 
-            while (QueryHelper.HasOpenSystemJobs(aliasRef.Id, GlobalTestingContext.ConnectionManager.AdminConnection))
+            while (QueryHelper.HasOpenSystemJobs(aliasRef.Id))
             {
                 Logger.WriteLine("Not all system jobs are completed. Waiting");
 
