@@ -188,7 +188,7 @@
     <Compile Include="Connectivity\ClientSecretCrmConnection.cs" />
     <Compile Include="Connectivity\ConnectionManager.cs" />
     <Compile Include="Connectivity\CrmConnection.cs" />
-    <Compile Include="Connectivity\DefaultCrmConnection.cs" />
+    <Compile Include="Connectivity\UsernamePasswordCrmConnection.cs" />
     <Compile Include="ConvertedObjectType.cs" />
     <Compile Include="EasyRepro\BrowserManager.cs" />
     <Compile Include="EasyRepro\ButtonTexts.cs" />
