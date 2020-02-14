@@ -82,7 +82,7 @@ namespace Vermaat.Crm.Specflow
             }
             else
             {
-                connection = DefaultCrmConnection.CreateFromAppConfig();
+                connection = UsernamePasswordCrmConnection.FromAppConfig();
             }
 
 
