@@ -1,13 +1,4 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api;
-using Microsoft.Dynamics365.UIAutomation.Browser;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow
@@ -28,8 +19,7 @@ namespace Vermaat.Crm.Specflow
             {
                 CleanSession = true,
                 StartMaximized = true,
-                UCITestMode = true,
-                DriversPath = GetDriverPath()
+                UCITestMode = true
 
             };
             CurrentApp = HelperMethods.GetAppSettingsValue("AppName", true);
@@ -45,13 +35,6 @@ namespace Vermaat.Crm.Specflow
             browser.ChangeApp(CurrentApp);
             IsLoggedIn = true;
             return browser;
-        }
-
-        private string GetDriverPath()
-        {
-            var assemblyPath = new FileInfo(Assembly.GetExecutingAssembly().Location);
-            Logger.WriteLine($"Using chrome driver path: {assemblyPath.Directory}");
-            return assemblyPath.DirectoryName;
         }
 
     }

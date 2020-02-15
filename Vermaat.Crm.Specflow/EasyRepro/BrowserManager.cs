@@ -1,7 +1,9 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Entities;
@@ -35,6 +37,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 Logger.WriteLine($"Browser for {userDetails.Username} doesn't exist. Creating new browser session");
 
+                if(string.IsNullOrEmpty(options.DriversPath))
+                {
+                    options.DriversPath = GetDriverPath(options);
+                }
+                
                 browser = new UCIBrowser(options, _buttonTexts, _appCache.Value);
                 dic.Add(userDetails.Username, browser);
                 browser.Login(uri, userDetails);
@@ -46,6 +53,38 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             Logger.WriteLine("Initializing App Cache");
             return CrmModelApps.GetApps(GlobalTestingContext.ConnectionManager.AdminConnection);
+        }
+
+        private string GetDriverPath(BrowserOptions options)
+        {
+            string envWebDriver = null;
+            string driverFile = null;
+            switch (options.BrowserType)
+            {
+                case BrowserType.Chrome:
+                    envWebDriver = Environment.GetEnvironmentVariable("ChromeWebDriver");
+                    driverFile = "chromedriver.exe";
+                    break;
+                case BrowserType.Firefox:
+                    envWebDriver = Environment.GetEnvironmentVariable("GeckoWebDriver");
+                    driverFile = "geckodriver.exe";
+                    break;
+                case BrowserType.IE:
+                    envWebDriver = Environment.GetEnvironmentVariable("IEWebDriver");
+                    driverFile = "IEDriverServer.exe";
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(envWebDriver) && File.Exists(Path.Combine(envWebDriver, driverFile)))
+            {
+                return envWebDriver;
+            }
+            else
+            {
+                var assemblyPath = new FileInfo(Assembly.GetExecutingAssembly().Location);
+                Logger.WriteLine($"Using chrome driver path: {assemblyPath.Directory}");
+                return assemblyPath.DirectoryName;
+            }
         }
 
         #region IDisposable Support
