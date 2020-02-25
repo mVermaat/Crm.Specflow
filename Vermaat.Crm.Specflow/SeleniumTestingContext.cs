@@ -19,7 +19,8 @@ namespace Vermaat.Crm.Specflow
             {
                 CleanSession = true,
                 StartMaximized = true,
-                UCITestMode = true
+                UCITestMode = true,
+                DriversPath = null,
 
             };
             CurrentApp = HelperMethods.GetAppSettingsValue("AppName", true);
