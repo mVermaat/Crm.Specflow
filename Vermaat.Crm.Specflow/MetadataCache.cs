@@ -8,20 +8,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vermaat.Crm.Specflow.Connectivity;
 
 namespace Vermaat.Crm.Specflow
 {
     public class MetadataCache
     {
-        private readonly ConnectionManager _connectionManager;
                  
         private readonly Dictionary<string, Dictionary<EntityFilters, EntityMetadata>> _entityMetadataCache;
         private readonly Dictionary<string, DataCollection<Entity>> _attributeMapCache;
         private readonly Dictionary<string, Guid> _formCache;
 
-        public MetadataCache(ConnectionManager connectionManager)
+        public MetadataCache()
         {
-            _connectionManager = connectionManager;
             _entityMetadataCache = new Dictionary<string, Dictionary<EntityFilters, EntityMetadata>>();
             _attributeMapCache = new Dictionary<string, DataCollection<Entity>>();
             _formCache = new Dictionary<string, Guid>();
@@ -71,7 +70,7 @@ namespace Vermaat.Crm.Specflow
                     LogicalName = entityName,
                 };
 
-                result = _connectionManager.CurrentConnection.Execute<RetrieveEntityResponse>(req).EntityMetadata;
+                result = GlobalTestingContext.ConnectionManager.AdminConnection.Execute<RetrieveEntityResponse>(req).EntityMetadata;
                 metadataDic.Add(filters, result);
             }
             return result;
@@ -90,7 +89,7 @@ namespace Vermaat.Crm.Specflow
                 link.LinkCriteria.AddCondition("sourceentityname", ConditionOperator.Equal, parentEntity);
                 link.LinkCriteria.AddCondition("targetentityname", ConditionOperator.Equal, childEntity);
 
-                result = GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(query).Entities;
+                result = GlobalTestingContext.ConnectionManager.AdminConnection.RetrieveMultiple(query).Entities;
                 _attributeMapCache.Add(parentEntity + childEntity, result);
             }
             return result;
@@ -108,7 +107,7 @@ namespace Vermaat.Crm.Specflow
                 query.Criteria.AddCondition("objecttypecode", ConditionOperator.Equal, entityName);
                 query.Criteria.AddCondition("name", ConditionOperator.Equal, formName);
 
-                var result = GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(query).Entities.FirstOrDefault();
+                var result = GlobalTestingContext.ConnectionManager.AdminConnection.RetrieveMultiple(query).Entities.FirstOrDefault();
 
                 if (result == null)
                     throw new TestExecutionException(Constants.ErrorCodes.FORM_NOT_FOUND, formName, entityName);

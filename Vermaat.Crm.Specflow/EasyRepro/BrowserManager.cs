@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Vermaat.Crm.Specflow.Connectivity;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -23,7 +24,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _appCache = new Lazy<CrmModelApps>(InitializeCache);
         }
 
-        public UCIBrowser GetBrowser(BrowserOptions options, UserDetails userDetails, Uri uri)
+        public UCIBrowser GetBrowser(BrowserOptions options, BrowserLoginDetails browserLoginDetails)
         {
             Logger.WriteLine("Getting Browser");
             if(!_browserCache.TryGetValue(options.BrowserType, out var dic))
@@ -33,9 +34,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 _browserCache.Add(options.BrowserType, dic);
             }
 
-            if(!dic.TryGetValue(userDetails.Username, out UCIBrowser browser))
+            if(!dic.TryGetValue(browserLoginDetails.Username, out UCIBrowser browser))
             {
-                Logger.WriteLine($"Browser for {userDetails.Username} doesn't exist. Creating new browser session");
+                Logger.WriteLine($"Browser for {browserLoginDetails.Username} doesn't exist. Creating new browser session");
 
                 if(string.IsNullOrEmpty(options.DriversPath))
                 {
@@ -43,8 +44,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 }
                 
                 browser = new UCIBrowser(options, _buttonTexts, _appCache.Value);
-                dic.Add(userDetails.Username, browser);
-                browser.Login(uri, userDetails);
+                dic.Add(browserLoginDetails.Username, browser);
+                browser.Login(browserLoginDetails);
             }
             return browser;
         }
@@ -52,7 +53,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private CrmModelApps InitializeCache()
         {
             Logger.WriteLine("Initializing App Cache");
-            return CrmModelApps.GetApps(GlobalTestingContext.ConnectionManager.AdminConnection);
+            return CrmModelApps.GetApps();
+            return CrmModelApps.GetApps();
         }
 
         private string GetDriverPath(BrowserOptions options)

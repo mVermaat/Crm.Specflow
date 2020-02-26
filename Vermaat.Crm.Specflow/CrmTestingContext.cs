@@ -31,7 +31,7 @@ namespace Vermaat.Crm.Specflow
             TableConverter = new TableConverter(this);
             LanguageCode = GetLanguageCode();
             CommandProcessor = new CommandProcessor(scenarioContext);
-            RecordCache = new AliasedRecordCache(GlobalTestingContext.ConnectionManager, GlobalTestingContext.Metadata);
+            RecordCache = new AliasedRecordCache(GlobalTestingContext.Metadata);
 
             _targets = ConfigurationManager.AppSettings["Target"]
                 .ToLower()

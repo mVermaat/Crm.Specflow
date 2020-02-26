@@ -10,7 +10,7 @@ namespace Vermaat.Crm.Specflow
 {
     static class QueryHelper
     {
-        public static bool HasOpenSystemJobs(Guid regardingId, CrmService service)
+        public static bool HasOpenSystemJobs(Guid regardingId)
         {
             QueryExpression qe = new QueryExpression("asyncoperation")
             {
@@ -20,7 +20,7 @@ namespace Vermaat.Crm.Specflow
             qe.Criteria.AddCondition("regardingobjectid", ConditionOperator.Equal, regardingId);
             qe.Criteria.AddCondition("statuscode", ConditionOperator.NotIn, new object[] { 10, 30, 31, 32 });
 
-            return service.RetrieveMultiple(qe).Entities.Count > 0;
+            return GlobalTestingContext.ConnectionManager.AdminConnection.RetrieveMultiple(qe).Entities.Count > 0;
         }
 
         public static QueryExpression CreateQueryExpressionFromTable(string entityName, Table criteria, CrmTestingContext context)

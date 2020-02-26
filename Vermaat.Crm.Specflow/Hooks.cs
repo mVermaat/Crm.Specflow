@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.Connectivity;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -73,33 +74,27 @@ namespace Vermaat.Crm.Specflow
         public void SetDefaultConnection()
         {
             var authType = HelperMethods.GetAppSettingsValue("AuthType", true);
-            IConnectionStringHelper connectionStringHelper;
-            switch (authType)
-            {
-                default:
-                    connectionStringHelper = new DefaultConnectionStringHelper();
-                    break;
-                case "ClientSecret":
-                    connectionStringHelper = new AppConnectionStringHelper();
-                    break;
-            }
 
-            var result = connectionStringHelper.Validate();
-            if (result.IsValid)
+            CrmConnection connection;
+            if (authType.Equals("ClientSecret", StringComparison.InvariantCultureIgnoreCase))
             {
-                GlobalTestingContext.ConnectionManager.SetAdminConnection(connectionStringHelper);
-                GlobalTestingContext.ConnectionManager.SetCurrentConnection(connectionStringHelper);
+                connection = ClientSecretCrmConnection.CreateFromAppConfig();
             }
             else
             {
-                throw new TestExecutionException(Constants.ErrorCodes.INVALID_CONNECTIONSTRING, string.Join(", ", result.Errors));
+                connection = UsernamePasswordCrmConnection.FromAppConfig();
             }
+
+
+            GlobalTestingContext.ConnectionManager.SetAdminConnection(connection);
+            GlobalTestingContext.ConnectionManager.SetCurrentConnection(connection);
+           
         }
 
         [AfterScenario("Cleanup")]
         public void Cleanup()
         {
-            _crmContext.RecordCache.DeleteAllCachedRecords(GlobalTestingContext.ConnectionManager.AdminConnection);
+            _crmContext.RecordCache.DeleteAllCachedRecords();
         }
 
 
