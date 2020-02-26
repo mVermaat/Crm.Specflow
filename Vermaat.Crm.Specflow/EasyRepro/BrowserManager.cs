@@ -54,6 +54,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             Logger.WriteLine("Initializing App Cache");
             return CrmModelApps.GetApps();
+            return CrmModelApps.GetApps();
         }
 
         private string GetDriverPath(BrowserOptions options)
