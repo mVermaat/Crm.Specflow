@@ -39,6 +39,12 @@ namespace Vermaat.Crm.Specflow
             {
                 DefaultData data = ser.Deserialize(reader) as DefaultData;
 
+                if(data == null || data.Entities == null || data.Entities.Length == 0)
+                {
+                    Logger.WriteLine("DefaultData is empty");
+                    return new Dictionary<string, DefaultDataField[]>();
+                }
+
                 return data.Entities.ToDictionary(e => e.Name, e => e.Fields);
             }
 
