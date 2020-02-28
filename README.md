@@ -1,6 +1,7 @@
-# Crm.Specflow
-
+# Dynamics 365 CE Extension for SpecFlow
 Do you want to test your Dynamics 365 CE implementation automatically, but do you think it is hard to do and very complex to implement? There are several exisiting technologies available to implement this like SpecFlow and EasyRepro. SpecFlow gives you the means to create test scenarios without writing any code. EasyRepro provides a set of functions to automatically work with Dynamics 365 CE. I combined both of these technologies into a solution so you can create test scenarios for Dynamics 365 CE without writing any code.
+
+Detailed documentation can be found in the Wiki.
 
 # Features
 Below is an overview of all features. The framework is extensible, so you can easily ass your own functionality. I'm happy to include useful functionality in the framework. If you have any, feel free to create pull requests.
