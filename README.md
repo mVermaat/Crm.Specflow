@@ -14,7 +14,7 @@ You can use display names of attributes instead of schema names to make you scen
 ## Multiple tab support
 When entering data on a form, it will automatically determine the tab the field is on and switch tabs if needed
 
-## Globalizations for Dates & Times
+## Globalizations for dates & times
 You specify your Date(time) format in your test project and the framework automatically figures out how this relates to the user's timezone and adapts the inputs and assertions.
 
 ## Creation of related records
@@ -33,7 +33,7 @@ You can do all sorts of assertions like:
 * Find specific ribbon buttons
 * Find specific form notifications
 
-## Several Entity Specific actions
+## Several entity specific actions
 * Lead Qualification
 * Closing Opportunities
 * Conversion from quotes to orders
@@ -41,10 +41,10 @@ You can do all sorts of assertions like:
 ## API connection support
 You use both Username/Password and ClientSecret authentication for API connections
 
-## Multi User Support
+## Multi user support
 You can login with other users by writing a simple extension
 
-# NuGet Packages
+# NuGet packages
 
 Two nuget packages are available.
 
@@ -53,6 +53,6 @@ Vermaat.Crm.Specflow.Legacy (Branch: Legacy)
 
 The legacy package is used for the old web interface and will only recieve minimal updates. It is recommended to use the unified interface with the regular client.
 
-## Supported Browsers
+## Supported browsers
 
 Currently supported browsers are: Chrome, Firefox, Internet Explorer and Edge. The support is solely based on EasyRepro (https://github.com/Microsoft/EasyRepro). Read more there for extra information
