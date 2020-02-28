@@ -30,6 +30,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_FormState_LockedIcon, "//div[@data-id='[NAME]-locked-icon']" },
             { SeleniumSelectorItems.Entity_FormState_RequiredOrRecommended, "//div[contains(@id, '[NAME]-required-icon')]" },
             { SeleniumSelectorItems.Dialog_Container, "id(\"dialogContentContainer_1\")" },
+            { SeleniumSelectorItems.Entity_FieldContainer, "//div[@data-id='[NAME]']" },
             { SeleniumSelectorItems.Dialog_OK, "//button[@data-id='ok_id']" },
 
         };

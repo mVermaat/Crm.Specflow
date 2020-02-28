@@ -36,6 +36,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_MoreTabs,
 
+        Entity_FieldContainer,
+
         FlyoutRoot
 
         
