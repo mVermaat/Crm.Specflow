@@ -1,8 +1,50 @@
 # Crm.Specflow
 
-This is a framework for testing Dynamics CRM using SpecFlow. It allows you to easily and quickly write tests for your Dynamics CRM implementation. It allows both API and UI Testing. 
+Do you want to test your Dynamics 365 CE implementation automatically, but do you think it is hard to do and very complex to implement? There are several exisiting technologies available to implement this like SpecFlow and EasyRepro. SpecFlow gives you the means to create test scenarios without writing any code. EasyRepro provides a set of functions to automatically work with Dynamics 365 CE. I combined both of these technologies into a solution so you can create test scenarios for Dynamics 365 CE without writing any code.
 
-## NuGet Packages
+# Features
+Below is an overview of all features. The framework is extensible, so you can easily ass your own functionality. I'm happy to include useful functionality in the framework. If you have any, feel free to create pull requests.
+
+## One scenario, multiple targets
+You only need to write your script once and run that same scripts on multiple browsers and/or the Dynamics CE API
+
+## Use display names instead of schema names
+You can use display names of attributes instead of schema names to make you scenarios easier to write and understand
+
+## Multiple tab support
+When entering data on a form, it will automatically determine the tab the field is on and switch tabs if needed
+
+## Globalizations for Dates & Times
+You specify your Date(time) format in your test project and the framework automatically figures out how this relates to the user's timezone and adapts the inputs and assertions.
+
+## Creation of related records
+Next to creating new standalone records, you can also created records that are related to another. Like pressing the 'Add New' on a subgrid or associated view.
+
+## Wait for background processes
+You can wait until background processes are finished. Very usefull when you want to test functionality that runs asynchonously
+
+## Varied assertions
+You can do all sorts of assertions like:
+* Specific records has specific data
+* A record exists with specified data
+* Specific record has a set of related records
+* Form state (required, read-only, visibility)
+* Find specific error messages
+* Find specific ribbon buttons
+* Find specific form notifications
+
+## Several Entity Specific actions
+* Lead Qualification
+* Closing Opportunities
+* Conversion from quotes to orders
+
+## API connection support
+You use both Username/Password and ClientSecret authentication for API connections
+
+## Multi User Support
+You can login with other users by writing a simple extension
+
+# NuGet Packages
 
 Two nuget packages are available.
 
