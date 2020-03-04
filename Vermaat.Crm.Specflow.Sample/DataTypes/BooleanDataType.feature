@@ -1,6 +1,6 @@
 ﻿Feature: BooleanDataType
 
-@API @Chrome @Cleanup
+@API @Chrome @Firefox @Cleanup
 Scenario: Create Account - Check two option fields
 When an account named TestAccount is created with the following values
 	| Property                 | Value        |

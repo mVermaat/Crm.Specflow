@@ -1,6 +1,6 @@
 ﻿Feature: LookupDataType
 
-@Chrome @Cleanup
+@Chrome @Firefox @Cleanup
 Scenario: Lookup with multiple results tests
 Given an account named FirstAccount with the following values
     | Property     | Value                   |
@@ -27,7 +27,7 @@ Then TestLookup has the following values
     | Company Name | SecondAccount    |
     | Email        | someone@test.com |
 
-@Chrome @Cleanup
+@Chrome @Firefox @Cleanup
 Scenario: Lookup test - Special Characters
 Given an account named FirstAccount with the following values
     | Property     | Value                                 |

@@ -226,6 +226,9 @@
     <Error Condition="!Exists('..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.props'))" />
     <Error Condition="!Exists('..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.targets'))" />
     <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.79.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.79.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.WebDriver.GeckoDriver.0.26.0\build\Selenium.WebDriver.GeckoDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.GeckoDriver.0.26.0\build\Selenium.WebDriver.GeckoDriver.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.WebDriver.IEDriver.3.150.1\build\Selenium.WebDriver.IEDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.IEDriver.3.150.1\build\Selenium.WebDriver.IEDriver.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.WebDriver.MicrosoftDriver.17.17134.0\build\Selenium.WebDriver.MicrosoftDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.MicrosoftDriver.17.17134.0\build\Selenium.WebDriver.MicrosoftDriver.targets'))" />
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.targets')" />
   <Target Name="AfterUpdateFeatureFilesInProject">
@@ -240,4 +243,7 @@
   <Import Project="..\packages\SpecRun.Runner.3.0.377\build\SpecRun.Runner.targets" Condition="Exists('..\packages\SpecRun.Runner.3.0.377\build\SpecRun.Runner.targets')" />
   <Import Project="..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.targets" Condition="Exists('..\packages\SpecRun.SpecFlow.3-0-0.3.0.377\build\SpecRun.SpecFlow.3-0-0.targets')" />
   <Import Project="..\packages\Selenium.Chrome.WebDriver.79.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.79.0.0\build\Selenium.Chrome.WebDriver.targets')" />
+  <Import Project="..\packages\Selenium.WebDriver.GeckoDriver.0.26.0\build\Selenium.WebDriver.GeckoDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.GeckoDriver.0.26.0\build\Selenium.WebDriver.GeckoDriver.targets')" />
+  <Import Project="..\packages\Selenium.WebDriver.IEDriver.3.150.1\build\Selenium.WebDriver.IEDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.IEDriver.3.150.1\build\Selenium.WebDriver.IEDriver.targets')" />
+  <Import Project="..\packages\Selenium.WebDriver.MicrosoftDriver.17.17134.0\build\Selenium.WebDriver.MicrosoftDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.MicrosoftDriver.17.17134.0\build\Selenium.WebDriver.MicrosoftDriver.targets')" />
 </Project>

@@ -1,7 +1,7 @@
 ﻿Feature: RelatedRecords
 
 
-@API @Chrome @Cleanup
+@API @Chrome @Firefox @Cleanup
 Scenario: Creating child contact from account
 Given an account named TestAccount with the following values
 	| Property                   | Value                   |

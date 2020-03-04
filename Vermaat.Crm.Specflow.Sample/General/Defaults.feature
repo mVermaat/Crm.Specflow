@@ -1,6 +1,6 @@
 ﻿Feature: Defaults
 
-@API @Chrome @Cleanup
+@API @Chrome @Firefox @Cleanup
 Scenario: Use DefaultData for default values
 When an account named TestAccount is created with the following values
 	| Property     | Value |                 
