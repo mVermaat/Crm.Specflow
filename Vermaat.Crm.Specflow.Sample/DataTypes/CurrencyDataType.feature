@@ -1,6 +1,6 @@
 ﻿Feature: CurrencyDataType
 
-@API @Chrome @Cleanup
+@API @Chrome @Firefox @Cleanup
 Scenario: Filling Money fields
 Given an account named TestAccount with the following values
 	| Property     | Value       |

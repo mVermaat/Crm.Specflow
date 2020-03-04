@@ -1,6 +1,6 @@
 ﻿Feature: QuoteTests
 
-@API @Chrome @Cleanup
+@API @Chrome @Firefox @Cleanup
 Scenario: Convert Quote to Sales Order
 Given an account named QuoteTesting with the following values
 	| Property              | Value                   |
@@ -19,7 +19,7 @@ Then TestOrder has the following values
 	| Customer   | QuoteTesting         |
 	| Quote      | TestQuote            |
 
-@API @Chrome @Cleanup
+@API @Chrome @Firefox @Cleanup
 Scenario: Revise a quote
 Given an account named QuoteTesting with the following values
 	| Property              | Value                   |

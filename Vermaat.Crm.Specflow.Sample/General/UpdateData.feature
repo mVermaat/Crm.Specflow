@@ -1,6 +1,6 @@
 ﻿Feature: UpdateData
 
-@API @Chrome @Cleanup
+@API @Chrome @Firefox @Cleanup
 Scenario: Update an existing Account
 Given an account named TestAccount with the following values
 	| Property     | Value                   |
@@ -23,7 +23,7 @@ Then TestAccount has the following values
 	| Industry     | Consulting              |
 	| Description  | Update multi line       |
 
-@API @Chrome @Cleanup
+@API @Chrome @Firefox @Cleanup
 Scenario: Basic contact test
 Given a contact named TestContact with the following values
     | Property   | Value |
@@ -40,7 +40,7 @@ Then TestContact has the following values
     | Last Name  | Smith                  |
     | Job Title  | Chief Lazyness Officer |
 
-@API @Chrome @Cleanup
+@API @Chrome @Firefox @Cleanup
 Scenario: Clearing values of Account
 Given an account named TestAccount with the following values
 	| Property     | Value                   |
