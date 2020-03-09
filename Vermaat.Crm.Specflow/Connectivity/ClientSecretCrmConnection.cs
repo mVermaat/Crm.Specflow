@@ -16,7 +16,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
         private readonly string _clientSecret;
 
         public ClientSecretCrmConnection(string clientId, string clientSecret)
-            :base(clientId)
+            : base(clientId)
         {
             _authType = HelperMethods.GetAppSettingsValue("AuthType", false);
             _url = HelperMethods.GetAppSettingsValue("Url", false);
@@ -29,6 +29,13 @@ namespace Vermaat.Crm.Specflow.Connectivity
             return new ClientSecretCrmConnection(
                 HelperMethods.GetAppSettingsValue("ClientId", false),
                 HelperMethods.GetAppSettingsValue("ClientSecret", false));
+        }
+
+        public static ClientSecretCrmConnection CreateAdminConnectionFromAppConfig()
+        {
+            var username = HelperMethods.TryGetAppSettingsValue("AdminClientId") ?? HelperMethods.GetAppSettingsValue("ClientId");
+            var password = HelperMethods.TryGetAppSettingsValue("AdminClientSecret") ?? HelperMethods.GetAppSettingsValue("ClientSecret");
+            return new ClientSecretCrmConnection(username, password);
         }
 
         public override CrmService CreateCrmServiceInstance()
