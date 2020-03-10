@@ -44,9 +44,9 @@ namespace Vermaat.Crm.Specflow
             {
                 case AttributeTypeCode.Boolean:
                     return GetTwoOptionValue(metadata, value, context);
-                case AttributeTypeCode.Double: return double.Parse(value);
-                case AttributeTypeCode.Decimal: return decimal.Parse(value);
-                case AttributeTypeCode.Integer: return int.Parse(value);
+                case AttributeTypeCode.Double: return double.Parse(value, NumberFormatInfo.InvariantInfo);
+                case AttributeTypeCode.Decimal: return decimal.Parse(value, NumberFormatInfo.InvariantInfo);
+                case AttributeTypeCode.Integer: return int.Parse(value, NumberFormatInfo.InvariantInfo);
                 case AttributeTypeCode.DateTime:
                     return ParseDateTime(metadata, value);
 
@@ -57,7 +57,7 @@ namespace Vermaat.Crm.Specflow
                     if (objectType == ConvertedObjectType.Primitive)
                         return decimal.Parse(value);
                     else
-                        return new Money(decimal.Parse(value));
+                        return new Money(decimal.Parse(value, NumberFormatInfo.InvariantInfo));
                 case AttributeTypeCode.Picklist:
                 case AttributeTypeCode.State:
                 case AttributeTypeCode.Status:
