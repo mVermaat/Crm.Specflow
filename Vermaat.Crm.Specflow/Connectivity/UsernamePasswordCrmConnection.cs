@@ -8,12 +8,12 @@ using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Connectivity
 {
-   public class UsernamePasswordCrmConnection : CrmConnection
+    public class UsernamePasswordCrmConnection : CrmConnection
     {
         private readonly string _authType;
         private readonly BrowserLoginDetails _loginInfo;
 
-        public UsernamePasswordCrmConnection(string username, string password) 
+        public UsernamePasswordCrmConnection(string username, string password)
             : base(username)
         {
             _authType = HelperMethods.GetAppSettingsValue("AuthType", false);
@@ -29,7 +29,14 @@ namespace Vermaat.Crm.Specflow.Connectivity
         {
             return new UsernamePasswordCrmConnection(
                 HelperMethods.GetAppSettingsValue("Username", false),
-                HelperMethods.GetAppSettingsValue("Password", false));            
+                HelperMethods.GetAppSettingsValue("Password", false));
+        }
+
+        public static UsernamePasswordCrmConnection AdminConnectionFromAppConfig()
+        {
+            var userName = HelperMethods.GetAppSettingsValue("AdminUsername", true) ?? HelperMethods.GetAppSettingsValue("Username");
+            var password = HelperMethods.GetAppSettingsValue("AdminPassword", true) ?? HelperMethods.GetAppSettingsValue("Password");
+            return new UsernamePasswordCrmConnection(userName, password);
         }
 
 

@@ -13,7 +13,6 @@ namespace Vermaat.Crm.Specflow
 {
     public static class HelperMethods
     {
-
         public static string GetAppSettingsValue(string key, bool emptyAllowed = false, string defaultValue = null)
         {
             string value = ConfigurationManager.AppSettings[key];
@@ -95,7 +94,7 @@ namespace Vermaat.Crm.Specflow
             DateTime timeout = DateTime.Now.AddSeconds(30);
 
             bool loadComplete = false;
-            while(!loadComplete)
+            while (!loadComplete)
             {
                 loadComplete = true;
 
@@ -109,11 +108,11 @@ namespace Vermaat.Crm.Specflow
                         d => { throw new TestExecutionException(Constants.ErrorCodes.FORM_LOAD_TIMEOUT); }
                     );
 
-                    if(additionalConditions != null)
+                    if (additionalConditions != null)
                     {
-                        foreach(var condition in additionalConditions)
+                        foreach (var condition in additionalConditions)
                         {
-                            if(!condition.Evaluate(driver))
+                            if (!condition.Evaluate(driver))
                             {
                                 Logger.WriteLine("Evaluation failed. Waiting for next attempt");
                                 loadComplete = false;

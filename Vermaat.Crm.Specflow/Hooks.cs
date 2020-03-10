@@ -76,19 +76,21 @@ namespace Vermaat.Crm.Specflow
             var authType = HelperMethods.GetAppSettingsValue("AuthType", true);
 
             CrmConnection connection;
+            CrmConnection adminConnection;
             if (authType.Equals("ClientSecret", StringComparison.InvariantCultureIgnoreCase))
             {
                 connection = ClientSecretCrmConnection.CreateFromAppConfig();
+                adminConnection = ClientSecretCrmConnection.CreateAdminConnectionFromAppConfig();
             }
             else
             {
                 connection = UsernamePasswordCrmConnection.FromAppConfig();
+                adminConnection = UsernamePasswordCrmConnection.AdminConnectionFromAppConfig();
             }
 
-
-            GlobalTestingContext.ConnectionManager.SetAdminConnection(connection);
+            GlobalTestingContext.ConnectionManager.SetAdminConnection(adminConnection);
             GlobalTestingContext.ConnectionManager.SetCurrentConnection(connection);
-           
+
         }
 
         [AfterScenario("Cleanup")]
