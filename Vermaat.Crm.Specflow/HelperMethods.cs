@@ -13,10 +13,6 @@ namespace Vermaat.Crm.Specflow
 {
     public static class HelperMethods
     {
-        public static string TryGetAppSettingsValue(string key)
-        {
-            return GetAppSettingsValue(key, true);
-        }
         public static string GetAppSettingsValue(string key, bool emptyAllowed = false, string defaultValue = null)
         {
             string value = ConfigurationManager.AppSettings[key];

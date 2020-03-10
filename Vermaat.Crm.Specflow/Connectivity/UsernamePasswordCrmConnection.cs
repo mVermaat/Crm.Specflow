@@ -34,8 +34,8 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         public static UsernamePasswordCrmConnection AdminConnectionFromAppConfig()
         {
-            var userName = HelperMethods.TryGetAppSettingsValue("AdminUsername") ?? HelperMethods.GetAppSettingsValue("Username");
-            var password = HelperMethods.TryGetAppSettingsValue("AdminPassword") ?? HelperMethods.GetAppSettingsValue("Password");
+            var userName = HelperMethods.GetAppSettingsValue("AdminUsername", true) ?? HelperMethods.GetAppSettingsValue("Username");
+            var password = HelperMethods.GetAppSettingsValue("AdminPassword", true) ?? HelperMethods.GetAppSettingsValue("Password");
             return new UsernamePasswordCrmConnection(userName, password);
         }
 
