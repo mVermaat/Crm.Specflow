@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
+using System.Linq;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.EasyRepro;
 
@@ -6,6 +7,8 @@ namespace Vermaat.Crm.Specflow.Commands
 {
     public class UpdateRecordCommand : BrowserCommand
     {
+        private static readonly string[] _apiOnlyEntities = new string[] { "usersettings" };
+
         private readonly EntityReference _toUpdate;
         private readonly Table _criteria;
 
@@ -35,9 +38,16 @@ namespace Vermaat.Crm.Specflow.Commands
 
         protected override void ExecuteBrowser()
         {
-            var formData = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(_toUpdate));
-            formData.FillForm(_crmContext, _criteria);
-            formData.Save(true);
+            if (_apiOnlyEntities.Contains(_toUpdate.LogicalName))
+            {
+                ExecuteApi();
+            }
+            else
+            {
+                var formData = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(_toUpdate));
+                formData.FillForm(_crmContext, _criteria);
+                formData.Save(true);
+            }
         }
     }
 }

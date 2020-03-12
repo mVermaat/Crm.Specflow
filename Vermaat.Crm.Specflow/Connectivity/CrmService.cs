@@ -20,18 +20,19 @@ namespace Vermaat.Crm.Specflow.Connectivity
     {
         private readonly Lazy<IOrganizationService> _service;
         private readonly Lazy<UserSettings> _userSettings;
+        private readonly Lazy<Guid> _userId;
         private readonly string _connectionString;
 
         private IOrganizationService Service => _service.Value;
-
         public UserSettings UserSettings => _userSettings.Value;
-        
+        public Guid UserId => _userId.Value;
 
         public CrmService(string connectionString)
         {
             _connectionString = connectionString;
             _service = new Lazy<IOrganizationService>(ConnectToCrm);
             _userSettings = new Lazy<UserSettings>(GetUserSettings);
+            _userId = new Lazy<Guid>(GetUserId);
         }
 
         public void Create(Entity entity, string alias, AliasedRecordCache recordCache)
@@ -85,30 +86,19 @@ namespace Vermaat.Crm.Specflow.Connectivity
             Service.Update(entity);
         }
 
+        public Guid GetUserId()
+        {
+            return Execute<WhoAmIResponse>(new WhoAmIRequest()).UserId;
+        }
 
         public UserSettings GetUserSettings()
         {
-            string username = GetDomainName();
-            var userQuery = new QueryExpression("systemuser")
-            {
-                ColumnSet = { AllColumns = true },
-                TopCount = 1
-            };
-            userQuery.Criteria.AddCondition("domainname", ConditionOperator.Equal, username);
-            var userEntity = RetrieveMultiple(userQuery);
-
-            if (!userEntity.Entities.Any())
-            {
-                throw new NotFoundException($"The user with domainname '{username}' is not found!");
-            }
-
-            var userGuid = userEntity.Entities[0]["systemuserid"];
             var query = new QueryExpression("usersettings")
             {
                 TopCount = 1,
                 ColumnSet = { AllColumns = true }
             };
-            query.Criteria.AddCondition("systemuserid", ConditionOperator.Equal, userGuid);
+            query.Criteria.AddCondition("systemuserid", ConditionOperator.Equal, UserId);
             var settingsEntity = RetrieveMultiple(query).Entities[0];
 
             query = new QueryExpression("timezonedefinition")
@@ -123,12 +113,6 @@ namespace Vermaat.Crm.Specflow.Connectivity
             return new UserSettings(settingsEntity, timeZoneInfo);
         }
 
-        private string GetDomainName()
-        {
-            var resp = Execute<WhoAmIResponse>(new WhoAmIRequest());
-            var user = Retrieve("systemuser", resp.UserId, new ColumnSet("domainname"));
-            return user.GetAttributeValue<string>("domainname");
-        }
 
         #region IOrganizationService
 

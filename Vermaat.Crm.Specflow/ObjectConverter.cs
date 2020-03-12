@@ -55,7 +55,7 @@ namespace Vermaat.Crm.Specflow
 
                 case AttributeTypeCode.Money:
                     if (objectType == ConvertedObjectType.Primitive)
-                        return decimal.Parse(value);
+                        return decimal.Parse(value, NumberFormatInfo.InvariantInfo);
                     else
                         return new Money(decimal.Parse(value, NumberFormatInfo.InvariantInfo));
                 case AttributeTypeCode.Picklist:
@@ -75,6 +75,9 @@ namespace Vermaat.Crm.Specflow
                         return lookup.Id;
                     else
                         return lookup;
+
+                case AttributeTypeCode.Uniqueidentifier:
+                    return GetLookupValue(context, metadata, value).Id;
 
                 case AttributeTypeCode.Virtual:
                     return ParseVirtualType(context, metadata, value);

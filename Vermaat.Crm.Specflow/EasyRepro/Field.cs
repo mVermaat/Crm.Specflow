@@ -52,10 +52,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         SetVirtualField(fieldValueText);
                         break;
                     case AttributeTypeCode.Integer:
+                        SetIntegerField((int)fieldValue);
+                        break;
                     case AttributeTypeCode.Double:
+                        SetDoubleField((double)fieldValue);
+                        break;
                     case AttributeTypeCode.BigInt:
+                        SetLongField((long)fieldValue);
+                        break;
                     case AttributeTypeCode.Decimal:
-                        SetTextField(fieldValueText);
+                        SetDecimalField((decimal)fieldValue);
                         break;
                     default:
                         SetTextField((string)fieldValue);
@@ -67,6 +73,30 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 Logger.WriteLine($"Clearing field value");
                 ClearValue();
             }
+        }
+
+        private void SetIntegerField(int fieldValue)
+        {
+            SetTextField(fieldValue.ToString(
+                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
+        }
+
+        private void SetDoubleField(double fieldValue)
+        {
+            SetTextField(fieldValue.ToString(
+                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
+        }
+
+        private void SetDecimalField(decimal fieldValue)
+        {
+            SetTextField(fieldValue.ToString(
+                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
+        }
+
+        private void SetLongField(long fieldValue)
+        {
+            SetTextField(fieldValue.ToString(
+                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
         }
 
         protected virtual void SetVirtualField(string fieldValueText)
