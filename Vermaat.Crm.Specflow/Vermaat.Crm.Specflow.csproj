@@ -182,6 +182,8 @@
     <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
     <Compile Include="Commands\ClickSubgridButtonCommand.cs" />
     <Compile Include="Commands\CreateRelatedRecordCommand.cs" />
+    <Compile Include="Commands\GetCurrentUserCommand.cs" />
+    <Compile Include="Commands\GetCurrentUserSettingsCommand.cs" />
     <Compile Include="Commands\MergeRecordsCommand.cs" />
     <Compile Include="Commands\ReviseQuoteCommand.cs" />
     <Compile Include="Commands\SetLookupAsAliasCommand.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="FormLoadConditions\RecordHasStatus.cs" />
     <Compile Include="GlobalTestingContext.cs" />
     <Compile Include="Steps\OpportunitySteps.cs" />
+    <Compile Include="Steps\UserSteps.cs" />
     <Compile Include="TestExecutionException.cs" />
     <Compile Include="Connectivity\BrowserLoginDetails.cs" />
     <Compile Include="Constants.cs" />

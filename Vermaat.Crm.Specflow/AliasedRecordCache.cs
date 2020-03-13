@@ -38,8 +38,11 @@ namespace Vermaat.Crm.Specflow
             if(string.IsNullOrEmpty(reference.Name))
             {
                 var md = _metadataCache.GetEntityMetadata(reference.LogicalName);
-                var entity = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(reference, new ColumnSet(md.PrimaryNameAttribute));
-                reference.Name = entity.GetAttributeValue<string>(md.PrimaryNameAttribute);
+                if (!string.IsNullOrWhiteSpace(md.PrimaryNameAttribute))
+                {
+                    var entity = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(reference, new ColumnSet(md.PrimaryNameAttribute));
+                    reference.Name = entity.GetAttributeValue<string>(md.PrimaryNameAttribute);
+                }
             }
 
             Logger.WriteLine($"Adding alias {alias} to cache. {reference?.Id}");
