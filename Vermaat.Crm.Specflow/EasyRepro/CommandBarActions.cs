@@ -30,20 +30,22 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Check ribbon button"), driver =>
             {
-                IWebElement ribbon = null;
 
                 //Find the button in the CommandBar
-                if (driver.HasElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Container])))
-                    ribbon = driver.FindElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Container]));
+                var ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.Container]), 
+                    TimeSpan.FromSeconds(5));
 
-                if (ribbon == null)
+                if(ribbon == null)
                 {
-                    if (driver.HasElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid])))
-                        ribbon = driver.FindElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid]));
-                    else
-                        throw new InvalidOperationException("Unable to find the ribbon.");
+                    ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid]), 
+                        TimeSpan.FromSeconds(5),
+                        null,
+                        d => // FailureCallback
+                        {
+                            throw new TestExecutionException(Constants.ErrorCodes.RIBBON_NOT_FOUND);
+                        });
+                
                 }
-
                 //Get the CommandBar buttons
                 var items = ribbon.FindElements(By.TagName("li"));
 
