@@ -55,6 +55,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.MULTIPLE_ATTRIBUTES_FOUND, "Multiple attributes found for {0}. Results: {1}");
             AddError(Constants.ErrorCodes.APPLICATIONUSER_CANNOT_LOGIN, "An application user can't login via the browser");
             AddError(Constants.ErrorCodes.NO_CONTROL_FOUND, "No controls found for attribute {0}");
+            AddError(Constants.ErrorCodes.RIBBON_NOT_FOUND, "Unable to find the ribbon");
         }
 
         public void AddError(int errorCode, string message)
