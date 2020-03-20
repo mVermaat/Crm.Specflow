@@ -15,8 +15,8 @@ You can use display names of attributes instead of schema names to make you scen
 ## Multiple tab support
 When entering data on a form, it will automatically determine the tab the field is on and switch tabs if needed
 
-## Globalizations for dates & times
-You specify your Date(time) format in your test project and the framework automatically figures out how this relates to the user's timezone and adapts the inputs and assertions.
+## Unified Data Type input
+You specify your Date(time) format in your test project and the framework automatically figures out how this relates to the user's timezone and adapts the inputs and assertions. The same goes for decimal numbers. Invariant input is used for SpecFlow, but it will be entered in the form based on user settings.
 
 ## Creation of related records
 Next to creating new standalone records, you can also created records that are related to another. Like pressing the 'Add New' on a subgrid or associated view.
