@@ -28,6 +28,9 @@ namespace Vermaat.Crm.Specflow.Expressions
 
         private void ParseRow(object sender, TableRowEventArgs e)
         {
+            if (!e.Row.ContainsKey(Constants.SpecFlow.TABLE_VALUE))
+                return;
+
             var value = e.Row[Constants.SpecFlow.TABLE_VALUE];
 
             if (string.IsNullOrWhiteSpace(value) || !value.StartsWith("="))
