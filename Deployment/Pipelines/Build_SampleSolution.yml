@@ -88,8 +88,9 @@ stages:
   - deployment: 'Deployment'
     displayName: 'Deploy Sample Solution'
     timeoutInMinutes: 600
-    pool:
-      vmImage: 'windows-latest'
+# I use a VM here instead of the free MS agent, because the free agent can only run for 1 hour maximum
+# A payed agent ($40 per month) can run upto 6 hours. I recommend using that one or maintain your own VM
+    pool: 'AzureDH' 
     variables:
     - group: 'TST'
     environment: 'TST'

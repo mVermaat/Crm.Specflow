@@ -38,6 +38,36 @@ namespace Vermaat.Crm.Specflow
             return convertedValue;
         }
 
+        public static string ToSpecflowTableValue(AttributeMetadata metadata, object parsed)
+        {
+            switch(metadata.AttributeType)
+            {
+                case AttributeTypeCode.Double: 
+                    return Convert.ToDouble(parsed).ToString(NumberFormatInfo.InvariantInfo);
+
+                case AttributeTypeCode.Decimal:
+                case AttributeTypeCode.Money:
+                    return Convert.ToDecimal(parsed).ToString(NumberFormatInfo.InvariantInfo);
+
+                case AttributeTypeCode.Integer:
+                    return Convert.ToInt32(parsed).ToString(NumberFormatInfo.InvariantInfo);
+
+                case AttributeTypeCode.DateTime:
+                    return ToDateTimeString(metadata, (DateTime)parsed);
+
+                default:
+                    return parsed.ToString();
+            }
+        }
+
+        private static string ToDateTimeString(AttributeMetadata metadata, DateTime parsed)
+        {
+            var format = ((DateTimeAttributeMetadata)metadata).Format == DateTimeFormat.DateOnly ?
+                _dateonlyFormat : _datetimeFormat;
+
+            return parsed.ToString(format);
+        }
+
         private static object GetConvertedValue(CrmTestingContext context, AttributeMetadata metadata, string value, ConvertedObjectType objectType)
         {
             switch (metadata.AttributeType)

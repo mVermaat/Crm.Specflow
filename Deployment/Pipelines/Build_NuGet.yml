@@ -37,6 +37,15 @@ steps:
     arguments: 'pack $(Build.SourcesDirectory)\Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj -OutputDirectory $(build.artifactstagingdirectory) -Properties Configuration=$(BuildConfiguration) -version "$(NuGetVersion)" -Verbosity Detailed -Symbols -SymbolPackageFormat snupkg'
 
 - task: NuGetCommand@2
+  displayName: 'NuGet custom'
+  condition: and(succeeded(), eq(variables.CreateNuGetPackage, 'true'))
+  inputs:
+    command: custom
+    versioningScheme: byBuildNumber
+    includeSymbols: true
+    arguments: 'pack $(Build.SourcesDirectory)\Vermaat.Crm.Specflow.Expressions\Vermaat.Crm.Specflow.Expressions.csproj -OutputDirectory $(build.artifactstagingdirectory) -Properties Configuration=$(BuildConfiguration) -version "$(NuGetVersion)" -Verbosity Detailed -Symbols -SymbolPackageFormat snupkg'
+
+- task: NuGetCommand@2
   displayName: 'NuGet push'
   condition: and(succeeded(), eq(variables.CreateNuGetPackage, 'true'))
   inputs:
