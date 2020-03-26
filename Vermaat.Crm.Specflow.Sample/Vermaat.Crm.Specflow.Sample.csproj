@@ -154,10 +154,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="API.runsettings">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="API.srprofile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="appsettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Chrome.runsettings">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Chrome.srprofile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DataTypes\BooleanDataType.feature" />
@@ -166,10 +178,20 @@
     <None Include="DataTypes\DecimalDataType.feature" />
     <None Include="DataTypes\LookupDataType.feature" />
     <None Include="DataTypes\StringDataType.feature" />
+    <None Include="Default.runsettings">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Default.srprofile">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="EntityTests\QuoteTests.feature" />
+    <None Include="Firefox.runsettings">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox.srprofile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Formulas\DateFormulas.feature" />
     <None Include="Formulas\NumericFormulas.feature" />
     <None Include="General\Defaults.feature" />
