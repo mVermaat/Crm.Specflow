@@ -18,10 +18,10 @@ namespace Vermaat.Crm.Specflow
             BrowserOptions = new BrowserOptions()
             {
                 CleanSession = true,
-                StartMaximized = true,
-                UCITestMode = true,
                 DriversPath = null,
-
+                StartMaximized = true,
+                PrivateMode = true,
+                UCITestMode = true,
             };
             CurrentApp = HelperMethods.GetAppSettingsValue("AppName", true);
 

@@ -1,7 +1,7 @@
 ﻿Feature: OpportunityTests
 
 
-@API @Chrome @Cleanup
+@API @Chrome @Firefox @Cleanup
 Scenario Outline: Winning an opportunity
 Given an account named TestAccount with the following values
 	| Property     | Value       |

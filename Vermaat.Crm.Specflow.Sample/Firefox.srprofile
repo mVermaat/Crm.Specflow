@@ -27,20 +27,8 @@
     </Steps>
   </DeploymentTransformation>
   <Targets>
-    <!--<Target name="IE">
-      <Filter>IE</Filter>
-    </Target>-->
     <Target name="Firefox">
       <Filter>Firefox</Filter>
-    </Target>
-    <Target name="Chrome">
-      <Filter>Chrome</Filter>
-    </Target>
-    <!--<Target name="Edge">
-      <Filter>Edge</Filter>
-    </Target>-->
-    <Target name="API">
-      <Filter>API</Filter>
     </Target>
   </Targets>
 </TestProfile>
