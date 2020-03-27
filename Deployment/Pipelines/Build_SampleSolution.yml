@@ -153,6 +153,8 @@ stages:
             inputs:
               filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/AddScreenshotsToTestResults.ps1'
               arguments: '-isRelease $false -testRunTitle "SpecFlow_API"'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           
           - task: VSTest@2
             displayName: 'Run SpecFlow Tests - Chrome'
@@ -170,6 +172,8 @@ stages:
             inputs:
               filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/AddScreenshotsToTestResults.ps1'
               arguments: '-isRelease $false -testRunTitle "SpecFlow_Chrome"'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
           - task: VSTest@2
             displayName: 'Run SpecFlow Tests - Firefox'
@@ -187,3 +191,5 @@ stages:
             inputs:
               filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/AddScreenshotsToTestResults.ps1'
               arguments: '-isRelease $false -testRunTitle "SpecFlow_Firefox"'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
