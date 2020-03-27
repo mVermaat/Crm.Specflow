@@ -139,6 +139,7 @@ stages:
           
           - task: VSTest@2
             displayName: 'Run SpecFlow Tests - API'
+            continueOnError: true
             inputs:
               testSelector: 'testAssemblies'
               testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
@@ -147,8 +148,15 @@ stages:
               testRunTitle: 'SpecFlow_API'
               diagnosticsEnabled: true
 
+          - task: PowerShell@2
+            displayName: 'Add Screenshots to API Test Results'
+            inputs:
+              filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/AddScreenshotsToTestResults.ps1'
+              arguments: '-isRelease $false -testRunTitle "SpecFlow_API"'
+          
           - task: VSTest@2
             displayName: 'Run SpecFlow Tests - Chrome'
+            continueOnError: true
             inputs:
               testSelector: 'testAssemblies'
               testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
@@ -157,8 +165,15 @@ stages:
               testRunTitle: 'SpecFlow_Chrome'
               diagnosticsEnabled: true
 
+          - task: PowerShell@2
+            displayName: 'Add Screenshots to Chrome Test Results'
+            inputs:
+              filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/AddScreenshotsToTestResults.ps1'
+              arguments: '-isRelease $false -testRunTitle "SpecFlow_Chrome"'
+
           - task: VSTest@2
             displayName: 'Run SpecFlow Tests - Firefox'
+            continueOnError: true
             inputs:
               testSelector: 'testAssemblies'
               testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
@@ -166,3 +181,9 @@ stages:
               runSettingsFile: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow/Firefox.runsettings'
               testRunTitle: 'SpecFlow_Firefox'
               diagnosticsEnabled: true
+
+          - task: PowerShell@2
+            displayName: 'Add Screenshots to Firefox Test Results'
+            inputs:
+              filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/AddScreenshotsToTestResults.ps1'
+              arguments: '-isRelease $false -testRunTitle "SpecFlow_Firefox"'
