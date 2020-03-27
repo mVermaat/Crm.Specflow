@@ -19,7 +19,7 @@ else { # As there is no filter parameter for stage/environment id in YAML deploy
 	$buildFilter = "&buildIds=$env:BUILD_BUILDID&runTitle=$testRunTitle"
 }
 
-$url = "$baseUrl?minLastUpdatedDate=$minUpdate&maxLastUpdatedDate=$maxUpdate$buildFilter&api-version=5.1"
+$url = "$($baseUrl)?minLastUpdatedDate=$minUpdate&maxLastUpdatedDate=$maxUpdate$buildFilter&api-version=5.1"
 Write-Host "url: $url"
 
 $data = Invoke-RestMethod -Uri "$url" -Headers @{Authorization = $pat} 
