@@ -40,7 +40,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         public override CrmService CreateCrmServiceInstance()
         {
-            return new CrmService($"AuthType={_authType};Url={_url};ClientId={Identifier};ClientSecret={_clientSecret};RequireNewInstance=True");
+            return new CrmService($"AuthType={_authType};Url={_url};ClientId={_clientId};ClientSecret={_clientSecret};RequireNewInstance=True");
         }
 
         public override BrowserLoginDetails GetBrowserLoginInformation()
