@@ -16,21 +16,19 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public TResult Execute(CommandAction commandAction = CommandAction.Default)
         {
-            if (commandAction == CommandAction.ForceApi || _crmContext.IsTarget(Constants.SpecFlow.TARGET_API))
+            var actionToUse = commandAction == CommandAction.Default ?
+                HelperMethods.GetPreferredCommandActionFromTarget(_crmContext) : commandAction;
+
+            switch(actionToUse)
             {
-                return ExecuteApi();
-            }
-            else if (commandAction == CommandAction.ForceBrowser ||
-                     _crmContext.IsTarget(Constants.SpecFlow.TARGET_Chrome) ||
-                     _crmContext.IsTarget(Constants.SpecFlow.TARGET_Edge) ||
-                     _crmContext.IsTarget(Constants.SpecFlow.TARGET_Firefox) ||
-                     _crmContext.IsTarget(Constants.SpecFlow.TARGET_InternetExplorer))
-            {
-                return ExecuteBrowser();
-            }
-            else
-            {
-                throw new TestExecutionException(Constants.ErrorCodes.UNKNOWN_TAG);
+                case CommandAction.ForceApi:
+                case CommandAction.PreferApi:
+                    return ExecuteApi();
+                case CommandAction.PreferBrowser:
+                case CommandAction.ForceBrowser:
+                    return ExecuteBrowser();
+                default:
+                    throw new TestExecutionException(Constants.ErrorCodes.UNKNOWN_TAG);
             }
         }
 
@@ -51,22 +49,19 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public void Execute(CommandAction commandAction = CommandAction.Default)
         {
-            if (commandAction == CommandAction.ForceApi ||
-                _crmContext.IsTarget(Constants.SpecFlow.TARGET_API))
+            var actionToUse = commandAction == CommandAction.Default ?
+                HelperMethods.GetPreferredCommandActionFromTarget(_crmContext) : commandAction;
+
+            switch (actionToUse)
             {
-                ExecuteApi();
-            }
-            else if (commandAction == CommandAction.ForceBrowser ||
-                     _crmContext.IsTarget(Constants.SpecFlow.TARGET_Chrome) ||
-                     _crmContext.IsTarget(Constants.SpecFlow.TARGET_Edge) ||
-                     _crmContext.IsTarget(Constants.SpecFlow.TARGET_Firefox) ||
-                     _crmContext.IsTarget(Constants.SpecFlow.TARGET_InternetExplorer))
-            {
-                ExecuteBrowser();
-            }
-            else
-            {
-                throw new TestExecutionException(Constants.ErrorCodes.UNKNOWN_TAG);
+                case CommandAction.ForceApi:
+                case CommandAction.PreferApi:
+                    ExecuteApi(); break;
+                case CommandAction.PreferBrowser:
+                case CommandAction.ForceBrowser:
+                    ExecuteBrowser(); break;
+                default:
+                    throw new TestExecutionException(Constants.ErrorCodes.UNKNOWN_TAG);
             }
         }
 
