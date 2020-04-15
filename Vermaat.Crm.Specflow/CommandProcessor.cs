@@ -12,15 +12,23 @@ namespace Vermaat.Crm.Specflow
     public class CommandProcessor
     {
         private readonly ScenarioContext _scenarioContext;
+        
 
         public TestExecutionException LastError { get; private set; }
+        public CommandAction DefaultCommandAction { get; set; }
 
         public CommandProcessor(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
+            DefaultCommandAction = CommandAction.Default;
         }
 
-        public void Execute(ICommand command, CommandAction commandAction = CommandAction.Default)
+        public void Execute(ICommand command)
+        {
+            Execute(command, DefaultCommandAction);
+        }
+
+        public void Execute(ICommand command, CommandAction commandAction)
         {
             try
             {
@@ -34,7 +42,12 @@ namespace Vermaat.Crm.Specflow
             }
         }
 
-        public TResult Execute<TResult>(ICommandFunc<TResult> command, CommandAction commandAction = CommandAction.Default)
+        public TResult Execute<TResult>(ICommandFunc<TResult> command)
+        {
+            return Execute(command, DefaultCommandAction);
+        }
+
+        public TResult Execute<TResult>(ICommandFunc<TResult> command, CommandAction commandAction)
         {
             try
             {
