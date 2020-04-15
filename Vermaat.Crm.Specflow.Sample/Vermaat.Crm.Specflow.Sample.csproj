@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTests\UnitTestSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="API.runsettings">
@@ -212,6 +213,7 @@
     <None Include="SpecRunTestProfile_2011_09.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="UnitTests\CommandActionTest.feature" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vermaat.Crm.Specflow.Expressions\Vermaat.Crm.Specflow.Expressions.csproj">

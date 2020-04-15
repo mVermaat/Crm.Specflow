@@ -70,6 +70,31 @@ namespace Vermaat.Crm.Specflow
             }
         }
 
+        [BeforeScenario("ForceAPI")]
+        public void ForceApi()
+        {
+            _crmContext.CommandProcessor.DefaultCommandAction = CommandAction.ForceApi;
+        }
+
+        [BeforeScenario("ForceBrowser")]
+        public void ForceBrowser()
+        {
+            _crmContext.CommandProcessor.DefaultCommandAction = CommandAction.ForceBrowser;
+        }
+
+        [BeforeScenario("PreferAPI")]
+        public void PreferApi()
+        {
+            _crmContext.CommandProcessor.DefaultCommandAction = CommandAction.PreferApi;
+        }
+
+        [BeforeScenario("PreferBrowser")]
+        public void PreferBrowser()
+        {
+            _crmContext.CommandProcessor.DefaultCommandAction = CommandAction.PreferBrowser;
+        }
+
+
         [BeforeScenario]
         public void SetDefaultConnection()
         {

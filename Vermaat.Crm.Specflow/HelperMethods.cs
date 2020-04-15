@@ -130,5 +130,24 @@ namespace Vermaat.Crm.Specflow
             Logger.WriteLine("Form load completed");
         }
 
+        public static CommandAction GetPreferredCommandActionFromTarget(CrmTestingContext crmContext)
+        {
+            if (crmContext.IsTarget(Constants.SpecFlow.TARGET_API))
+            {
+                return CommandAction.PreferApi;
+            }
+            else if (crmContext.IsTarget(Constants.SpecFlow.TARGET_Chrome) ||
+                     crmContext.IsTarget(Constants.SpecFlow.TARGET_Edge) ||
+                     crmContext.IsTarget(Constants.SpecFlow.TARGET_Firefox) ||
+                     crmContext.IsTarget(Constants.SpecFlow.TARGET_InternetExplorer))
+            {
+                return CommandAction.ForceBrowser;
+            }
+            else
+            {
+                throw new TestExecutionException(Constants.ErrorCodes.UNKNOWN_TAG);
+            }
+        }
+
     }
 }
