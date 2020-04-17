@@ -51,6 +51,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void ExpandHeader()
         {
+            Logger.WriteLine("Expanding headers");
             var header = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty);
             _app.WebDriver.ClickWhenAvailable(header);
         }
