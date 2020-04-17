@@ -38,8 +38,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_FieldContainer,
 
-        FlyoutRoot
-
-        
+        FlyoutRoot,
+        Entity_Header
     }
 }

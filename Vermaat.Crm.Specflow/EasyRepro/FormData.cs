@@ -93,7 +93,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];
 
                 var newTab = field.GetTabName();
-                if(string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab)
+                if (newTab != "Header" && (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab))
                 {
                     ExpandTab(field.GetTabLabel());
                     currentTab = newTab;
@@ -102,8 +102,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 Assert.IsTrue(field.IsVisible(), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't visible");
                 Assert.IsFalse(field.IsLocked(), $"Field {row[Constants.SpecFlow.TABLE_KEY]} is read-only");
 
-                field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
+                field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE], field.GetTabName() == "Header");
             }
+        }
+
+        internal void ExpandHeader()
+        {
+            var header = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty);
+            _app.WebDriver.ClickWhenAvailable(header);
         }
 
         private void WaitUntilSaveCompleted()

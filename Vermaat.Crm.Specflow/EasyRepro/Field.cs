@@ -1,4 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -23,7 +24,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             App = app;
         }
 
-        public void SetValue(CrmTestingContext crmContext, string fieldValueText)
+        public void SetValue(CrmTestingContext crmContext, string fieldValueText, bool isHeader = false)
         {
             object fieldValue = ObjectConverter.ToCrmObject(Metadata.EntityLogicalName, Metadata.LogicalName, fieldValueText, crmContext);
 
@@ -46,7 +47,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         SetOptionSetField((OptionSetValue)fieldValue, fieldValueText);
                         break;
                     case AttributeTypeCode.Money:
-                        SetMoneyField((Money)fieldValue, fieldValueText);
+                        SetMoneyField((Money)fieldValue, fieldValueText, isHeader);
                         break;
                     case AttributeTypeCode.Virtual:
                         SetVirtualField(fieldValueText);
@@ -152,17 +153,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             App.App.Entity.SetValue(new OptionSet { Name = LogicalName, Value = optionSetLabel });
         }
 
-        protected virtual void SetMoneyField(Money fieldValue, string fieldValueText)
+        protected virtual void SetMoneyField(Money fieldValue, string fieldValueText, bool isHeader = false)
         {
-            SetTextField(fieldValue?.Value.ToString());
+            SetTextField(fieldValue?.Value.ToString(), isHeader);
         }
 
-        protected virtual void SetTextField(string fieldValue)
+        protected virtual void SetTextField(string fieldValue, bool isHeader = false)
         {
             if (string.IsNullOrWhiteSpace(fieldValue))
                 App.App.Entity.ClearValue(LogicalName);
             else
-                App.Client.SetValueFix(LogicalName, fieldValue);
+                App.Client.SetValueFix(LogicalName, fieldValue, isHeader);
+            // Tried Using App.App.Entity.SetHeaderValue but received NullReferenceException
         }
 
         protected virtual void SetLookupValue(EntityReference fieldValue, string fieldValueText)

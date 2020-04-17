@@ -40,7 +40,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             if (string.IsNullOrEmpty(_tabLabel))
             {
-                _tabLabel = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{GetDefaultControl()}').getParent().getParent().getLabel()")?.ToString();
+                var defaultControl = GetDefaultControl();
+                if (defaultControl.StartsWith("header"))
+                    _tabLabel = string.Empty;
+                else
+                    _tabLabel = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{defaultControl}').getParent().getParent().getLabel()")?.ToString();
             }
             return _tabLabel;
         }
@@ -71,7 +75,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public bool IsVisible()
         {
-            if (!IsTabOfFieldExpanded())
+            if (_controls.Length == 1 && _controls[0].StartsWith("header_"))
+                _form.ExpandHeader();
+            else if (!IsTabOfFieldExpanded())
                 _form.ExpandTab(GetTabLabel());
 
             return App.WebDriver.WaitUntilVisible(
@@ -95,7 +101,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             if (string.IsNullOrEmpty(_tabName))
             {
-                _tabName = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{GetDefaultControl()}').getParent().getParent().getName()")?.ToString();
+                var defaultControl = GetDefaultControl();
+                if (defaultControl.StartsWith("header"))
+                    _tabName = "Header";
+                else
+                    _tabName = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{defaultControl}').getParent().getParent().getName()")?.ToString();
             }
             return _tabName;
         }
