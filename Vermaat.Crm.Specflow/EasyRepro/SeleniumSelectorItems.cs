@@ -34,11 +34,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Entity_SubGrid_Button,
         Entity_SubGrid_ButtonList,
 
+        Entity_Header,
+
         Entity_MoreTabs,
 
         Entity_FieldContainer,
 
-        FlyoutRoot,
-        Entity_Header
+        FlyoutRoot
     }
 }

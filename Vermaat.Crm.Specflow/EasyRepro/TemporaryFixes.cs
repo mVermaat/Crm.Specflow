@@ -20,18 +20,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         /// <param name="field">The field</param>
         /// <param name="value">The value</param>
         /// <example>xrmApp.Entity.SetValue("firstname", "Test");</example>
-        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, string value, bool isHeader = false)
+        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, string value)
         {
             return client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
-                //if (isHeader)
-                //{
-                //    // Expand Header
-                //    var header = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty);
-                //    IWebElement headerExpandButton = WaitUntilClickable(driver, header, TimeSpan.FromSeconds(5), null, null);
-                //    headerExpandButton.Click();
-                //}
-
                 var query = By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field));
                 IWebElement fieldContainer = WaitUntilClickable(driver, query, TimeSpan.FromSeconds(5), null, null);
 

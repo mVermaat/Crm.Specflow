@@ -18,6 +18,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private string _tabLabel;
         private string _tabName;
+        private bool? _isFieldInHeaderOnly;
 
         public IEnumerable<string> Controls => _controls;
 
@@ -40,11 +41,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             if (string.IsNullOrEmpty(_tabLabel))
             {
-                var defaultControl = GetDefaultControl();
-                if (defaultControl.StartsWith("header"))
+                if (IsFieldInHeaderOnly())
                     _tabLabel = string.Empty;
                 else
-                    _tabLabel = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{defaultControl}').getParent().getParent().getLabel()")?.ToString();
+                    _tabLabel = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{GetDefaultControl()}').getParent().getParent().getLabel()")?.ToString();
             }
             return _tabLabel;
         }
@@ -75,7 +75,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public bool IsVisible()
         {
-            if (_controls.Length == 1 && _controls[0].StartsWith("header_"))
+            if (IsFieldInHeaderOnly())
                 _form.ExpandHeader();
             else if (!IsTabOfFieldExpanded())
                 _form.ExpandTab(GetTabLabel());
@@ -101,11 +101,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             if (string.IsNullOrEmpty(_tabName))
             {
-                var defaultControl = GetDefaultControl();
-                if (defaultControl.StartsWith("header"))
+                if (IsFieldInHeaderOnly())
                     _tabName = "Header";
                 else
-                    _tabName = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{defaultControl}').getParent().getParent().getName()")?.ToString();
+                    _tabName = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{GetDefaultControl()}').getParent().getParent().getName()")?.ToString();
             }
             return _tabName;
         }
@@ -117,9 +116,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return "expanded".Equals(result, StringComparison.CurrentCultureIgnoreCase);
         }
 
-        
-
-        
+        public bool IsFieldInHeaderOnly()
+        {
+            if (_isFieldInHeaderOnly == null)
+                _isFieldInHeaderOnly = _controls.Length == 1 && _controls[0].StartsWith("header");
+            return _isFieldInHeaderOnly.Value;
+        }
 
     }
 }

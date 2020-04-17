@@ -49,6 +49,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _app.App.Entity.SelectTab(tabLabel);
         }
 
+        public void ExpandHeader()
+        {
+            var header = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty);
+            _app.WebDriver.ClickWhenAvailable(header);
+        }
+
         public string GetErrorDialogMessage()
         {
             Logger.WriteLine("Getting error dialog message");
@@ -93,7 +99,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];
 
                 var newTab = field.GetTabName();
-                if (newTab != "Header" && (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab))
+                if (!field.IsFieldInHeaderOnly() && (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab))
                 {
                     ExpandTab(field.GetTabLabel());
                     currentTab = newTab;
@@ -102,14 +108,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 Assert.IsTrue(field.IsVisible(), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't visible");
                 Assert.IsFalse(field.IsLocked(), $"Field {row[Constants.SpecFlow.TABLE_KEY]} is read-only");
 
-                field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE], field.GetTabName() == "Header");
+                field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }
-        }
-
-        internal void ExpandHeader()
-        {
-            var header = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty);
-            _app.WebDriver.ClickWhenAvailable(header);
         }
 
         private void WaitUntilSaveCompleted()
