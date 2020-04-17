@@ -14,12 +14,12 @@ steps:
     restoreSolution: '${{ parameters.solutions }}'
     feedsToUse: 'select'
     
-- task: Assembly-Info-NetFramework@2
-  displayName: 'Set Assembly Manifest Data'
-  inputs:
-    VersionNumber: '$(Build.BuildNumber)'
-    FileVersionNumber: '$(Build.BuildNumber)'
-    InformationalVersion: '$(Build.BuildNumber)'
+#- task: Assembly-Info-NetFramework@2
+#  displayName: 'Set Assembly Manifest Data'
+#  inputs:
+#    VersionNumber: '$(Build.BuildNumber)'
+#    FileVersionNumber: '$(Build.BuildNumber)'
+#    InformationalVersion: '$(Build.BuildNumber)'
 
 - task: VSBuild@1
   displayName: 'Build solution ${{ parameters.solutions }}'
