@@ -61,3 +61,12 @@ Then TestAccount has the following values
 	| Website      |              |
 	| Industry     |              |
 	| Description  |              |
+
+@Chrome @Firefox @Cleanup
+Scenario: Setting Account Header Field
+Given an account named TestAccount with the following values
+	| Property       | Value |
+	| Annual Revenue | 5000  |
+Then TestAccount has the following values
+	| Property       | Value |
+	| Annual Revenue | 5000  |

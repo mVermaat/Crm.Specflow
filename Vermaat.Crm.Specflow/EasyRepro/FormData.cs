@@ -49,6 +49,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _app.App.Entity.SelectTab(tabLabel);
         }
 
+        public void ExpandHeader()
+        {
+            Logger.WriteLine("Expanding headers");
+            var header = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty);
+            _app.WebDriver.ClickWhenAvailable(header);
+        }
+
         public string GetErrorDialogMessage()
         {
             Logger.WriteLine("Getting error dialog message");
@@ -93,7 +100,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];
 
                 var newTab = field.GetTabName();
-                if(string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab)
+                if (!field.IsFieldInHeaderOnly() && (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab))
                 {
                     ExpandTab(field.GetTabLabel());
                     currentTab = newTab;
