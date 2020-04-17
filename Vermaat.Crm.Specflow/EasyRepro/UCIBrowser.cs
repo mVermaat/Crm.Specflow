@@ -5,7 +5,9 @@ using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using Vermaat.Crm.Specflow.Connectivity;
 using Vermaat.Crm.Specflow.Entities;
@@ -40,6 +42,24 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             Logger.WriteLine("Logging in CRM");
             App.App.OnlineLogin.Login(new Uri(loginDetails.Url), loginDetails.Username.ToSecureString(), loginDetails.Password);
+
+            // Wait for login to finish
+            var watch = new Stopwatch();
+            watch.Start();
+            
+            while (true)
+            {
+                var currentHost = new Uri(App.Client.Browser.Driver.Url).Host;
+                var expectedHost = new Uri(loginDetails.Url).Host;
+
+                if (currentHost == expectedHost)
+                    break;
+
+                if (watch.Elapsed > TimeSpan.FromSeconds(10))
+                    throw new TestExecutionException(Constants.ErrorCodes.LOGIN_TIMED_OUT);
+
+                Thread.Sleep(1000);
+            }
         }
 
         public void ChangeApp(string appUniqueName)
