@@ -89,7 +89,7 @@ stages:
     displayName: 'Deploy Sample Solution'
     timeoutInMinutes: 600
     pool:
-        vmImage: 'windows-latest'
+      vmImage: 'windows-latest'
     variables:
     - group: 'TST'
     environment: 'TST'
