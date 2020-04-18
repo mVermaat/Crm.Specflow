@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Security.Tokens;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -206,14 +207,29 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private Dictionary<string, FormTab> InitializeFormTabs()
         {
-            dynamic tabCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.ui.tabs.getAll().map(function(t) { return { label: t.getLabel(), visible: t.getVisible() } })");
+            dynamic tabCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.ui.tabs.getAll().map(function(t) { return { label: t.getLabel(), visible: t.getVisible(), sections: t.sections.getAll().map(function (s) { return { label: s.getLabel(), visible: s.getVisible()}; })}})");
 
             var formTabs = new Dictionary<string, FormTab>();
             foreach (var tab in tabCollection)
             {
-                formTabs.Add(tab["label"], new FormTab
+                var formSections = new Dictionary<string, FormSection>();
+                foreach (var section in tab["sections"])
                 {
-                    Label = tab["label"],
+                    var sectionLabel = ((string)section["label"]).ToLower();
+
+                    formSections.Add(sectionLabel, new FormSection
+                    {
+                        Label = sectionLabel,
+                        // TODO: Visibility should not be determined used API, it should use the DOM
+                        Visible = section["visible"]
+                    });
+                }
+
+                var tabLabel = ((string)tab["label"]).ToLower();
+
+                formTabs.Add(tabLabel, new FormTab(formSections)
+                {
+                    Label = tabLabel,
                     // TODO: Visibility should not be determined using API, it should use the DOM
                     Visible = tab["visible"]
                 });
