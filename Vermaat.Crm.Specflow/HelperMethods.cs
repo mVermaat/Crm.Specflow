@@ -103,10 +103,9 @@ namespace Vermaat.Crm.Specflow
                 {
                     driver.WaitForPageToLoad();
                     driver.WaitUntilClickable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormLoad),
-                        timeLeft,
+                        timeLeft, 
                         null,
-                        d => { throw new TestExecutionException(Constants.ErrorCodes.FORM_LOAD_TIMEOUT); }
-                    );
+                        () => { throw new TestExecutionException(Constants.ErrorCodes.FORM_LOAD_TIMEOUT); });
 
                     if (additionalConditions != null)
                     {

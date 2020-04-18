@@ -80,9 +80,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             else if (!IsTabOfFieldExpanded())
                 _form.ExpandTab(GetTabLabel());
 
-            return App.WebDriver.WaitUntilVisible(
+            var element = App.WebDriver.WaitUntilVisible(
                 SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FieldContainer, GetDefaultControl()),
                 TimeSpan.FromSeconds(5));
+
+            return element != null;
         }
 
         public bool IsLocked()
