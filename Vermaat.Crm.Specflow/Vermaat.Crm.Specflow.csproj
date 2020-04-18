@@ -214,9 +214,11 @@
     <Compile Include="Commands\UpdateStatusCommand.cs" />
     <Compile Include="Commands\WaitForAsyncJobsCommand.cs" />
     <Compile Include="EasyRepro\Field.cs" />
+    <Compile Include="EasyRepro\FormComponent.cs" />
     <Compile Include="EasyRepro\FormNotification.cs" />
     <Compile Include="EasyRepro\FormNotificationType.cs" />
     <Compile Include="EasyRepro\FormOptions.cs" />
+    <Compile Include="EasyRepro\FormTab.cs" />
     <Compile Include="EasyRepro\FormVisibility.cs" />
     <Compile Include="EasyRepro\OpportunityCloseDialog.cs" />
     <Compile Include="EasyRepro\OpportunityCloseDialogField.cs" />

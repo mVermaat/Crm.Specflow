@@ -1,4 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -17,8 +18,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         private readonly UCIApp _app;
         private readonly EntityMetadata _entityMetadata;
-        private readonly Dictionary<string, FormField> _formFields;
 
+        private readonly Dictionary<string, FormField> _formFields;
+        private readonly Dictionary<string, FormTab> _formTabs;
+
+        public IReadOnlyDictionary<string, FormTab> Tabs => _formTabs;
+        public IReadOnlyDictionary<string, FormField> Fields => _formFields;
+        
         public FormField this[string attributeName] => _formFields[attributeName];
         public CommandBarActions CommandBar { get; }
 
@@ -28,7 +34,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _entityMetadata = entityMetadata;
             CommandBar = new CommandBarActions(_app);
 
-            _formFields = InitializeFormData();
+            _formFields = InitializeFormFields();
+            _formTabs = InitializeFormTabs();
         }
 
         public void ClickSubgridButton(string subgridName, string subgridButton)
@@ -88,6 +95,23 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
             ConfirmDuplicate(saveIfDuplicate);
             WaitUntilSaveCompleted();
+        }
+
+        public bool ContainsTab(string tabLabel)
+        {
+            return _formTabs.ContainsKey(tabLabel);
+        }
+
+        public bool TryGetTab(string key, out FormTab tab)
+        {
+            if (!_formTabs.ContainsKey(key))
+            {
+                tab = null;
+                return false;
+            }
+
+            tab = _formTabs[key];
+            return true;
         }
 
         public void FillForm(CrmTestingContext crmContext, Table formData)
@@ -159,7 +183,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
         }
 
-        private Dictionary<string, FormField> InitializeFormData()
+        private Dictionary<string, FormField> InitializeFormFields()
         {
             dynamic attributeCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.data.entity.attributes.getAll().map(function(a) { return { name: a.getName(), controls: a.controls.getAll().map(function(c) { return c.getName() }) } })");
 
@@ -178,6 +202,24 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
 
             return formFields;
+        }
+
+        private Dictionary<string, FormTab> InitializeFormTabs()
+        {
+            dynamic tabCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.ui.tabs.getAll().map(function(t) { return { label: t.getLabel(), visible: t.getVisible() } })");
+
+            var formTabs = new Dictionary<string, FormTab>();
+            foreach (var tab in tabCollection)
+            {
+                formTabs.Add(tab["label"], new FormTab
+                {
+                    Label = tab["label"],
+                    // TODO: Visibility should not be determined using API, it should use the DOM
+                    Visible = tab["visible"]
+                });
+            }
+
+            return formTabs;
         }
     }
 }

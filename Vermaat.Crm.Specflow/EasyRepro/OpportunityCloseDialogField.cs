@@ -30,5 +30,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             App.App.Entity.SetValue(new LookupItem { Name = LogicalName, Value = fieldValueText });
         }
+
+        public override bool IsVisible()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

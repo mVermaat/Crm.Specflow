@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    public abstract class Field
+    public abstract class Field : FormComponent
     {
         protected AttributeMetadata Metadata { get; }
         protected UCIApp App { get; }

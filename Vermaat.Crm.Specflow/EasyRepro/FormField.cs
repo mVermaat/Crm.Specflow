@@ -73,7 +73,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return result.Value;
         }
 
-        public bool IsVisible()
+        public override bool IsVisible()
         {
             if (IsFieldInHeaderOnly())
                 _form.ExpandHeader();
