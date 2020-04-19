@@ -219,6 +219,7 @@
     <Compile Include="EasyRepro\FormNotificationType.cs" />
     <Compile Include="EasyRepro\FormOptions.cs" />
     <Compile Include="EasyRepro\FormSection.cs" />
+    <Compile Include="EasyRepro\FormSubgrid.cs" />
     <Compile Include="EasyRepro\FormTab.cs" />
     <Compile Include="EasyRepro\FormVisibility.cs" />
     <Compile Include="EasyRepro\OpportunityCloseDialog.cs" />

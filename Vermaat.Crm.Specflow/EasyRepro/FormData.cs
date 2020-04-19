@@ -22,10 +22,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private readonly Dictionary<string, FormField> _formFields;
         private readonly Dictionary<string, FormTab> _formTabs;
+        private readonly Dictionary<string, FormSubgrid> _subgrids;
 
         public IReadOnlyDictionary<string, FormTab> Tabs => _formTabs;
         public IReadOnlyDictionary<string, FormField> Fields => _formFields;
-        
+        public IReadOnlyDictionary<string, FormSubgrid> Subgrids => _subgrids;
+
         public FormField this[string attributeName] => _formFields[attributeName];
         public CommandBarActions CommandBar { get; }
 
@@ -37,6 +39,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             _formFields = InitializeFormFields();
             _formTabs = InitializeFormTabs();
+            _subgrids = InitializeFormSubgrids();
+
         }
 
         public void ClickSubgridButton(string subgridName, string subgridButton)
@@ -236,6 +240,32 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
 
             return formTabs;
+        }
+
+        private Dictionary<string, FormSubgrid> InitializeFormSubgrids()
+        {
+            var js = @"
+return Xrm.Page.ui.tabs.getAll().
+    reduce(function(accumulator, currTab) { return accumulator.concat(currTab.sections.getAll()) }, []).
+    reduce(function(accumulator, currSection) { return accumulator.concat(currSection.controls.getAll()); }, []).
+    filter(function (c) { return c.getControlType() == ""subgrid""; }).
+    map(function(c) { return c.getLabel() })   
+";
+
+            dynamic subgridCollection = _app.WebDriver.ExecuteScript(js);
+
+            var formSubgrids = new Dictionary<string, FormSubgrid>();
+            foreach (var subgrid in subgridCollection)
+            {
+                var label = (string)subgrid;
+
+                formSubgrids.Add(label.ToLower(), new FormSubgrid(_app)
+                {
+                    Label = label
+                });
+            }
+
+            return formSubgrids;
         }
     }
 }

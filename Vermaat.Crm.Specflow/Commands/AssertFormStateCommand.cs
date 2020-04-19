@@ -102,6 +102,8 @@ namespace Vermaat.Crm.Specflow.Commands
                     var tab = formData.Tabs[tabName1];
 
                     return tab.Sections.ContainsKey(sectionName) ? tab.Sections[sectionName] : null;
+                case "subgrid":
+                    return formData.Subgrids.ContainsKey(key.ToLower()) ? formData.Subgrids[key.ToLower()] : null;
                 case null:
                     return null;
                 default:
