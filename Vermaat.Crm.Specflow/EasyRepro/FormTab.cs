@@ -1,6 +1,5 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using OpenQA.Selenium;
-using System.Collections.Generic;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {

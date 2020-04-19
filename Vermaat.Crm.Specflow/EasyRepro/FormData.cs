@@ -1,5 +1,4 @@
-﻿using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -7,10 +6,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel.Security.Tokens;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -214,9 +210,7 @@ return Xrm.Page.ui.tabs.getAll().
                 var formSections = new FormComponentCollection<FormSection>();
                 foreach (var section in tab["sections"])
                 {
-                    var sectionLabel = (string)section["label"];
-
-                    formSections.Add(new FormSection(this, _app)
+                    formSections.Add(new FormSection(_app)
                     {
                         Name = section["name"],
                         Label = section["label"]
@@ -252,14 +246,12 @@ return Xrm.Page.ui.tabs.getAll().
             var formSubgrids = new FormComponentCollection<FormSubgrid>();
             foreach (var subgrid in subgridCollection)
             {
-                var section = Tabs.FindByName((string)subgrid["tabName"])
-                    .Sections.FindByName((string)subgrid["sectionName"]);
-
                 formSubgrids.Add(new FormSubgrid(_app)
                 {
                     Name = subgrid["name"],
                     Label = subgrid["label"],
-                    Section = section
+                    Section = Tabs.FindByName((string)subgrid["tabName"])
+                        .Sections.FindByName((string)subgrid["sectionName"])
                 });
             }
 

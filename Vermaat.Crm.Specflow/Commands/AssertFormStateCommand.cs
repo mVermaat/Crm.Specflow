@@ -1,14 +1,9 @@
-﻿using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Web.UI;
 using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Tracing;
 using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -80,7 +75,7 @@ namespace Vermaat.Crm.Specflow.Commands
             switch (type)
             {
                 case ControlType.attribute:
-                    return formData.ContainsField(key) ? formData.Fields.FindByName(key) : null;
+                    return formData.Fields.FindByName(key);
                 case ControlType.tab:
                     if (!row.ContainsKey(Constants.SpecFlow.TABLE_TAB))
                         throw new TestExecutionException(Constants.ErrorCodes.TAB_NOT_SPECIFIED, type.ToString());
@@ -93,18 +88,18 @@ namespace Vermaat.Crm.Specflow.Commands
                     if (!row.ContainsKey(Constants.SpecFlow.TABLE_SECTION))
                         throw new TestExecutionException(Constants.ErrorCodes.SECTION_NOT_SPECIFIED, type.ToString());
 
-                    var tabName1 = row[Constants.SpecFlow.TABLE_TAB];
+                    var tabNameForSection = row[Constants.SpecFlow.TABLE_TAB];
                     var sectionName = row[Constants.SpecFlow.TABLE_SECTION];
 
-                    var tab = formData.Tabs.Find(tabName1).FirstOrDefault();
+                    var tab = formData.Tabs.Find(tabNameForSection).FirstOrDefault();
                     if (tab == null)
-                        throw new TestExecutionException(Constants.ErrorCodes.TAB_NOT_FOUND, tabName1);
+                        throw new TestExecutionException(Constants.ErrorCodes.TAB_NOT_FOUND, tabNameForSection);
 
                     return tab.Sections.Find(sectionName).FirstOrDefault();
                 case ControlType.subgrid:
                     return formData.Subgrids.Find(key).FirstOrDefault();
                 default:
-                    throw new TestExecutionException(Constants.ErrorCodes.UNSUPPORTED_CONTROL_TYPE, type.ToString());
+                    throw new TestExecutionException(Constants.ErrorCodes.UNSUPPORTED_COMPONENT_TYPE, type.ToString());
             }
         }
 

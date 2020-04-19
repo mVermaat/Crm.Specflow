@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vermaat.Crm.Specflow
+﻿namespace Vermaat.Crm.Specflow
 {
     public static class Constants
     {
@@ -73,7 +67,7 @@ namespace Vermaat.Crm.Specflow
             public const int SECTION_NOT_SPECIFIED = 38;
             public const int TAB_NOT_FOUND = 39;
             public const int COMPONENT_TYPE_NOT_RECOGNIZED = 40;
-            public const int UNSUPPORTED_CONTROL_TYPE = 41;
+            public const int UNSUPPORTED_COMPONENT_TYPE = 41;
         }
     }
 }

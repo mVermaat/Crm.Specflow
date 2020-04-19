@@ -3,10 +3,7 @@ using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {

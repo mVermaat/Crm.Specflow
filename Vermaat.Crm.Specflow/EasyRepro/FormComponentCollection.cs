@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -37,13 +33,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public bool ContainsByName(string value)
         {
-            return _componentsByName.ContainsKey(value);
-        }
-
-        public bool Contains(string value, bool byName = true, bool byLabel = true)
-        {
-            return (byName && _componentsByName.ContainsKey(value)) ||
-                (byLabel && _componentsByLabel.ContainsKey(value));
+            return _componentsByName.ContainsKey(value.ToLower());
         }
 
         public IEnumerable<T> Find(string value, bool byName = true, bool byLabel = true)
