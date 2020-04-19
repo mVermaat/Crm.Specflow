@@ -34,22 +34,17 @@ namespace Vermaat.Crm.Specflow.Commands
             foreach (TableRow row in _visibilityCriteria.Rows)
             {
                 var expectedFormState = GetExpectedFormState(row[Constants.SpecFlow.TABLE_FORMSTATE]);
-                FormComponent component = GetComponent(row, formData);
+                FormComponent component = GetComponent(row, formData, out var controlType);
 
-                // TODO: Move this to a separate function and throw exception if the type is not recognized
                 var isOnForm = component != null;
 
                 if (isOnForm)
                 {
-                    var formField = component as FormField;
-                    if (formField != null)
+                    var newTab = component.GetTabName();
+                    if (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab)
                     {
-                        var newTab = formField.GetTabName();
-                        if (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab)
-                        {
-                            formData.ExpandTab(formField.GetTabLabel());
-                            currentTab = newTab;
-                        }
+                        formData.ExpandTab(component.GetTabLabel());
+                        currentTab = newTab;
                     }
                 }
 
@@ -67,49 +62,49 @@ namespace Vermaat.Crm.Specflow.Commands
                 }
                 else
                 {
-                    errors.Add($"The attribute {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
+                    errors.Add($"The {controlType} {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
                 }
             }
             Assert.AreEqual(0, errors.Count, string.Join(", ", errors));
         }
 
-        private static FormComponent GetComponent(TableRow row, FormData formData)
+        private static FormComponent GetComponent(TableRow row, FormData formData, out ControlType type)
         {
-            var type = row.ContainsKey("Type") ? row["Type"] : "attribute";
+            if (!row.ContainsKey(Constants.SpecFlow.TABLE_TYPE))
+                type = ControlType.attribute;
+            else if (!Enum.TryParse(row[Constants.SpecFlow.TABLE_TYPE], out type))
+                throw new TestExecutionException(Constants.ErrorCodes.COMPONENT_TYPE_NOT_RECOGNIZED, row[Constants.SpecFlow.TABLE_TYPE]);
+
             var key = row[Constants.SpecFlow.TABLE_KEY];
 
             switch (type)
             {
-                case "attribute":
+                case ControlType.attribute:
                     return formData.ContainsField(key) ? formData.Fields.FindByName(key) : null;
-                case "tab":
-                    if (!row.ContainsKey("Tab")) // TODO: Use constants for all header values
-                        throw new Exception("The tab must be specified when checking tab visibility.");
-                    var tabName = row["Tab"];
+                case ControlType.tab:
+                    if (!row.ContainsKey(Constants.SpecFlow.TABLE_TAB))
+                        throw new TestExecutionException(Constants.ErrorCodes.TAB_NOT_SPECIFIED, type.ToString());
+                    var tabName = row[Constants.SpecFlow.TABLE_TAB];
 
-                    return formData.Tabs.Contains(tabName) ? formData.Tabs.Find(tabName).First() : null;
-                case "section":
-                    // TODO: Throw proper exceptions here
-                    if (!row.ContainsKey("Tab")) // TODO: Use constants for all header values
-                        throw new Exception("The tab must be specified when checking section visibility."); 
-                    if (!row.ContainsKey("Section"))
-                        throw new Exception("The section must be specified when checking section visibility.");
+                    return formData.Tabs.Find(tabName).FirstOrDefault();
+                case ControlType.section:
+                    if (!row.ContainsKey(Constants.SpecFlow.TABLE_TAB))
+                        throw new TestExecutionException(Constants.ErrorCodes.TAB_NOT_SPECIFIED, type.ToString());
+                    if (!row.ContainsKey(Constants.SpecFlow.TABLE_SECTION))
+                        throw new TestExecutionException(Constants.ErrorCodes.SECTION_NOT_SPECIFIED, type.ToString());
 
-                    var tabName1 = row["Tab"];
-                    var sectionName = row["Section"];
+                    var tabName1 = row[Constants.SpecFlow.TABLE_TAB];
+                    var sectionName = row[Constants.SpecFlow.TABLE_SECTION];
 
-                    if (!formData.Tabs.Contains(tabName1))
-                        throw new Exception("The tab was not found.");
-                    var tab = formData.Tabs.Find(tabName1).First();
+                    var tab = formData.Tabs.Find(tabName1).FirstOrDefault();
+                    if (tab == null)
+                        throw new TestExecutionException(Constants.ErrorCodes.TAB_NOT_FOUND, tabName1);
 
-                    return tab.Sections.Contains(sectionName) ? tab.Sections.Find(sectionName).First() : null;
-                case "subgrid":
-                    return formData.Subgrids.Contains(key) ? formData.Subgrids.Find(key).First() : null;
-                case null:
-                    return null;
+                    return tab.Sections.Find(sectionName).FirstOrDefault();
+                case ControlType.subgrid:
+                    return formData.Subgrids.Find(key).FirstOrDefault();
                 default:
-                    // TODO: Change this to correct exception type
-                    throw new Exception("Unrecognized type");
+                    throw new TestExecutionException(Constants.ErrorCodes.UNSUPPORTED_CONTROL_TYPE, type.ToString());
             }
         }
 

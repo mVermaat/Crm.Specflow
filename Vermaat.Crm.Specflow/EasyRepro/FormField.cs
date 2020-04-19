@@ -37,7 +37,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return _controls.FirstOrDefault(c => !c.StartsWith("header"));
         }
 
-        public string GetTabLabel()
+        public override string GetTabLabel()
         {
             if (string.IsNullOrEmpty(_tabLabel))
             {
@@ -97,7 +97,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }).Value;
         }
 
-        public string GetTabName()
+        public override string GetTabName()
         {
             if (string.IsNullOrEmpty(_tabName))
             {

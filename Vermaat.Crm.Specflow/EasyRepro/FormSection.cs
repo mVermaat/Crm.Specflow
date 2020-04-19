@@ -20,12 +20,20 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public override bool IsVisible()
         {
-            _formData.ExpandTab(Tab.Label);
-
             var by = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Section, Label);
             var elements = App.WebDriver.FindElements(by);
 
             return elements.Count != 0;
+        }
+
+        public override string GetTabName()
+        {
+            return Tab.Name;
+        }
+
+        public override string GetTabLabel()
+        {
+            return Tab.Label;
         }
     }
 }

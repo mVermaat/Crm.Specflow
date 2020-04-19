@@ -19,5 +19,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         }
 
         public abstract bool IsVisible();
+        public abstract string GetTabName();
+        public abstract string GetTabLabel();
     }
 }

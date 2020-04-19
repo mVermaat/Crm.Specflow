@@ -244,7 +244,7 @@ return Xrm.Page.ui.tabs.getAll().
     reduce(function(accumulator, currTab) { return accumulator.concat(currTab.sections.getAll()) }, []).
     reduce(function(accumulator, currSection) { return accumulator.concat(currSection.controls.getAll()); }, []).
     filter(function (c) { return c.getControlType() == ""subgrid""; }).
-    map(function(c) { return { name: c.getName(), label: c.getLabel() }})   
+    map(function(c) { return { name: c.getName(), label: c.getLabel(), tabName: c.getParent().getParent().getName(), sectionName: c.getParent().getName() }})   
 ";
 
             dynamic subgridCollection = _app.WebDriver.ExecuteScript(js);
@@ -252,10 +252,14 @@ return Xrm.Page.ui.tabs.getAll().
             var formSubgrids = new FormComponentCollection<FormSubgrid>();
             foreach (var subgrid in subgridCollection)
             {
+                var section = Tabs.FindByName((string)subgrid["tabName"])
+                    .Sections.FindByName((string)subgrid["sectionName"]);
+
                 formSubgrids.Add(new FormSubgrid(_app)
                 {
                     Name = subgrid["name"],
-                    Label = subgrid["label"]
+                    Label = subgrid["label"],
+                    Section = section
                 });
             }
 

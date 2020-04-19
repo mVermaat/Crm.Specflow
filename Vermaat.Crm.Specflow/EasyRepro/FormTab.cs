@@ -20,5 +20,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             return elements.Count != 0;
         }
+
+        public override string GetTabName()
+        {
+            return Name;
+        }
+
+        public override string GetTabLabel()
+        {
+            return Label;
+        }
     }
 }

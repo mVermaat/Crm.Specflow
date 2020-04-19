@@ -15,6 +15,9 @@ namespace Vermaat.Crm.Specflow
             public const string TABLE_FORMSTATE = "State";
             public const string TABLE_FORMNOTIFICATION_MESSAGE = "Message";
             public const string TABLE_FORMNOTIFICATION_LEVEL = "Level";
+            public const string TABLE_TYPE = "Type";
+            public const string TABLE_TAB = "Tab";
+            public const string TABLE_SECTION = "Section";
 
             public const string TARGET_API = "API";
             public const string TARGET_Chrome = "Chrome";
@@ -66,6 +69,11 @@ namespace Vermaat.Crm.Specflow
             public const int ASYNC_TIMEOUT = 34;
             public const int MULTIPLE_ATTRIBUTES_FOUND = 35;
             public const int APPLICATIONUSER_CANNOT_LOGIN = 36;
+            public const int TAB_NOT_SPECIFIED = 37;
+            public const int SECTION_NOT_SPECIFIED = 38;
+            public const int TAB_NOT_FOUND = 39;
+            public const int COMPONENT_TYPE_NOT_RECOGNIZED = 40;
+            public const int UNSUPPORTED_CONTROL_TYPE = 41;
         }
     }
 }

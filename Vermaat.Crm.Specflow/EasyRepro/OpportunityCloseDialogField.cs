@@ -35,5 +35,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             throw new NotImplementedException();
         }
+
+        public override string GetTabName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetTabLabel()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

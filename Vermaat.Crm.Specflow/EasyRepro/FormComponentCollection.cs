@@ -32,7 +32,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public T FindByName(string value)
         {
-            return _componentsByName.ContainsKey(value) ? _componentsByName[value] : null;
+            return _componentsByName.ContainsKey(value.ToLower()) ? _componentsByName[value.ToLower()] : null;
         }
 
         public bool ContainsByName(string value)
