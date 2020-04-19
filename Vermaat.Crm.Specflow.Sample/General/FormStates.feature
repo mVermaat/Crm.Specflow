@@ -40,6 +40,43 @@ Then TestAccount's form has the following form state
 	| Ownership | Invisible |
 
 @Chrome @Firefox @Cleanup
+Scenario: Check visibility of tab
+When an account named TestAccount is created with the following values
+	| Property     | Value                   |
+	| Account Name | DynamicHands            |
+	| Main Phone   | 0612345678              |
+	| Website      | https://dynamichands.nl |
+	| Industry     | Consulting              |
+Then TestAccount's form has the following form state
+	| Type      | Tab     | Property | State   |
+	| attribute |         | SIC Code | Visible |
+	| tab       | Summary |          | Visible |
+
+@Chrome @Firefox @Cleanup
+Scenario: Check visibility of section
+When an account named TestAccount is created with the following values
+	| Property     | Value                   |
+	| Account Name | DynamicHands            |
+	| Main Phone   | 0612345678              |
+	| Website      | https://dynamichands.nl |
+	| Industry     | Consulting              |
+Then TestAccount's form has the following form state
+	| Type    | Tab     | Section             | Property | State   |
+	| section | Summary | ACCOUNT INFORMATION |          | visible |
+
+@Chrome @Firefox @Cleanup
+Scenario: Check visibility of subgrid
+When an account named TestAccount is created with the following values
+	| Property     | Value                   |
+	| Account Name | DynamicHands            |
+	| Main Phone   | 0612345678              |
+	| Website      | https://dynamichands.nl |
+	| Industry     | Consulting              |
+Then TestAccount's form has the following form state
+	| Type    | Property             | State   |
+	| subgrid | RECENT OPPORTUNITIES | visible |
+
+@Chrome @Firefox @Cleanup
 Scenario: Check combined state of form items
 Given a contact named TestContact with the following values
     | Property   | Value |

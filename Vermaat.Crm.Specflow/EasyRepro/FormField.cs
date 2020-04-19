@@ -1,12 +1,10 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
-using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenQA.Selenium.Interactions;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -37,7 +35,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return _controls.FirstOrDefault(c => !c.StartsWith("header"));
         }
 
-        public string GetTabLabel()
+        public override string GetTabLabel()
         {
             if (string.IsNullOrEmpty(_tabLabel))
             {
@@ -73,7 +71,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return result.Value;
         }
 
-        public bool IsVisible()
+        public override bool IsVisible()
         {
             if (IsFieldInHeaderOnly())
                 _form.ExpandHeader();
@@ -97,7 +95,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }).Value;
         }
 
-        public string GetTabName()
+        public override string GetTabName()
         {
             if (string.IsNullOrEmpty(_tabName))
             {

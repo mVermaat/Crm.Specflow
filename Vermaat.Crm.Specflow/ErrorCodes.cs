@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -54,6 +50,11 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.ASYNC_TIMEOUT, "Not all Asynchronous jobs are completed on time");
             AddError(Constants.ErrorCodes.MULTIPLE_ATTRIBUTES_FOUND, "Multiple attributes found for {0}. Results: {1}");
             AddError(Constants.ErrorCodes.APPLICATIONUSER_CANNOT_LOGIN, "An application user can't login via the browser");
+            AddError(Constants.ErrorCodes.TAB_NOT_SPECIFIED, "The tab must be specified when checking {0} visibility.");
+            AddError(Constants.ErrorCodes.SECTION_NOT_SPECIFIED, "The section must be specified when checking {0} visibility.");
+            AddError(Constants.ErrorCodes.COMPONENT_TYPE_NOT_RECOGNIZED, "The type {0} was not recognized.");
+            AddError(Constants.ErrorCodes.TAB_NOT_FOUND, "The tab {0} was not found.");
+            AddError(Constants.ErrorCodes.UNSUPPORTED_COMPONENT_TYPE, "The control type {0} is not supported.");
         }
 
         public void AddError(int errorCode, string message)

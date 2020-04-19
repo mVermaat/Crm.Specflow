@@ -6,9 +6,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -17,9 +15,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         private readonly UCIApp _app;
         private readonly EntityMetadata _entityMetadata;
-        private readonly Dictionary<string, FormField> _formFields;
 
-        public FormField this[string attributeName] => _formFields[attributeName];
+        public FormComponentCollection<FormField> Fields { get; private set; }
+        public FormComponentCollection<FormTab> Tabs { get; private set; }
+        public FormComponentCollection<FormSubgrid> Subgrids { get; private set; }
+
         public CommandBarActions CommandBar { get; }
 
         public FormData(UCIApp app, EntityMetadata entityMetadata)
@@ -28,7 +28,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _entityMetadata = entityMetadata;
             CommandBar = new CommandBarActions(_app);
 
-            _formFields = InitializeFormData();
+            Fields = InitializeFormFields();
+            Tabs = InitializeFormTabs();
+            Subgrids = InitializeFormSubgrids();
         }
 
         public void ClickSubgridButton(string subgridName, string subgridButton)
@@ -38,7 +40,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public bool ContainsField(string fieldLogicalName)
         {
-            var containsField = _formFields.ContainsKey(fieldLogicalName);
+            var containsField = Fields.ContainsByName(fieldLogicalName);
             Logger.WriteLine($"Field {fieldLogicalName} is on Form: {containsField}");
             return containsField;
         }
@@ -97,7 +99,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             foreach (var row in formData.Rows)
             {
                 Assert.IsTrue(ContainsField(row[Constants.SpecFlow.TABLE_KEY]), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
-                var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];
+                var field = Fields.FindByName(row[Constants.SpecFlow.TABLE_KEY]);
 
                 var newTab = field.GetTabName();
                 if (!field.IsFieldInHeaderOnly() && (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab))
@@ -159,11 +161,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
         }
 
-        private Dictionary<string, FormField> InitializeFormData()
+        private FormComponentCollection<FormField> InitializeFormFields()
         {
             dynamic attributeCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.data.entity.attributes.getAll().map(function(a) { return { name: a.getName(), controls: a.controls.getAll().map(function(c) { return c.getName() }) } })");
 
-            var formFields = new Dictionary<string, FormField>();
+            var formFields = new FormComponentCollection<FormField>();
             var metadataDic = _entityMetadata.Attributes.ToDictionary(a => a.LogicalName);
             foreach (var attribute in attributeCollection)
             {
@@ -174,10 +176,86 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     controls[i] = attribute["controls"][i];
                 }
 
-                formFields.Add(attribute["name"], new FormField(this, _app, metadataDic[attribute["name"]], controls));
+                formFields.Add(new FormField(this, _app, metadataDic[attribute["name"]], controls));
             }
 
             return formFields;
+        }
+
+        private FormComponentCollection<FormTab> InitializeFormTabs()
+        {
+            var script = @"
+return Xrm.Page.ui.tabs.getAll().
+    map(function(t) { 
+        return { 
+            name: t.getName(),
+            label: t.getLabel(), 
+            sections: t.sections.getAll().
+                map(function (s) { 
+                    return { 
+                        name: s.getName(),
+                        label: s.getLabel() 
+                    }; 
+                })
+            }
+        }
+    )
+";
+
+            dynamic tabCollection = _app.WebDriver.ExecuteScript(script);
+
+            var formTabs = new FormComponentCollection<FormTab>();
+            foreach (var tab in tabCollection)
+            {
+                var formSections = new FormComponentCollection<FormSection>();
+                foreach (var section in tab["sections"])
+                {
+                    formSections.Add(new FormSection(_app)
+                    {
+                        Name = section["name"],
+                        Label = section["label"]
+                    });
+                }
+
+                var formTab = new FormTab(_app, formSections)
+                {
+                    Name = tab["name"],
+                    Label = tab["label"]
+                };
+                formTabs.Add(formTab);
+
+                foreach (var section in formTab.Sections)
+                    section.Tab = formTab;
+            }
+
+            return formTabs;
+        }
+
+        private FormComponentCollection<FormSubgrid> InitializeFormSubgrids()
+        {
+            var js = @"
+return Xrm.Page.ui.tabs.getAll().
+    reduce(function(accumulator, currTab) { return accumulator.concat(currTab.sections.getAll()) }, []).
+    reduce(function(accumulator, currSection) { return accumulator.concat(currSection.controls.getAll()); }, []).
+    filter(function (c) { return c.getControlType() == ""subgrid""; }).
+    map(function(c) { return { name: c.getName(), label: c.getLabel(), tabName: c.getParent().getParent().getName(), sectionName: c.getParent().getName() }})   
+";
+
+            dynamic subgridCollection = _app.WebDriver.ExecuteScript(js);
+
+            var formSubgrids = new FormComponentCollection<FormSubgrid>();
+            foreach (var subgrid in subgridCollection)
+            {
+                formSubgrids.Add(new FormSubgrid(_app)
+                {
+                    Name = subgrid["name"],
+                    Label = subgrid["label"],
+                    Section = Tabs.FindByName((string)subgrid["tabName"])
+                        .Sections.FindByName((string)subgrid["sectionName"])
+                });
+            }
+
+            return formSubgrids;
         }
     }
 }

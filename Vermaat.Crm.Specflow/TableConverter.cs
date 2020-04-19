@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xrm.Sdk.Metadata;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -31,10 +27,17 @@ namespace Vermaat.Crm.Specflow
             {
                 OnRowProcessing?.Invoke(this, new TableRowEventArgs(entityName, row));
 
-                var attribute = GlobalTestingContext.Metadata.GetAttributeMetadata(entityName, row[Constants.SpecFlow.TABLE_KEY], _context.LanguageCode);
+                var type = row.ContainsKey(Constants.SpecFlow.TABLE_TYPE)
+                    ? row[Constants.SpecFlow.TABLE_TYPE]
+                    : ControlType.attribute.ToString();
 
-                if(row.ContainsKey(Constants.SpecFlow.TABLE_KEY))
-                    row[Constants.SpecFlow.TABLE_KEY] = attribute.LogicalName;
+                if (type.ToLower() == ControlType.attribute.ToString().ToLower())
+                {
+                    var attribute = GlobalTestingContext.Metadata.GetAttributeMetadata(entityName, row[Constants.SpecFlow.TABLE_KEY], _context.LanguageCode);
+
+                    if (row.ContainsKey(Constants.SpecFlow.TABLE_KEY))
+                        row[Constants.SpecFlow.TABLE_KEY] = attribute.LogicalName;
+                }
 
                 OnRowProcessed?.Invoke(this, new TableRowEventArgs(entityName, row));
             }

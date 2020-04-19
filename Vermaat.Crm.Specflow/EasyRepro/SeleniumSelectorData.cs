@@ -1,9 +1,5 @@
 ﻿using OpenQA.Selenium;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -32,7 +28,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Dialog_Container, "id(\"dialogContentContainer_1\")" },
             { SeleniumSelectorItems.Entity_FieldContainer, "//div[@data-id='[NAME]']" },
             { SeleniumSelectorItems.Dialog_OK, "//button[@data-id='ok_id']" },
-            { SeleniumSelectorItems.Entity_Header, "//button[@id='headerFieldsExpandButton']" }
+            { SeleniumSelectorItems.Entity_Header, "//button[@id='headerFieldsExpandButton']" },
+            { SeleniumSelectorItems.Entity_Section, "//h2[@title='[NAME]']" },
         };
 
         public By GetXPathSeleniumSelector(SeleniumSelectorItems itemName)

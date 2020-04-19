@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vermaat.Crm.Specflow.EasyRepro
+﻿namespace Vermaat.Crm.Specflow.EasyRepro
 {
     internal enum SeleniumSelectorItems
     {
@@ -35,7 +29,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Entity_SubGrid_ButtonList,
 
         Entity_Header,
-
+        Entity_Section,
         Entity_MoreTabs,
 
         Entity_FieldContainer,

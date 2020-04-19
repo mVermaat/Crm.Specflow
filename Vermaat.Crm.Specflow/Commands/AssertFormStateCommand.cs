@@ -2,6 +2,7 @@
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.EasyRepro;
 
@@ -28,15 +29,16 @@ namespace Vermaat.Crm.Specflow.Commands
             foreach (TableRow row in _visibilityCriteria.Rows)
             {
                 var expectedFormState = GetExpectedFormState(row[Constants.SpecFlow.TABLE_FORMSTATE]);
-                var isOnForm = formData.ContainsField(row[Constants.SpecFlow.TABLE_KEY]);
+                FormComponent component = GetComponent(row, formData, out var controlType);
+
+                var isOnForm = component != null;
 
                 if (isOnForm)
                 {
-                    var field = formData[row[Constants.SpecFlow.TABLE_KEY]];
-                    var newTab = field.GetTabName();
+                    var newTab = component.GetTabName();
                     if (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab)
                     {
-                        formData.ExpandTab(field.GetTabLabel());
+                        formData.ExpandTab(component.GetTabLabel());
                         currentTab = newTab;
                     }
                 }
@@ -44,17 +46,61 @@ namespace Vermaat.Crm.Specflow.Commands
                 if (isOnForm || (!expectedFormState.Locked.HasValue && !expectedFormState.Required.HasValue))
                 {
                     // Assert
-                    AssertVisibility(formData, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Visible, errors, isOnForm);
-                    AssertReadOnly(formData, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Locked, errors);
-                    AssertRequirement(formData, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Required, errors);
+                    AssertVisibility(component, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Visible, errors, isOnForm);
+
+                    var formField = component as FormField;
+                    if (formField != null)
+                    {
+                        AssertReadOnly(formField, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Locked, errors);
+                        AssertRequirement(formField, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Required, errors);
+                    }
                 }
                 else
                 {
-                    errors.Add($"{row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
+                    errors.Add($"The {controlType} {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
                 }
-               
             }
             Assert.AreEqual(0, errors.Count, string.Join(", ", errors));
+        }
+
+        private static FormComponent GetComponent(TableRow row, FormData formData, out ControlType type)
+        {
+            if (!row.ContainsKey(Constants.SpecFlow.TABLE_TYPE))
+                type = ControlType.attribute;
+            else if (!Enum.TryParse(row[Constants.SpecFlow.TABLE_TYPE], out type))
+                throw new TestExecutionException(Constants.ErrorCodes.COMPONENT_TYPE_NOT_RECOGNIZED, row[Constants.SpecFlow.TABLE_TYPE]);
+
+            var key = row[Constants.SpecFlow.TABLE_KEY];
+
+            switch (type)
+            {
+                case ControlType.attribute:
+                    return formData.Fields.FindByName(key);
+                case ControlType.tab:
+                    if (!row.ContainsKey(Constants.SpecFlow.TABLE_TAB))
+                        throw new TestExecutionException(Constants.ErrorCodes.TAB_NOT_SPECIFIED, type.ToString());
+                    var tabName = row[Constants.SpecFlow.TABLE_TAB];
+
+                    return formData.Tabs.Find(tabName).FirstOrDefault();
+                case ControlType.section:
+                    if (!row.ContainsKey(Constants.SpecFlow.TABLE_TAB))
+                        throw new TestExecutionException(Constants.ErrorCodes.TAB_NOT_SPECIFIED, type.ToString());
+                    if (!row.ContainsKey(Constants.SpecFlow.TABLE_SECTION))
+                        throw new TestExecutionException(Constants.ErrorCodes.SECTION_NOT_SPECIFIED, type.ToString());
+
+                    var tabNameForSection = row[Constants.SpecFlow.TABLE_TAB];
+                    var sectionName = row[Constants.SpecFlow.TABLE_SECTION];
+
+                    var tab = formData.Tabs.Find(tabNameForSection).FirstOrDefault();
+                    if (tab == null)
+                        throw new TestExecutionException(Constants.ErrorCodes.TAB_NOT_FOUND, tabNameForSection);
+
+                    return tab.Sections.Find(sectionName).FirstOrDefault();
+                case ControlType.subgrid:
+                    return formData.Subgrids.Find(key).FirstOrDefault();
+                default:
+                    throw new TestExecutionException(Constants.ErrorCodes.UNSUPPORTED_COMPONENT_TYPE, type.ToString());
+            }
         }
 
         private FormState GetExpectedFormState(string formStateString)
@@ -80,51 +126,51 @@ namespace Vermaat.Crm.Specflow.Commands
             return result;
         }
 
-        private void AssertVisibility(FormData formData, string fieldName, FormVisibility? expected, List<string> errors, bool isOnForm)
+        private void AssertVisibility(FormComponent formComponent, string componentName, FormVisibility? expected, List<string> errors, bool isOnForm)
         {
             if (!expected.HasValue)
                 return;
 
             if(isOnForm)
             {
-                var isVisible = formData[fieldName].IsVisible();
+                var isVisible = formComponent.IsVisible();
                 if (expected == FormVisibility.Visible && !isVisible)
                 {
-                    errors.Add($"{fieldName} was expected to be visible but it is invisible");
+                    errors.Add($"{componentName} was expected to be visible but it is invisible");
                 }
                 else if(expected == FormVisibility.Invisible && isVisible)
                 {
-                    errors.Add($"{fieldName} was expected to be invisible but it is visible");
+                    errors.Add($"{componentName} was expected to be invisible but it is visible");
                 }
                 else if(expected == FormVisibility.NotOnForm)
                 {
-                    errors.Add($"{fieldName} was shouldn't be on the form");
+                    errors.Add($"{componentName} was shouldn't be on the form");
                 }
             }
             else if(expected != FormVisibility.NotOnForm)
             {
-                errors.Add($"Field {fieldName} isn't on the form");
+                errors.Add($"Field {componentName} isn't on the form");
             }
         }
 
-        private void AssertReadOnly(FormData formData, string fieldName, bool? locked, List<string> errors)
+        private void AssertReadOnly(FormField formField, string fieldName, bool? locked, List<string> errors)
         {
             if (!locked.HasValue)
                 return;
 
-            if (formData[fieldName].IsLocked() != locked.Value)
+            if (formField.IsLocked() != locked.Value)
             {
                 errors.Add(string.Format("{0} was expected to be {1}locked but it is {2}locked",
                    fieldName, locked.Value ? "" : "un", locked.Value ? "un" : ""));
             }
         }
 
-        private void AssertRequirement(FormData formData, string fieldName, RequiredState? expectedRequiredState, List<string> errors)
+        private void AssertRequirement(FormField formField, string fieldName, RequiredState? expectedRequiredState, List<string> errors)
         {
             if (!expectedRequiredState.HasValue)
                 return;
 
-            var actualRequiredState = formData[fieldName].GetRequiredState();
+            var actualRequiredState = formField.GetRequiredState();
             if (actualRequiredState != expectedRequiredState)
             {
                 errors.Add($"{fieldName} was expected to be {expectedRequiredState} but it is {actualRequiredState}");

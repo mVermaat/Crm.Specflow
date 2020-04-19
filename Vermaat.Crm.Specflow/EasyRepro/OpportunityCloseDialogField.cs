@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -29,6 +25,21 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         protected override void SetLookupValue(EntityReference fieldValue, string fieldValueText)
         {
             App.App.Entity.SetValue(new LookupItem { Name = LogicalName, Value = fieldValueText });
+        }
+
+        public override bool IsVisible()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetTabName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetTabLabel()
+        {
+            throw new NotImplementedException();
         }
     }
 }
