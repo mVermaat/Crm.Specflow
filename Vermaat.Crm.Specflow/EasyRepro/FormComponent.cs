@@ -8,6 +8,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public abstract class FormComponent
     {
+        protected UCIApp App { get; }
+
+        public FormComponent(UCIApp app)
+        {
+            App = app;
+        }
+
         public abstract bool IsVisible();
     }
 }

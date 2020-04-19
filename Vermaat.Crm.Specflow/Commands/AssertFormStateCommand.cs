@@ -44,7 +44,6 @@ namespace Vermaat.Crm.Specflow.Commands
                     if (formField != null)
                     {
                         var newTab = formField.GetTabName();
-                        // TODO: Use existing function for switching tabs here
                         if (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab)
                         {
                             formData.ExpandTab(formField.GetTabLabel());
@@ -85,7 +84,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 case "tab":
                     if (!row.ContainsKey("Tab")) // TODO: Use constants for all header values
                         throw new Exception("The tab must be specified when checking tab visibility.");
-                    var tabName = row["Tab"].ToLower();
+                    var tabName = row["Tab"];
 
                     return formData.ContainsTab(tabName) ? formData.Tabs[tabName] : null;
                 case "section":
@@ -95,8 +94,8 @@ namespace Vermaat.Crm.Specflow.Commands
                     if (!row.ContainsKey("Section"))
                         throw new Exception("The section must be specified when checking section visibility.");
 
-                    var tabName1 = row["Tab"].ToLower();
-                    var sectionName = row["Section"].ToLower();
+                    var tabName1 = row["Tab"];
+                    var sectionName = row["Section"];
 
                     if (!formData.Tabs.ContainsKey(tabName1))
                         throw new Exception("The tab was not found.");

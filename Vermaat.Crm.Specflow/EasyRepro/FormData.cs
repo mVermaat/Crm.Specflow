@@ -207,7 +207,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private Dictionary<string, FormTab> InitializeFormTabs()
         {
-            dynamic tabCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.ui.tabs.getAll().map(function(t) { return { label: t.getLabel(), visible: t.getVisible(), sections: t.sections.getAll().map(function (s) { return { label: s.getLabel(), visible: s.getVisible()}; })}})");
+            dynamic tabCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.ui.tabs.getAll().map(function(t) { return { label: t.getLabel(), sections: t.sections.getAll().map(function (s) { return { label: s.getLabel() }; })}})");
 
             var formTabs = new Dictionary<string, FormTab>();
             foreach (var tab in tabCollection)
@@ -215,24 +215,24 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 var formSections = new Dictionary<string, FormSection>();
                 foreach (var section in tab["sections"])
                 {
-                    var sectionLabel = ((string)section["label"]).ToLower();
+                    var sectionLabel = (string)section["label"];
 
-                    formSections.Add(sectionLabel, new FormSection
+                    formSections.Add(sectionLabel, new FormSection(this, _app)
                     {
-                        Label = sectionLabel,
-                        // TODO: Visibility should not be determined used API, it should use the DOM
-                        Visible = section["visible"]
+                        Label = sectionLabel
                     });
                 }
 
-                var tabLabel = ((string)tab["label"]).ToLower();
+                var tabLabel = (string)tab["label"];
 
-                formTabs.Add(tabLabel, new FormTab(formSections)
+                var formTab = new FormTab(_app, formSections)
                 {
-                    Label = tabLabel,
-                    // TODO: Visibility should not be determined using API, it should use the DOM
-                    Visible = tab["visible"]
-                });
+                    Label = tabLabel
+                };
+                formTabs.Add(tabLabel, formTab);
+
+                foreach (var section in formTab.Sections)
+                    section.Value.Tab = formTab;
             }
 
             return formTabs;

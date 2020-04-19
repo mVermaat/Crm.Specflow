@@ -13,14 +13,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     public abstract class Field : FormComponent
     {
         protected AttributeMetadata Metadata { get; }
-        protected UCIApp App { get; }
 
         protected virtual string LogicalName => Metadata.LogicalName;
 
-        public Field(UCIApp app, AttributeMetadata metadata)
+        public Field(UCIApp app, AttributeMetadata metadata) : base(app)
         {
             Metadata = metadata;
-            App = app;
         }
 
         public void SetValue(CrmTestingContext crmContext, string fieldValueText)

@@ -62,7 +62,7 @@ When an account named TestAccount is created with the following values
 	| Industry     | Consulting              |
 Then TestAccount's form has the following form state
 	| Type    | Tab     | Section             | Property | State   |
-	| section | SUMMARY | ACCOUNT INFORMATION |          | visible |
+	| section | Summary | ACCOUNT INFORMATION |          | visible |
 
 @Chrome @Firefox @Cleanup
 Scenario: Check combined state of form items
