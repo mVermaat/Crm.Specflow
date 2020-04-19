@@ -6,10 +6,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public class FormTab : FormComponent
     {
-        public string Label { get; set; }
-        public Dictionary<string, FormSection> Sections { get; private set; }
+        public FormComponentCollection<FormSection> Sections { get; private set; }
 
-        public FormTab(UCIApp app, Dictionary<string, FormSection> sections) : base(app)
+        public FormTab(UCIApp app, FormComponentCollection<FormSection> sections) : base(app)
         {
             Sections = sections;
         }

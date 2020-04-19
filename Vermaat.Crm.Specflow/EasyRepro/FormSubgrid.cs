@@ -10,8 +10,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public class FormSubgrid : FormComponent
     {
-        public string Label { get; set; }
-
         public FormSubgrid(UCIApp app) : base(app)
         {
 

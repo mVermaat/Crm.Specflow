@@ -9,7 +9,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public class FormSection : FormComponent
     {
-        public string Label { get; set; }
         public FormTab Tab { get; set; }
 
         public FormData _formData;

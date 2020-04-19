@@ -19,6 +19,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public Field(UCIApp app, AttributeMetadata metadata) : base(app)
         {
             Metadata = metadata;
+
+            Name = metadata.LogicalName;
+            Label = metadata?.DisplayName?.UserLocalizedLabel?.Label;
         }
 
         public void SetValue(CrmTestingContext crmContext, string fieldValueText)

@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web.UI;
 using TechTalk.SpecFlow;
@@ -80,13 +81,13 @@ namespace Vermaat.Crm.Specflow.Commands
             switch (type)
             {
                 case "attribute":
-                    return formData.ContainsField(key) ? formData.Fields[key] : null;
+                    return formData.ContainsField(key) ? formData.Fields.FindByName(key) : null;
                 case "tab":
                     if (!row.ContainsKey("Tab")) // TODO: Use constants for all header values
                         throw new Exception("The tab must be specified when checking tab visibility.");
                     var tabName = row["Tab"];
 
-                    return formData.ContainsTab(tabName) ? formData.Tabs[tabName] : null;
+                    return formData.Tabs.Contains(tabName) ? formData.Tabs.Find(tabName).First() : null;
                 case "section":
                     // TODO: Throw proper exceptions here
                     if (!row.ContainsKey("Tab")) // TODO: Use constants for all header values
@@ -97,13 +98,13 @@ namespace Vermaat.Crm.Specflow.Commands
                     var tabName1 = row["Tab"];
                     var sectionName = row["Section"];
 
-                    if (!formData.Tabs.ContainsKey(tabName1))
+                    if (!formData.Tabs.Contains(tabName1))
                         throw new Exception("The tab was not found.");
-                    var tab = formData.Tabs[tabName1];
+                    var tab = formData.Tabs.Find(tabName1).First();
 
-                    return tab.Sections.ContainsKey(sectionName) ? tab.Sections[sectionName] : null;
+                    return tab.Sections.Contains(sectionName) ? tab.Sections.Find(sectionName).First() : null;
                 case "subgrid":
-                    return formData.Subgrids.ContainsKey(key.ToLower()) ? formData.Subgrids[key.ToLower()] : null;
+                    return formData.Subgrids.Contains(key) ? formData.Subgrids.Find(key).First() : null;
                 case null:
                     return null;
                 default:
