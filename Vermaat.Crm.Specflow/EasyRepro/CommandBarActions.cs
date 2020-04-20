@@ -40,7 +40,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid]), 
                         TimeSpan.FromSeconds(5),
                         null,
-                        () => // FailureCallback
+                        d => // FailureCallback
                         {
                             throw new TestExecutionException(Constants.ErrorCodes.RIBBON_NOT_FOUND);
                         });
