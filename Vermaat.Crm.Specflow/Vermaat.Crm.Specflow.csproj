@@ -7,7 +7,7 @@
     <Description>D365 Extension for SpecFlow allows you to automatically test your Dynamics 365 CE implementation. It provides a broad set of SpecFlow steps to help you create your scripts very rapidly. It leverages the EasyRepro library from Microsoft for the User Interface related tests.</Description>
     <IncludeSource>true</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
-    <PackageIconUrl>https://raw.githubusercontent.com/remyvd/NodaMoney/master/docs/logo_nodamoney.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/DynamicHands/PowerApps-Guidelines/master/.vuepress/public/favicon-64x64.png</PackageIconUrl>
     <PackageId>Vermaat.Crm.Specflow</PackageId>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
