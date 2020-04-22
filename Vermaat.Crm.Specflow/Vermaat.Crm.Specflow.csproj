@@ -4,16 +4,7 @@
     <AssemblyName>Vermaat.Crm.Specflow</AssemblyName>
     <AssemblyTitle>Vermaat.Crm.Specflow</AssemblyTitle>
     <Configurations>Debug;Release;NuGetRelease</Configurations>
-    <Description>D365 Extension for SpecFlow allows you to automatically test your Dynamics 365 CE implementation. It provides a broad set of SpecFlow steps to help you create your scripts very rapidly. It leverages the EasyRepro library from Microsoft for the User Interface related tests.</Description>
-    <IncludeSource>true</IncludeSource>
-    <IncludeSymbols>true</IncludeSymbols>
-    <PackageIconUrl>https://raw.githubusercontent.com/DynamicHands/PowerApps-Guidelines/master/.vuepress/public/favicon-64x64.png</PackageIconUrl>
     <PackageId>Vermaat.Crm.Specflow</PackageId>
-    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageTags>D365;SpecFlow;PowerPlatform;Automated;Testing;Dynamics365;Dynamics</PackageTags>
-    <RepositoryUrl>https://github.com/DynamicHands/Crm.Specflow</RepositoryUrl>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net4.6.2</TargetFramework>
   </PropertyGroup>
 
