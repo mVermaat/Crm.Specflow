@@ -3,6 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net4.6.2</TargetFramework>
     <Configurations>Debug;Release;NuGetRelease</Configurations>
+    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <AssemblyTitle>Vermaat.Crm.Specflow</AssemblyTitle>
+    <AssemblyName>Vermaat.Crm.Specflow</AssemblyName>
+    <PackageId>Vermaat.Crm.Specflow</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NuGetRelease|AnyCPU'">
@@ -14,10 +20,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
