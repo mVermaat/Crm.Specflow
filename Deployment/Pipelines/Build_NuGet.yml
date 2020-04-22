@@ -32,12 +32,13 @@ steps:
   condition: and(succeeded(), eq(variables.CreateNuGetPackage, 'true'))
   inputs:
     command: 'pack'
-    packagesToPack: '$(Build.SourcesDirectory)\Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj'
+    packagesToPack: '$(Build.SourcesDirectory)\Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj;$(Build.SourcesDirectory)\Vermaat.Crm.Specflow.Expressions\Vermaat.Crm.Specflow.Expressions.csproj'
     nobuild: true
     includesymbols: true
     includesource: true
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'NuGetVersion'
+
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
