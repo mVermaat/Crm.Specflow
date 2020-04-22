@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow", "Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj", "{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vermaat.Crm.Specflow", "Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj", "{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow.Sample", "Vermaat.Crm.Specflow.Sample\Vermaat.Crm.Specflow.Sample.csproj", "{40155862-3830-401C-945A-70E57B35F7A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vermaat.Crm.Specflow.Sample", "Vermaat.Crm.Specflow.Sample\Vermaat.Crm.Specflow.Sample.csproj", "{40155862-3830-401C-945A-70E57B35F7A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermaat.Crm.Specflow.Expressions", "Vermaat.Crm.Specflow.Expressions\Vermaat.Crm.Specflow.Expressions.csproj", "{473D4530-AC23-4A29-948E-96AD3A52D074}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vermaat.Crm.Specflow.Expressions", "Vermaat.Crm.Specflow.Expressions\Vermaat.Crm.Specflow.Expressions.csproj", "{473D4530-AC23-4A29-948E-96AD3A52D074}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,7 +24,8 @@ Global
 		{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}.Release|Any CPU.Build.0 = Release|Any CPU
 		{40155862-3830-401C-945A-70E57B35F7A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{40155862-3830-401C-945A-70E57B35F7A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40155862-3830-401C-945A-70E57B35F7A1}.NuGetRelease|Any CPU.ActiveCfg = NuGetRelease|Any CPU
+		{40155862-3830-401C-945A-70E57B35F7A1}.NuGetRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{40155862-3830-401C-945A-70E57B35F7A1}.NuGetRelease|Any CPU.Build.0 = Release|Any CPU
 		{40155862-3830-401C-945A-70E57B35F7A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40155862-3830-401C-945A-70E57B35F7A1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{473D4530-AC23-4A29-948E-96AD3A52D074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

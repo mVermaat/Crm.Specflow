@@ -1,41 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0B9CDBF5-9B2F-4CDA-B708-8C4590A8E558}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Vermaat.Crm.Specflow</RootNamespace>
     <AssemblyName>Vermaat.Crm.Specflow</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
+    <AssemblyTitle>Vermaat.Crm.Specflow</AssemblyTitle>
+    <Configurations>Debug;Release;NuGetRelease</Configurations>
+    <Description>D365 Extension for SpecFlow allows you to automatically test your Dynamics 365 CE implementation. It provides a broad set of SpecFlow steps to help you create your scripts very rapidly. It leverages the EasyRepro library from Microsoft for the User Interface related tests.</Description>
+    <IncludeSource>true</IncludeSource>
+    <IncludeSymbols>true</IncludeSymbols>
+    <PackageIconUrl>https://raw.githubusercontent.com/DynamicHands/PowerApps-Guidelines/master/.vuepress/public/favicon-64x64.png</PackageIconUrl>
+    <PackageId>Vermaat.Crm.Specflow</PackageId>
+    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>D365;SpecFlow;PowerPlatform;Automated;Testing;Dynamics365;Dynamics</PackageTags>
+    <RepositoryUrl>https://github.com/DynamicHands/Crm.Specflow</RepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <TargetFramework>net4.6.2</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NuGetRelease|AnyCPU'">
     <OutputPath>bin\NuGetRelease\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -46,246 +27,19 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="BoDi, Version=1.4.1.0, Culture=neutral, PublicKeyToken=ff7cd5ea2744b496, processorArchitecture=MSIL">
-      <HintPath>..\packages\BoDi.1.4.1\lib\net45\BoDi.dll</HintPath>
-    </Reference>
-    <Reference Include="Gherkin, Version=6.0.0.0, Culture=neutral, PublicKeyToken=86496cfa5b4a5851, processorArchitecture=MSIL">
-      <HintPath>..\packages\Gherkin.6.0.0\lib\net45\Gherkin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.21\lib\net462\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Dynamics365.UIAutomation.Api.UCI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0.11711\lib\net46\Microsoft.Dynamics365.UIAutomation.Api.UCI.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Dynamics365.UIAutomation.Browser, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dynamics365.UIAutomation.Api.9.1.0.11711\lib\net46\Microsoft.Dynamics365.UIAutomation.Browser.dll</HintPath>
-    </Reference>
-    <Reference Include="microsoft.identitymodel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.7.0.0\lib\net35\microsoft.identitymodel.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=5.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.5.2.5\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.1.0.25\lib\net462\Microsoft.Rest.ClientRuntime.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.21\lib\net462\Microsoft.Xrm.Sdk.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xrm.Sdk.Deployment, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.Deployment.9.0.2.21\lib\net462\Microsoft.Xrm.Sdk.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.Workflow.9.0.2.21\lib\net462\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xrm.Tooling.Connector, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.1.0.25\lib\net462\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationFramework" />
-    <Reference Include="SeleniumExtras.WaitHelpers, Version=3.11.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetSeleniumExtras.WaitHelpers.3.11.0\lib\net45\SeleniumExtras.WaitHelpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Activities" />
-    <Reference Include="System.Activities.Presentation" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.DirectoryServices.AccountManagement" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IdentityModel" />
-    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.Web" />
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Workflow.Activities" />
-    <Reference Include="System.Workflow.ComponentModel" />
-    <Reference Include="System.Workflow.Runtime" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
+    <PackageReference Include="Dynamics365.UIAutomation.Api" Version="9.1.0.11711" />
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.21" />
+    <PackageReference Include="Microsoft.CrmSdk.XrmTooling.CoreAssembly" Version="9.1.0.37" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+    <PackageReference Include="SpecFlow" Version="3.0.225" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="TechTalk.SpecFlow, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.3.0.225\lib\net45\TechTalk.SpecFlow.dll</HintPath>
-    </Reference>
-    <Reference Include="Utf8Json, Version=1.3.7.0, Culture=neutral, PublicKeyToken=8a73d3ba7e392e27, processorArchitecture=MSIL">
-      <HintPath>..\packages\Utf8Json.1.3.7\lib\net45\Utf8Json.dll</HintPath>
-    </Reference>
-    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
-    </Reference>
-    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Configuration" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AliasedRecordCache.cs" />
-    <Compile Include="AssertHelper.cs" />
-    <Compile Include="BusinessProcessFlowHelper.cs" />
-    <Compile Include="CommandAction.cs" />
-    <Compile Include="Commands\ActivateQuoteCommand.cs" />
-    <Compile Include="Commands\AssertErrorDialogCommand.cs" />
-    <Compile Include="Commands\AssertFormNotificationsCommand.cs" />
-    <Compile Include="Commands\AssertNNRelationshipCommand.cs" />
-    <Compile Include="Commands\AssertRibbonStateCommand.cs" />
-    <Compile Include="Commands\AssociateToNNRelationshipCommand.cs" />
-    <Compile Include="Commands\CloseOpportunityCommand.cs" />
-    <Compile Include="Commands\ConvertToSalesOrderCommand.cs" />
-    <Compile Include="Commands\ClickSubgridButtonCommand.cs" />
-    <Compile Include="Commands\CreateRelatedRecordCommand.cs" />
-    <Compile Include="Commands\GetCurrentUserCommand.cs" />
-    <Compile Include="Commands\GetCurrentUserSettingsCommand.cs" />
-    <Compile Include="Commands\MergeRecordsCommand.cs" />
-    <Compile Include="Commands\ReviseQuoteCommand.cs" />
-    <Compile Include="Commands\SetLookupAsAliasCommand.cs" />
-    <Compile Include="Connectivity\ClientSecretCrmConnection.cs" />
-    <Compile Include="Connectivity\ConnectionManager.cs" />
-    <Compile Include="Connectivity\CrmConnection.cs" />
-    <Compile Include="Connectivity\UsernamePasswordCrmConnection.cs" />
-    <Compile Include="ConvertedObjectType.cs" />
-    <Compile Include="EasyRepro\BrowserManager.cs" />
-    <Compile Include="EasyRepro\ButtonTexts.cs" />
-    <Compile Include="CommandProcessor.cs" />
-    <Compile Include="Commands\AssertBusinessProcessStageCommand.cs" />
-    <Compile Include="Commands\AssertCrmRecordCommand.cs" />
-    <Compile Include="Commands\AssertFormStateCommand.cs" />
-    <Compile Include="Commands\AssignRecordCommand.cs" />
-    <Compile Include="Commands\BrowserCommand.cs" />
-    <Compile Include="Commands\BrowserOnlyCommand.cs" />
-    <Compile Include="Commands\CreateRecordCommand.cs" />
-    <Compile Include="Commands\DeleteRecordCommand.cs" />
-    <Compile Include="Commands\GetRecordsCommand.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ICommandFunc.cs" />
-    <Compile Include="Commands\ApiOnlyCommand.cs" />
-    <Compile Include="Commands\MoveToBusinessProcessStageCommand.cs" />
-    <Compile Include="Commands\MoveToNextBusinessProcessStageCommand.cs" />
-    <Compile Include="Commands\QualifyLeadCommand.cs" />
-    <Compile Include="Commands\UpdateRecordCommand.cs" />
-    <Compile Include="Commands\UpdateStatusCommand.cs" />
-    <Compile Include="Commands\WaitForAsyncJobsCommand.cs" />
-    <Compile Include="EasyRepro\Field.cs" />
-    <Compile Include="EasyRepro\FormNotification.cs" />
-    <Compile Include="EasyRepro\FormNotificationType.cs" />
-    <Compile Include="EasyRepro\FormOptions.cs" />
-    <Compile Include="EasyRepro\FormVisibility.cs" />
-    <Compile Include="EasyRepro\OpportunityCloseDialog.cs" />
-    <Compile Include="EasyRepro\OpportunityCloseDialogField.cs" />
-    <Compile Include="EasyRepro\SeleniumFunctions.cs" />
-    <Compile Include="EasyRepro\SeleniumSelectorData.cs" />
-    <Compile Include="EasyRepro\SeleniumSelectorItems.cs" />
-    <Compile Include="EasyRepro\TemporaryFixes.cs" />
-    <Compile Include="Entities\CrmModelApps.cs" />
-    <Compile Include="Entities\Lead.cs" />
-    <Compile Include="Entities\UserSettings.cs" />
-    <Compile Include="EntityReferenceComparer.cs" />
-    <Compile Include="ErrorCodes.cs" />
-    <Compile Include="FormLoadConditions\FormIsId.cs" />
-    <Compile Include="FormLoadConditions\FormIsOfEntity.cs" />
-    <Compile Include="FormLoadConditions\IFormLoadCondition.cs" />
-    <Compile Include="FormLoadConditions\NoBusinessProcessError.cs" />
-    <Compile Include="FormLoadConditions\RecordHasStatus.cs" />
-    <Compile Include="GlobalTestingContext.cs" />
-    <Compile Include="Steps\OpportunitySteps.cs" />
-    <Compile Include="Steps\UserSteps.cs" />
-    <Compile Include="TestExecutionException.cs" />
-    <Compile Include="Connectivity\BrowserLoginDetails.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Connectivity\CrmService.cs" />
-    <Compile Include="CrmTestingContext.cs" />
-    <Compile Include="EasyRepro\BrowserOptionHelper.cs" />
-    <Compile Include="EasyRepro\CommandBarActions.cs" />
-    <Compile Include="EasyRepro\CompositeFields.cs" />
-    <Compile Include="EasyRepro\FormState.cs" />
-    <Compile Include="EasyRepro\RequiredState.cs" />
-    <Compile Include="EasyRepro\UCIApp.cs" />
-    <Compile Include="EasyRepro\FormData.cs" />
-    <Compile Include="EasyRepro\FormField.cs" />
-    <Compile Include="EasyRepro\UCIBrowser.cs" />
-    <Compile Include="EasyRepro\WebElementExtensions.cs" />
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="HelperMethods.cs" />
-    <Compile Include="Hooks.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="ProcessStage.cs" />
-    <Compile Include="QueryHelper.cs" />
-    <Compile Include="SeleniumTestingContext.cs" />
-    <Compile Include="Steps\GeneralSteps.cs" />
-    <Compile Include="Steps\LeadSteps.cs" />
-    <Compile Include="Steps\QuoteSteps.cs" />
-    <Compile Include="Steps\UISteps.cs" />
-    <Compile Include="TableConverter.cs" />
-    <Compile Include="ValidationResult.cs" />
-    <Compile Include="Xml\DefaultDataXmlClasses.cs" />
-    <Compile Include="MetadataCache.cs" />
-    <Compile Include="ObjectConverter.cs" />
-    <Compile Include="RecordBuilder.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Selenium.Chrome.WebDriver.81.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.81.0.0\build\Selenium.Chrome.WebDriver.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.81.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.81.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
-  </Target>
+
 </Project>

@@ -1,10 +1,27 @@
-$result = Get-ChildItem -Path "$env:SYSTEM_DEFAULTWORKINGDIRECTORY\packages" -Directory -Filter "SpecRun.Runner.*"
+######################### Parameters #########################
+param(
+[string]$packageDirectory
+)
 
-if($result.Length -gt 0) {
-    Write-Host "Setting variable to $($result[0].FullName)"
-    Write-Host "##vso[task.setvariable variable=SpecRunFolder;]$($result[0].FullName)"  
-}
-else {
+######################### Script #########################
+$result = Get-ChildItem -Path "$packageDirectory\specrun.runner" -Directory
+
+if($result.Length -eq 0) {
     Write-Host "SpecRun foulder not found"
-    exit 1;
+    exit 1; 
 }
+$highest = $null
+$highestVersion = $null
+
+for($i = 0; $i -lt $result.Length;$i++) {
+    $version = [Version]::new($result[$i].Name)
+
+    if($highestVersion -eq $null -or $highestVersion -lt $version) {
+        $highestVersion = $version
+        $highest = $result[$i]
+    }
+}
+
+Write-Host "Setting variable to $($highest.FullName)"
+Write-Host "##vso[task.setvariable variable=SpecRunFolder;]$($highest.FullName)"  
+
