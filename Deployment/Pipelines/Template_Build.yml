@@ -12,14 +12,8 @@ steps:
   inputs:
     command: 'restore'
     restoreSolution: '${{ parameters.solutions }}'
-    feedsToUse: 'select'
-    
-#- task: Assembly-Info-NetFramework@2
-#  displayName: 'Set Assembly Manifest Data'
-#  inputs:
-#    VersionNumber: '$(Build.BuildNumber)'
-#    FileVersionNumber: '$(Build.BuildNumber)'
-#    InformationalVersion: '$(Build.BuildNumber)'
+    feedsToUse: 'config'
+    nugetConfigPath: 'Nuget.config'
 
 - task: VSBuild@1
   displayName: 'Build solution ${{ parameters.solutions }}'
