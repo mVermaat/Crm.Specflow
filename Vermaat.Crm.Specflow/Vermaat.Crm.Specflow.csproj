@@ -3,12 +3,18 @@
   <PropertyGroup>
     <TargetFramework>net4.6.2</TargetFramework>
     <Configurations>Debug;Release;NuGetRelease</Configurations>
-    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <AssemblyTitle>Vermaat.Crm.Specflow</AssemblyTitle>
     <AssemblyName>Vermaat.Crm.Specflow</AssemblyName>
     <PackageId>Vermaat.Crm.Specflow</PackageId>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageTags>D365;SpecFlow;PowerPlatform;Automated;Testing;Dynamics365;Dynamics</PackageTags>
+    <Description>D365 Extension for SpecFlow allows you to automatically test your Dynamics 365 CE implementation. It provides a broad set of SpecFlow steps to help you create your scripts very rapidly. It leverages the EasyRepro library from Microsoft for the User Interface related tests.</Description>
+    <RepositoryUrl>https://github.com/DynamicHands/Crm.Specflow</RepositoryUrl>
+    
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NuGetRelease|AnyCPU'">
