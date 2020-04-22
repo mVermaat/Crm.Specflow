@@ -31,6 +31,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '$(Build.SourcesDirectory)\Vermaat.Crm.Specflow\Vermaat.Crm.Specflow.csproj'
+    nobuild: true
     includesymbols: true
     includesource: true
     versioningScheme: 'byBuildNumber'
