@@ -98,19 +98,29 @@ namespace Vermaat.Crm.Specflow
         [BeforeScenario]
         public void SetDefaultConnection()
         {
-            var authType = HelperMethods.GetAppSettingsValue("AuthType", true);
+            // Fallback to 'Default' for backwards compatibility
+            var loginType = HelperMethods.GetAppSettingsValue("LoginType", true) ?? "Default";
 
             CrmConnection connection;
             CrmConnection adminConnection;
-            if (authType.Equals("ClientSecret", StringComparison.InvariantCultureIgnoreCase))
+            switch (loginType)
             {
-                connection = ClientSecretCrmConnection.CreateFromAppConfig();
-                adminConnection = ClientSecretCrmConnection.CreateAdminConnectionFromAppConfig();
-            }
-            else
-            {
-                connection = UsernamePasswordCrmConnection.FromAppConfig();
-                adminConnection = UsernamePasswordCrmConnection.AdminConnectionFromAppConfig();
+                case "Default":
+                    connection = UsernamePasswordCrmConnection.FromAppConfig();
+                    adminConnection = UsernamePasswordCrmConnection.AdminConnectionFromAppConfig();
+                    break;
+                case "ClientSecret":
+                    connection = ClientSecretCrmConnection.CreateFromAppConfig();
+                    adminConnection = ClientSecretCrmConnection.CreateAdminConnectionFromAppConfig();
+                    break;
+                case "Hybrid":
+                    connection = HybridCrmConnection.CreateFromAppConfig();
+                    adminConnection = HybridCrmConnection.CreateAdminConnectionFromAppConfig();
+                    break;
+                // Implementations can add their own 'LoginType'. If this is done, then this method shouldn't do anything
+                default: 
+                    return;
+
             }
 
             GlobalTestingContext.ConnectionManager.SetAdminConnection(adminConnection);
