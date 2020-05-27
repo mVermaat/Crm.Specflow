@@ -6,6 +6,7 @@ using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public static class TemporaryFixes
     {
+        #region TBD
         /// <summary>
         /// Set Value
         /// </summary>
@@ -63,6 +65,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return true;
             });
         }
+
+        #endregion
+
+        #region https://github.com/DynamicHands/Crm.Specflow/issues/44
 
         /// <summary>
         /// Sets the value of a Date Field.
@@ -166,7 +172,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return success;
         }
 
-       
         private static IWebElement WaitUntilClickable(IWebDriver driver, By by, TimeSpan timeout, Action<IWebDriver> successCallback, Action<IWebDriver> failureCallback)
         {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
@@ -196,5 +201,90 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             return returnElement;
         }
+
+
+        #endregion
+
+        #region https://github.com/DynamicHands/Crm.Specflow/issues/78
+
+        public static void Login(WebClient client, Uri orgUri, SecureString username, SecureString password)
+        {
+            client.Execute(BrowserOptionHelper.GetOptions("Login"), Login, client, orgUri, username, password); 
+        }
+
+        private static LoginResult Login(IWebDriver driver, WebClient client, Uri uri, SecureString username, SecureString password)
+        {
+            bool online = !(client.OnlineDomains != null && !client.OnlineDomains.Any(d => uri.Host.EndsWith(d)));
+            driver.Navigate().GoToUrl(uri);
+
+            if (!online)
+                return LoginResult.Success;
+
+            driver.WaitUntilClickable(By.Id("use_another_account_link"), TimeSpan.FromSeconds(1), e => e.Click());
+
+            bool success = EnterUserName(driver, username);
+            driver.ClickIfVisible(By.Id("aadTile"));
+            client.Browser.ThinkTime(1000);
+
+            EnterPassword(driver, password);
+            client.Browser.ThinkTime(1000);
+            
+            int attempts = 0;
+            do
+            {
+                success = ClickStaySignedIn(driver);
+                attempts++;
+            }
+            while (!success && attempts <= 3);
+
+            if (success)
+                WaitForMainPage(driver);
+            else
+                throw new InvalidOperationException("Login failed");
+
+            return success ? LoginResult.Success : LoginResult.Failure;
+        }
+
+        private static bool EnterUserName(IWebDriver driver, SecureString username)
+        {
+            var input = driver.WaitUntilAvailable(By.XPath(Elements.Xpath[Reference.Login.UserId]), new TimeSpan(0, 0, 30));
+            if (input == null)
+                return false;
+
+            input.SendKeys(username.ToUnsecureString());
+            input.SendKeys(Keys.Enter);
+            return true;
+        }
+
+        private static void EnterPassword(IWebDriver driver, SecureString password)
+        {
+            var input = driver.FindElement(By.XPath(Elements.Xpath[Reference.Login.LoginPassword]));
+            input.SendKeys(password.ToUnsecureString());
+            input.Submit();
+        }
+
+        private static bool ClickStaySignedIn(IWebDriver driver)
+        {
+            var xpath = By.XPath(Elements.Xpath[Reference.Login.StaySignedIn]);
+            var element = driver.ClickIfVisible(xpath, 5.Seconds());
+            return element != null;
+        }
+
+        internal static bool WaitForMainPage(IWebDriver driver)
+        {
+            Action<IWebElement> successCallback = _ =>
+                                  {
+                                      bool isUCI = driver.HasElement(By.XPath(Elements.Xpath[Reference.Login.CrmUCIMainPage]));
+                                      if (isUCI)
+                                          driver.WaitForTransaction();
+                                  };
+
+            var xpathToMainPage = By.XPath(Elements.Xpath[Reference.Login.CrmMainPage]);
+            var element = driver.WaitUntilAvailable(xpathToMainPage, TimeSpan.FromSeconds(30), successCallback);
+            return element != null;
+        }
+
+        #endregion
+
     }
 }
