@@ -54,7 +54,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     driver.WaitUntilClickable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok]),
                                new TimeSpan(0, 0, 5),
                                d => { driver.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok])); },
-                               d => { throw new InvalidOperationException("The Close Opportunity dialog is not available."); });
+                               () => { throw new InvalidOperationException("The Close Opportunity dialog is not available."); });
 
                     HelperMethods.WaitForFormLoad(_app.WebDriver, new NoBusinessProcessError(), new RecordHasStatus(_closeAsWon ? "Won" : "Lost"));
                 
