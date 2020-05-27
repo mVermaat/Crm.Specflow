@@ -1,4 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,15 @@ namespace Vermaat.Crm.Specflow
             _crmContext = crmContext;
             _featureContext = featureContext;
             _scenarioContext = scenarioContext;
+        }
+
+        /// <summary>
+        /// This is a temporary fix as due to another issue EasyRepro can't be updated right now
+        /// </summary>
+        [BeforeScenario]
+        public void FixXPaths()
+        {
+            AppElements.Xpath[AppReference.Entity.TabList] = "//ul[contains(@id, \"tablist\")]";
         }
 
         [BeforeScenario("API")]

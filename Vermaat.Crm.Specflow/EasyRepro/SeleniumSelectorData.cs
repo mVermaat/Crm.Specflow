@@ -22,7 +22,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_SubGrid_Button, ".//button[contains(@data-id,'[NAME]')]" },
             { SeleniumSelectorItems.FlyoutRoot, "//div[@id='__flyoutRootNode']" },
             { SeleniumSelectorItems.Entity_ScriptErrorDialog, "//*[@id='dialogTitleText']" },
-            { SeleniumSelectorItems.Entity_FormLoad, "id(\"tablist\")" },
+            { SeleniumSelectorItems.Entity_FormLoad, "//ul[contains(@id, 'tablist_')]" },
             { SeleniumSelectorItems.Entity_MoreTabs, ".//button[@data-id='more_button']" },
             { SeleniumSelectorItems.Entity_DateContainer, "//div[contains(@data-id,'[NAME].fieldControl._datecontrol-date-container')]" },
             { SeleniumSelectorItems.Entity_DateTime_Time_Input, "//input[@id='[NAME]_fabric_combobox-input']" },
