@@ -7,7 +7,7 @@ using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 
-namespace Vermaat.Crm.Specflow.EasyRepro
+namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
     class OpportunityCloseDialogField : Field
     {

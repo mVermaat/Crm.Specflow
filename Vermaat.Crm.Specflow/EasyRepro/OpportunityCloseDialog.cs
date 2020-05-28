@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro.Fields;
 using Vermaat.Crm.Specflow.FormLoadConditions;
 
 namespace Vermaat.Crm.Specflow.EasyRepro

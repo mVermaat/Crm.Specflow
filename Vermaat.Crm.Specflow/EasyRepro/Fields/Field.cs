@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vermaat.Crm.Specflow.EasyRepro
+namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
     public abstract class Field
     {

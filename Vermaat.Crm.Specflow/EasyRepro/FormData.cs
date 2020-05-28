@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro.Fields;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -41,19 +42,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             var containsField = _formFields.ContainsKey(fieldLogicalName);
             Logger.WriteLine($"Field {fieldLogicalName} is on Form: {containsField}");
             return containsField;
-        }
-
-        public void ExpandTab(string tabLabel)
-        {
-            Logger.WriteLine($"Expanding tab {tabLabel}");
-            _app.App.Entity.SelectTab(tabLabel);
-        }
-
-        public void ExpandHeader()
-        {
-            Logger.WriteLine("Expanding headers");
-            var header = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty);
-            _app.WebDriver.ClickWhenAvailable(header);
         }
 
         public string GetErrorDialogMessage()
@@ -93,21 +81,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void FillForm(CrmTestingContext crmContext, Table formData)
         {
             Logger.WriteLine($"Filling form");
-            string currentTab = null;
+            var formState = new FormState(_app);
             foreach (var row in formData.Rows)
             {
                 Assert.IsTrue(ContainsField(row[Constants.SpecFlow.TABLE_KEY]), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
                 var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];
-
-                var newTab = field.GetTabName();
-                if (!field.IsFieldInHeaderOnly() && (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab))
-                {
-                    ExpandTab(field.GetTabLabel());
-                    currentTab = newTab;
-                }
-
-                Assert.IsTrue(field.IsVisible(), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't visible");
-                Assert.IsFalse(field.IsLocked(), $"Field {row[Constants.SpecFlow.TABLE_KEY]} is read-only");
+                Assert.IsTrue(field.IsVisible(formState), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't visible");
+                Assert.IsFalse(field.IsLocked(formState), $"Field {row[Constants.SpecFlow.TABLE_KEY]} is read-only");
 
                 field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }
@@ -174,10 +154,30 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     controls[i] = attribute["controls"][i];
                 }
 
-                formFields.Add(attribute["name"], new FormField(this, _app, metadataDic[attribute["name"]], controls));
+                FormField field = CreateFormField(metadataDic[attribute["name"]], controls);
+                if (field != null)
+                    formFields.Add(attribute["name"], field);
+                
             }
 
             return formFields;
+        }
+
+        private FormField CreateFormField(AttributeMetadata metadata, string[] controls)
+        {
+            if (controls.Length == 0)
+                return null;
+
+            // Take the first control that isn't in the header
+            for(int i = 0; i < controls.Length; i++)
+            {
+                if(!controls[i].StartsWith("header"))
+                {
+                    return new BodyFormField(_app, metadata, controls[i]);
+                }
+            }
+            // If all are in the header, take the first header control
+            return new HeaderFormField(_app, metadata, controls[0]);
         }
     }
 }

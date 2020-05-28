@@ -54,6 +54,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.ASYNC_TIMEOUT, "Not all Asynchronous jobs are completed on time");
             AddError(Constants.ErrorCodes.MULTIPLE_ATTRIBUTES_FOUND, "Multiple attributes found for {0}. Results: {1}");
             AddError(Constants.ErrorCodes.APPLICATIONUSER_CANNOT_LOGIN, "An application user can't login via the browser");
+            AddError(Constants.ErrorCodes.NO_CONTROL_FOUND, "No controls found for attribute {0}");
         }
 
         public void AddError(int errorCode, string message)
