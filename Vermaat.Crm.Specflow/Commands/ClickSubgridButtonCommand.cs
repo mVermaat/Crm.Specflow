@@ -30,7 +30,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
             var browser = _seleniumContext.GetBrowser();
             var record = browser.OpenRecord(new OpenFormOptions(parentRecord));
-            record.ExpandTab(_tabName);
+            browser.App.App.Entity.SelectTab(_tabName);
 
             Logger.WriteLine($"Clicking button '{_gridButtonId} in grid {_subgridName}");
             record.ClickSubgridButton(_subgridName, _gridButtonId);

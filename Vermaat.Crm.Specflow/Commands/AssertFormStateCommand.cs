@@ -12,6 +12,13 @@ namespace Vermaat.Crm.Specflow.Commands
         private readonly EntityReference _crmRecord;
         private readonly Table _visibilityCriteria;
 
+        private class ExpectedFormState
+        {
+            public FormVisibility? Visible { get; set; }
+            public bool? Locked { get; set; }
+            public RequiredState? Required { get; set; }
+        }
+
         public AssertFormStateCommand(CrmTestingContext crmContext, SeleniumTestingContext seleniumContext, EntityReference crmRecord, Table visibilityCriteria) :
             base(crmContext, seleniumContext)
         {
@@ -22,31 +29,20 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             var formData = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(_crmRecord));
+            var formState = new FormState(_seleniumContext.GetBrowser().App);
             List<string> errors = new List<string>();
 
-            string currentTab = null;
             foreach (TableRow row in _visibilityCriteria.Rows)
             {
                 var expectedFormState = GetExpectedFormState(row[Constants.SpecFlow.TABLE_FORMSTATE]);
                 var isOnForm = formData.ContainsField(row[Constants.SpecFlow.TABLE_KEY]);
 
-                if (isOnForm)
-                {
-                    var field = formData[row[Constants.SpecFlow.TABLE_KEY]];
-                    var newTab = field.GetTabName();
-                    if (string.IsNullOrWhiteSpace(currentTab) || currentTab != newTab)
-                    {
-                        formData.ExpandTab(field.GetTabLabel());
-                        currentTab = newTab;
-                    }
-                }
-
                 if (isOnForm || (!expectedFormState.Locked.HasValue && !expectedFormState.Required.HasValue))
                 {
                     // Assert
-                    AssertVisibility(formData, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Visible, errors, isOnForm);
-                    AssertReadOnly(formData, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Locked, errors);
-                    AssertRequirement(formData, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Required, errors);
+                    AssertVisibility(formData, formState, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Visible, errors, isOnForm);
+                    AssertReadOnly(formData, formState, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Locked, errors);
+                    AssertRequirement(formData, formState, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Required, errors);
                 }
                 else
                 {
@@ -57,11 +53,11 @@ namespace Vermaat.Crm.Specflow.Commands
             Assert.AreEqual(0, errors.Count, string.Join(", ", errors));
         }
 
-        private FormState GetExpectedFormState(string formStateString)
+        private ExpectedFormState GetExpectedFormState(string formStateString)
         {
             var splitted = formStateString.Split(',');
 
-            FormState result = new FormState();
+            ExpectedFormState result = new ExpectedFormState();
             foreach(string state in splitted)
             {
                 switch(state.Trim().ToLower())
@@ -80,14 +76,14 @@ namespace Vermaat.Crm.Specflow.Commands
             return result;
         }
 
-        private void AssertVisibility(FormData formData, string fieldName, FormVisibility? expected, List<string> errors, bool isOnForm)
+        private void AssertVisibility(FormData formData, FormState formState, string fieldName, FormVisibility? expected, List<string> errors, bool isOnForm)
         {
             if (!expected.HasValue)
                 return;
 
             if(isOnForm)
             {
-                var isVisible = formData[fieldName].IsVisible();
+                var isVisible = formData[fieldName].IsVisible(formState);
                 if (expected == FormVisibility.Visible && !isVisible)
                 {
                     errors.Add($"{fieldName} was expected to be visible but it is invisible");
@@ -107,24 +103,24 @@ namespace Vermaat.Crm.Specflow.Commands
             }
         }
 
-        private void AssertReadOnly(FormData formData, string fieldName, bool? locked, List<string> errors)
+        private void AssertReadOnly(FormData formData, FormState formState, string fieldName, bool? locked, List<string> errors)
         {
             if (!locked.HasValue)
                 return;
 
-            if (formData[fieldName].IsLocked() != locked.Value)
+            if (formData[fieldName].IsLocked(formState) != locked.Value)
             {
                 errors.Add(string.Format("{0} was expected to be {1}locked but it is {2}locked",
                    fieldName, locked.Value ? "" : "un", locked.Value ? "un" : ""));
             }
         }
 
-        private void AssertRequirement(FormData formData, string fieldName, RequiredState? expectedRequiredState, List<string> errors)
+        private void AssertRequirement(FormData formData, FormState formState, string fieldName, RequiredState? expectedRequiredState, List<string> errors)
         {
             if (!expectedRequiredState.HasValue)
                 return;
 
-            var actualRequiredState = formData[fieldName].GetRequiredState();
+            var actualRequiredState = formData[fieldName].GetRequiredState(formState);
             if (actualRequiredState != expectedRequiredState)
             {
                 errors.Add($"{fieldName} was expected to be {expectedRequiredState} but it is {actualRequiredState}");
