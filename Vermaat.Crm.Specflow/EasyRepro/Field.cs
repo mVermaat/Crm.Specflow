@@ -1,4 +1,5 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -75,25 +76,25 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
         }
 
-        private void SetIntegerField(int fieldValue)
+        protected virtual void SetIntegerField(int fieldValue)
         {
             SetTextField(fieldValue.ToString(
                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
         }
 
-        private void SetDoubleField(double fieldValue)
+        protected virtual void SetDoubleField(double fieldValue)
         {
             SetTextField(fieldValue.ToString(
                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
         }
 
-        private void SetDecimalField(decimal fieldValue)
+        protected virtual void SetDecimalField(decimal fieldValue)
         {
             SetTextField(fieldValue.ToString(
                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
         }
 
-        private void SetLongField(long fieldValue)
+        protected virtual void SetLongField(long fieldValue)
         {
             SetTextField(fieldValue.ToString(
                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
@@ -159,7 +160,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         protected virtual void SetTextField(string fieldValue)
         {
-            App.Client.SetValueFix(LogicalName, fieldValue);
+            App.Client.SetValueFix(LogicalName, fieldValue, FormContextType.Entity);
         }
 
         protected virtual void SetLookupValue(EntityReference fieldValue, string fieldValueText)

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenQA.Selenium.Interactions;
+using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -121,6 +122,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (_isFieldInHeaderOnly == null)
                 _isFieldInHeaderOnly = _controls.Length == 1 && _controls[0].StartsWith("header");
             return _isFieldInHeaderOnly.Value;
+        }
+
+        protected override void SetTextField(string fieldValue)
+        {
+            if(IsFieldInHeaderOnly())
+                App.Client.SetValueFix(LogicalName, fieldValue, FormContextType.Header);
+            else
+                base.SetTextField(fieldValue);
         }
 
     }
