@@ -15,58 +15,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public static class TemporaryFixes
     {
-        #region TBD
-        /// <summary>
-        /// Set Value
-        /// </summary>
-        /// <param name="field">The field</param>
-        /// <param name="value">The value</param>
-        /// <example>xrmApp.Entity.SetValue("firstname", "Test");</example>
-        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, string value)
-        {
-            return client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
-            {
-                var query = By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field));
-                IWebElement fieldContainer = WaitUntilClickable(driver, query, TimeSpan.FromSeconds(5), null, null);
-
-                if (fieldContainer == null)
-                {
-                    throw new TestExecutionException(Constants.ErrorCodes.ELEMENT_NOT_INTERACTABLE, $"Field {field} is probably locked or invisible");
-                }
-
-                IWebElement input;
-                if (fieldContainer.FindElements(By.TagName("input")).Count > 0)
-                {
-                    input = fieldContainer.FindElement(By.TagName("input"));
-
-                }
-                else if (fieldContainer.FindElements(By.TagName("textarea")).Count > 0)
-                {
-                    input = fieldContainer.FindElement(By.TagName("textarea"));
-                }
-                else
-                {
-                    throw new Exception($"Field with name {field} does not exist.");
-                }
-
-                if (input != null)
-                {
-                    input.SendKeys(Keys.Control + "a");
-                    input.SendKeys(Keys.Backspace);
-
-                    if (!string.IsNullOrWhiteSpace(value))
-                    {
-                        input.SendKeys(value);
-                    }
-
-                    input.SendKeys(Keys.Tab + Keys.Tab);
-                }
-
-                return true;
-            });
-        }
-
-        #endregion
 
         #region https://github.com/DynamicHands/Crm.Specflow/issues/44
 
@@ -285,6 +233,62 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         }
 
         #endregion
+
+        #region https://github.com/DynamicHands/Crm.Specflow/issues/88
+
+        /// <summary>
+        /// Set Value
+        /// </summary>
+        /// <param name="field">The field</param>
+        /// <param name="value">The value</param>
+        /// <example>xrmApp.Entity.SetValue("firstname", "Test");</example>
+        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, string value)
+        {
+            return client.Execute(BrowserOptionHelper.GetOptions("Set Value"), driver =>
+            {
+
+                IWebElement fieldContainer = null;
+
+                // Initialize the entity form context
+                var formContext = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.FormContext]));
+                fieldContainer = formContext.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field)));
+
+
+                IWebElement input;
+                bool found = fieldContainer.TryFindElement(By.TagName("input"), out input);
+
+                if (!found)
+                    found = fieldContainer.TryFindElement(By.TagName("textarea"), out input);
+
+                if (!found)
+                    throw new NoSuchElementException($"Field with name {field} does not exist.");
+
+                SetInputValue(driver, input, value);
+
+                return true;
+            });
+        }
+
+        private static void SetInputValue(IWebDriver driver, IWebElement input, string value, TimeSpan? thinktime = null)
+        {
+            input.SendKeys(Keys.Control + "a");
+            input.SendKeys(Keys.Backspace);
+            driver.WaitForTransaction();
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                input.Click(true);
+                return;
+            }
+
+            input.SendKeys(value, true);
+            driver.WaitForTransaction();
+        }
+
+
+        #endregion
+
+
 
     }
 }

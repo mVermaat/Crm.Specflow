@@ -159,10 +159,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         protected virtual void SetTextField(string fieldValue)
         {
-            if (string.IsNullOrWhiteSpace(fieldValue))
-                App.App.Entity.ClearValue(LogicalName);
-            else
-                App.Client.SetValueFix(LogicalName, fieldValue);
+            App.Client.SetValueFix(LogicalName, fieldValue);
         }
 
         protected virtual void SetLookupValue(EntityReference fieldValue, string fieldValueText)
