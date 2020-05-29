@@ -70,78 +70,39 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             
         }
 
-
-        protected virtual void SetIntegerField(IntegerValue value)
-        {
-            SetTextField(value.TextValue);
-        }
-
-        protected virtual void SetDoubleField(DoubleValue value)
-        {
-            SetTextField(value.TextValue);
-        }
-
-        protected virtual void SetDecimalField(DecimalValue value)
-        {
-            SetTextField(value.TextValue);
-        }
-
-        protected virtual void SetLongField(LongValue value)
-        {
-            SetTextField(value.TextValue);
-        }
-
-        protected virtual void SetTwoOptionField(BooleanValue value)
-        {
-            App.App.Entity.SetValue(value.ToBooleanItem(Metadata.LogicalName));
-        }
-
-        protected virtual void SetDateTimeField(DateTimeValue value)
-        {
-            App.Client.SetValueFix(LogicalName, value.Value, 
-                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat, 
-                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
-        }
-
-        protected virtual void SetOptionSetField(FieldTypes.OptionSetValue value)
-        {
-            if(value.Value.HasValue)
-                App.App.Entity.SetValue(value.ToOptionSet(Metadata));
-            else
-                App.App.Entity.ClearValue(value.ToOptionSet(Metadata));
-        }
-
-        protected virtual void SetMoneyField(DecimalValue value)
-        {
-            SetTextField(value.TextValue);
-        }
-
-        protected virtual void SetTextField(string fieldValue)
-        {
-            App.Client.SetValueFix(LogicalName, fieldValue, FormContextType.Entity);
-        }
-
-        protected virtual void SetLookupValue(LookupValue value)
-        {
-            if (value.Value != null)
-            {
-                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {{ id: '{value.Value.Id}', name: '{value.Value.Name.Replace("'", @"\'")}', entityType: '{value.Value.LogicalName}' }} ])");
-                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
-            }
-            else
-            {
-                App.App.Entity.ClearValue(value.ToLookupItem(Metadata));
-            }
-        }
-
-
         protected virtual void SetVirtualField(string fieldValueText)
         {
             if (Metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
-                App.App.Entity.SetValue(new MultiValueOptionSet { Name = LogicalName, Values = fieldValueText.Split(',').Select(v => v.Trim()).ToArray() });
+                SetMultiSelectOptionSetField(new MultiSelectOptionSetValue(fieldValueText.Split(',').Select(v => v.Trim()).ToArray()));
             else
                 throw new NotImplementedException(string.Format("Virtual type {0} not implemented", Metadata.AttributeTypeName.Value));
         }
+
+
+        protected abstract void SetIntegerField(IntegerValue value);
+
+        protected abstract void SetDoubleField(DoubleValue value);
+
+        protected abstract void SetDecimalField(DecimalValue value);
+
+        protected abstract void SetLongField(LongValue value);
+
+        protected abstract void SetTwoOptionField(BooleanValue value);
+
+        protected abstract void SetDateTimeField(DateTimeValue value);
+
+        protected abstract void SetOptionSetField(FieldTypes.OptionSetValue value);
+
+        protected abstract void SetMoneyField(DecimalValue value);
+
+        protected abstract void SetTextField(string fieldValue);
+
+        protected abstract void SetLookupValue(LookupValue value);
+
+        protected abstract void SetMultiSelectOptionSetField(MultiSelectOptionSetValue value);
+
+
+        
 
        
         

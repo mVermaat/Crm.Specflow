@@ -16,9 +16,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.FieldTypes
             Label = label;
         }
 
-        public OptionSet ToOptionSet(AttributeMetadata metadata)
+        public OptionSet ToOptionSet(string logicalName)
         {
-            return new OptionSet { Name = metadata.LogicalName, Value = Label };
+            return new OptionSet { Name = logicalName, Value = Label };
         }
 
         public int? Value { get; }
