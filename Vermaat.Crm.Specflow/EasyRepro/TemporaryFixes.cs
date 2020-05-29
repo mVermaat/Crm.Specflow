@@ -291,20 +291,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             });
         }
 
-        private static void SetInputValue(IWebDriver driver, IWebElement input, string value, TimeSpan? thinktime = null)
+        private static void SetInputValue(IWebDriver driver, IWebElement input, string value)
         {
+            
             input.SendKeys(Keys.Control + "a");
             input.SendKeys(Keys.Backspace);
-            driver.WaitForTransaction();
 
-            if (string.IsNullOrWhiteSpace(value))
+            if (!string.IsNullOrWhiteSpace(value))
             {
-                input.Click(true);
-                return;
+                input.SendKeys(value);
             }
 
-            input.SendKeys(value, true);
-            driver.WaitForTransaction();
+            input.SendKeys(Keys.Tab + Keys.Tab);
         }
 
 
