@@ -8,14 +8,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro.FieldTypes
 {
     public class LongValue
     {
-        public LongValue(long value)
+        public LongValue(long? value)
         {
             Value = value;
         }
 
-        public long Value { get; }
+        public long? Value { get; }
 
-        public string TextValue => Value.ToString(
+        public string TextValue => Value?.ToString(
             GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat);
     }
 }

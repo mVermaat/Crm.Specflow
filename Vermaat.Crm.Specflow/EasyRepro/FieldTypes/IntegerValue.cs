@@ -10,14 +10,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro.FieldTypes
     {
 
 
-        public IntegerValue(int value)
+        public IntegerValue(int? value)
         {
             Value = value;
         }
 
-        public int Value { get; }
+        public int? Value { get; }
 
-        public string TextValue => Value.ToString(
+        public string TextValue => Value?.ToString(
             GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat);
     }
 }

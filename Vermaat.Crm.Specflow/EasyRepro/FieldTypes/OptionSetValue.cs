@@ -10,7 +10,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.FieldTypes
 {
     public class OptionSetValue
     {
-        public OptionSetValue(int value, string label)
+        public OptionSetValue(int? value, string label)
         {
             Value = value;
             Label = label;
@@ -21,7 +21,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.FieldTypes
             return new OptionSet { Name = metadata.LogicalName, Value = Label };
         }
 
-        public int Value { get; }
+        public int? Value { get; }
         public string Label { get; }
     }
 }

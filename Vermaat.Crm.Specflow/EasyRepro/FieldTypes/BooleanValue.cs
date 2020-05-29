@@ -10,18 +10,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro.FieldTypes
 {
     public class BooleanValue
     {
-        public BooleanValue(bool value)
+        public BooleanValue(bool? value)
         {
             Value = value;
         }
 
-        public bool Value { get; }
+        public bool? Value { get; }
 
-        public string TextValue => Value.ToString(CultureInfo.InvariantCulture);
+        public string TextValue => Value?.ToString(CultureInfo.InvariantCulture);
 
         public BooleanItem ToBooleanItem(string logicalName)
         {
-            return new BooleanItem { Name = logicalName, Value = Value };
+            return new BooleanItem { Name = logicalName, Value = Value.GetValueOrDefault() };
         }
     }
 }

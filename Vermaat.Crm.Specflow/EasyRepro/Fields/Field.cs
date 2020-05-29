@@ -29,74 +29,45 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
         {
             object fieldValue = ObjectConverter.ToCrmObject(Metadata.EntityLogicalName, Metadata.LogicalName, fieldValueText, crmContext);
 
-            if (fieldValue != null)
-            {
-                Logger.WriteLine($"Setting field value");
-                switch (Metadata.AttributeType.Value)
-                {
-                    case AttributeTypeCode.Boolean:
-                        SetTwoOptionField(new BooleanValue((bool)fieldValue));
-                        break;
-                    case AttributeTypeCode.DateTime:
-                        SetDateTimeField(new DateTimeValue((DateTimeAttributeMetadata)Metadata, (DateTime)fieldValue));
-                        break;
-                    case AttributeTypeCode.Customer:
-                    case AttributeTypeCode.Lookup:
-                        SetLookupValue(new LookupValue((EntityReference)fieldValue));
-                        break;
-                    case AttributeTypeCode.Picklist:
-                        SetOptionSetField(new FieldTypes.OptionSetValue(((Microsoft.Xrm.Sdk.OptionSetValue)fieldValue).Value, fieldValueText));
-                        break;
-                    case AttributeTypeCode.Money:
-                        SetMoneyField(new DecimalValue(((Money)fieldValue).Value));
-                        break;
-                    case AttributeTypeCode.Virtual:
-                        SetVirtualField(fieldValueText);
-                        break;
-                    case AttributeTypeCode.Integer:
-                        SetIntegerField(new IntegerValue((int)fieldValue));
-                        break;
-                    case AttributeTypeCode.Double:
-                        SetDoubleField(new DoubleValue((double)fieldValue));
-                        break;
-                    case AttributeTypeCode.BigInt:
-                        SetLongField(new LongValue((long)fieldValue));
-                        break;
-                    case AttributeTypeCode.Decimal:
-                        SetDecimalField(new DecimalValue((decimal)fieldValue));
-                        break;
-                    default:
-                        SetTextField((string)fieldValue);
-                        break;
-                }
-            }
-            else
-            {
-                Logger.WriteLine($"Clearing field value");
-                ClearValue();
-            }
-        }
-
-        protected virtual void ClearValue()
-        {
+            Logger.WriteLine($"Setting field value");
             switch (Metadata.AttributeType.Value)
             {
                 case AttributeTypeCode.Boolean:
-                    throw new TestExecutionException(Constants.ErrorCodes.TWO_OPTION_FIELDS_CANT_BE_CLEARED);
-                case AttributeTypeCode.Customer:
-                case AttributeTypeCode.Lookup:
-                    App.App.Entity.ClearValue(new LookupItem { Name = LogicalName });
-                    break;
-                case AttributeTypeCode.Picklist:
-                    App.App.Entity.ClearValue(new OptionSet { Name = LogicalName });
+                    SetTwoOptionField(new BooleanValue((bool?)fieldValue));
                     break;
                 case AttributeTypeCode.DateTime:
-                    App.Client.SetValueFix(LogicalName, null, null, null);
+                    SetDateTimeField(new DateTimeValue((DateTimeAttributeMetadata)Metadata, (DateTime?)fieldValue));
+                    break;
+                case AttributeTypeCode.Customer:
+                case AttributeTypeCode.Lookup:
+                    SetLookupValue(new LookupValue((EntityReference)fieldValue));
+                    break;
+                case AttributeTypeCode.Picklist:
+                    SetOptionSetField(new FieldTypes.OptionSetValue(((Microsoft.Xrm.Sdk.OptionSetValue)fieldValue)?.Value, fieldValueText));
+                    break;
+                case AttributeTypeCode.Money:
+                    SetMoneyField(new DecimalValue(((Money)fieldValue)?.Value));
+                    break;
+                case AttributeTypeCode.Virtual:
+                    SetVirtualField(fieldValueText);
+                    break;
+                case AttributeTypeCode.Integer:
+                    SetIntegerField(new IntegerValue((int?)fieldValue));
+                    break;
+                case AttributeTypeCode.Double:
+                    SetDoubleField(new DoubleValue((double?)fieldValue));
+                    break;
+                case AttributeTypeCode.BigInt:
+                    SetLongField(new LongValue((long?)fieldValue));
+                    break;
+                case AttributeTypeCode.Decimal:
+                    SetDecimalField(new DecimalValue((decimal?)fieldValue));
                     break;
                 default:
-                    SetTextField(null);
+                    SetTextField((string)fieldValue);
                     break;
             }
+            
         }
 
 
@@ -134,7 +105,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected virtual void SetOptionSetField(FieldTypes.OptionSetValue value)
         {
-            App.App.Entity.SetValue(value.ToOptionSet(Metadata));
+            if(value.Value.HasValue)
+                App.App.Entity.SetValue(value.ToOptionSet(Metadata));
+            else
+                App.App.Entity.ClearValue(value.ToOptionSet(Metadata));
         }
 
         protected virtual void SetMoneyField(DecimalValue value)
@@ -149,8 +123,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected virtual void SetLookupValue(LookupValue value)
         {
-            App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {{ id: '{value.Value.Id}', name: '{value.Value.Name.Replace("'", @"\'")}', entityType: '{value.Value.LogicalName}' }} ])");
-            App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
+            if (value.Value != null)
+            {
+                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {{ id: '{value.Value.Id}', name: '{value.Value.Name.Replace("'", @"\'")}', entityType: '{value.Value.LogicalName}' }} ])");
+                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
+            }
+            else
+            {
+                App.App.Entity.ClearValue(value.ToLookupItem(Metadata));
+            }
         }
 
 

@@ -1,4 +1,6 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +17,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro.FieldTypes
         }
 
         public EntityReference Value { get; }
+
+        public LookupItem ToLookupItem(AttributeMetadata metadata)
+        {
+            return new LookupItem { Name = metadata.LogicalName, Value = Value?.Name };
+        }
     }
 }

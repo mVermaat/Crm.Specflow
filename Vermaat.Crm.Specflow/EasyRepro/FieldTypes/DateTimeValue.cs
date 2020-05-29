@@ -9,18 +9,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro.FieldTypes
 {
     public class DateTimeValue
     {
-        public DateTimeValue(DateTimeAttributeMetadata metadata, DateTime value)
+        public DateTimeValue(DateTimeAttributeMetadata metadata, DateTime? value)
         {
-            if (metadata.DateTimeBehavior == DateTimeBehavior.UserLocal)
+            if (value.HasValue && metadata.DateTimeBehavior == DateTimeBehavior.UserLocal)
             {
-                var offset = GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeZoneInfo.GetUtcOffset(value);
-                Value = value.Add(offset);
+                var offset = GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeZoneInfo.GetUtcOffset(value.Value);
+                Value = value.Value.Add(offset);
             }
             else
                 Value = value;
         }
 
-        public DateTime Value { get; }
+        public DateTime? Value { get; }
 
     }
 }
