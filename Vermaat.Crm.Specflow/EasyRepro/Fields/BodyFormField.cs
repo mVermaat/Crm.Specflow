@@ -100,7 +100,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected override void SetTextField(string fieldValue)
         {
-            App.Client.SetValueFix(LogicalName, fieldValue, FormContextType.Entity);
+            App.Client.SetValueFix(LogicalName, fieldValue, ContainerType.Body);
         }
 
         protected override void SetLookupValue(LookupValue value)

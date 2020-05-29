@@ -67,7 +67,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
         protected override void SetOptionSetField(FieldTypes.OptionSetValue value)
         {
             if (value.Value.HasValue)
-                App.App.Entity.SetValue(value.ToOptionSet(LogicalName));
+                App.Client.SetValueFix(value.ToOptionSet(LogicalName), ContainerType.Dialog);
             else
                 App.App.Entity.ClearValue(value.ToOptionSet(LogicalName));
         }
@@ -79,7 +79,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected override void SetTextField(string fieldValue)
         {
-            App.Client.SetValueFix(LogicalName, fieldValue, FormContextType.Entity);
+            App.Client.SetValueFix(LogicalName, fieldValue, ContainerType.Dialog);
         }
 
         protected override void SetLookupValue(LookupValue value)

@@ -85,7 +85,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected override void SetTextField(string fieldValue)
         {
-            App.Client.SetValueFix(LogicalName, fieldValue, FormContextType.Header);
+            App.Client.SetValueFix(LogicalName, fieldValue, ContainerType.Header);
         }
 
         protected override void SetTwoOptionField(BooleanValue value)
