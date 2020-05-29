@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk.Metadata;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
+using Microsoft.Xrm.Sdk.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
     class HeaderFormField : FormField
     {
 
-        //public override string GetDefaultControl()
-        //{
-        //    if (_controls.Length == 1)
-        //        return _controls[0];
-        //    else
-        //        return _controls.FirstOrDefault(c => c.StartsWith("header"));
-        //}
+
         public HeaderFormField(UCIApp app, AttributeMetadata attributeMetadata, string control) 
             : base(app, attributeMetadata, control)
         {
@@ -27,5 +22,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             formState.ExpandHeader();
             return base.IsVisible(formState);
         }
+
+        protected override void SetTextField(string fieldValue)
+        {
+            App.Client.SetValueFix(LogicalName, fieldValue, FormContextType.Header);
+        }
+
+
     }
 }

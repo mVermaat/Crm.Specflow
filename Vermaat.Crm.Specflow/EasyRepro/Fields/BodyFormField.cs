@@ -13,16 +13,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
     public class BodyFormField : FormField
     {
-
-        //public override string GetDefaultControl()
-        //{
-        //    if (_controls.Length == 1)
-        //        return _controls[0];
-        //    else
-        //        return _controls.FirstOrDefault(c => !c.StartsWith("header"));
-        //}
-
-        private string _tabName;
         private string _tabLabel;
 
         public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, string control) 
