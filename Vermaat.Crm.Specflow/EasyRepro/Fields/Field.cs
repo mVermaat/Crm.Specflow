@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vermaat.Crm.Specflow.EasyRepro.FieldTypes;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
@@ -24,7 +25,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             App = app;
         }
 
-        public void SetValue(CrmTestingContext crmContext, string fieldValueText)
+        public virtual void SetValue(CrmTestingContext crmContext, string fieldValueText)
         {
             object fieldValue = ObjectConverter.ToCrmObject(Metadata.EntityLogicalName, Metadata.LogicalName, fieldValueText, crmContext);
 
@@ -34,35 +35,35 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 switch (Metadata.AttributeType.Value)
                 {
                     case AttributeTypeCode.Boolean:
-                        SetTwoOptionField((bool)fieldValue, fieldValueText);
+                        SetTwoOptionField(new BooleanValue((bool)fieldValue));
                         break;
                     case AttributeTypeCode.DateTime:
-                        SetDateTimeField((DateTime)fieldValue, fieldValueText);
+                        SetDateTimeField(new DateTimeValue((DateTimeAttributeMetadata)Metadata, (DateTime)fieldValue));
                         break;
                     case AttributeTypeCode.Customer:
                     case AttributeTypeCode.Lookup:
-                        SetLookupValue((EntityReference)fieldValue, fieldValueText);
+                        SetLookupValue(new LookupValue((EntityReference)fieldValue));
                         break;
                     case AttributeTypeCode.Picklist:
-                        SetOptionSetField((OptionSetValue)fieldValue, fieldValueText);
+                        SetOptionSetField(new FieldTypes.OptionSetValue(((Microsoft.Xrm.Sdk.OptionSetValue)fieldValue).Value, fieldValueText));
                         break;
                     case AttributeTypeCode.Money:
-                        SetMoneyField((Money)fieldValue, fieldValueText);
+                        SetMoneyField(new DecimalValue(((Money)fieldValue).Value));
                         break;
                     case AttributeTypeCode.Virtual:
                         SetVirtualField(fieldValueText);
                         break;
                     case AttributeTypeCode.Integer:
-                        SetIntegerField((int)fieldValue);
+                        SetIntegerField(new IntegerValue((int)fieldValue));
                         break;
                     case AttributeTypeCode.Double:
-                        SetDoubleField((double)fieldValue);
+                        SetDoubleField(new DoubleValue((double)fieldValue));
                         break;
                     case AttributeTypeCode.BigInt:
-                        SetLongField((long)fieldValue);
+                        SetLongField(new LongValue((long)fieldValue));
                         break;
                     case AttributeTypeCode.Decimal:
-                        SetDecimalField((decimal)fieldValue);
+                        SetDecimalField(new DecimalValue((decimal)fieldValue));
                         break;
                     default:
                         SetTextField((string)fieldValue);
@@ -74,38 +75,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 Logger.WriteLine($"Clearing field value");
                 ClearValue();
             }
-        }
-
-        protected virtual void SetIntegerField(int fieldValue)
-        {
-            SetTextField(fieldValue.ToString(
-                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
-        }
-
-        protected virtual void SetDoubleField(double fieldValue)
-        {
-            SetTextField(fieldValue.ToString(
-                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
-        }
-
-        protected virtual void SetDecimalField(decimal fieldValue)
-        {
-            SetTextField(fieldValue.ToString(
-                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
-        }
-
-        protected virtual void SetLongField(long fieldValue)
-        {
-            SetTextField(fieldValue.ToString(
-                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat));
-        }
-
-        protected virtual void SetVirtualField(string fieldValueText)
-        {
-            if (Metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
-                App.App.Entity.SetValue(new MultiValueOptionSet { Name = LogicalName, Values = fieldValueText.Split(',').Select(v => v.Trim()).ToArray() });
-            else
-                throw new NotImplementedException(string.Format("Virtual type {0} not implemented", Metadata.AttributeTypeName.Value));
         }
 
         protected virtual void ClearValue()
@@ -130,32 +99,47 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             }
         }
 
-        protected virtual void SetTwoOptionField(bool fieldValueBool, string fieldValueText)
+
+        protected virtual void SetIntegerField(IntegerValue value)
         {
-            App.App.Entity.SetValue(new BooleanItem { Name = LogicalName, Value = fieldValueBool });
+            SetTextField(value.TextValue);
         }
 
-        protected virtual void SetDateTimeField(DateTime fieldValue, string fieldValueText)
+        protected virtual void SetDoubleField(DoubleValue value)
         {
-            DateTime dateTime = fieldValue;
-
-            if (((DateTimeAttributeMetadata)Metadata).DateTimeBehavior == DateTimeBehavior.UserLocal)
-            {
-                var offset = GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeZoneInfo.GetUtcOffset(fieldValue);
-                dateTime = dateTime.Add(offset);
-            }
-
-            App.Client.SetValueFix(LogicalName, dateTime, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+            SetTextField(value.TextValue);
         }
 
-        protected virtual void SetOptionSetField(OptionSetValue optionSetNumber, string optionSetLabel)
+        protected virtual void SetDecimalField(DecimalValue value)
         {
-            App.App.Entity.SetValue(new OptionSet { Name = LogicalName, Value = optionSetLabel });
+            SetTextField(value.TextValue);
         }
 
-        protected virtual void SetMoneyField(Money fieldValue, string fieldValueText)
+        protected virtual void SetLongField(LongValue value)
         {
-            SetTextField(fieldValue?.Value.ToString());
+            SetTextField(value.TextValue);
+        }
+
+        protected virtual void SetTwoOptionField(BooleanValue value)
+        {
+            App.App.Entity.SetValue(value.ToBooleanItem(Metadata.LogicalName));
+        }
+
+        protected virtual void SetDateTimeField(DateTimeValue value)
+        {
+            App.Client.SetValueFix(LogicalName, value.Value, 
+                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat, 
+                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+        }
+
+        protected virtual void SetOptionSetField(FieldTypes.OptionSetValue value)
+        {
+            App.App.Entity.SetValue(value.ToOptionSet(Metadata));
+        }
+
+        protected virtual void SetMoneyField(DecimalValue value)
+        {
+            SetTextField(value.TextValue);
         }
 
         protected virtual void SetTextField(string fieldValue)
@@ -163,10 +147,30 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             App.Client.SetValueFix(LogicalName, fieldValue, FormContextType.Entity);
         }
 
-        protected virtual void SetLookupValue(EntityReference fieldValue, string fieldValueText)
+        protected virtual void SetLookupValue(LookupValue value)
         {
-            App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {{ id: '{fieldValue.Id}', name: '{fieldValue.Name.Replace("'", @"\'")}', entityType: '{fieldValue.LogicalName}' }} ])");
+            App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {{ id: '{value.Value.Id}', name: '{value.Value.Name.Replace("'", @"\'")}', entityType: '{value.Value.LogicalName}' }} ])");
             App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
         }
+
+
+        protected virtual void SetVirtualField(string fieldValueText)
+        {
+            if (Metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
+                App.App.Entity.SetValue(new MultiValueOptionSet { Name = LogicalName, Values = fieldValueText.Split(',').Select(v => v.Trim()).ToArray() });
+            else
+                throw new NotImplementedException(string.Format("Virtual type {0} not implemented", Metadata.AttributeTypeName.Value));
+        }
+
+       
+        
+
+        
+
+        
+
+        
+
+       
     }
 }

@@ -25,10 +25,5 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             : base(app, metadata)
         {
         }
-
-        protected override void SetLookupValue(EntityReference fieldValue, string fieldValueText)
-        {
-            App.App.Entity.SetValue(new LookupItem { Name = LogicalName, Value = fieldValueText });
-        }
     }
 }
