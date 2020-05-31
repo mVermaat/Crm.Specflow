@@ -1,11 +1,14 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,55 +17,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public static class TemporaryFixes
     {
-        /// <summary>
-        /// Set Value
-        /// </summary>
-        /// <param name="field">The field</param>
-        /// <param name="value">The value</param>
-        /// <example>xrmApp.Entity.SetValue("firstname", "Test");</example>
-        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, string value)
-        {
-            return client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
-            {
-                var query = By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field));
-                IWebElement fieldContainer = WaitUntilClickable(driver, query, TimeSpan.FromSeconds(5), null, null);
 
-                if (fieldContainer == null)
-                {
-                    throw new TestExecutionException(Constants.ErrorCodes.ELEMENT_NOT_INTERACTABLE, $"Field {field} is probably locked or invisible");
-                }
-
-                IWebElement input;
-                if (fieldContainer.FindElements(By.TagName("input")).Count > 0)
-                {
-                    input = fieldContainer.FindElement(By.TagName("input"));
-
-                }
-                else if (fieldContainer.FindElements(By.TagName("textarea")).Count > 0)
-                {
-                    input = fieldContainer.FindElement(By.TagName("textarea"));
-                }
-                else
-                {
-                    throw new Exception($"Field with name {field} does not exist.");
-                }
-
-                if (input != null)
-                {
-                    input.SendKeys(Keys.Control + "a");
-                    input.SendKeys(Keys.Backspace);
-
-                    if (!string.IsNullOrWhiteSpace(value))
-                    {
-                        input.SendKeys(value);
-                    }
-
-                    input.SendKeys(Keys.Tab + Keys.Tab);
-                }
-
-                return true;
-            });
-        }
+        #region https://github.com/DynamicHands/Crm.Specflow/issues/44
 
         /// <summary>
         /// Sets the value of a Date Field.
@@ -166,7 +122,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return success;
         }
 
-       
         private static IWebElement WaitUntilClickable(IWebDriver driver, By by, TimeSpan timeout, Action<IWebDriver> successCallback, Action<IWebDriver> failureCallback)
         {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
@@ -196,5 +151,227 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             return returnElement;
         }
+
+
+        #endregion
+
+        #region https://github.com/DynamicHands/Crm.Specflow/issues/78
+
+        public static void Login(WebClient client, Uri orgUri, SecureString username, SecureString password)
+        {
+            client.Execute(BrowserOptionHelper.GetOptions("Login"), Login, client, orgUri, username, password); 
+        }
+
+        private static LoginResult Login(IWebDriver driver, WebClient client, Uri uri, SecureString username, SecureString password)
+        {
+            bool online = !(client.OnlineDomains != null && !client.OnlineDomains.Any(d => uri.Host.EndsWith(d)));
+            driver.Navigate().GoToUrl(uri);
+
+            if (!online)
+                return LoginResult.Success;
+
+            driver.WaitUntilClickable(By.Id("use_another_account_link"), TimeSpan.FromSeconds(1), e => e.Click());
+
+            bool success = EnterUserName(driver, username);
+            driver.ClickIfVisible(By.Id("aadTile"));
+            client.Browser.ThinkTime(1000);
+
+            EnterPassword(driver, password);
+            client.Browser.ThinkTime(1000);
+            
+            int attempts = 0;
+            do
+            {
+                success = ClickStaySignedIn(driver);
+                attempts++;
+            }
+            while (!success && attempts <= 3);
+
+            if (success)
+                WaitForMainPage(driver);
+            else
+                throw new InvalidOperationException("Login failed");
+
+            return success ? LoginResult.Success : LoginResult.Failure;
+        }
+
+        private static bool EnterUserName(IWebDriver driver, SecureString username)
+        {
+            var input = driver.WaitUntilAvailable(By.XPath(Elements.Xpath[Reference.Login.UserId]), new TimeSpan(0, 0, 30));
+            if (input == null)
+                return false;
+
+            input.SendKeys(username.ToUnsecureString());
+            input.SendKeys(Keys.Enter);
+            return true;
+        }
+
+        private static void EnterPassword(IWebDriver driver, SecureString password)
+        {
+            var input = driver.FindElement(By.XPath(Elements.Xpath[Reference.Login.LoginPassword]));
+            input.SendKeys(password.ToUnsecureString());
+            input.Submit();
+        }
+
+        private static bool ClickStaySignedIn(IWebDriver driver)
+        {
+            var xpath = By.XPath(Elements.Xpath[Reference.Login.StaySignedIn]);
+            var element = driver.ClickIfVisible(xpath, 5.Seconds());
+            return element != null;
+        }
+
+        internal static bool WaitForMainPage(IWebDriver driver)
+        {
+            Action<IWebElement> successCallback = _ =>
+                                  {
+                                      bool isUCI = driver.HasElement(By.XPath(Elements.Xpath[Reference.Login.CrmUCIMainPage]));
+                                      if (isUCI)
+                                          driver.WaitForTransaction();
+                                  };
+
+            var xpathToMainPage = By.XPath(Elements.Xpath[Reference.Login.CrmMainPage]);
+            var element = driver.WaitUntilAvailable(xpathToMainPage, TimeSpan.FromSeconds(30), successCallback);
+            return element != null;
+        }
+
+        #endregion
+
+        #region https://github.com/DynamicHands/Crm.Specflow/issues/88
+
+        /// <summary>
+        /// Set Value
+        /// </summary>
+        /// <param name="field">The field</param>
+        /// <param name="value">The value</param>
+        /// <example>xrmApp.Entity.SetValue("firstname", "Test");</example>
+        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, string value, ContainerType formContextType)
+        {
+            return client.Execute(BrowserOptionHelper.GetOptions("Set Value"), driver =>
+            {
+
+                IWebElement fieldContainer = null;
+
+                if (formContextType == ContainerType.Body)
+                {
+                    // Initialize the entity form context
+                    var formContext = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.FormContext]));
+                    fieldContainer = formContext.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field)));
+                }
+                else if (formContextType == ContainerType.Header)
+                {
+                    // Initialize the Header context
+                    var formContext = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.HeaderContext]));
+                    fieldContainer = formContext.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field)));
+                }
+                else if (formContextType == ContainerType.Dialog)
+                {
+                    // Initialize the Dialog context
+                    var formContext = driver.WaitUntilAvailable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Container));
+                    fieldContainer = formContext.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", field)));
+                }
+
+                IWebElement input;
+                bool found = fieldContainer.TryFindElement(By.TagName("input"), out input);
+
+                if (!found)
+                    found = fieldContainer.TryFindElement(By.TagName("textarea"), out input);
+
+                if (!found)
+                    throw new NoSuchElementException($"Field with name {field} does not exist.");
+
+                SetInputValue(driver, input, value);
+
+                return true;
+            });
+        }
+
+        private static void SetInputValue(IWebDriver driver, IWebElement input, string value)
+        {
+            
+            input.SendKeys(Keys.Control + "a");
+            input.SendKeys(Keys.Backspace);
+
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                input.SendKeys(value);
+            }
+
+            input.SendKeys(Keys.Tab + Keys.Tab);
+        }
+
+        /// <summary>
+        /// Sets the value of a picklist or status field.
+        /// </summary>
+        /// <param name="control">The option you want to set.</param>
+        /// <example>xrmApp.Entity.SetValue(new OptionSet { Name = "preferredcontactmethodcode", Value = "Email" });</example>
+        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, OptionSet control, ContainerType formContextType)
+        {
+            var controlName = control.Name;
+            return client.Execute(BrowserOptionHelper.GetOptions($"Set OptionSet Value: {controlName}"), driver =>
+            {
+                IWebElement fieldContainer = null;
+
+                if (formContextType == ContainerType.Body)
+                {
+                    // Initialize the entity form context
+                    var formContext = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.FormContext]));
+                    fieldContainer = formContext.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", controlName)));
+                }
+                else if (formContextType == ContainerType.Header)
+                {
+                    // Initialize the Header context
+                    var formContext = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.HeaderContext]));
+                    fieldContainer = formContext.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", controlName)));
+                }
+                else if (formContextType == ContainerType.Dialog)
+                {
+                    // Initialize the Dialog context
+                    var formContext = driver.WaitUntilAvailable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Container));
+                    fieldContainer = formContext.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", controlName)));
+                }
+
+                TrySetValue(fieldContainer, control);
+                return true;
+            });
+        }
+
+        private static void TrySetValue(IWebElement fieldContainer, OptionSet control)
+        {
+            var value = control.Value;
+            bool success = fieldContainer.TryFindElement(By.TagName("select"), out IWebElement select);
+            if (success)
+            {
+                var options = select.FindElements(By.TagName("option"));
+                SelectOption(options, value);
+                return;
+            }
+
+            var name = control.Name;
+            var hasStatusCombo = fieldContainer.HasElement(By.XPath(AppElements.Xpath[AppReference.Entity.EntityOptionsetStatusCombo].Replace("[NAME]", name)));
+            if (hasStatusCombo)
+            {
+                // This is for statuscode (type = status) that should act like an optionset doesn't doesn't follow the same pattern when rendered
+                fieldContainer.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.EntityOptionsetStatusComboButton].Replace("[NAME]", name)));
+
+                var listBox = fieldContainer.FindElement(By.XPath(AppElements.Xpath[AppReference.Entity.EntityOptionsetStatusComboList].Replace("[NAME]", name)));
+
+                var options = listBox.FindElements(By.TagName("li"));
+                SelectOption(options, value);
+                return;
+            }
+
+            throw new InvalidOperationException($"OptionSet Field: '{name}' does not exist");
+        }
+
+        private static void SelectOption(ReadOnlyCollection<IWebElement> options, string value)
+        {
+            var selectedOption = options.FirstOrDefault(op => op.Text == value || op.GetAttribute("value") == value);
+            selectedOption.Click(true);
+        }
+
+        #endregion
+
+
+
     }
 }

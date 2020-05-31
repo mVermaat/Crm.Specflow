@@ -39,7 +39,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void Login(BrowserLoginDetails loginDetails)
         {
             Logger.WriteLine("Logging in CRM");
-            App.App.OnlineLogin.Login(new Uri(loginDetails.Url), loginDetails.Username.ToSecureString(), loginDetails.Password);
+            TemporaryFixes.Login(App.Client, new Uri(loginDetails.Url), loginDetails.Username.ToSecureString(), loginDetails.Password);
         }
 
         public void ChangeApp(string appUniqueName)

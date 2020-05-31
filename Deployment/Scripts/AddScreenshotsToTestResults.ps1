@@ -37,6 +37,11 @@ $resultData = Invoke-RestMethod -Uri "$baseUrl/$testRunId/results?api-version=5.
 Foreach ($result in $resultData.value) {
 
     $testName = $result.testCaseTitle.Replace(' ', '_').Replace(':','')
+    $comma = $testName.LastIndexOf(',')
+    if($comma -ne -1) {
+        $testName = $testName.Substring(0, $comma)
+    }
+
     $search = "$testResultFolder\error_*_$($testName)_*"
     Write-Host "Processing $testName. Path: $search"
 
