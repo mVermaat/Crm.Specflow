@@ -67,6 +67,7 @@ namespace Vermaat.Crm.Specflow
             public const int MULTIPLE_ATTRIBUTES_FOUND = 35;
             public const int APPLICATIONUSER_CANNOT_LOGIN = 36;
             public const int NO_CONTROL_FOUND = 37;
+            public const int RIBBON_NOT_FOUND = 38;
         }
     }
 }
