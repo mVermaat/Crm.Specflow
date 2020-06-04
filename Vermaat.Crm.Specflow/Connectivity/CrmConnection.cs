@@ -14,7 +14,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         public CrmConnection(string identifier)
         {
-            Identifier = identifier;
+            Identifier = $"{GetType().Name}_{identifier}";
         }
 
         public abstract CrmService CreateCrmServiceInstance();
