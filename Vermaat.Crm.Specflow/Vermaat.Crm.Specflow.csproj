@@ -24,6 +24,10 @@
     <PackageReference Include="Dynamics365.UIAutomation.Api" Version="9.1.0.17139" />
     <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.21" />
     <PackageReference Include="Microsoft.CrmSdk.XrmTooling.CoreAssembly" Version="9.1.0.37" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
     <PackageReference Include="SpecFlow" Version="3.0.225" />
   </ItemGroup>
