@@ -41,8 +41,13 @@ namespace Vermaat.Crm.Specflow.Connectivity
         {
             if (_connectionCache.TryGetValue(connection.Identifier, out CrmService service))
             {
-                Logger.WriteLine($"{connection.Identifier} dis already connected. Getting service from cache");
+                Logger.WriteLine($"{connection.Identifier} is already connected. Getting service from cache");
                 connection.Service = service;
+            }
+            else
+            {
+                Logger.WriteLine($"{connection.Identifier} is not connected. Adding service to cache");
+                _connectionCache.Add(connection.Identifier, connection.Service);
             }
         }
 
