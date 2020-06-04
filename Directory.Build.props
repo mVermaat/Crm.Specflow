@@ -10,5 +10,8 @@
     <PackageTags>D365;SpecFlow;PowerPlatform;Automated;Testing;Dynamics365;Dynamics</PackageTags>
     <RepositoryUrl>https://github.com/DynamicHands/Crm.Specflow</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 </Project>
