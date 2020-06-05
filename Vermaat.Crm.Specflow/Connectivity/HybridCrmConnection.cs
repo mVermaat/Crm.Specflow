@@ -11,7 +11,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
     public class HybridCrmConnection : CrmConnection
     {
         private readonly string _authType;
-        private readonly BrowserLoginDetails _browserLoginDetails;
+        private readonly BrowserLoginDetails _loginInfo;
         private readonly string _clientId;
         private readonly string _clientSecret;
 
@@ -21,7 +21,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
             _authType = HelperMethods.GetAppSettingsValue("AuthType", false);
             _clientId = clientId;
             _clientSecret = clientSecret;
-            _browserLoginDetails = new BrowserLoginDetails
+            _loginInfo = new BrowserLoginDetails
             {
                 Url = HelperMethods.GetAppSettingsValue("Url", false),
                 Username = browserUsername,
@@ -49,12 +49,12 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         public override CrmService CreateCrmServiceInstance()
         {
-            return new CrmService($"AuthType={_authType};Url={_browserLoginDetails.Url};ClientId={_clientId};ClientSecret={_clientSecret};RequireNewInstance=True");
+            return new CrmService($"AuthType={_authType};Url={_loginInfo.Url};ClientId={_clientId};ClientSecret={_clientSecret};RequireNewInstance=True");
         }
 
         public override BrowserLoginDetails GetBrowserLoginInformation()
         {
-            throw new TestExecutionException(Constants.ErrorCodes.APPLICATIONUSER_CANNOT_LOGIN);
+            return _loginInfo;
         }
     }
 }
