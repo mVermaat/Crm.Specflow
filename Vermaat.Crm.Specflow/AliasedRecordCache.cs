@@ -15,14 +15,14 @@ namespace Vermaat.Crm.Specflow
     /// </summary>
     public class AliasedRecordCache
     {
-        private readonly Dictionary<string, EntityReference> _aliasedRecords;
+        private readonly Dictionary<string, AliasedRecord> _aliasedRecords;
         private readonly List<string> _entitiesToIgnore;
         private readonly List<string> _aliasesToIgnore;
         private readonly MetadataCache _metadataCache;
 
         internal AliasedRecordCache(MetadataCache metadataCache)
         {
-            _aliasedRecords = new Dictionary<string, EntityReference>();
+            _aliasedRecords = new Dictionary<string, AliasedRecord>();
             _entitiesToIgnore = new List<string>();
             _aliasesToIgnore = new List<string>();
             _metadataCache = metadataCache;
@@ -46,7 +46,7 @@ namespace Vermaat.Crm.Specflow
             }
 
             Logger.WriteLine($"Adding alias {alias} to cache. {reference?.Id}");
-            _aliasedRecords.Add(alias, reference);
+            _aliasedRecords.Add(alias, new AliasedRecord(alias, reference));
 
             if (!deleteRecordOnCleanup)
                 DoNotDeleteAlias(alias);
@@ -71,11 +71,11 @@ namespace Vermaat.Crm.Specflow
         /// <returns></returns>
         public EntityReference Get(string alias, bool mustExist = false)
         {
-            if(!_aliasedRecords.TryGetValue(alias, out EntityReference value) && mustExist)
+            if(!_aliasedRecords.TryGetValue(alias, out AliasedRecord value) && mustExist)
                 Assert.Fail("alias {0} doesn't exist", alias);
 
-            Logger.WriteLine($"Getting Alias {alias} from cache. Result: {value?.Id}");
-            return value;
+            Logger.WriteLine($"Getting Alias {alias} from cache. Result: {value?.Record?.Id}");
+            return value.Record;
         }
 
         /// <summary>
@@ -98,12 +98,12 @@ namespace Vermaat.Crm.Specflow
             if (_aliasedRecords.ContainsKey(alias))
             {
                 Logger.WriteLine($"Adding {alias} to cache with ID {entityReference?.Id}");
-                _aliasedRecords[alias] = entityReference;
+                _aliasedRecords[alias].Record = entityReference;
             }
             else
             {
                 Logger.WriteLine($"Updating {alias} to cache with ID {entityReference?.Id}");
-                _aliasedRecords.Add(alias, entityReference);
+                _aliasedRecords.Add(alias, new AliasedRecord(alias, entityReference));
             }
         }
 
@@ -124,15 +124,15 @@ namespace Vermaat.Crm.Specflow
         public void DeleteAllCachedRecords()
         {
             Logger.WriteLine("Clearing cache");
-            foreach (var record in _aliasedRecords)
+            foreach (var aliasedRecord in _aliasedRecords.Values.OrderByDescending(a => a.CreatedOn))
             {
-                if (_aliasesToIgnore.Contains(record.Key) || _entitiesToIgnore.Contains(record.Value.LogicalName))
+                if (_aliasesToIgnore.Contains(aliasedRecord.Alias) || _entitiesToIgnore.Contains(aliasedRecord.Record.LogicalName))
                     continue;
 
                 try
                 {
-                    Logger.WriteLine($"Deleting {record.Key}. ID: {record.Value.Id} Entity: {record.Value.LogicalName}");
-                    GlobalTestingContext.ConnectionManager.AdminConnection.Delete(record.Value);
+                    Logger.WriteLine($"Deleting {aliasedRecord.Alias}. ID: {aliasedRecord.Record.Id} Entity: {aliasedRecord.Record.LogicalName}");
+                    GlobalTestingContext.ConnectionManager.AdminConnection.Delete(aliasedRecord.Record);
                 }
                 // Some records can't be deleted due to cascading behavior
                 catch(Exception ex)
