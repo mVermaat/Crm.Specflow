@@ -75,7 +75,7 @@ namespace Vermaat.Crm.Specflow
                 Assert.Fail("alias {0} doesn't exist", alias);
 
             Logger.WriteLine($"Getting Alias {alias} from cache. Result: {value?.Record?.Id}");
-            return value.Record;
+            return value?.Record;
         }
 
         /// <summary>
