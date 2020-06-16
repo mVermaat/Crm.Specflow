@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "PowerPlatform.SpecflowExtensions.Sample": {
+      "commandName": "Project"
+    }
+  }
+}

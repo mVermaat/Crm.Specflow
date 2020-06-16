@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestProfile xmlns="http://www.specflow.org/schemas/plus/TestProfile/1.5">
+  <Settings projectName="PowerPlatform.SpecflowExtensions.Sample" />
+  <Execution stopAfterFailures="0" testThreadCount="1" testSchedulingMode="Sequential" retryCount="1" retryFor="Failing" />
+  <VSTest testRetryResults="Unified" passRateAbsolute="1"/>
+  <TestAssemblyPaths>
+    <TestAssemblyPath>PowerPlatform.SpecflowExtensions.Sample.dll</TestAssemblyPath>
+  </TestAssemblyPaths>
+  <DeploymentTransformation>
+    <Steps>
+      <ConfigFileTransformation configFile="app.config" >
+        <Transformation>
+          <![CDATA[<?xml version="1.0" encoding="utf-8"?>
+							<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+                              <appSettings>
+                                <add key="Target" value="{Target}" 
+                                 xdt:Locator="Match(key)" xdt:Transform="SetAttributes(value)" />
+                              </appSettings>
+							</configuration>
+						]]>
+        </Transformation>
+      </ConfigFileTransformation>
+    </Steps>
+  </DeploymentTransformation>
+  <Targets>
+    <!--<Target name="IE">
+      <Filter>IE</Filter>
+    </Target>-->
+    <Target name="Firefox">
+      <Filter>Firefox</Filter>
+    </Target>
+    <Target name="Chrome">
+      <Filter>Chrome</Filter>
+    </Target>
+    <!--<Target name="Edge">
+      <Filter>Edge</Filter>
+    </Target>-->
+    <Target name="API">
+      <Filter>API</Filter>
+    </Target>
+  </Targets>
+</TestProfile>
