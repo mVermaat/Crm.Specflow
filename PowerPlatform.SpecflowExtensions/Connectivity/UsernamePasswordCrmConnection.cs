@@ -19,24 +19,24 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
         public UsernamePasswordCrmConnection(string username, SecureString password)
             : base(username)
         {
-            _authType = HelperMethods.GetAppSettingsValue("AuthType", false);
+            _authType = HelperMethods.GetAppSettingsValue(Constants.AppSettings.AUTH_TYPE, false);
             _username = username;
             _password = password;
-            _url = HelperMethods.GetAppSettingsValue("Url", false);
+            _url = HelperMethods.GetAppSettingsValue(Constants.AppSettings.URL, false);
             
         }
 
         public static UsernamePasswordCrmConnection FromAppConfig()
         {
             return new UsernamePasswordCrmConnection(
-                HelperMethods.GetAppSettingsValue("Username", false),
-                HelperMethods.GetAppSettingsValue("Password", false).ToSecureString());
+                HelperMethods.GetAppSettingsValue(Constants.AppSettings.USERNAME, false),
+                HelperMethods.GetAppSettingsValue(Constants.AppSettings.PASSWORD, false).ToSecureString());
         }
 
         public static UsernamePasswordCrmConnection AdminConnectionFromAppConfig()
         {
-            var userName = HelperMethods.GetAppSettingsValue("AdminUsername", true) ?? HelperMethods.GetAppSettingsValue("Username");
-            var password = HelperMethods.GetAppSettingsValue("AdminPassword", true).ToSecureString() ?? HelperMethods.GetAppSettingsValue("Password").ToSecureString();
+            var userName = HelperMethods.GetAppSettingsValue(Constants.AppSettings.ADMIN_USERNAME, true) ?? HelperMethods.GetAppSettingsValue(Constants.AppSettings.USERNAME);
+            var password = HelperMethods.GetAppSettingsValue(Constants.AppSettings.ADMIN_PASSWORD, true).ToSecureString() ?? HelperMethods.GetAppSettingsValue(Constants.AppSettings.PASSWORD).ToSecureString();
             return new UsernamePasswordCrmConnection(userName, password);
         }
 

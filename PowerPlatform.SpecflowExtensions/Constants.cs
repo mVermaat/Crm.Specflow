@@ -23,7 +23,7 @@ namespace PowerPlatform.SpecflowExtensions
             public const string TARGET_Edge = "Edge";
         }
 
-        public class ErrorCodes
+        public static class ErrorCodes
         {
             public const int ERRORMESSAGE_NOT_FOUND = 1;
             public const int FORMLOAD_SCRIPT_ERROR_ON_FORM = 2;
@@ -64,6 +64,17 @@ namespace PowerPlatform.SpecflowExtensions
             public const int NO_CONTROL_FOUND = 37;
             public const int RIBBON_NOT_FOUND = 38;
             public const int ALIAS_DOESNT_EXIST = 39;
+        }
+
+        public static class AppSettings
+        {
+            public const string LANGUAGE_CODE = "LanguageCode";
+            public const string AUTH_TYPE = "AuthType";
+            public const string URL = "Url";
+            public const string USERNAME = "Username";
+            public const string PASSWORD = "Password";
+            public const string ADMIN_USERNAME = "AdminUsername";
+            public const string ADMIN_PASSWORD = "AdminPassword";
         }
     }
 }

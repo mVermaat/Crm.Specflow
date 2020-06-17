@@ -6,6 +6,8 @@ namespace PowerPlatform.SpecflowExtensions.Interfaces
 {
     public interface ICrmContext
     {
+        int LanguageCode { get; }
         AliasedRecordCache RecordCache { get; }
+        TableConverter TableConverter { get; }        
     }
 }

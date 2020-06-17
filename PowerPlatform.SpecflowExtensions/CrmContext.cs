@@ -10,12 +10,23 @@ namespace PowerPlatform.SpecflowExtensions
     {
         private readonly ScenarioContext _scenarioContext;
 
+        public AliasedRecordCache RecordCache { get; private set; }
+        public int LanguageCode { get; private set; }
+        public TableConverter TableConverter { get; private set; }
+
         public CrmContext(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
+            LanguageCode = GetLanguageCode();
             RecordCache = new AliasedRecordCache(GlobalContext.Metadata);
         }
 
-        public AliasedRecordCache RecordCache { get; private set; }
+        private int GetLanguageCode()
+        {
+            if (!int.TryParse(HelperMethods.GetAppSettingsValue(Constants.AppSettings.LANGUAGE_CODE), out int lcid))
+                throw new TestExecutionException(Constants.ErrorCodes.LANGUAGECODE_MUST_BE_INTEGER);
+
+            return lcid;
+        }
     }
 }
