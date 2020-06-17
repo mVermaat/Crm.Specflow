@@ -22,6 +22,7 @@ namespace PowerPlatform.SpecflowExtensions.Hooks
         public void RegisterInterfaces()
         {
             _objectContainer.RegisterTypeAs<CrmContext, ICrmContext>();
+            _objectContainer.RegisterTypeAs<SeleniumContext, ISeleniumContext>();
         }
     }
 }

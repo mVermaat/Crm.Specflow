@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using PowerPlatform.SpecflowExtensions.Commands;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace PowerPlatform.SpecflowExtensions.Steps
     public class CrudSteps
     {
         private readonly ICrmContext _crmContext;
+        private readonly ISeleniumContext _seleniumContext;
 
-        public CrudSteps(ICrmContext crmContext)
+        public CrudSteps(ICrmContext crmContext, ISeleniumContext seleniumContext)
         {
             _crmContext = crmContext;
+            _seleniumContext = seleniumContext;
         }
 
         [Given(@"a ([^\s]+) named (.*) with the following values")]
@@ -24,7 +27,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         public void GivenEntityWithValues(string entityName, string alias, Table criteria)
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
-            //_crmContext.CommandProcessor.Execute(new CreateRecordCommand(_crmContext, _seleniumContext, entityName, criteria, alias));
+            _crmContext.CommandProcessor.Execute(new CreateRecordCommand(_crmContext, _seleniumContext, entityName, criteria, alias));
         }
 
     }

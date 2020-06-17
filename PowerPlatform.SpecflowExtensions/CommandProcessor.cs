@@ -1,59 +1,49 @@
-﻿using System;
+﻿using PowerPlatform.SpecflowExtensions.Commands;
+using PowerPlatform.SpecflowExtensions.Interfaces;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
-using Vermaat.Crm.Specflow.Commands;
 
-namespace Vermaat.Crm.Specflow
+namespace PowerPlatform.SpecflowExtensions
 {
-    public class CommandProcessor
+    public sealed class CommandProcessor
     {
         private readonly ScenarioContext _scenarioContext;
-        
-        public TestExecutionException LastError { get; private set; }
-        public CommandAction DefaultCommandAction { get; set; }
 
-        public CommandProcessor(ScenarioContext scenarioContext)
+        internal TestExecutionException LastError { get; private set; }
+        public ICommandTargetCalculator CommandTargetCalculator { get; set; }
+
+        internal CommandProcessor(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
-            DefaultCommandAction = CommandAction.Default;
+            CommandTargetCalculator = new DefaultCommandTargetCalculator();
         }
 
-        public void Execute(ICommand command)
-        {
-            Execute(command, DefaultCommandAction);
-        }
-
-        public void Execute(ICommand command, CommandAction commandAction)
+        public void Execute(ICommand command, CommandTarget? target = null)
         {
             try
             {
                 Logger.WriteLine($"Executing Command: {command?.GetType().FullName}");
-                command.Execute(commandAction);
+                command.Execute(CommandTargetCalculator, target);
             }
-            catch(TestExecutionException ex)
+            catch (TestExecutionException ex)
             {
                 if (!HandleException(ex))
                     throw;
             }
         }
 
-        public TResult Execute<TResult>(ICommandFunc<TResult> command)
-        {
-            return Execute(command, DefaultCommandAction);
-        }
-
-        public TResult Execute<TResult>(ICommandFunc<TResult> command, CommandAction commandAction)
+        public TResult Execute<TResult>(ICommandFunc<TResult> command, CommandTarget? target = null)
         {
             try
             {
                 Logger.WriteLine($"Executing Command: {command?.GetType().FullName}");
-                return command.Execute(commandAction);
+                return command.Execute(CommandTargetCalculator, target);
             }
-            catch(TestExecutionException ex)
+            catch (TestExecutionException ex)
             {
                 if (!HandleException(ex))
                     throw;
@@ -65,13 +55,13 @@ namespace Vermaat.Crm.Specflow
         private bool HandleException(TestExecutionException ex)
         {
             LastError = ex;
-            if(_scenarioContext.CurrentScenarioBlock != ScenarioBlock.When ||
+            if (_scenarioContext.CurrentScenarioBlock != ScenarioBlock.When ||
                !_scenarioContext.ScenarioInfo.Tags.Contains("ExpectedError"))
             {
                 return false;
             }
 
-            switch(ex.ErrorCode)
+            switch (ex.ErrorCode)
             {
                 case Constants.ErrorCodes.FORM_SAVE_FAILED:
                     return true;
