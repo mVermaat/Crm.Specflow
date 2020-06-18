@@ -26,10 +26,9 @@ namespace PowerPlatform.SpecflowExtensions.Commands
 
         protected override EntityReference ExecuteApi()
         {
-            //Entity toCreate = _crmContext.RecordBuilder.SetupEntityWithDefaults(_entityLogicalName, _criteria);
-            //GlobalContext.ConnectionManager.CurrentConnection.Create(toCreate, _alias, _crmContext.RecordCache);
-            //return toCreate.ToEntityReference();
-            throw new NotImplementedException();
+            Entity toCreate = _crmContext.RecordBuilder.SetupEntityWithDefaults(_entityLogicalName, _criteria);
+            GlobalContext.ConnectionManager.CurrentConnection.Create(toCreate, _alias, _crmContext.RecordCache);
+            return toCreate.ToEntityReference();
         }
 
         protected override EntityReference ExecuteBrowser()

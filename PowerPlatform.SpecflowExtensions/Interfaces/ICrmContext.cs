@@ -9,6 +9,7 @@ namespace PowerPlatform.SpecflowExtensions.Interfaces
         CommandProcessor CommandProcessor { get; }
         int LanguageCode { get; }
         AliasedRecordCache RecordCache { get; }
+        RecordBuilder RecordBuilder { get; }
         TableConverter TableConverter { get; }
 
         bool IsTarget(string target);

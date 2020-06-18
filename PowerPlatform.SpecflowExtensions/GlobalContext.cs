@@ -14,6 +14,7 @@ namespace PowerPlatform.SpecflowExtensions
         {
             ConnectionManager = new ConnectionManager();
             Metadata = new MetadataCache();
+            ErrorCodes = new ErrorCodes();
         }
 
         public static ConnectionManager ConnectionManager { get; }

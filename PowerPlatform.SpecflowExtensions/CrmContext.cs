@@ -15,6 +15,7 @@ namespace PowerPlatform.SpecflowExtensions
         public CommandProcessor CommandProcessor { get; private set; }
         public AliasedRecordCache RecordCache { get; private set; }
         public int LanguageCode { get; private set; }
+        public RecordBuilder RecordBuilder { get; private set; }
         public TableConverter TableConverter { get; private set; }
 
         public CrmContext(ScenarioContext scenarioContext)
@@ -22,6 +23,8 @@ namespace PowerPlatform.SpecflowExtensions
             LanguageCode = GetLanguageCode();
             RecordCache = new AliasedRecordCache(GlobalContext.Metadata);
             CommandProcessor = new CommandProcessor(scenarioContext);
+            RecordBuilder = new RecordBuilder(this);
+            TableConverter = new TableConverter(this);
 
             _targets = ConfigurationManager.AppSettings[Constants.AppSettings.TARGET]
                 .ToLower()

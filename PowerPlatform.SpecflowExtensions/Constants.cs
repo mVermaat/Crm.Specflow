@@ -75,7 +75,10 @@ namespace PowerPlatform.SpecflowExtensions
             public const string PASSWORD = "Password";
             public const string ADMIN_USERNAME = "AdminUsername";
             public const string ADMIN_PASSWORD = "AdminPassword";
+            public const string DATE_FORMAT = "DateFormat";
+            public const string LOGIN_TYPE = "LoginType";
             public const string TARGET = "Target";
+            public const string TIME_FORMAT = "TimeFormat";
         }
     }
 }
