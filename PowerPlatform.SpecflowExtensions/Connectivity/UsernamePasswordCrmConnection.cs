@@ -12,18 +12,19 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
     public class UsernamePasswordCrmConnection : CrmConnection
     {
         private readonly string _authType;
-        private readonly string _username;
-        private readonly SecureString _password;
-        private readonly string _url;
+        private BrowserLoginDetails _browserLoginDetails;
+
+        public override BrowserLoginDetails BrowserLoginDetails => _browserLoginDetails;
 
         public UsernamePasswordCrmConnection(string username, SecureString password)
             : base(username)
         {
             _authType = HelperMethods.GetAppSettingsValue(Constants.AppSettings.AUTH_TYPE, false);
-            _username = username;
-            _password = password;
-            _url = HelperMethods.GetAppSettingsValue(Constants.AppSettings.URL, false);
-            
+            _browserLoginDetails = new BrowserLoginDetails
+            {
+                Password = password,
+                Username = username
+            };
         }
 
         public static UsernamePasswordCrmConnection FromAppConfig()
@@ -42,7 +43,7 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
 
         protected override ICrmService CreateServiceInstance()
         {
-            return new XrmToolingCrmService($"AuthType={_authType};Url={_url};Username={_username};Password={_password.ToUnsecureString()};RequireNewInstance=True");
+            return new XrmToolingCrmService($"AuthType={_authType};Url={Url};Username={BrowserLoginDetails.Username};Password={BrowserLoginDetails.Password.ToUnsecureString()};RequireNewInstance=True");
         }
     }
 }

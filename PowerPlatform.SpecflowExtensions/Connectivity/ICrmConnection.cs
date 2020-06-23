@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PowerPlatform.SpecflowExtensions.Interfaces
+namespace PowerPlatform.SpecflowExtensions.Connectivity
 {
     public interface ICrmConnection
     {
         string Identifier { get; }
+        Uri Url { get; }
         ICrmService Service { get; set; }
+        BrowserLoginDetails BrowserLoginDetails { get; }
+
     }
 }

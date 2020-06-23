@@ -18,7 +18,7 @@ namespace PowerPlatform.SpecflowExtensions.Hooks
             _objectContainer = objectContainer;
         }
 
-        [BeforeScenario]
+        [BeforeScenario(Order = 0)]
         public void RegisterInterfaces()
         {
             _objectContainer.RegisterTypeAs<CrmContext, ICrmContext>();

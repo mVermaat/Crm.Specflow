@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PowerPlatform.SpecflowExtensions.Interfaces
+namespace PowerPlatform.SpecflowExtensions.Connectivity
 {
     public interface ICrmService
     {

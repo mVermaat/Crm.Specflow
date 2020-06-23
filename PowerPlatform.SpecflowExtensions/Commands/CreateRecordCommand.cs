@@ -33,6 +33,8 @@ namespace PowerPlatform.SpecflowExtensions.Commands
 
         protected override EntityReference ExecuteBrowser()
         {
+            var browser = GlobalContext.ConnectionManager.GetCurrentBrowserSession(_seleniumContext);
+
             //var formData = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(_entityLogicalName));
 
             //var tableWithDefaults = _crmContext.RecordBuilder.AddDefaultsToTable(_entityLogicalName, _criteria);

@@ -11,9 +11,13 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
     {
         private readonly string _identifier;
         private ICrmService _service;
+        
+        
+        public Uri Url { get; private set; }
 
         public CrmConnection(string identifier)
         {
+            Url = new Uri(HelperMethods.GetAppSettingsValue(Constants.AppSettings.URL, false));
             _identifier = identifier;
         }
 
@@ -29,6 +33,8 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
             }
             set { _service = value; }
         }
+
+        public abstract BrowserLoginDetails BrowserLoginDetails { get; }
 
         protected abstract ICrmService CreateServiceInstance();
 

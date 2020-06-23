@@ -1,4 +1,5 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+using PowerPlatform.SpecflowExtensions.Connectivity;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,9 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro
 {
-    internal class BrowserSessionManager
+    internal class BrowserSessionManager : IDisposable
     {
         private readonly Dictionary<BrowserType, Dictionary<string, BrowserSession>> _browserCache;
-
 
         public BrowserSessionManager()
         {
@@ -39,7 +39,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
                     options.DriversPath = GetDriverPath(options);
                 }
 
-                browser = new BrowserSession();
+                browser = new BrowserSession(options);
                 dic.Add(connection.Identifier, browser);
                 browser.Login(connection);
             }
@@ -78,5 +78,39 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
                 return assemblyPath.DirectoryName;
             }
         }
+
+        #region IDisposable Support
+        private bool _disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                Logger.WriteLine("Cleaning up Browser sessions");
+                if (disposing)
+                {
+                    foreach (var list in _browserCache.Values)
+                    {
+                        foreach (var item in list.Values)
+                        {
+                            item.Dispose();
+                        }
+                        list.Clear();
+                    }
+                    _browserCache.Clear();
+                }
+
+                _disposedValue = true;
+            }
+        }
+
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+        }
+        #endregion
     }
 }

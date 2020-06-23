@@ -25,6 +25,12 @@ namespace PowerPlatform.SpecflowExtensions.Hooks
             _crmContext.RecordCache.DeleteAllCachedRecords();
         }
 
+        [AfterTestRun]
+        public static void AfterTestRunCleanup()
+        {
+            GlobalContext.ConnectionManager.Dispose();
+        }
+
 
 
 

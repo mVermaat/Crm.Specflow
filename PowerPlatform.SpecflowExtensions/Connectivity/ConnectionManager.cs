@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.Connectivity
 {
-    public class ConnectionManager
+    public class ConnectionManager : IDisposable
     {
         private readonly Dictionary<string, ICrmService> _connectionCache = new Dictionary<string, ICrmService>();
         private readonly BrowserSessionManager _browserSessionManager = new BrowserSessionManager();
@@ -50,5 +50,31 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
                 _connectionCache.Add(connection.Identifier, connection.Service);
             }
         }
+
+        #region IDisposable Support
+        private bool _disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                
+                if (disposing)
+                {
+                    Logger.WriteLine("Cleaning up CRM API sessions");
+                    _connectionCache.Clear();
+
+                    _browserSessionManager.Dispose();
+                }
+
+                _disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }
