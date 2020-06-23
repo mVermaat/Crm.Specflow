@@ -17,6 +17,7 @@ namespace PowerPlatform.SpecflowExtensions
         private readonly Dictionary<string, Dictionary<EntityFilters, EntityMetadata>> _entityMetadataCache;
         private readonly Dictionary<string, DataCollection<Entity>> _attributeMapCache;
         private readonly Dictionary<string, Guid> _formCache;
+        private Dictionary<string, ModelApp> _modelAppCache;
 
         public MetadataCache()
         {
@@ -140,6 +141,31 @@ namespace PowerPlatform.SpecflowExtensions
                 formId = result.Id;
             }
             return formId;
+        }
+
+        public ModelApp GetModelApp(string appUniqueName)
+        {
+            if(_modelAppCache == null)
+            {
+                var query = new QueryExpression(ModelApp.EntityLogicalName)
+                {
+                    ColumnSet = new ColumnSet(ModelApp.Fields.UniqueName),
+                    NoLock = true
+                };
+
+                var result = GlobalContext.ConnectionManager.AdminConnection.RetrieveMultiple(query);
+
+
+                _modelAppCache = result.Entities.Select(e => new ModelApp(e)).ToDictionary(a => a.Name);
+
+            }
+
+            if(!_modelAppCache.TryGetValue(appUniqueName, out var modelApp))
+            {
+                throw new TestExecutionException(Constants.ErrorCodes.APP_NOT_FOUND, appUniqueName);
+            }
+            return modelApp;
+
         }
     }
 }

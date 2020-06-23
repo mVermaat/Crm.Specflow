@@ -1,4 +1,5 @@
-﻿using PowerPlatform.SpecflowExtensions.Connectivity;
+﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+using PowerPlatform.SpecflowExtensions.Connectivity;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace PowerPlatform.SpecflowExtensions
             ConnectionManager = new ConnectionManager();
             Metadata = new MetadataCache();
             ErrorCodes = new ErrorCodes();
+            
         }
 
         public static ConnectionManager ConnectionManager { get; }

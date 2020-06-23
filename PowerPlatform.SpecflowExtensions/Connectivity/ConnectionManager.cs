@@ -1,4 +1,5 @@
-﻿using PowerPlatform.SpecflowExtensions.Interfaces;
+﻿using PowerPlatform.SpecflowExtensions.EasyRepro;
+using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +11,30 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
     public class ConnectionManager
     {
         private readonly Dictionary<string, ICrmService> _connectionCache = new Dictionary<string, ICrmService>();
+        private readonly BrowserSessionManager _browserSessionManager = new BrowserSessionManager();
+        private ICrmConnection _currentConnection;
+        private ICrmConnection _adminConnection;
 
-        public ICrmService CurrentConnection { get; private set; }
+        public ICrmService CurrentConnection => _currentConnection.Service;
+        public ICrmService AdminConnection => _adminConnection.Service;
 
-        public ICrmService AdminConnection { get; private set; }
+        public BrowserSession GetCurrentBrowserSession(ISeleniumContext seleniumContext)
+        {
+            return _browserSessionManager.GetBrowserSession(seleniumContext.BrowserOptions, _currentConnection);
+        }
 
         public void SetAdminConnection(ICrmConnection connection)
         {
             Logger.WriteLine($"Changing admin connection to {connection.Identifier}");
             TryGetServiceFromCache(connection);
-            AdminConnection = connection.Service;
+            _adminConnection = connection;
         }
 
         public void SetCurrentConnection(ICrmConnection connection)
         {
             Logger.WriteLine($"Changing current connection to {connection.Identifier}");
             TryGetServiceFromCache(connection);
-            CurrentConnection = connection.Service;
+            _currentConnection = connection;
         }
 
         private void TryGetServiceFromCache(ICrmConnection connection)

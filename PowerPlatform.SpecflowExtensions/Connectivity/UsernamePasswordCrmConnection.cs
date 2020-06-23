@@ -40,7 +40,6 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
             return new UsernamePasswordCrmConnection(userName, password);
         }
 
-
         protected override ICrmService CreateServiceInstance()
         {
             return new XrmToolingCrmService($"AuthType={_authType};Url={_url};Username={_username};Password={_password.ToUnsecureString()};RequireNewInstance=True");
