@@ -2,6 +2,7 @@
 using PowerPlatform.SpecflowExtensions.Connectivity;
 using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
 using PowerPlatform.SpecflowExtensions.Interfaces;
+using PowerPlatform.SpecflowExtensions.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
     public class BrowserSession : IDisposable
     {
         private SeleniumApp _app;
+        private ModelApp _currentApp;
 
         public BrowserSession(BrowserOptions options)
         {
@@ -23,7 +25,28 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
         {
             Logger.WriteLine("Logging in CRM");
             _app.Login.Login(connection);
+        }
 
+        public void ChangeApp(string appUniqueName)
+        {
+            if (appUniqueName != _currentApp.Name)
+            {
+                Logger.WriteLine($"Changing app from {_currentApp.Name} to {appUniqueName}");
+                _currentApp = GlobalContext.Metadata.GetModelApp(appUniqueName);
+                Logger.WriteLine($"Logged into app: {appUniqueName} (ID: {_currentApp})");
+            }
+            else
+            {
+                Logger.WriteLine($"App name is already {_currentApp.Name}. No need to switch");
+            }
+        }
+
+        public void OpenRecord(OpenFormOptions formOptions)
+        {
+            if (_currentApp == null)
+                throw new TestExecutionException(Constants.ErrorCodes.APP_UNSELECTED);
+
+            _app.Navigation.OpenRecord(formOptions, _currentApp.Id);
         }
 
         #region IDisposable

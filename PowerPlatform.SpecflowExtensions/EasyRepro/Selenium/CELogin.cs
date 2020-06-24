@@ -12,62 +12,60 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 {
-    class CELogin : ILogin
+    internal class CELogin : ILogin
     {
+        private readonly SeleniumExecutor _executor;
         private readonly WebClient _client;
 
-        public CELogin(WebClient client)
+        public CELogin(SeleniumExecutor executor, WebClient client)
         {
+            _executor = executor;
             _client = client;
         }
 
         public void Login(ICrmConnection connection)
         {
-            _client.Execute(BrowserOptionHelper.GetOptions("Login"), LoginToCE, _client, connection.Url, 
-                connection.BrowserLoginDetails.Username.ToSecureString(),
-                connection.BrowserLoginDetails.Password);
-        }
-
-        private LoginResult LoginToCE(IWebDriver driver, WebClient client, Uri uri, SecureString username, SecureString password)
-        {
-            bool online = !(client.OnlineDomains != null && !client.OnlineDomains.Any(d => uri.Host.EndsWith(d)));
-            driver.Navigate().GoToUrl(uri);
-
-            if (!online)
-                return LoginResult.Success;
-
-            driver.WaitUntilClickable(By.Id("use_another_account_link"), TimeSpan.FromSeconds(1), e => e.Click());
-
-            bool success = EnterUserName(driver, username);
-            driver.ClickIfVisible(By.Id("aadTile"));
-            client.Browser.ThinkTime(1000);
-
-            EnterPassword(driver, password);
-            client.Browser.ThinkTime(1000);
-
-            int attempts = 0;
-            do
+            _executor.Execute("Login to CE", (driver, selectors) =>
             {
-                success = ClickStaySignedIn(driver);
-                attempts++;
-            }
-            while (!success && attempts <= 3);
+                bool online = !(_client.OnlineDomains != null && !_client.OnlineDomains.Any(d => GlobalContext.Url.Host.EndsWith(d)));
+                driver.Navigate().GoToUrl(GlobalContext.Url);
 
-            if (success)
-                WaitForMainPage(driver);
-            else
-                throw new InvalidOperationException("Login failed");
+                if (!online)
+                    return LoginResult.Success;
 
-            return success ? LoginResult.Success : LoginResult.Failure;
+                driver.WaitUntilClickable(By.Id("use_another_account_link"), TimeSpan.FromSeconds(1), e => e.Click());
+
+                bool success = EnterUserName(driver, connection.BrowserLoginDetails.Username);
+                driver.ClickIfVisible(By.Id("aadTile"));
+                _client.Browser.ThinkTime(1000);
+
+                EnterPassword(driver, connection.BrowserLoginDetails.Password);
+                _client.Browser.ThinkTime(1000);
+
+                int attempts = 0;
+                do
+                {
+                    success = ClickStaySignedIn(driver);
+                    attempts++;
+                }
+                while (!success && attempts <= 3);
+
+                if (success)
+                    WaitForMainPage(driver);
+                else
+                    throw new InvalidOperationException("Login failed");
+
+                return success ? LoginResult.Success : LoginResult.Failure;
+            });
         }
 
-        private bool EnterUserName(IWebDriver driver, SecureString username)
+        private bool EnterUserName(IWebDriver driver, string username)
         {
             var input = driver.WaitUntilAvailable(By.XPath(Elements.Xpath[Reference.Login.UserId]), new TimeSpan(0, 0, 30));
             if (input == null)
                 return false;
 
-            input.SendKeys(username.ToUnsecureString());
+            input.SendKeys(username);
             input.SendKeys(Keys.Enter);
             return true;
         }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 {
-    public interface ILogin
+    internal interface ILogin
     {
         void Login(ICrmConnection connection);
     }

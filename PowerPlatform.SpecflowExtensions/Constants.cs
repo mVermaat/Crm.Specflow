@@ -64,6 +64,7 @@ namespace PowerPlatform.SpecflowExtensions
             public const int NO_CONTROL_FOUND = 37;
             public const int RIBBON_NOT_FOUND = 38;
             public const int ALIAS_DOESNT_EXIST = 39;
+            public const int APP_UNSELECTED = 40;
         }
 
         public static class AppSettings

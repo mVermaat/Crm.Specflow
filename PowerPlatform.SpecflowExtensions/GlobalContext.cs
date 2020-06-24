@@ -16,12 +16,14 @@ namespace PowerPlatform.SpecflowExtensions
             ConnectionManager = new ConnectionManager();
             Metadata = new MetadataCache();
             ErrorCodes = new ErrorCodes();
-            
+            Url = new Uri(HelperMethods.GetAppSettingsValue(Constants.AppSettings.URL));
         }
 
         public static ConnectionManager ConnectionManager { get; }
         public static MetadataCache Metadata { get; }
         public static ErrorCodes ErrorCodes { get; }
+
+        public static Uri Url { get; }
     }
 }
 

@@ -8,20 +8,25 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 {
-    public class SeleniumApp : IDisposable
+    internal class SeleniumApp : IDisposable
     {
         private WebClient _client;
         private XrmApp _app;
+        private SeleniumExecutor _executor;
 
         public ILogin Login { get; }
+        public INavigation Navigation { get; }
+
 
         public SeleniumApp(BrowserOptions options)
         {
             _client = new WebClient(options);
             _app = new XrmApp(_client);
+            _executor = new SeleniumExecutor(_client);
 
             // Todo: make implementers override this:
-            Login = new CELogin(_client);
+            Login = new CELogin(_executor, _client);
+            Navigation = new Navigation(_executor);
         }
 
         #region IDisposable

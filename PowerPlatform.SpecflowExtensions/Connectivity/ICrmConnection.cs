@@ -9,7 +9,6 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
     public interface ICrmConnection
     {
         string Identifier { get; }
-        Uri Url { get; }
         ICrmService Service { get; set; }
         BrowserLoginDetails BrowserLoginDetails { get; }
 

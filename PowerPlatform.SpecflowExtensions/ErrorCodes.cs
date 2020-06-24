@@ -58,6 +58,7 @@ namespace PowerPlatform.SpecflowExtensions
             AddError(Constants.ErrorCodes.NO_CONTROL_FOUND, "No controls found for attribute {0}");
             AddError(Constants.ErrorCodes.RIBBON_NOT_FOUND, "Unable to find the ribbon");
             AddError(Constants.ErrorCodes.ALIAS_DOESNT_EXIST, "alias {0} doesn't exist");
+            AddError(Constants.ErrorCodes.APP_UNSELECTED, "You need to select an model app before opening records");
         }
 
         public void AddError(int errorCode, string message)
