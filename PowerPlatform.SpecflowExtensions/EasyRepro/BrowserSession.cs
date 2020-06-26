@@ -41,12 +41,13 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
             }
         }
 
-        public void OpenRecord(OpenFormOptions formOptions)
+        public IForm OpenRecord(OpenFormOptions formOptions)
         {
             if (_currentApp == null)
                 throw new TestExecutionException(Constants.ErrorCodes.APP_UNSELECTED);
 
             _app.Navigation.OpenRecord(formOptions, _currentApp.Id);
+
         }
 
         #region IDisposable

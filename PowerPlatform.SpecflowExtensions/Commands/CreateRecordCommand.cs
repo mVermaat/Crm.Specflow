@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
+using PowerPlatform.SpecflowExtensions.EasyRepro;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,9 @@ namespace PowerPlatform.SpecflowExtensions.Commands
 
         protected override EntityReference ExecuteBrowser()
         {
-            var browser = GlobalContext.ConnectionManager.GetCurrentBrowserSession(_seleniumContext);
-
-            //var formData = _seleniumContext.GetBrowser().OpenRecord(new OpenFormOptions(_entityLogicalName));
+            GlobalContext.ConnectionManager
+                .GetCurrentBrowserSession(_seleniumContext)
+                .OpenRecord(new OpenFormOptions(_entityLogicalName));
 
             //var tableWithDefaults = _crmContext.RecordBuilder.AddDefaultsToTable(_entityLogicalName, _criteria);
 
