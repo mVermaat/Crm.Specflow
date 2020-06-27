@@ -208,7 +208,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private static void EnterPassword(IWebDriver driver, SecureString password)
         {
-            var input = driver.FindElement(By.XPath(Elements.Xpath[Reference.Login.LoginPassword]));
+            var input = driver.WaitUntilAvailable(By.XPath(Elements.Xpath[Reference.Login.LoginPassword]), new TimeSpan(0, 0, 30));
             input.SendKeys(password.ToUnsecureString());
             input.Submit();
         }
@@ -230,7 +230,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                                   };
 
             var xpathToMainPage = By.XPath(Elements.Xpath[Reference.Login.CrmMainPage]);
-            var element = driver.WaitUntilAvailable(xpathToMainPage, TimeSpan.FromSeconds(30), successCallback);
+            var element = driver.WaitUntilAvailable(xpathToMainPage, TimeSpan.FromSeconds(60), successCallback);
             return element != null;
         }
 
