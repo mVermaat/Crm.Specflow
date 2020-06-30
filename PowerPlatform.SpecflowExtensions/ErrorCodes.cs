@@ -59,6 +59,8 @@ namespace PowerPlatform.SpecflowExtensions
             AddError(Constants.ErrorCodes.RIBBON_NOT_FOUND, "Unable to find the ribbon");
             AddError(Constants.ErrorCodes.ALIAS_DOESNT_EXIST, "alias {0} doesn't exist");
             AddError(Constants.ErrorCodes.APP_UNSELECTED, "You need to select an model app before opening records");
+            AddError(Constants.ErrorCodes.FIELD_INVISIBLE, "Field {0} isn't visible");
+            AddError(Constants.ErrorCodes.FIELD_READ_ONLY, "Field {0} is read-only");
         }
 
         public void AddError(int errorCode, string message)

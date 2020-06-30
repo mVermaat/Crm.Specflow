@@ -28,16 +28,20 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 
        
 
-        public void FillForm(ICrmContext crmContext, Table tableWithDefaults)
+        public void FillForm(ICrmContext crmContext, Table formData)
         {
             Logger.WriteLine($"Filling form");
-            var formState = new FormState(_app);
+            var formState = new FormState();
             foreach (var row in formData.Rows)
             {
-                Assert.IsTrue(ContainsField(row[Constants.SpecFlow.TABLE_KEY]), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
-                var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];
-                Assert.IsTrue(field.IsVisible(formState), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't visible");
-                Assert.IsFalse(field.IsLocked(formState), $"Field {row[Constants.SpecFlow.TABLE_KEY]} is read-only");
+                if (!_formStructure.TryGetFormField(row[Constants.SpecFlow.TABLE_KEY], out var field))
+                    throw new TestExecutionException(Constants.ErrorCodes.FIELD_NOT_ON_FORM, row[Constants.SpecFlow.TABLE_KEY]);
+
+                if (!field.IsVisible(formState))
+                    throw new TestExecutionException(Constants.ErrorCodes.FIELD_INVISIBLE, row[Constants.SpecFlow.TABLE_KEY]);
+
+                if (field.IsLocked(formState))
+                    throw new TestExecutionException(Constants.ErrorCodes.FIELD_READ_ONLY, row[Constants.SpecFlow.TABLE_KEY]);
 
                 field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }

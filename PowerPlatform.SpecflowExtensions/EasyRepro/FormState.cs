@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro
 {
-    class FormField
+    public class FormState
     {
     }
 }
