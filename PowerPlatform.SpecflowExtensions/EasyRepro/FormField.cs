@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
+namespace PowerPlatform.SpecflowExtensions.EasyRepro
 {
-    public class FormStructure
+    class FormField
     {
     }
 }

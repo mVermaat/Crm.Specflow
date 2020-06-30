@@ -81,5 +81,43 @@ namespace PowerPlatform.SpecflowExtensions
             public const string TARGET = "Target";
             public const string TIME_FORMAT = "TimeFormat";
         }
+
+        internal static class JavaScriptCommands
+        {            
+            internal const string GET_FORM_ATTRIBUTES = @"
+                return Xrm.Page.data.entity.attributes.getAll()
+                    .map(function(a) { 
+                        return { 
+                            name: a.getName(), 
+                            controls: a.controls.getAll().map(function(c) { 
+                                return c.getName()
+                            }) 
+                        } 
+                    })";
+
+            internal const string GET_FORM_ID = "return Xrm.Page.ui.formSelector.getCurrentItem().getId()";
+
+            internal const string GET_FORM_STRUCTURE = @"
+                return Xrm.Page.ui.tabs.getAll()
+                    .map(function(t) {
+                        return {
+                            name: t.getName(),
+                            label: t.getLabel(),
+                            sections: t.sections.getAll().map(function(s) {
+                                return {
+                                    name: s.getName(),
+                                    label: s.getLabel(),
+                                    controls: s.controls.getAll().map(function(c) {
+                                        return {
+                                            name: c.getName(),
+                                            type: c.getControlType()
+                                        }
+                                    })
+                                }
+                            })
+                        }	
+                    })";
+
+        }
     }
 }

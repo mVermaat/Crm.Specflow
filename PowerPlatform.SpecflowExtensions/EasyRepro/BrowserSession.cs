@@ -48,6 +48,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
 
             _app.Navigation.OpenRecord(formOptions, _currentApp.Id);
 
+            return _app.GetForm(formOptions.EntityName); 
         }
 
         #region IDisposable

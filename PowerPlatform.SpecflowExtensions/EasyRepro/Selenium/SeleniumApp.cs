@@ -29,6 +29,11 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
             Navigation = new Navigation(_executor);
         }
 
+        public Form GetForm(string entityName)
+        {
+            return new Form(_executor, entityName);
+        }
+
         #region IDisposable
 
         private bool _isDisposed = false;

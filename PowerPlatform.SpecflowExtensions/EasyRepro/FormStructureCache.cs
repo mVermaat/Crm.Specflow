@@ -16,6 +16,17 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
             _cache = new Dictionary<string, Dictionary<Guid, FormStructure>>();
         }
 
+        public void AddFormStructure(string entityName, Guid formId, FormStructure formStructure)
+        {
+            if (!_cache.TryGetValue(entityName, out var structureCache))
+            {
+                structureCache = new Dictionary<Guid, FormStructure>();
+                _cache.Add(entityName, structureCache);
+            }
+
+            structureCache[formId] = formStructure;
+        }
+
         public FormStructure GetFormStructure(string entityName, Guid formId)
         {
             if(!_cache.TryGetValue(entityName, out var structureCache))
@@ -26,10 +37,8 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
 
             if (structureCache.TryGetValue(formId, out var structure))
                 return structure;
-
-            structure = new FormStructure();
-            structureCache.Add(formId, structure);
-            return structure;
+            else
+                return null;
         }        
     }
 }
