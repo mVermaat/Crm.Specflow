@@ -9,6 +9,16 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
     class Form : IForm
     {
 
-        public FormStructure FormStructure => throw new NotImplementedException();
+        public Form(string entityName, Guid formId)
+        {
+            FormStructure = GlobalContext.FormStructureCache.GetFormStructure(entityName, formId);
+        }
+
+        public Form(FormStructure formStructure)
+        {
+            FormStructure = formStructure;
+        }
+
+        public FormStructure FormStructure { get; }
     }
 }

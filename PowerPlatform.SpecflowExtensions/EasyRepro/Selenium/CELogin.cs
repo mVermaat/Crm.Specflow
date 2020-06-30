@@ -72,7 +72,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 
         private void EnterPassword(IWebDriver driver, SecureString password)
         {
-            var input = driver.FindElement(By.XPath(Elements.Xpath[Reference.Login.LoginPassword]));
+            var input = driver.WaitUntilAvailable(By.XPath(Elements.Xpath[Reference.Login.LoginPassword]), new TimeSpan(0, 0, 30));
             input.SendKeys(password.ToUnsecureString());
             input.Submit();
         }
