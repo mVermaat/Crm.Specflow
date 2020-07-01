@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk.Metadata;
+﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+using Microsoft.Xrm.Sdk.Metadata;
 using PowerPlatform.SpecflowExtensions.EasyRepro.FieldTypes;
 using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
 using System;
@@ -38,16 +39,24 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         private string GetTabLabel()
         {
-            if (string.IsNullOrEmpty(_tabLabel))
+            return Executor.Execute("Get Tab Label", (driver, selectors) =>
             {
-                _tabLabel = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{Control}').getParent().getParent().getLabel()")?.ToString();
-            }
-            return _tabLabel;
+                if (string.IsNullOrEmpty(_tabLabel))
+                {
+                    //TODO: To constants
+                    _tabLabel = driver.ExecuteScript($"return Xrm.Page.getControl('{Control}').getParent().getParent().getLabel()")?.ToString();
+                }
+                return _tabLabel;
+            });
         }
 
         protected override void SetMultiSelectOptionSetField(MultiSelectOptionSetValue value)
         {
-            App.App.Entity.SetValue(value.ToMultiValueOptionSet(LogicalName), true);
+            Executor.Execute("Set Multi Select OptionSet", (driver, selectors, app) =>
+            {
+                app.Entity.SetValue(value.ToMultiValueOptionSet(LogicalName), true);
+                return true;
+            });
         }
 
         protected override void SetIntegerField(IntegerValue value)
@@ -72,22 +81,36 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         protected override void SetTwoOptionField(BooleanValue value)
         {
-            App.App.Entity.SetValue(value.ToBooleanItem(Metadata.LogicalName));
+            Executor.Execute("Set Boolean Field", (driver, selectors, app) =>
+            {
+                app.Entity.SetValue(value.ToBooleanItem(Metadata.LogicalName));
+                return true;
+            });
         }
 
         protected override void SetDateTimeField(DateTimeValue value)
         {
-            App.Client.SetValueFix(LogicalName, value.Value,
-                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
-                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+            Executor.Execute("Set DateTime Field", (driver, selectors, app) =>
+            {
+                App.Client.SetValueFix(LogicalName, value.Value,
+                 GlobalContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
+                 GlobalContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+                return true;
+            });
         }
 
         protected override void SetOptionSetField(OptionSetValue value)
         {
-            if (value.Value.HasValue)
-                App.App.Entity.SetValue(value.ToOptionSet(LogicalName));
-            else
-                App.App.Entity.ClearValue(value.ToOptionSet(LogicalName));
+            Executor.Execute("Set OptionSet Field", (driver, selectors, app) =>
+            {
+                if (value.Value.HasValue)
+                    app.Entity.SetValue(value.ToOptionSet(LogicalName));
+                else
+                    app.Entity.ClearValue(value.ToOptionSet(LogicalName));
+                return true;
+            });
+
+           
         }
 
         protected override void SetMoneyField(DecimalValue value)
@@ -102,15 +125,20 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         protected override void SetLookupValue(LookupValue value)
         {
-            if (value.Value != null)
+            Executor.Execute("Set OptionSet Field", (driver, selectors, app) =>
             {
-                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {{ id: '{value.Value.Id}', name: '{value.Value.Name.Replace("'", @"\'")}', entityType: '{value.Value.LogicalName}' }} ])");
-                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
-            }
-            else
-            {
-                App.App.Entity.ClearValue(value.ToLookupItem(Metadata));
-            }
+                if (value.Value != null)
+                {
+                    //TODO: To constants 
+                    driver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {{ id: '{value.Value.Id}', name: '{value.Value.Name.Replace("'", @"\'")}', entityType: '{value.Value.LogicalName}' }} ])");
+                    driver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
+                }
+                else
+                {
+                    app.Entity.ClearValue(value.ToLookupItem(Metadata));
+                }
+                return true;
+            });
         }
     }
 }

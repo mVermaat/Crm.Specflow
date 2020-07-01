@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk.Metadata;
+﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+using Microsoft.Xrm.Sdk.Metadata;
 using PowerPlatform.SpecflowExtensions.EasyRepro.FieldTypes;
 using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
 using System;
@@ -26,8 +27,8 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
         protected override void SetDateTimeField(DateTimeValue value)
         {
             App.Client.SetValueFix(LogicalName, value.Value,
-                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
-                GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+                GlobalContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
+                GlobalContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
         }
 
         protected override void SetDecimalField(DecimalValue value)
@@ -52,15 +53,20 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         protected override void SetLookupValue(LookupValue value)
         {
-            if (value.Value != null)
+            Executor.Execute("Set Lookup Field", (driver, selectors, app) =>
             {
-                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {{ id: '{value.Value.Id}', name: '{value.Value.Name.Replace("'", @"\'")}', entityType: '{value.Value.LogicalName}' }} ])");
-                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
-            }
-            else
-            {
-                App.App.Entity.ClearValue(value.ToLookupItem(Metadata));
-            }
+                if (value.Value != null)
+                {
+                    //TODO: To constants
+                    driver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {{ id: '{value.Value.Id}', name: '{value.Value.Name.Replace("'", @"\'")}', entityType: '{value.Value.LogicalName}' }} ])");
+                    driver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
+                }
+                else
+                {
+                    app.Entity.ClearValue(value.ToLookupItem(Metadata));
+                }
+                return true;
+            });            
         }
 
         protected override void SetMoneyField(DecimalValue value)
@@ -70,15 +76,23 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         protected override void SetMultiSelectOptionSetField(MultiSelectOptionSetValue value)
         {
-            App.App.Entity.SetHeaderValue(value.ToMultiValueOptionSet(LogicalName));
+            Executor.Execute("Set Multi Select OptionSet Field", (driver, selectors, app) =>
+            {
+                app.Entity.SetHeaderValue(value.ToMultiValueOptionSet(LogicalName));
+                return true;
+            });
         }
 
         protected override void SetOptionSetField(OptionSetValue value)
         {
-            if (value.Value.HasValue)
-                App.App.Entity.SetHeaderValue(value.ToOptionSet(LogicalName));
-            else
-                App.App.Entity.ClearValue(value.ToOptionSet(LogicalName));
+            Executor.Execute("Set OptionSet Field", (driver, selectors, app) =>
+            {
+                if (value.Value.HasValue)
+                    app.Entity.SetHeaderValue(value.ToOptionSet(LogicalName));
+                else
+                    app.Entity.ClearValue(value.ToOptionSet(LogicalName));
+                return true;
+            });           
         }
 
         protected override void SetTextField(string fieldValue)
@@ -88,7 +102,11 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         protected override void SetTwoOptionField(BooleanValue value)
         {
-            App.App.Entity.SetHeaderValue(value.ToBooleanItem(LogicalName));
+            Executor.Execute("Set Boolean Field", (driver, selectors, app) =>
+            {
+                app.Entity.SetHeaderValue(value.ToBooleanItem(LogicalName));
+                return true;
+            }); 
         }
     }
 }

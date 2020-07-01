@@ -13,20 +13,19 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 {
     internal abstract class FormField : Field
     {
-        private readonly SeleniumExecutor _executor;
-
         protected string Control { get; private set; }
+        protected SeleniumExecutor Executor { get; private set; }
 
         public FormField(SeleniumExecutor executor, AttributeMetadata attributeMetadata, string control)
             : base(attributeMetadata, control)
         {
-            _executor = executor;
+            Executor = executor;
             Control = control;
         }
 
         public virtual RequiredState GetRequiredState(FormState formState)
         {
-            return _executor.Execute("Get Required State", (driver, selectors) => 
+            return Executor.Execute("Get Required State", (driver, selectors) => 
             {
                 var fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", LogicalName)));
                 if (fieldContainer == null)
@@ -46,7 +45,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         public virtual bool IsVisible(FormState formState)
         {
-            return _executor.Execute("Is Visible", (driver, selectors) =>
+            return Executor.Execute("Is Visible", (driver, selectors) =>
             {
                 return driver.WaitUntilVisible(
                     selectors.GetXPathSeleniumSelector(
@@ -58,7 +57,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         public virtual bool IsLocked(FormState formState)
         {
-            return _executor.Execute("Is Locked", (driver, selectors) =>
+            return Executor.Execute("Is Locked", (driver, selectors) =>
             {
                 var fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", LogicalName)));
                 if (fieldContainer == null)

@@ -31,7 +31,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
         public void FillForm(ICrmContext crmContext, Table formData)
         {
             Logger.WriteLine($"Filling form");
-            var formState = new FormState();
+            var formState = new FormState(_executor);
             foreach (var row in formData.Rows)
             {
                 if (!_formStructure.TryGetFormField(row[Constants.SpecFlow.TABLE_KEY], out var field))
