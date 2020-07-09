@@ -18,19 +18,31 @@ namespace Vermaat.Crm.Specflow.Connectivity
     /// </summary>
     public class CrmService : IOrganizationService
     {
-        private readonly Lazy<IOrganizationService> _service;
+        private readonly Lazy<CrmServiceClient> _service;
         private readonly Lazy<UserSettings> _userSettings;
         private readonly Lazy<Guid> _userId;
         private readonly string _connectionString;
+        private Guid _callerId;
 
-        private IOrganizationService Service => _service.Value;
+        private CrmServiceClient Service => _service.Value;
         public UserSettings UserSettings => _userSettings.Value;
         public Guid UserId => _userId.Value;
+
+
+        public Guid CallerId
+        {
+            get => _callerId;
+            set
+            {
+                _callerId = value;
+                Service.CallerId = CallerId;
+            }
+        }
 
         public CrmService(string connectionString)
         {
             _connectionString = connectionString;
-            _service = new Lazy<IOrganizationService>(ConnectToCrm);
+            _service = new Lazy<CrmServiceClient>(ConnectToCrm);
             _userSettings = new Lazy<UserSettings>(GetUserSettings);
             _userId = new Lazy<Guid>(GetUserId);
         }
@@ -138,7 +150,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         #endregion
 
-        private IOrganizationService ConnectToCrm()
+        private CrmServiceClient ConnectToCrm()
         {
             Logger.WriteLine("Connecting to Dynamics CRM API");
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
