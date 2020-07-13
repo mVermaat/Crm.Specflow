@@ -13,6 +13,12 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
     {
         private readonly string _connectionString;
 
+        public override Guid CallerId 
+        { 
+            get => ((CrmServiceClient)Service).CallerId;
+            set => ((CrmServiceClient)Service).CallerId = value;
+        }
+
         public XrmToolingCrmService(string connectionString)
         {
             _connectionString = connectionString;

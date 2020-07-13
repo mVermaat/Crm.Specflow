@@ -17,12 +17,15 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
         private readonly Lazy<IOrganizationService> _service;
         private readonly Lazy<UserSettings> _userSettings;
         private readonly Lazy<Guid> _userId;
-        private IOrganizationService Service => _service.Value;
+
         private Guid UserId => _userId.Value;
 
         protected abstract IOrganizationService ConnectToCrm();
+        protected IOrganizationService Service => _service.Value;
+
 
         public UserSettings UserSettings => _userSettings.Value;
+        public abstract Guid CallerId { get; set; }
 
         public CrmService()
         {
