@@ -40,17 +40,11 @@ namespace PowerPlatform.SpecflowExtensions.Commands
 
             var tableWithDefaults = _crmContext.RecordBuilder.AddDefaultsToTable(_entityLogicalName, _criteria);
             form.FillForm(_crmContext, tableWithDefaults);
+            form.Save(true);
 
-
-            //var tableWithDefaults = _crmContext.RecordBuilder.AddDefaultsToTable(_entityLogicalName, _criteria);
-
-            //formData.FillForm(_crmContext, tableWithDefaults);
-            //formData.Save(true);
-
-            //var record = new EntityReference(_entityLogicalName, formData.GetRecordId());
-            //_crmContext.RecordCache.Add(_alias, record);
-            //return record;
-            throw new NotImplementedException();
+            var record = new EntityReference(_entityLogicalName, form.GetRecordId());
+            _crmContext.RecordCache.Add(_alias, record);
+            return record;
         }
     }
 }

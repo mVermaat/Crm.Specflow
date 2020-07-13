@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <SpecFlowObsoleteCodeBehindFiles Remove="General\AsyncProcesses.feature.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Selenium.Chrome.WebDriver" Version="83.0.0" />
     <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.26.0.1" />
     <PackageReference Include="SpecFlow" Version="3.0.225" />
@@ -20,5 +24,18 @@
     <None Update="appsettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="General\AsyncProcesses.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <SpecFlowFeatureFiles Update="General\AsyncProcesses.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
   </ItemGroup>
 </Project>

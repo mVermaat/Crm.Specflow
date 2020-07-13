@@ -90,9 +90,9 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         protected override void SetDateTimeField(DateTimeValue value)
         {
-            Executor.Execute("Set DateTime Field", (driver, selectors, app) =>
+            Executor.Execute("Set DateTime Field", (driver) =>
             {
-                App.Client.SetValueFix(LogicalName, value.Value,
+                TemporaryFixes.SetDateTimeValue(driver, LogicalName, value.Value,
                  GlobalContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
                  GlobalContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
                 return true;
@@ -120,7 +120,11 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         protected override void SetTextField(string fieldValue)
         {
-            App.Client.SetValueFix(LogicalName, fieldValue, ContainerType.Body);
+            Executor.Execute("Set Text Field", (driver, selectors) =>
+            {
+                TemporaryFixes.SetTextField(driver, selectors, LogicalName, fieldValue, TemporaryFixes.ContainerType.Body);
+                return true;
+            });           
         }
 
         protected override void SetLookupValue(LookupValue value)

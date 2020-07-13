@@ -12,7 +12,6 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 {
     internal class HeaderFormField : FormField
     {
-
         public HeaderFormField(SeleniumExecutor executor, AttributeMetadata attributeMetadata, string control)
             : base(executor, attributeMetadata, control)
         {
@@ -26,9 +25,13 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         protected override void SetDateTimeField(DateTimeValue value)
         {
-            App.Client.SetValueFix(LogicalName, value.Value,
-                GlobalContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
-                GlobalContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+            Executor.Execute("Set DateTime Field", (driver) =>
+            {
+                TemporaryFixes.SetDateTimeValue(driver, LogicalName, value.Value,
+                 GlobalContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
+                 GlobalContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+                return true;
+            });
         }
 
         protected override void SetDecimalField(DecimalValue value)
@@ -97,7 +100,11 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         protected override void SetTextField(string fieldValue)
         {
-            App.Client.SetValueFix(LogicalName, fieldValue, ContainerType.Header);
+            Executor.Execute("Set Text Field", (driver, selectors) =>
+            {
+                TemporaryFixes.SetTextField(driver, selectors, LogicalName, fieldValue, TemporaryFixes.ContainerType.Header);
+                return true;
+            });
         }
 
         protected override void SetTwoOptionField(BooleanValue value)

@@ -22,7 +22,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
         {
             _client = new WebClient(options);
             _app = new XrmApp(_client);
-            _executor = new SeleniumExecutor(_client);
+            _executor = new SeleniumExecutor(_client, _app);
 
             // Todo: make implementers override this:
             Login = new CELogin(_executor, _client);
