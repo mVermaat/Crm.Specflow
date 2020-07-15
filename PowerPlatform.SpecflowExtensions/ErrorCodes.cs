@@ -61,6 +61,7 @@ namespace PowerPlatform.SpecflowExtensions
             AddError(Constants.ErrorCodes.APP_UNSELECTED, "You need to select an model app before opening records");
             AddError(Constants.ErrorCodes.FIELD_INVISIBLE, "Field {0} isn't visible");
             AddError(Constants.ErrorCodes.FIELD_READ_ONLY, "Field {0} is read-only");
+            AddError(Constants.ErrorCodes.RECORD_DOESNT_MATCH, "At least one error occured when asseting fields. Errors: {0}");
         }
 
         public void AddError(int errorCode, string message)

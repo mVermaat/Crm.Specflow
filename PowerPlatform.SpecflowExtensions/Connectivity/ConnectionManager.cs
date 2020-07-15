@@ -20,7 +20,9 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
 
         public BrowserSession GetCurrentBrowserSession(ISeleniumContext seleniumContext)
         {
-            return _browserSessionManager.GetBrowserSession(seleniumContext.BrowserOptions, _currentConnection);
+            var session = _browserSessionManager.GetBrowserSession(seleniumContext.BrowserOptions, _currentConnection);
+            session.ChangeApp(seleniumContext.CurrentApp);
+            return session;
         }
 
         public void SetAdminConnection(ICrmConnection connection)

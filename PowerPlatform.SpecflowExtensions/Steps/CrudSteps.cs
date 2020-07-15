@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.Xrm.Sdk;
 using PowerPlatform.SpecflowExtensions.Commands;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
@@ -28,6 +29,16 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
             _crmContext.CommandProcessor.Execute(new CreateRecordCommand(_crmContext, _seleniumContext, entityName, criteria, alias));
+        }
+
+
+        [Then(@"(.*) has the following values")]
+        public void ThenAliasHasValues(string alias, Table criteria)
+        {
+            EntityReference aliasRef = _crmContext.RecordCache[alias];
+            _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, criteria);
+
+            _crmContext.CommandProcessor.Execute(new AssertCrmRecordCommand(_crmContext, aliasRef, criteria));
         }
 
     }

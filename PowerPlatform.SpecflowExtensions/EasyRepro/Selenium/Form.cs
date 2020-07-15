@@ -109,7 +109,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
         {
             return _executor.Execute("Get Form ID", (driver, selectors) =>
             {
-                return driver.ExecuteJavaScript<Guid>(Constants.JavaScriptCommands.GET_FORM_ID);
+                return Guid.Parse(driver.ExecuteScript(Constants.JavaScriptCommands.GET_FORM_ID).ToString());
             });
         }
 

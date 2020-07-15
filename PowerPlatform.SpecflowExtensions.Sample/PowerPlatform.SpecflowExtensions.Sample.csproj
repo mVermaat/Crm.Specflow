@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <SpecFlowObsoleteCodeBehindFiles Remove="General\AsyncProcesses.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="General\BooleanDataType.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="General\CurrencyDataType.feature.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,10 +32,24 @@
     <Compile Update="General\AsyncProcesses.feature.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
+    <Compile Update="DataTypes\BooleanDataType.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="DataTypes\CurrencyDataType.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <SpecFlowFeatureFiles Update="General\AsyncProcesses.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="DataTypes\BooleanDataType.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="DataTypes\CurrencyDataType.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>

@@ -67,21 +67,24 @@ namespace PowerPlatform.SpecflowExtensions
             public const int APP_UNSELECTED = 40;
             public const int FIELD_INVISIBLE = 41;
             public const int FIELD_READ_ONLY = 42;
+            public const int RECORD_DOESNT_MATCH = 43;
         }
 
         public static class AppSettings
         {
-            public const string LANGUAGE_CODE = "LanguageCode";
-            public const string AUTH_TYPE = "AuthType";
-            public const string URL = "Url";
-            public const string USERNAME = "Username";
-            public const string PASSWORD = "Password";
-            public const string ADMIN_USERNAME = "AdminUsername";
             public const string ADMIN_PASSWORD = "AdminPassword";
+            public const string ADMIN_USERNAME = "AdminUsername";
+            public const string APP_NAME = "AppName";
+            public const string ASYNC_JOB_TIMEOUT = "AsyncJobTimeoutInSeconds";
+            public const string AUTH_TYPE = "AuthType";
             public const string DATE_FORMAT = "DateFormat";
+            public const string LANGUAGE_CODE = "LanguageCode";
+            public const string PASSWORD = "Password";
             public const string LOGIN_TYPE = "LoginType";
             public const string TARGET = "Target";
             public const string TIME_FORMAT = "TimeFormat";
+            public const string URL = "Url";
+            public const string USERNAME = "Username";
         }
 
         internal static class JavaScriptCommands

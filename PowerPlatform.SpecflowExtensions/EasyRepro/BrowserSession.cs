@@ -29,9 +29,9 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
 
         public void ChangeApp(string appUniqueName)
         {
-            if (appUniqueName != _currentApp.Name)
+            if (appUniqueName != _currentApp?.Name)
             {
-                Logger.WriteLine($"Changing app from {_currentApp.Name} to {appUniqueName}");
+                Logger.WriteLine($"Changing app from {_currentApp?.Name} to {appUniqueName}");
                 _currentApp = GlobalContext.Metadata.GetModelApp(appUniqueName);
                 Logger.WriteLine($"Logged into app: {appUniqueName} (ID: {_currentApp})");
             }

@@ -11,6 +11,7 @@ namespace PowerPlatform.SpecflowExtensions
     public class SeleniumContext : ISeleniumContext
     {
         public BrowserOptions BrowserOptions { get; set; }
+        public string CurrentApp { get; set; }
 
         public SeleniumContext()
         {
@@ -22,6 +23,7 @@ namespace PowerPlatform.SpecflowExtensions
                 PrivateMode = true,
                 UCITestMode = true,
             };
+            CurrentApp = HelperMethods.GetAppSettingsValue(Constants.AppSettings.APP_NAME, true);
         }
     }
 }

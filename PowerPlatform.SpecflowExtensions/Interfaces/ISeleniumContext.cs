@@ -10,5 +10,6 @@ namespace PowerPlatform.SpecflowExtensions.Interfaces
     public interface ISeleniumContext
     {
         BrowserOptions BrowserOptions { get; }
+        string CurrentApp { get; set; }
     }
 }
