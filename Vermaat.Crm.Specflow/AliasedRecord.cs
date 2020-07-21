@@ -15,6 +15,7 @@ namespace Vermaat.Crm.Specflow
 
         public AliasedRecord(string alias, EntityReference record)
         {
+            Alias = alias;
             Record = record;
             CreatedOn = DateTime.Now;
         }
