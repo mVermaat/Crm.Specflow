@@ -13,6 +13,7 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
     {
         UserSettings UserSettings { get; }
         Guid CallerId { get; set; }
+        Guid UserId { get; }
 
         void Associate(string entityName, Guid entityId, Relationship relationship, EntityReferenceCollection relatedEntities);
         void Create(Entity entity, string alias, AliasedRecordCache recordCache);

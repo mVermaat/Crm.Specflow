@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <SpecFlowObsoleteCodeBehindFiles Remove="DataTypes\DateTimeDataType.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="DataTypes\DecimalDataType.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="DataTypes\LookupDataType.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="DataTypes\StringDataType.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="General\AsyncProcesses.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="General\BooleanDataType.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="General\CurrencyDataType.feature.cs" />
@@ -29,6 +33,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="DataTypes\DateTimeDataType.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="DataTypes\DecimalDataType.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="DataTypes\LookupDataType.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="DataTypes\StringDataType.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
     <Compile Update="General\AsyncProcesses.feature.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
@@ -41,6 +57,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <SpecFlowFeatureFiles Update="DataTypes\DateTimeDataType.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="DataTypes\DecimalDataType.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="DataTypes\LookupDataType.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="DataTypes\StringDataType.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
     <SpecFlowFeatureFiles Update="General\AsyncProcesses.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>

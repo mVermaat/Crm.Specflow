@@ -111,7 +111,7 @@ namespace PowerPlatform.SpecflowExtensions
                 var query = new QueryExpression(AttributeMap.EntityLogicalName);
                 query.ColumnSet.AddColumns(AttributeMap.Fields.SourceAttributeName, AttributeMap.Fields.TargetAttributeName);
 
-                var link = query.AddLink(EntityMap.EntityLogicalName, AttributeMap.Fields.SourceAttributeName, EntityMap.Fields.Id);
+                var link = query.AddLink(EntityMap.EntityLogicalName, AttributeMap.Fields.EntityMapId, EntityMap.Fields.Id);
                 link.LinkCriteria.AddCondition(EntityMap.Fields.SourceEntityName, ConditionOperator.Equal, parentEntity);
                 link.LinkCriteria.AddCondition(EntityMap.Fields.TargetEntityName, ConditionOperator.Equal, childEntity);
 
