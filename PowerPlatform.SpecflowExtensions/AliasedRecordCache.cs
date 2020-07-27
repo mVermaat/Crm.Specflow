@@ -11,16 +11,16 @@ namespace PowerPlatform.SpecflowExtensions
     // <summary>
     /// Cache of all records that were created in the specflow scenario
     /// </summary>
-    public sealed class AliasedRecordCache
+    public class AliasedRecordCache
     {
-        private readonly Dictionary<string, EntityReference> _aliasedRecords;
+        private readonly Dictionary<string, AliasedRecord> _aliasedRecords;
         private readonly List<string> _entitiesToIgnore;
         private readonly List<string> _aliasesToIgnore;
         private readonly MetadataCache _metadataCache;
 
         internal AliasedRecordCache(MetadataCache metadataCache)
         {
-            _aliasedRecords = new Dictionary<string, EntityReference>();
+            _aliasedRecords = new Dictionary<string, AliasedRecord>();
             _entitiesToIgnore = new List<string>();
             _aliasesToIgnore = new List<string>();
             _metadataCache = metadataCache;
@@ -44,7 +44,7 @@ namespace PowerPlatform.SpecflowExtensions
             }
 
             Logger.WriteLine($"Adding alias {alias} to cache. {reference?.Id}");
-            _aliasedRecords.Add(alias, reference);
+            _aliasedRecords.Add(alias, new AliasedRecord(alias, reference));
 
             if (!deleteRecordOnCleanup)
                 DoNotDeleteAlias(alias);
@@ -69,11 +69,40 @@ namespace PowerPlatform.SpecflowExtensions
         /// <returns></returns>
         public EntityReference Get(string alias, bool mustExist = false)
         {
-            if (!_aliasedRecords.TryGetValue(alias, out EntityReference value) && mustExist)
+            if (!_aliasedRecords.TryGetValue(alias, out var aliasedRecord) && mustExist)
                 throw new TestExecutionException(Constants.ErrorCodes.ALIAS_DOESNT_EXIST, alias);
 
-            Logger.WriteLine($"Getting Alias {alias} from cache. Result: {value?.Id}");
-            return value;
+            Logger.WriteLine($"Getting Alias {alias} from cache. Result: {aliasedRecord?.Record?.Id}");
+            return aliasedRecord?.Record;
+        }
+
+        /// <summary>
+        /// Adds the record to the cache if it doesn't exist. Overwrites it if it does
+        /// </summary>
+        /// <param name="alias">Alias of the record. The record can be retrieved by this alias after it had been added. </param>
+        /// <param name="entity">EntityReference of the record</param>
+        public void Upsert(string alias, Entity entity)
+        {
+            Upsert(alias, entity.ToEntityReference());
+        }
+
+        /// <summary>
+        /// Adds the record to the cache if it doesn't exist. Overwrites it if it does
+        /// </summary>
+        /// <param name="alias">Alias of the record. The record can be retrieved by this alias after it had been added. </param>
+        /// <param name="reference">EntityReference of the record</param>
+        public void Upsert(string alias, EntityReference entityReference)
+        {
+            if (_aliasedRecords.ContainsKey(alias))
+            {
+                Logger.WriteLine($"Adding {alias} to cache with ID {entityReference?.Id}");
+                _aliasedRecords[alias].Record = entityReference;
+            }
+            else
+            {
+                Logger.WriteLine($"Updating {alias} to cache with ID {entityReference?.Id}");
+                _aliasedRecords.Add(alias, new AliasedRecord(alias, entityReference));
+            }
         }
 
         /// <summary>
@@ -93,15 +122,15 @@ namespace PowerPlatform.SpecflowExtensions
         public void DeleteAllCachedRecords()
         {
             Logger.WriteLine("Clearing cache");
-            foreach (var record in _aliasedRecords)
+            foreach (var aliasedRecord in _aliasedRecords.Values.OrderByDescending(a => a.CreatedOn))
             {
-                if (_aliasesToIgnore.Contains(record.Key) || _entitiesToIgnore.Contains(record.Value.LogicalName))
+                if (_aliasesToIgnore.Contains(aliasedRecord.Alias) || _entitiesToIgnore.Contains(aliasedRecord.Record.LogicalName))
                     continue;
 
                 try
                 {
-                    Logger.WriteLine($"Deleting {record.Key}. ID: {record.Value.Id} Entity: {record.Value.LogicalName}");
-                    GlobalContext.ConnectionManager.AdminConnection.Delete(record.Value);
+                    Logger.WriteLine($"Deleting {aliasedRecord.Alias}. ID: {aliasedRecord.Record.Id} Entity: {aliasedRecord.Record.LogicalName}");
+                    GlobalContext.ConnectionManager.AdminConnection.Delete(aliasedRecord.Record);
                 }
                 // Some records can't be deleted due to cascading behavior
                 catch (Exception ex)
@@ -137,6 +166,10 @@ namespace PowerPlatform.SpecflowExtensions
         /// </summary>
         /// <param name="alias">Name of the record</param>
         /// <returns></returns>
-        public EntityReference this[string alias] => Get(alias, true);
+        public EntityReference this[string alias]
+        {
+            get { return Get(alias, true); }
+            set { Upsert(alias, value); }
+        }
     }
 }
