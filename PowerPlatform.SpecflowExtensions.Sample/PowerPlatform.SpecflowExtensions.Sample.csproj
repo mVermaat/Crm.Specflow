@@ -9,6 +9,9 @@
     <SpecFlowObsoleteCodeBehindFiles Remove="DataTypes\DecimalDataType.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="DataTypes\LookupDataType.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="DataTypes\StringDataType.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="EntityTests\LeadTests.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="EntityTests\OpportunityTests.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="EntityTests\QuoteTests.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="General\AsyncProcesses.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="General\BooleanDataType.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="General\CurrencyDataType.feature.cs" />
@@ -45,6 +48,15 @@
     <Compile Update="DataTypes\StringDataType.feature.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
+    <Compile Update="EntityTests\LeadTests.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="EntityTests\OpportunityTests.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="EntityTests\QuoteTests.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
     <Compile Update="General\AsyncProcesses.feature.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
@@ -70,6 +82,18 @@
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>
     <SpecFlowFeatureFiles Update="DataTypes\StringDataType.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="EntityTests\LeadTests.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="EntityTests\OpportunityTests.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="EntityTests\QuoteTests.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>

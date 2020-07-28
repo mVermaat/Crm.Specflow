@@ -57,5 +57,12 @@ namespace PowerPlatform.SpecflowExtensions.Steps
             _crmContext.CommandProcessor.Execute(new AssertCrmRecordCommand(_crmContext, aliasRef, criteria));
         }
 
+        [Given(@"that (.*)'s (.*) is named (.*)")]
+        [Then(@"(.*)'s (.*) is named (.*)")]
+        public void ThenAliasFieldIsAliased(string alias, string lookupField, string lookupAlias)
+        {
+            _crmContext.CommandProcessor.Execute(new SetLookupAsAliasCommand(_crmContext, alias, lookupField, lookupAlias));
+        }
+
     }
 }
