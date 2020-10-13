@@ -33,9 +33,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return client.Execute(BrowserOptionHelper.GetOptions($"Set Date/Time Value: {field}"), driver =>
             {
                 driver.WaitForTransaction();
-                var xPath = By.XPath(AppElements.Xpath[AppReference.Entity.FieldControlDateTimeInputUCI].Replace("[FIELD]", field));
 
-                var dateField = driver.WaitUntilAvailable(xPath, $"Field: {field} Does not exist");
+                var container = driver.WaitUntilAvailable(
+                    SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_DateContainer, field),
+                    $"Field: {field} does not exist");
+
+                var dateField = container.WaitUntilAvailable(
+                    SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_DateTime_Time_Input), 
+                    $"Input for {field} does not exist");
                 try
                 {
                     var date = value.HasValue ? formatDate == null ? value.Value.ToShortDateString() : value.Value.ToString(formatDate) : string.Empty;
@@ -96,7 +101,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                                        int attemps = 2,
                                        Action successCallback = null, Action failureCallback = null)
         {
-            timeout = timeout ?? new TimeSpan(0,0,30);
+            timeout = timeout ?? new TimeSpan(0, 0, 30);
             var waittime = new TimeSpan(timeout.Value.Ticks / attemps);
 
             WebDriverWait wait = new WebDriverWait(driver, waittime);
@@ -159,7 +164,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public static void Login(WebClient client, Uri orgUri, SecureString username, SecureString password)
         {
-            client.Execute(BrowserOptionHelper.GetOptions("Login"), Login, client, orgUri, username, password); 
+            client.Execute(BrowserOptionHelper.GetOptions("Login"), Login, client, orgUri, username, password);
         }
 
         private static LoginResult Login(IWebDriver driver, WebClient client, Uri uri, SecureString username, SecureString password)
@@ -178,7 +183,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             EnterPassword(driver, password);
             client.Browser.ThinkTime(1000);
-            
+
             int attempts = 0;
             do
             {
@@ -287,7 +292,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private static void SetInputValue(IWebDriver driver, IWebElement input, string value)
         {
-            
+
             input.SendKeys(Keys.Control + "a");
             input.SendKeys(Keys.Backspace);
 
