@@ -90,9 +90,9 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 
         protected override void SetDateTimeField(DateTimeValue value)
         {
-            Executor.Execute("Set DateTime Field", (driver) =>
+            Executor.Execute("Set DateTime Field", (driver, selectors) =>
             {
-                TemporaryFixes.SetDateTimeValue(driver, LogicalName, value.Value,
+                TemporaryFixes.SetDateTimeValue(driver, selectors, LogicalName, value.Value,
                  GlobalContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
                  GlobalContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
                 return true;

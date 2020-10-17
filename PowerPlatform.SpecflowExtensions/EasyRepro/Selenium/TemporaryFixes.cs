@@ -26,12 +26,18 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
         /// <param name="formatDate">Datetime format matching Short Date formatting personal options.</param>
         /// <param name="formatTime">Datetime format matching Short Time formatting personal options.</param>
         /// <example>xrmApp.Entity.SetValue("birthdate", DateTime.Parse("11/1/1980"));</example>
-        public static void SetDateTimeValue(IWebDriver driver, string field, DateTime? value, string formatDate = null, string formatTime = null)
+        public static void SetDateTimeValue(IWebDriver driver, SeleniumSelectorData selectors, string field, DateTime? value, string formatDate = null, string formatTime = null)
         {
             driver.WaitForTransaction();
-            var xPath = By.XPath(AppElements.Xpath[AppReference.Entity.FieldControlDateTimeInputUCI].Replace("[FIELD]", field));
 
-            var dateField = driver.WaitUntilAvailable(xPath, $"Field: {field} Does not exist");
+
+            var container = driver.WaitUntilAvailable(
+                   selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_DateContainer, field),
+                   $"Field: {field} does not exist");
+
+            var dateField = container.WaitUntilAvailable(
+                selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_DateTime_Time_Input),
+                $"Input for {field} does not exist");
             try
             {
                 var date = value.HasValue ? formatDate == null ? value.Value.ToShortDateString() : value.Value.ToString(formatDate) : string.Empty;
