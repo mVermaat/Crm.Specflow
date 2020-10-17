@@ -12,6 +12,13 @@
     <SpecFlowObsoleteCodeBehindFiles Remove="General\AsyncProcesses.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="General\BooleanDataType.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="General\CurrencyDataType.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="General\Defaults.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="General\FormStates.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="General\Merging.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="General\NotificationsAndErrors.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="General\RelatedRecords.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="General\SwitchTabs.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="General\UpdateData.feature.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +61,27 @@
     <Compile Update="DataTypes\CurrencyDataType.feature.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
+    <Compile Update="General\Defaults.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="General\FormStates.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="General\Merging.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="General\NotificationsAndErrors.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="General\RelatedRecords.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="General\SwitchTabs.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="General\UpdateData.feature.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -82,6 +110,34 @@
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>
     <SpecFlowFeatureFiles Update="DataTypes\CurrencyDataType.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="General\Defaults.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="General\FormStates.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="General\Merging.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="General\NotificationsAndErrors.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="General\RelatedRecords.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="General\SwitchTabs.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="General\UpdateData.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>

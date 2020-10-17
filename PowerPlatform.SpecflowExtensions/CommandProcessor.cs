@@ -48,7 +48,7 @@ namespace PowerPlatform.SpecflowExtensions
                 if (!HandleException(ex))
                     throw;
                 else
-                    return default;
+                    return default(TResult);
             }
         }
 
