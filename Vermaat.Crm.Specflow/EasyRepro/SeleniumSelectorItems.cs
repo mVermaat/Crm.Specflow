@@ -40,6 +40,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_FieldContainer,
 
-        FlyoutRoot
+        FlyoutRoot,
+
+        Popup_TeachingBubble_CloseButton
     }
 }

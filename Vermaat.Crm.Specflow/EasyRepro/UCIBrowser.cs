@@ -66,6 +66,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 driver.Navigate().GoToUrl(formOptions.GetUrl(driver, _currentAppId));
                 CheckAlert(driver);
                 HelperMethods.WaitForFormLoad(driver);
+                CheckForWavePopup(driver);
 
                 if (App.Client.ScriptErrorExists())
                     throw new TestExecutionException(Constants.ErrorCodes.FORMLOAD_SCRIPT_ERROR_ON_FORM);
@@ -74,6 +75,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             });
 
             return GetFormData(GlobalTestingContext.Metadata.GetEntityMetadata(formOptions.EntityName));
+        }
+
+        private void CheckForWavePopup(IWebDriver driver)
+        {
+            if(driver.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Popup_TeachingBubble_CloseButton), out var closeButton))
+            {
+                closeButton.Click();
+            }
         }
 
         private void CheckAlert(IWebDriver driver)
