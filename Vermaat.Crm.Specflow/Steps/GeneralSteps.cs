@@ -120,6 +120,11 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssociateToNNRelationshipCommand(_crmContext, alias, relatedEntityName, records));
         }
 
+        [When(@"the workflow '(.*)' is executed on (.*)")]
+        public void ExecuteWorkflow(string workflowName, string alias)
+        {
+            _crmContext.CommandProcessor.Execute(new RunOnDemandWorkflow(_crmContext, workflowName, alias));
+        }
 
         #endregion
 
