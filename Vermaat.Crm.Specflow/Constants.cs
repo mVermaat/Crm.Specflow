@@ -68,6 +68,7 @@ namespace Vermaat.Crm.Specflow
             public const int APPLICATIONUSER_CANNOT_LOGIN = 36;
             public const int NO_CONTROL_FOUND = 37;
             public const int RIBBON_NOT_FOUND = 38;
+            public const int UNEXPECTED_PROCESS_COUNT = 39;
         }
     }
 }
