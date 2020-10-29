@@ -10,7 +10,7 @@ namespace Vermaat.Crm.Specflow
 
         public BrowserOptions BrowserOptions { get; }
         public string CurrentApp { get; set; }
-        public bool IsLoggedIn { get; private set; }
+        public bool IsLoggedIn { get; set; }
 
         public SeleniumTestingContext(CrmTestingContext crmContext)
         {
