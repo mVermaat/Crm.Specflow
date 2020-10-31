@@ -68,7 +68,7 @@ namespace PowerPlatform.SpecflowExtensions
             public const int FIELD_INVISIBLE = 41;
             public const int FIELD_READ_ONLY = 42;
             public const int RECORD_DOESNT_MATCH = 43;
-            public const int UNEXPECTED_PROCESS_COUNT = 34;
+            public const int UNEXPECTED_PROCESS_COUNT = 44;
         }
 
         public static class AppSettings

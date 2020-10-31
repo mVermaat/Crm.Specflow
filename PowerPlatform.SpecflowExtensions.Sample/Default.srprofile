@@ -11,13 +11,13 @@
       <ConfigFileTransformation configFile="app.config" >
         <Transformation>
           <![CDATA[<?xml version="1.0" encoding="utf-8"?>
-							<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+              <configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
                               <appSettings>
                                 <add key="Target" value="{Target}" 
                                  xdt:Locator="Match(key)" xdt:Transform="SetAttributes(value)" />
                               </appSettings>
-							</configuration>
-						]]>
+              </configuration>
+            ]]>
         </Transformation>
       </ConfigFileTransformation>
     </Steps>
@@ -26,9 +26,9 @@
     <!--<Target name="IE">
       <Filter>IE</Filter>
     </Target>-->
-    <Target name="Firefox">
+    <!--<Target name="Firefox">
       <Filter>Firefox</Filter>
-    </Target>
+    </Target>-->
     <Target name="Chrome">
       <Filter>Chrome</Filter>
     </Target>
