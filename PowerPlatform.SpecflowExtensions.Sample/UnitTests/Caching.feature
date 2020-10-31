@@ -7,6 +7,6 @@ Scenario: When a record is created, it should be added to the cache
     | First Name | John  |
     | Last Name  | Smith |
     | Job Title  | CLO   |
-    Then The alias cache has the following records
+Then The alias cache has the following records
     | Value       |
     | TestContact |

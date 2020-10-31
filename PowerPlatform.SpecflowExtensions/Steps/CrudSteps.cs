@@ -21,6 +21,13 @@ namespace PowerPlatform.SpecflowExtensions.Steps
             _seleniumContext = seleniumContext;
         }
 
+        [Given(@"an existing ([^\s]+) named (.*) with the following values")]
+        public void GivenExistingWithValues(string entityName, string alias, Table criteria)
+        {
+            Entity entity = ThenRecordExists(entityName, criteria);
+            _crmContext.RecordCache.Add(alias, entity, false);
+        }
+
         [Given(@"a ([^\s]+) named (.*) with the following values")]
         [Given(@"an ([^\s]+) named (.*) with the following values")]
         [When(@"a ([^\s]+) named (.*) is created with the following values")]
@@ -55,6 +62,30 @@ namespace PowerPlatform.SpecflowExtensions.Steps
             _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, criteria);
 
             _crmContext.CommandProcessor.Execute(new AssertCrmRecordCommand(_crmContext, aliasRef, criteria));
+        }
+
+        [Then(@"a ([^\s]+) exists with the following values")]
+        [Then(@"an ([^\s]+) exists with the following values")]
+        public Entity ThenRecordExists(string entityName, Table criteria)
+        {
+            _crmContext.TableConverter.ConvertTable(entityName, criteria);
+            DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_crmContext, entityName, criteria));
+            records.Should().HaveCount(1, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Count));
+
+            return records[0];
+        }
+
+        [Then(@"a ([^\s]+) named (.*) exists with the following values")]
+        [Then(@"an ([^\s]+) named (.*) exists with the following values")]
+        public Entity ThenRecordExistsAndGiveAlias(string entityName, string alias, Table criteria)
+        {
+            _crmContext.TableConverter.ConvertTable(entityName, criteria);
+            DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_crmContext, entityName, criteria));
+            records.Should().HaveCount(1, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Count));
+
+            _crmContext.RecordCache.Add(alias, records[0], false);
+
+            return records[0];
         }
 
         [Given(@"that (.*)'s (.*) is named (.*)")]
