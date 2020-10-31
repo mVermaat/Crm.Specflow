@@ -21,7 +21,7 @@ namespace PowerPlatform.SpecflowExtensions
         {
             AddError(Constants.ErrorCodes.ERRORMESSAGE_NOT_FOUND, "Errormessage with ErrorCode {0} not found");
             AddError(Constants.ErrorCodes.FORMLOAD_SCRIPT_ERROR_ON_FORM, "Failed to load form due to a JavaScript error");
-            AddError(Constants.ErrorCodes.BROWSER_OT_SUPPORTED_FOR_API_TEST, "Browser not supported for API only commands");
+            AddError(Constants.ErrorCodes.BROWSER_NOT_SUPPORTED_FOR_API_TEST, "Browser not supported for API only commands");
             AddError(Constants.ErrorCodes.N_N_RELATIONSHIP_NOT_FOUND, "No N:N relationship found between {0} and {1}");
             AddError(Constants.ErrorCodes.RECORD_NOT_FOUND, "Cannot find record {0} of type {1}");
             AddError(Constants.ErrorCodes.UNKNOWN_TAG, "Unknown tag. Use API, Chrome, Edge, Firefox or IE");
@@ -63,6 +63,7 @@ namespace PowerPlatform.SpecflowExtensions
             AddError(Constants.ErrorCodes.FIELD_READ_ONLY, "Field {0} is read-only");
             AddError(Constants.ErrorCodes.RECORD_DOESNT_MATCH, "At least one error occured when asseting fields. Errors: {0}");
             AddError(Constants.ErrorCodes.UNEXPECTED_PROCESS_COUNT, "Expected 1 process with name {0}, but found {1}");
+            AddError(Constants.ErrorCodes.USER_NOT_FOUND, "User {0} doesn't exist");
         }
 
         public void AddError(int errorCode, string message)

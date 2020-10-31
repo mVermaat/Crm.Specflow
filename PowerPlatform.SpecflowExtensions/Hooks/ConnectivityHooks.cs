@@ -25,14 +25,15 @@ namespace PowerPlatform.SpecflowExtensions.Hooks
                     connection = UsernamePasswordCrmConnection.FromAppConfig();
                     adminConnection = UsernamePasswordCrmConnection.AdminConnectionFromAppConfig();
                     break;
-                //case "ClientSecret":
-                //    connection = ClientSecretCrmConnection.CreateFromAppConfig();
-                //    adminConnection = ClientSecretCrmConnection.CreateAdminConnectionFromAppConfig();
-                //    break;
-                //case "Hybrid":
-                //    connection = HybridCrmConnection.CreateFromAppConfig();
-                //    adminConnection = HybridCrmConnection.CreateAdminConnectionFromAppConfig();
-                //    break;
+                case "ClientSecret":
+                    connection = ClientSecretCrmConnection.FromAppConfig();
+                    adminConnection = ClientSecretCrmConnection.AdminConnectionFromAppConfig();
+                    break;
+                case "Hybrid": // for backwards compatibility
+                case "ImpersonatedClientSecret":
+                    connection = ImpersonatedClientSecretCrmConnection.FromAppConfig();
+                    adminConnection = ImpersonatedClientSecretCrmConnection.AdminConnectionFromAppConfig();
+                    break;
                 // Implementations can add their own 'LoginType'. If this is done, then this method shouldn't do anything
                 default:
                     return;

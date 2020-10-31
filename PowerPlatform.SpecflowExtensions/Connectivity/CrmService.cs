@@ -23,7 +23,6 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
         protected abstract IOrganizationService ConnectToCrm();
         protected IOrganizationService Service => _service.Value;
 
-
         public UserSettings UserSettings => _userSettings.Value;
         public abstract Guid CallerId { get; set; }
 

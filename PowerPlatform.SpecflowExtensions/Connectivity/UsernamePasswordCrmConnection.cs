@@ -36,9 +36,9 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
 
         public static UsernamePasswordCrmConnection AdminConnectionFromAppConfig()
         {
-            var userName = HelperMethods.GetAppSettingsValue(Constants.AppSettings.ADMIN_USERNAME, true) ?? HelperMethods.GetAppSettingsValue(Constants.AppSettings.USERNAME);
+            var username = HelperMethods.GetAppSettingsValue(Constants.AppSettings.ADMIN_USERNAME, true) ?? HelperMethods.GetAppSettingsValue(Constants.AppSettings.USERNAME);
             var password = HelperMethods.GetAppSettingsValue(Constants.AppSettings.ADMIN_PASSWORD, true)?.ToSecureString() ?? HelperMethods.GetAppSettingsValue(Constants.AppSettings.PASSWORD).ToSecureString();
-            return new UsernamePasswordCrmConnection(userName, password);
+            return new UsernamePasswordCrmConnection(username, password);
         }
 
         protected override ICrmService CreateServiceInstance()

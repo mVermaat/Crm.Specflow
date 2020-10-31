@@ -22,7 +22,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         {
             var target = prefferedTarget ?? targetCalculator.Calculate(_crmContext, this);
             if(target == CommandTarget.ForceBrowser)
-                throw new TestExecutionException(Constants.ErrorCodes.BROWSER_OT_SUPPORTED_FOR_API_TEST);
+                throw new TestExecutionException(Constants.ErrorCodes.BROWSER_NOT_SUPPORTED_FOR_API_TEST);
             return Execute();
         }
     }
@@ -42,7 +42,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         {
             var target = prefferedTarget ?? targetCalculator.Calculate(_crmContext, this);
             if (target == CommandTarget.ForceBrowser)
-                throw new TestExecutionException(Constants.ErrorCodes.BROWSER_OT_SUPPORTED_FOR_API_TEST);
+                throw new TestExecutionException(Constants.ErrorCodes.BROWSER_NOT_SUPPORTED_FOR_API_TEST);
             Execute();
         }
     }

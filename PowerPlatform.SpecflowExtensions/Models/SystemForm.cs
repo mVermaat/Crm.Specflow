@@ -8,13 +8,13 @@ namespace PowerPlatform.SpecflowExtensions.Models
 {
     internal static class SystemForm
     {
-        internal static string EntityLogicalName = "systemform";
+        internal const string EntityLogicalName = "systemform";
 
         internal static class Fields
         {
-            internal static string FormId = "formid";
-            internal static string ObjectTypeCode = "objecttypecode";
-            internal static string Name = "name";
+            internal const string FormId = "formid";
+            internal const string ObjectTypeCode = "objecttypecode";
+            internal const string Name = "name";
         }
     }
 }

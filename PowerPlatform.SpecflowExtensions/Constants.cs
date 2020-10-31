@@ -27,7 +27,7 @@ namespace PowerPlatform.SpecflowExtensions
         {
             public const int ERRORMESSAGE_NOT_FOUND = 1;
             public const int FORMLOAD_SCRIPT_ERROR_ON_FORM = 2;
-            public const int BROWSER_OT_SUPPORTED_FOR_API_TEST = 3;
+            public const int BROWSER_NOT_SUPPORTED_FOR_API_TEST = 3;
             public const int N_N_RELATIONSHIP_NOT_FOUND = 4;
             public const int RECORD_NOT_FOUND = 5;
             public const int UNKNOWN_TAG = 6;
@@ -69,19 +69,24 @@ namespace PowerPlatform.SpecflowExtensions
             public const int FIELD_READ_ONLY = 42;
             public const int RECORD_DOESNT_MATCH = 43;
             public const int UNEXPECTED_PROCESS_COUNT = 44;
+            public const int USER_NOT_FOUND = 45;
         }
 
         public static class AppSettings
         {
             public const string ADMIN_PASSWORD = "AdminPassword";
             public const string ADMIN_USERNAME = "AdminUsername";
+            public const string ADMIN_CLIENT_ID = "AdminClientId";
+            public const string ADMIN_CLIENT_SECRET = "AdminClientSecret";
             public const string APP_NAME = "AppName";
             public const string ASYNC_JOB_TIMEOUT = "AsyncJobTimeoutInSeconds";
             public const string AUTH_TYPE = "AuthType";
+            public const string CLIENT_ID = "ClientId";
+            public const string CLIENT_SECRET = "ClientSecret";
             public const string DATE_FORMAT = "DateFormat";
             public const string LANGUAGE_CODE = "LanguageCode";
-            public const string PASSWORD = "Password";
             public const string LOGIN_TYPE = "LoginType";
+            public const string PASSWORD = "Password";
             public const string TARGET = "Target";
             public const string TIME_FORMAT = "TimeFormat";
             public const string URL = "Url";
