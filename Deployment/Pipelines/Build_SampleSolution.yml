@@ -112,7 +112,7 @@ stages:
           - task: MSCRMImportSolution@11
             displayName: 'Import SpecFlowDemo'
             inputs:
-              crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);Username=$(Username);Password=$(Password)'
+              crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);ClientId=$(ClientId);ClientSecret=$(ClientSecret)'
               solutionFile: '$(Agent.BuildDirectory)/SampleSolution/Solution/SpecFlowDemo_managed.zip'
               publishWorkflows: true
               overwriteUnmanagedCustomizations: true
@@ -121,13 +121,13 @@ stages:
           - task: MSCRMApplySolution@10
             displayName: 'Apply SpecFlowDemo'
             inputs:
-              crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);Username=$(Username);Password=$(Password)'
+              crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);ClientId=$(ClientId);ClientSecret=$(ClientSecret)'
               solutionName: 'SpecFlowDemo'
               useAsyncMode: true
 
           - task: MSCRMImportCMData@9
             inputs:
-              crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);Username=$(Username);Password=$(Password)'
+              crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);ClientId=$(ClientId);ClientSecret=$(ClientSecret)'
               dataFile: '$(Agent.BuildDirectory)/SampleSolution/Data/CMData.zip'
 
           - task: PowerShell@2
