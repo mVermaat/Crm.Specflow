@@ -27,12 +27,21 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
                 driver.Navigate().GoToUrl(options.GetUrl(appId));
                 CheckAlert(driver);
                 WaitForFormLoad();
+                CheckForWavePopup(driver, selectors);
 
                 if (driver.HasElement(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_ScriptErrorDialog)))
                     throw new TestExecutionException(Constants.ErrorCodes.FORMLOAD_SCRIPT_ERROR_ON_FORM);
 
                 return true;
             });
+        }
+
+        private void CheckForWavePopup(IWebDriver driver, SeleniumSelectorData selectors)
+        {
+            if (driver.TryFindElement(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Popup_TeachingBubble_CloseButton), out var closeButton))
+            {
+                closeButton.Click();
+            }
         }
 
         public void WaitForFormLoad(params IFormLoadCondition[] additionalConditions)

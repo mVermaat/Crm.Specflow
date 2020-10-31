@@ -62,6 +62,7 @@ namespace PowerPlatform.SpecflowExtensions
             AddError(Constants.ErrorCodes.FIELD_INVISIBLE, "Field {0} isn't visible");
             AddError(Constants.ErrorCodes.FIELD_READ_ONLY, "Field {0} is read-only");
             AddError(Constants.ErrorCodes.RECORD_DOESNT_MATCH, "At least one error occured when asseting fields. Errors: {0}");
+            AddError(Constants.ErrorCodes.UNEXPECTED_PROCESS_COUNT, "Expected 1 process with name {0}, but found {1}");
         }
 
         public void AddError(int errorCode, string message)

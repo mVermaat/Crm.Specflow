@@ -40,6 +40,8 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 
         Entity_FieldContainer,
 
-        FlyoutRoot
+        FlyoutRoot,
+
+        Popup_TeachingBubble_CloseButton
     }
 }
