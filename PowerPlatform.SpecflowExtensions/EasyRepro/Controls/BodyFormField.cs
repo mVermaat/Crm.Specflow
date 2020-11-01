@@ -44,7 +44,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
                 if (string.IsNullOrEmpty(_tabLabel))
                 {
                     //TODO: To constants
-                    _tabLabel = driver.ExecuteScript($"return Xrm.Page.getControl('{Control}').getParent().getParent().getLabel()")?.ToString();
+                    _tabLabel = driver.ExecuteScript($"return Xrm.Page.getControl('{ControlName}').getParent().getParent().getLabel()")?.ToString();
                 }
                 return _tabLabel;
             });

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 {
-    internal enum SeleniumSelectorItems
+    public enum SeleniumSelectorItems
     {
         Dialog_Container,
         Dialog_OK,

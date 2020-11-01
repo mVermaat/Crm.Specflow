@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
 {
     public interface IFormLoadCondition
     {
-        bool Evaluate(IWebDriver driver);
+        bool Evaluate(IWebDriver driver, SeleniumSelectorData selectors);
     }
 }

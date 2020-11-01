@@ -13,14 +13,12 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 {
     internal abstract class FormField : Field
     {
-        protected string Control { get; private set; }
         protected SeleniumExecutor Executor { get; private set; }
 
         public FormField(SeleniumExecutor executor, AttributeMetadata attributeMetadata, string control)
             : base(attributeMetadata, control)
         {
             Executor = executor;
-            Control = control;
         }
 
         public virtual RequiredState GetRequiredState(FormState formState)
@@ -50,7 +48,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
                 return driver.WaitUntilVisible(
                     selectors.GetXPathSeleniumSelector(
                         SeleniumSelectorItems.Entity_FieldContainer, 
-                        Control),
+                        ControlName),
                     TimeSpan.FromSeconds(5)) != null;
             });
         }

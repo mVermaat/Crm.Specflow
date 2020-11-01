@@ -11,8 +11,8 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
     internal class SeleniumApp : IDisposable
     {
         private WebClient _client;
-        private XrmApp _app;
-        private SeleniumExecutor _executor;
+        private readonly XrmApp _app;
+        private readonly SeleniumExecutor _executor;
 
         public ILogin Login { get; }
         public INavigation Navigation { get; }
@@ -42,7 +42,6 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
         {
             Dispose(true);
         }
-
 
         protected virtual void Dispose(bool disposing)
         {

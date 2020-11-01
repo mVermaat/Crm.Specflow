@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 {
-    internal class SeleniumSelectorData
+    public class SeleniumSelectorData
     {
         private readonly Dictionary<SeleniumSelectorItems, string> _selectors = new Dictionary<SeleniumSelectorItems, string>()
         {

@@ -38,6 +38,18 @@ namespace PowerPlatform.SpecflowExtensions
             return convertedValue;
         }
 
+        public static Status FromStatusText(EntityReference target, string desiredstatus, ICrmContext context)
+        {
+            var attributeMd = GlobalContext.Metadata.GetAttributeMetadata(target.LogicalName, "statuscode") as StatusAttributeMetadata;
+            var optionMd = attributeMd.OptionSet.Options.Where(o => o.Label.IsLabel(context.LanguageCode, desiredstatus)).FirstOrDefault() as StatusOptionMetadata;
+
+            return new Status
+            {
+                StateCode = optionMd.State.Value,
+                StatusCode = optionMd.Value.Value,
+            };
+        }
+
         private static object CrmObjectToPrimitive(object value)
         {
             if (value == null)

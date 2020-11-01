@@ -69,7 +69,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
                         {
                             foreach (var condition in additionalConditions)
                             {
-                                if (!condition.Evaluate(driver))
+                                if (!condition.Evaluate(driver, selectors))
                                 {
                                     Logger.WriteLine("Evaluation failed. Waiting for next attempt");
                                     loadComplete = false;
