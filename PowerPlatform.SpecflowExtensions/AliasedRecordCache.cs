@@ -38,7 +38,7 @@ namespace PowerPlatform.SpecflowExtensions
                 var md = _metadataCache.GetEntityMetadata(reference.LogicalName);
                 if (!string.IsNullOrWhiteSpace(md.PrimaryNameAttribute))
                 {
-                    var entity = GlobalContext.ConnectionManager.CurrentConnection.Retrieve(reference, new ColumnSet(md.PrimaryNameAttribute));
+                    var entity = GlobalContext.ConnectionManager.CurrentCrmService.Retrieve(reference, new ColumnSet(md.PrimaryNameAttribute));
                     reference.Name = entity.GetAttributeValue<string>(md.PrimaryNameAttribute);
                 }
             }
@@ -130,7 +130,7 @@ namespace PowerPlatform.SpecflowExtensions
                 try
                 {
                     Logger.WriteLine($"Deleting {aliasedRecord.Alias}. ID: {aliasedRecord.Record.Id} Entity: {aliasedRecord.Record.LogicalName}");
-                    GlobalContext.ConnectionManager.AdminConnection.Delete(aliasedRecord.Record);
+                    GlobalContext.ConnectionManager.AdminCrmService.Delete(aliasedRecord.Record);
                 }
                 // Some records can't be deleted due to cascading behavior
                 catch (Exception ex)

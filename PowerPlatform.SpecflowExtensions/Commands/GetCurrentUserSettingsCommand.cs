@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using BoDi;
+using Microsoft.Xrm.Sdk;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,15 @@ namespace PowerPlatform.SpecflowExtensions.Commands
     {
         private readonly string _userAlias;
 
-        public GetCurrentUserSettingsCommand(ICrmContext crmContext, string userAlias)
-            : base(crmContext)
+        public GetCurrentUserSettingsCommand(IObjectContainer container, string userAlias)
+            : base(container)
         {
             _userAlias = userAlias;
         }
 
         public override EntityReference Execute()
         {
-            var entityRef = new EntityReference("usersettings", GlobalContext.ConnectionManager.CurrentConnection.UserSettings.Id);
+            var entityRef = new EntityReference("usersettings", GlobalContext.ConnectionManager.CurrentCrmService.UserSettings.Id);
             _crmContext.RecordCache.Add(_userAlias, entityRef, false);
             return entityRef;
         }

@@ -1,4 +1,5 @@
-﻿using PowerPlatform.SpecflowExtensions.Commands;
+﻿using BoDi;
+using PowerPlatform.SpecflowExtensions.Commands;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,12 @@ namespace PowerPlatform.SpecflowExtensions.Steps
     public class MergeSteps
     {
         private readonly ICrmContext _crmContext;
-        private readonly ISeleniumContext _seleniumContext;
+        private readonly IObjectContainer _container;
 
-        public MergeSteps(ICrmContext crmContext, ISeleniumContext seleniumContext)
+        public MergeSteps(ICrmContext crmContext, IObjectContainer container)
         {
             _crmContext = crmContext;
-            _seleniumContext = seleniumContext;
+            _container = container;
         }
 
         [When(@"(.*) is fully merged into (.*)")]
@@ -26,7 +27,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         {
             var targetRecord = _crmContext.RecordCache.Get(targetAlias);
             var subordinateRecord = _crmContext.RecordCache.Get(subordindateAlias);
-            _crmContext.CommandProcessor.Execute(new MergeRecordsCommand(_crmContext, targetRecord, subordinateRecord));
+            _crmContext.CommandProcessor.Execute(new MergeRecordsCommand(_container, targetRecord, subordinateRecord));
         }
 
         [When(@"The following fields of (.*) are fully merged into (.*)")]
@@ -35,7 +36,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
             var targetRecord = _crmContext.RecordCache.Get(targetAlias);
             var subordinateRecord = _crmContext.RecordCache.Get(subordindateAlias);
             _crmContext.TableConverter.ConvertTable(subordinateRecord.LogicalName, mergeTable);
-            _crmContext.CommandProcessor.Execute(new MergeRecordsCommand(_crmContext, targetRecord, subordinateRecord, mergeTable));
+            _crmContext.CommandProcessor.Execute(new MergeRecordsCommand(_container, targetRecord, subordinateRecord, mergeTable));
         }
     }
 }

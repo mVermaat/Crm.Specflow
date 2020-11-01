@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using BoDi;
+using FluentAssertions;
 using Microsoft.Xrm.Sdk;
 using PowerPlatform.SpecflowExtensions.Commands;
 using PowerPlatform.SpecflowExtensions.Interfaces;
@@ -13,12 +14,12 @@ namespace PowerPlatform.SpecflowExtensions.Steps
     public class CrudSteps
     {
         private readonly ICrmContext _crmContext;
-        private readonly ISeleniumContext _seleniumContext;
+        private readonly IObjectContainer _container;
 
-        public CrudSteps(ICrmContext crmContext, ISeleniumContext seleniumContext)
+        public CrudSteps(ICrmContext crmContext, IObjectContainer container)
         {
             _crmContext = crmContext;
-            _seleniumContext = seleniumContext;
+            _container = container;
         }
 
         [Given(@"an existing ([^\s]+) named (.*) with the following values")]
@@ -35,7 +36,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         public void GivenEntityWithValues(string entityName, string alias, Table criteria)
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
-            _crmContext.CommandProcessor.Execute(new CreateRecordCommand(_crmContext, _seleniumContext, entityName, criteria, alias));
+            _crmContext.CommandProcessor.Execute(new CreateRecordCommand(_container, entityName, criteria, alias));
         }
 
         [Given(@"a related ([^\s]+) from (.*) named (.*) with the following values")]
@@ -43,7 +44,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         public void GivenRelatedEntityWithValues(string entityName, string parentAlias, string childAlias, Table criteria)
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
-            _crmContext.CommandProcessor.Execute(new CreateRelatedRecordCommand(_crmContext, _seleniumContext, entityName, criteria, childAlias, parentAlias));
+            _crmContext.CommandProcessor.Execute(new CreateRelatedRecordCommand(_container, entityName, criteria, childAlias, parentAlias));
         }
 
         [When(@"(.*) is updated with the following values")]
@@ -51,7 +52,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         {
             EntityReference aliasRef = _crmContext.RecordCache[alias];
             _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, criteria);
-            _crmContext.CommandProcessor.Execute(new UpdateRecordCommand(_crmContext, _seleniumContext, aliasRef, criteria));
+            _crmContext.CommandProcessor.Execute(new UpdateRecordCommand(_container, aliasRef, criteria));
         }
 
 
@@ -61,7 +62,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
             EntityReference aliasRef = _crmContext.RecordCache[alias];
             _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, criteria);
 
-            _crmContext.CommandProcessor.Execute(new AssertCrmRecordCommand(_crmContext, aliasRef, criteria));
+            _crmContext.CommandProcessor.Execute(new AssertCrmRecordCommand(_container, aliasRef, criteria));
         }
 
         [Then(@"a ([^\s]+) exists with the following values")]
@@ -69,7 +70,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         public Entity ThenRecordExists(string entityName, Table criteria)
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
-            DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_crmContext, entityName, criteria));
+            DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_container, entityName, criteria));
             records.Should().HaveCount(1, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Count));
 
             return records[0];
@@ -80,7 +81,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         public Entity ThenRecordExistsAndGiveAlias(string entityName, string alias, Table criteria)
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
-            DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_crmContext, entityName, criteria));
+            DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_container, entityName, criteria));
             records.Should().HaveCount(1, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Count));
 
             _crmContext.RecordCache.Add(alias, records[0], false);
@@ -92,7 +93,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         [Then(@"(.*)'s (.*) is named (.*)")]
         public void ThenAliasFieldIsAliased(string alias, string lookupField, string lookupAlias)
         {
-            _crmContext.CommandProcessor.Execute(new SetLookupAsAliasCommand(_crmContext, alias, lookupField, lookupAlias));
+            _crmContext.CommandProcessor.Execute(new SetLookupAsAliasCommand(_container, alias, lookupField, lookupAlias));
         }
 
     }

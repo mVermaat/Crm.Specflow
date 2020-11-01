@@ -1,4 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+﻿using BoDi;
+using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using PowerPlatform.SpecflowExtensions.EasyRepro.Controls;
@@ -13,14 +14,12 @@ using TechTalk.SpecFlow;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium.Entity
 {
-    class OpportunityActions : IOpportunityActions
+    internal class OpportunityActions : IBrowserApp
     {
-        private const string _logicalName = "opportunity";
-        private BrowserSession _session;
-        private SeleniumExecutor _executor;
-        
+        private const string _logicalName = "opportunityclose";
+        private ISeleniumExecutor _executor;
 
-        public void CloseOpportunity(ICrmContext crmContext, bool closeAsWon, Table closeData)
+        public void CloseOpportunity(ICrmContext crmContext, INavigation navigation, bool closeAsWon, Table closeData)
         {
             _executor.Execute("closing opportunity", 
                 (driver, selectors) =>
@@ -41,24 +40,32 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium.Entity
                     if (attribute == null)
                         throw new TestExecutionException(Constants.ErrorCodes.ATTRIBUTE_DOESNT_EXIST, row[Constants.SpecFlow.TABLE_KEY], _logicalName);
 
-                    OpportunityCloseDialogField field = new OpportunityCloseDialogField(attribute, attribute.LogicalName);
+                    OpportunityCloseDialogField field = new OpportunityCloseDialogField(_executor, attribute, attribute.LogicalName);
                     field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
 
                     driver.WaitUntilClickable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok]),
                           new TimeSpan(0, 0, 5),
                           d => { driver.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok])); },
                           () => { throw new InvalidOperationException("The Close Opportunity dialog is not available."); });
-                    _session.WaitForFormLoad(new NoBusinessProcessError(), new RecordHasStatus(closeAsWon ? "Won" : "Lost"));
+                    navigation.WaitForFormLoad(new NoBusinessProcessError(), new RecordHasStatus(closeAsWon ? "Won" : "Lost"));
 
                 }
+                return true;
             });
         }
 
-        public void Initialize(BrowserSession session, SeleniumExecutor executor)
+        public void Dispose()
         {
-            _session = session;
+        }
+
+        public void Initialize(WebClient client, ISeleniumExecutor executor)
+        {
             _executor = executor;
         }
 
+        public void Refresh(IObjectContainer container)
+        {
+            
+        }
     }
 }

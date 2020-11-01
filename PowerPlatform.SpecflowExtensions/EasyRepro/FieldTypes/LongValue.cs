@@ -16,6 +16,6 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.FieldTypes
         public long? Value { get; }
 
         public string TextValue => Value?.ToString(
-            GlobalContext.ConnectionManager.CurrentConnection.UserSettings.NumberFormat);
+            GlobalContext.ConnectionManager.CurrentCrmService.UserSettings.NumberFormat);
     }
 }

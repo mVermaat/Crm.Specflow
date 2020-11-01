@@ -1,4 +1,5 @@
-﻿using PowerPlatform.SpecflowExtensions.Commands;
+﻿using BoDi;
+using PowerPlatform.SpecflowExtensions.Commands;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,18 +15,19 @@ namespace PowerPlatform.SpecflowExtensions.Steps
     {
         private readonly ICrmContext _crmContext;
         private readonly ISeleniumContext _selenumContext;
+        private readonly IObjectContainer _container;
 
-        public OpportunitySteps(ICrmContext crmContext, ISeleniumContext selenumContext)
+        public OpportunitySteps(ICrmContext crmContext, IObjectContainer container)
         {
             _crmContext = crmContext;
-            _selenumContext = selenumContext;
+            _container = container;
         }
 
         [When(@"the opportunity (.*) is closed with the following values")]
         public void WinOpportunity(string alias, Table closeData)
         {
             _crmContext.TableConverter.ConvertTable("opportunityclose", closeData);
-            _crmContext.CommandProcessor.Execute(new CloseOpportunityCommand(_crmContext, _selenumContext, alias, closeData));
+            _crmContext.CommandProcessor.Execute(new CloseOpportunityCommand(_container, alias, closeData));
         }
     }
 }

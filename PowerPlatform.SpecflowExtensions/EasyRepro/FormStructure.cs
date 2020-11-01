@@ -25,7 +25,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
 
         }
 
-        internal static FormStructure FromCurrentScreen(SeleniumExecutor executor, EntityMetadata metadata)
+        internal static FormStructure FromCurrentScreen(ISeleniumExecutor executor, EntityMetadata metadata)
         {
             
             return executor.Execute("Build form structure", (driver, selectors) =>
@@ -91,7 +91,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
             });
         }
 
-        private static FormField CreateFormField(SeleniumExecutor executor, AttributeMetadata metadata, string[] controls)
+        private static FormField CreateFormField(ISeleniumExecutor executor, AttributeMetadata metadata, string[] controls)
         {
             if (controls.Length == 0)
                 return null;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoDi;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
@@ -16,7 +17,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         private readonly string _lookupFieldName;
         private readonly string _lookupAlias;
 
-        public SetLookupAsAliasCommand(ICrmContext crmContext, string alias, string lookupFieldName, string lookupAlias) : base(crmContext)
+        public SetLookupAsAliasCommand(IObjectContainer container, string alias, string lookupFieldName, string lookupAlias) : base(container)
         {
             _alias = alias;
             _lookupFieldName = lookupFieldName;
@@ -27,7 +28,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         {
             var aliasRef = _crmContext.RecordCache[_alias];
             var attribute = GlobalContext.Metadata.GetAttributeMetadata(aliasRef.LogicalName, _lookupFieldName, _crmContext.LanguageCode);
-            Entity record = GlobalContext.ConnectionManager.CurrentConnection.Retrieve(aliasRef, new ColumnSet(attribute.LogicalName));
+            Entity record = GlobalContext.ConnectionManager.CurrentCrmService.Retrieve(aliasRef, new ColumnSet(attribute.LogicalName));
             var value = record.Contains(attribute.LogicalName) ? record[attribute.LogicalName] : null;
 
             if(value == null )

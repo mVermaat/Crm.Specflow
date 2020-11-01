@@ -13,7 +13,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.FieldTypes
         {
             if (value.HasValue && metadata.DateTimeBehavior == DateTimeBehavior.UserLocal)
             {
-                var offset = GlobalContext.ConnectionManager.CurrentConnection.UserSettings.TimeZoneInfo.GetUtcOffset(value.Value);
+                var offset = GlobalContext.ConnectionManager.CurrentCrmService.UserSettings.TimeZoneInfo.GetUtcOffset(value.Value);
                 Value = value.Value.Add(offset);
             }
             else

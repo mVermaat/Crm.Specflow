@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using BoDi;
+using FluentAssertions;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
@@ -22,14 +23,14 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         private readonly Table _fieldsToPush;
         private readonly bool _mergeAll;
 
-        public MergeRecordsCommand(ICrmContext crmContext, EntityReference targetAlias, EntityReference subordindateAlias) : base(crmContext)
+        public MergeRecordsCommand(IObjectContainer container, EntityReference targetAlias, EntityReference subordindateAlias) : base(container)
         {
             _targetRecord = targetAlias;
             _subordinateRecord = subordindateAlias;
             _mergeAll = true;
         }
 
-        public MergeRecordsCommand(ICrmContext crmContext, EntityReference targetAlias, EntityReference subordindateAlias, Table mergeFields) : base(crmContext)
+        public MergeRecordsCommand(IObjectContainer container, EntityReference targetAlias, EntityReference subordindateAlias, Table mergeFields) : base(container)
         {
             _targetRecord = targetAlias;
             _subordinateRecord = subordindateAlias;
@@ -41,7 +42,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
             VerifyRecordTypes();
             Logger.WriteLine($"Merging records of type {_targetRecord.LogicalName}");
 
-            GlobalContext.ConnectionManager.CurrentConnection.Execute<MergeResponse>(new MergeRequest
+            GlobalContext.ConnectionManager.CurrentCrmService.Execute<MergeResponse>(new MergeRequest
             {
                 PerformParentingChecks = false,
                 SubordinateId = _subordinateRecord.Id,
@@ -57,7 +58,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
                 new ColumnSet(true) :
                 new ColumnSet(_fieldsToPush.Rows.Select(r => r[Constants.SpecFlow.TABLE_KEY]).ToArray());
 
-            Entity result = GlobalContext.ConnectionManager.CurrentConnection.Retrieve(_subordinateRecord, columnSet);
+            Entity result = GlobalContext.ConnectionManager.CurrentCrmService.Retrieve(_subordinateRecord, columnSet);
 
             var attributeMetadata = GlobalContext.Metadata.GetEntityMetadata(_subordinateRecord.LogicalName).Attributes.ToDictionary(a => a.LogicalName);
             var deleteQuery = result.Attributes.Where(a =>

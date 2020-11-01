@@ -14,10 +14,10 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 {
     internal class CELogin : ILogin
     {
-        private readonly SeleniumExecutor _executor;
+        private readonly ISeleniumExecutor _executor;
         private readonly WebClient _client;
 
-        public CELogin(SeleniumExecutor executor, WebClient client)
+        public CELogin(ISeleniumExecutor executor, WebClient client)
         {
             _executor = executor;
             _client = client;

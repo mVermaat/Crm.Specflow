@@ -10,6 +10,7 @@ using System.Diagnostics;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using Microsoft.Xrm.Sdk.Query;
 using PowerPlatform.SpecflowExtensions.Models;
+using BoDi;
 
 namespace PowerPlatform.SpecflowExtensions.Commands
 {
@@ -17,7 +18,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
     {
         private readonly string _alias;
 
-        public WaitForAsyncJobsCommand(ICrmContext crmContext, string alias) : base(crmContext)
+        public WaitForAsyncJobsCommand(IObjectContainer container, string alias) : base(container)
         {
             _alias = alias;
         }
@@ -54,7 +55,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
             qe.Criteria.AddCondition(AsyncOperation.Fields.RegardingObjectId, ConditionOperator.Equal, regardingId);
             qe.Criteria.AddCondition(AsyncOperation.Fields.StatusCode, ConditionOperator.NotIn, new object[] { 10, 30, 31, 32 });
 
-            return GlobalContext.ConnectionManager.AdminConnection.RetrieveMultiple(qe).Entities.Count > 0;
+            return GlobalContext.ConnectionManager.AdminCrmService.RetrieveMultiple(qe).Entities.Count > 0;
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 {
-    internal class SeleniumExecutor
+    internal class SeleniumExecutor : ISeleniumExecutor
     {
         private static readonly SeleniumSelectorData _selectors = new SeleniumSelectorData();
 
@@ -29,7 +29,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 
         public TResult Execute<TResult>(string commmandName, Func<IWebDriver, SeleniumSelectorData, TResult> func)
         {
-           return _browserPage.Execute(GetOptions(commmandName), func, _selectors).Value;
+            return _browserPage.Execute(GetOptions(commmandName), func, _selectors).Value;
         }
 
         public TResult Execute<TResult>(string commmandName, Func<IWebDriver, SeleniumSelectorData, XrmApp, TResult> func)

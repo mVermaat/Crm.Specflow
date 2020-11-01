@@ -13,9 +13,9 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 {
     internal abstract class FormField : Field
     {
-        protected SeleniumExecutor Executor { get; private set; }
+        protected ISeleniumExecutor Executor { get; private set; }
 
-        public FormField(SeleniumExecutor executor, AttributeMetadata attributeMetadata, string control)
+        public FormField(ISeleniumExecutor executor, AttributeMetadata attributeMetadata, string control)
             : base(attributeMetadata, control)
         {
             Executor = executor;

@@ -89,7 +89,7 @@ namespace PowerPlatform.SpecflowExtensions
                     LogicalName = entityName,
                 };
 
-                result = GlobalContext.ConnectionManager.AdminConnection.Execute<RetrieveEntityResponse>(req).EntityMetadata;
+                result = GlobalContext.ConnectionManager.AdminCrmService.Execute<RetrieveEntityResponse>(req).EntityMetadata;
                 metadataDic.Add(filters, result);
             }
             return result;
@@ -115,7 +115,7 @@ namespace PowerPlatform.SpecflowExtensions
                 link.LinkCriteria.AddCondition(EntityMap.Fields.SourceEntityName, ConditionOperator.Equal, parentEntity);
                 link.LinkCriteria.AddCondition(EntityMap.Fields.TargetEntityName, ConditionOperator.Equal, childEntity);
 
-                result = GlobalContext.ConnectionManager.AdminConnection.RetrieveMultiple(query).Entities;
+                result = GlobalContext.ConnectionManager.AdminCrmService.RetrieveMultiple(query).Entities;
                 _attributeMapCache.Add(parentEntity + childEntity, result);
             }
             return result;
@@ -133,7 +133,7 @@ namespace PowerPlatform.SpecflowExtensions
                 query.Criteria.AddCondition(SystemForm.Fields.ObjectTypeCode, ConditionOperator.Equal, entityName);
                 query.Criteria.AddCondition(SystemForm.Fields.Name, ConditionOperator.Equal, formName);
 
-                var result = GlobalContext.ConnectionManager.AdminConnection.RetrieveMultiple(query).Entities.FirstOrDefault();
+                var result = GlobalContext.ConnectionManager.AdminCrmService.RetrieveMultiple(query).Entities.FirstOrDefault();
 
                 if (result == null)
                     throw new TestExecutionException(Constants.ErrorCodes.FORM_NOT_FOUND, formName, entityName);
@@ -153,7 +153,7 @@ namespace PowerPlatform.SpecflowExtensions
                     NoLock = true
                 };
 
-                var result = GlobalContext.ConnectionManager.AdminConnection.RetrieveMultiple(query);
+                var result = GlobalContext.ConnectionManager.AdminCrmService.RetrieveMultiple(query);
 
 
                 _modelAppCache = result.Entities.Select(e => new ModelApp(e)).ToDictionary(a => a.Name);

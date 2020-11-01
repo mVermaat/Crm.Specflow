@@ -1,4 +1,5 @@
-﻿using PowerPlatform.SpecflowExtensions.Commands;
+﻿using BoDi;
+using PowerPlatform.SpecflowExtensions.Commands;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,18 @@ namespace PowerPlatform.SpecflowExtensions.Steps
     public class ProcessSteps
     {
         private readonly ICrmContext _crmContext;
-        private readonly ISeleniumContext _seleniumContext;
+        private readonly IObjectContainer _container;
 
-        public ProcessSteps(ICrmContext crmContext, ISeleniumContext seleniumContext)
+        public ProcessSteps(ICrmContext crmContext, IObjectContainer container)
         {
             _crmContext = crmContext;
-            _seleniumContext = seleniumContext;
+            _container = container;
         }
 
         [When(@"the workflow '(.*)' is executed on (.*)")]
         public void ExecuteWorkflow(string workflowName, string alias)
         {
-            _crmContext.CommandProcessor.Execute(new RunOnDemandWorkflowCommand(_crmContext, workflowName, alias));
+            _crmContext.CommandProcessor.Execute(new RunOnDemandWorkflowCommand(_container, workflowName, alias));
         }
     }
 }

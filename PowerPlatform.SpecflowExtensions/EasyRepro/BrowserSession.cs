@@ -1,4 +1,6 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+﻿using BoDi;
+using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using Microsoft.Dynamics365.UIAutomation.Browser;
 using PowerPlatform.SpecflowExtensions.Connectivity;
 using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
 using PowerPlatform.SpecflowExtensions.Interfaces;
@@ -13,43 +15,32 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
 {
     public class BrowserSession : IDisposable
     {
-        private SeleniumApp _app;
-        private ModelApp _currentApp;
+        private readonly WebClient _client;
+        private readonly XrmApp _xrmApp;
+        private readonly ISeleniumExecutor _executor;
+        private readonly Dictionary<Type, IBrowserApp> _apps;
 
         public BrowserSession(BrowserOptions options)
         {
-            _app = new SeleniumApp(options);
+            _client = new WebClient(options);
+            _xrmApp = new XrmApp(_client);
+            _executor = new SeleniumExecutor(_client, _xrmApp);
+            _apps = new Dictionary<Type, IBrowserApp>();
         }
 
-        internal void Login(ICrmConnection connection)
+        public T GetApp<T>(IObjectContainer container) where T : IBrowserApp
         {
-            Logger.WriteLine("Logging in CRM");
-            _app.Login.Login(connection);
-        }
-
-        public void ChangeApp(string appUniqueName)
-        {
-            if (appUniqueName != _currentApp?.Name)
+            if(!_apps.TryGetValue(typeof(T), out var browserApp))
             {
-                Logger.WriteLine($"Changing app from {_currentApp?.Name} to {appUniqueName}");
-                _currentApp = GlobalContext.Metadata.GetModelApp(appUniqueName);
-                Logger.WriteLine($"Logged into app: {appUniqueName} (ID: {_currentApp})");
+                browserApp = (T)Activator.CreateInstance(typeof(T));
+                browserApp.Initialize(_client, _executor);
+                _apps.Add(typeof(T), browserApp);
             }
-            else
-            {
-                Logger.WriteLine($"App name is already {_currentApp.Name}. No need to switch");
-            }
+
+            browserApp.Refresh(container);
+            return (T)browserApp;
         }
 
-        public IForm OpenRecord(OpenFormOptions formOptions)
-        {
-            if (_currentApp == null)
-                throw new TestExecutionException(Constants.ErrorCodes.APP_UNSELECTED);
-
-            _app.Navigation.OpenRecord(formOptions, _currentApp.Id);
-
-            return _app.GetForm(formOptions.EntityName); 
-        }
 
         #region IDisposable
 
@@ -67,7 +58,11 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
             {
                 if (disposing)
                 {
-                    _app.Dispose();
+                    foreach(var app in _apps)
+                    {
+                        app.Value.Dispose();
+                    }
+                    _xrmApp.Dispose();
                 }
 
                 _isDisposed = true;

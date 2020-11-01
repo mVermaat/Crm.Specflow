@@ -11,11 +11,11 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
 {
     internal class FormState
     {
-        private readonly SeleniumExecutor _executor;
+        private readonly ISeleniumExecutor _executor;
 
         public string CurrentTab { get; private set; }
 
-        public FormState(SeleniumExecutor executor)
+        public FormState(ISeleniumExecutor executor)
         {
             _executor = executor;
         }

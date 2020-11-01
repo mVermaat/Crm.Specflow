@@ -1,4 +1,7 @@
-﻿using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
+﻿using BoDi;
+using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
+using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +10,9 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro
 {
-    interface IBrowserApp
+    public interface IBrowserApp : IDisposable
     {
-        void Initialize(SeleniumExecutor executor);
+        void Initialize(WebClient client, ISeleniumExecutor executor);
+        void Refresh(IObjectContainer container);
     }
 }

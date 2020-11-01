@@ -1,5 +1,8 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using BoDi;
+using Microsoft.Xrm.Sdk;
 using PowerPlatform.SpecflowExtensions.EasyRepro;
+using PowerPlatform.SpecflowExtensions.EasyRepro.Apps;
+using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System.Linq;
 using TechTalk.SpecFlow;
@@ -13,9 +16,9 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         private readonly EntityReference _toUpdate;
         private readonly Table _criteria;
 
-        public UpdateRecordCommand(ICrmContext crmContext, ISeleniumContext seleniumContext, EntityReference toUpdate,
+        public UpdateRecordCommand(IObjectContainer container, EntityReference toUpdate,
             Table criteria)
-            : base(crmContext, seleniumContext)
+            : base(container)
         {
             _toUpdate = toUpdate;
             _criteria = criteria;
@@ -34,7 +37,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
                     row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], _crmContext);
             }
 
-            GlobalContext.ConnectionManager.CurrentConnection.Update(toUpdate);
+            GlobalContext.ConnectionManager.CurrentCrmService.Update(toUpdate);
         }
 
         protected override void ExecuteBrowser()
@@ -47,6 +50,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
             {
                 var formData = GlobalContext.ConnectionManager
                     .GetCurrentBrowserSession(_seleniumContext)
+                    .GetApp<CustomerEngagementApp>(_container)
                     .OpenRecord(new OpenFormOptions(_toUpdate));
                 formData.FillForm(_crmContext, _criteria);
                 formData.Save(true);

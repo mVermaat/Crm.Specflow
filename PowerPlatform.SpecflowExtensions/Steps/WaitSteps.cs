@@ -1,4 +1,5 @@
-﻿using PowerPlatform.SpecflowExtensions.Commands;
+﻿using BoDi;
+using PowerPlatform.SpecflowExtensions.Commands;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,18 @@ namespace PowerPlatform.SpecflowExtensions.Steps
     public class WaitSteps
     {
         private readonly ICrmContext _crmContext;
+        private readonly IObjectContainer _container;
 
-        public WaitSteps(ICrmContext crmContext)
+        public WaitSteps(ICrmContext crmContext, IObjectContainer container)
         {
             _crmContext = crmContext;
+            _container = container;
         }
 
         [When(@"all asynchronous processes for (.*) are finished")]
         public void WhenAsyncJobsFinished(string alias)
         {
-            _crmContext.CommandProcessor.Execute(new WaitForAsyncJobsCommand(_crmContext, alias));
+            _crmContext.CommandProcessor.Execute(new WaitForAsyncJobsCommand(_container, alias));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Crm.Sdk.Messages;
+﻿using BoDi;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using PowerPlatform.SpecflowExtensions.Interfaces;
@@ -18,7 +19,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         private readonly bool _createContact;
         private readonly bool _createOpportunity;
 
-        public QualifyLeadCommand(ICrmContext crmContext, string alias, bool createAccount, bool createContact, bool createOpportunity) : base(crmContext)
+        public QualifyLeadCommand(IObjectContainer container, string alias, bool createAccount, bool createContact, bool createOpportunity) : base(container)
         {
             _alias = alias;
             _createAccount = createAccount;
@@ -29,13 +30,13 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         public override EntityReferenceCollection Execute()
         {
             EntityReference aliasRef = _crmContext.RecordCache[_alias];
-            var lead = GlobalContext.ConnectionManager.CurrentConnection.Retrieve(aliasRef, 
+            var lead = GlobalContext.ConnectionManager.CurrentCrmService.Retrieve(aliasRef, 
                 new ColumnSet(Lead.Fields.TransactionCurrencyId, Lead.Fields.CustomerId, Lead.Fields.CampaignId));
 
             Logger.WriteLine($"Qualifying Lead {lead.Id}");
             QualifyLeadRequest req = CreateQualifyLeadRequest(lead, _createAccount, _createContact, _createOpportunity);
 
-            return GlobalContext.ConnectionManager.CurrentConnection.Execute<QualifyLeadResponse>(req).CreatedEntities;
+            return GlobalContext.ConnectionManager.CurrentCrmService.Execute<QualifyLeadResponse>(req).CreatedEntities;
         }
 
         private QualifyLeadRequest CreateQualifyLeadRequest(Entity lead, bool createAccount, bool createContact, bool createOpportunity)

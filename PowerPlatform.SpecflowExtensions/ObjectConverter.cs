@@ -158,7 +158,7 @@ namespace PowerPlatform.SpecflowExtensions
             {
                 return TimeZoneInfo.ConvertTimeToUtc(
                     DateTime.ParseExact(value, format, CultureInfo.InvariantCulture),
-                    GlobalContext.ConnectionManager.CurrentConnection.UserSettings.TimeZoneInfo);
+                    GlobalContext.ConnectionManager.CurrentCrmService.UserSettings.TimeZoneInfo);
             }
             else
             {
@@ -211,7 +211,7 @@ namespace PowerPlatform.SpecflowExtensions
                 }
             }
 
-            var col = GlobalContext.ConnectionManager.CurrentConnection.RetrieveMultiple(qe);
+            var col = GlobalContext.ConnectionManager.CurrentCrmService.RetrieveMultiple(qe);
 
             Logger.WriteLine($"Looked for {targetEntity} with {targetMd.PrimaryNameAttribute} is {alias}. Found {col.Entities.Count} records");
             return col.Entities.FirstOrDefault()?.ToEntityReference(targetMd.PrimaryNameAttribute);

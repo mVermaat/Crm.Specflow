@@ -14,7 +14,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
     {
         private string _tabLabel;
 
-        public BodyFormField(SeleniumExecutor executor, AttributeMetadata attributeMetadata, string control)
+        public BodyFormField(ISeleniumExecutor executor, AttributeMetadata attributeMetadata, string control)
             : base(executor, attributeMetadata, control)
         {
         }
@@ -93,8 +93,8 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
             Executor.Execute("Set DateTime Field", (driver, selectors) =>
             {
                 TemporaryFixes.SetDateTimeValue(driver, selectors, LogicalName, value.Value,
-                 GlobalContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
-                 GlobalContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+                 GlobalContext.ConnectionManager.CurrentCrmService.UserSettings.DateFormat,
+                 GlobalContext.ConnectionManager.CurrentCrmService.UserSettings.TimeFormat);
                 return true;
             });
         }

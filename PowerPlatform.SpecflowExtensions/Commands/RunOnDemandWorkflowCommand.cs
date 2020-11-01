@@ -1,4 +1,5 @@
-﻿using Microsoft.Crm.Sdk.Messages;
+﻿using BoDi;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using PowerPlatform.SpecflowExtensions.Commands;
@@ -16,7 +17,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         private readonly string _workflowName;
         private readonly string _alias;
 
-        public RunOnDemandWorkflowCommand(ICrmContext crmContext, string workflowName, string alias) : base(crmContext)
+        public RunOnDemandWorkflowCommand(IObjectContainer container, string workflowName, string alias) : base(container)
         {
             _workflowName = workflowName;
             _alias = alias;
@@ -25,7 +26,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         public override void Execute()
         {
             var workflow = GetWorkflow();
-            GlobalContext.ConnectionManager.CurrentConnection.Execute<ExecuteWorkflowResponse>(new ExecuteWorkflowRequest()
+            GlobalContext.ConnectionManager.CurrentCrmService.Execute<ExecuteWorkflowResponse>(new ExecuteWorkflowRequest()
             {
                 WorkflowId = workflow.Id,
                 EntityId = _crmContext.RecordCache.Get(_alias, true).Id
@@ -33,12 +34,12 @@ namespace PowerPlatform.SpecflowExtensions.Commands
 
             // Wait for completion if it is async
             if (workflow.GetAttributeValue<OptionSetValue>("mode")?.Value == 0)
-                _crmContext.CommandProcessor.Execute(new WaitForAsyncJobsCommand(_crmContext, _alias));
+                _crmContext.CommandProcessor.Execute(new WaitForAsyncJobsCommand(_container, _alias));
         }
 
         private Entity GetWorkflow()
         {
-            var workflows = GlobalContext.ConnectionManager.CurrentConnection.RetrieveMultiple(new QueryExpression("workflow")
+            var workflows = GlobalContext.ConnectionManager.CurrentCrmService.RetrieveMultiple(new QueryExpression("workflow")
             {
                 ColumnSet = new ColumnSet("mode"),
                 NoLock = true,

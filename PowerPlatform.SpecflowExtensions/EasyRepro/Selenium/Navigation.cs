@@ -12,9 +12,9 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 {
     internal class Navigation : INavigation
     {
-        private readonly SeleniumExecutor _executor;
+        private readonly ISeleniumExecutor _executor;
 
-        public Navigation(SeleniumExecutor executor)
+        public Navigation(ISeleniumExecutor executor)
         {
             _executor = executor;
         }

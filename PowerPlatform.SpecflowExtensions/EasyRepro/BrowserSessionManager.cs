@@ -1,4 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+﻿using BoDi;
+using Microsoft.Dynamics365.UIAutomation.Browser;
 using PowerPlatform.SpecflowExtensions.Connectivity;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
@@ -41,7 +42,6 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
 
                 browser = new BrowserSession(options);
                 dic.Add(connection.Identifier, browser);
-                browser.Login(connection);
             }
             return browser;
         }

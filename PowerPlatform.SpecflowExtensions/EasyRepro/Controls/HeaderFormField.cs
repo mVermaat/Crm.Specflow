@@ -12,7 +12,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
 {
     internal class HeaderFormField : FormField
     {
-        public HeaderFormField(SeleniumExecutor executor, AttributeMetadata attributeMetadata, string control)
+        public HeaderFormField(ISeleniumExecutor executor, AttributeMetadata attributeMetadata, string control)
             : base(executor, attributeMetadata, control)
         {
         }
@@ -28,8 +28,8 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
             Executor.Execute("Set DateTime Field", (driver, selectors) =>
             {
                 TemporaryFixes.SetDateTimeValue(driver, selectors, LogicalName, value.Value,
-                 GlobalContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
-                 GlobalContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+                 GlobalContext.ConnectionManager.CurrentCrmService.UserSettings.DateFormat,
+                 GlobalContext.ConnectionManager.CurrentCrmService.UserSettings.TimeFormat);
                 return true;
             });
         }

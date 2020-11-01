@@ -101,7 +101,7 @@ namespace PowerPlatform.SpecflowExtensions
             AttributeValid(parentMetadata, m.GetAttributeValue<string>(AttributeMap.Fields.SourceAttributeName)) &&
             AttributeValid(childMetadata, m.GetAttributeValue<string>(AttributeMap.Fields.TargetAttributeName)));
 
-            Entity parentRecord = GlobalContext.ConnectionManager.CurrentConnection.Retrieve(parentEntity,
+            Entity parentRecord = GlobalContext.ConnectionManager.CurrentCrmService.Retrieve(parentEntity,
                 new ColumnSet(validMaps.Select(m => m.GetAttributeValue<string>(AttributeMap.Fields.SourceAttributeName)).ToArray()));
 
             Entity toCreate = new Entity(childEntityName);

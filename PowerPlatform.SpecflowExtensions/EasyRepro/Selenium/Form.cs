@@ -18,11 +18,11 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
     class Form : IForm
     {
         private readonly EntityMetadata _entityMetadata;
-        private readonly SeleniumExecutor _executor;
+        private readonly ISeleniumExecutor _executor;
         private readonly Guid _formId;
         private readonly FormStructure _formStructure;
 
-        public Form(SeleniumExecutor executor, string entityName)
+        public Form(ISeleniumExecutor executor, string entityName)
         {
             _executor = executor;
             _entityMetadata = GlobalContext.Metadata.GetEntityMetadata(entityName);

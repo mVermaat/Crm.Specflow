@@ -1,4 +1,5 @@
-﻿using PowerPlatform.SpecflowExtensions.Commands;
+﻿using BoDi;
+using PowerPlatform.SpecflowExtensions.Commands;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,12 @@ namespace PowerPlatform.SpecflowExtensions.Steps
     public class UserSteps
     {
         private readonly ICrmContext _crmContext;
-        private readonly ISeleniumContext _selenumContext;
+        private readonly IObjectContainer _container;
 
-        public UserSteps(ICrmContext crmContext, ISeleniumContext selenumContext)
+        public UserSteps(ICrmContext crmContext, IObjectContainer container)
         {
             _crmContext = crmContext;
-            _selenumContext = selenumContext;
+            _container = container;
         }
 
         // TODO: Check if tested
@@ -31,7 +32,7 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         [Given(@"the current logged in user's settings named (.*)")]
         public void GetLoggedInUserSettings(string alias)
         {
-            _crmContext.CommandProcessor.Execute(new GetCurrentUserSettingsCommand(_crmContext, alias));
+            _crmContext.CommandProcessor.Execute(new GetCurrentUserSettingsCommand(_container, alias));
         }
 
     }

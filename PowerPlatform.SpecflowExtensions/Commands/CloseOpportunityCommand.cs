@@ -1,7 +1,10 @@
-﻿using Microsoft.Crm.Sdk.Messages;
+﻿using BoDi;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using PowerPlatform.SpecflowExtensions.EasyRepro;
+using PowerPlatform.SpecflowExtensions.EasyRepro.Apps;
 using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
+using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium.Entity;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,8 +20,8 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         private readonly string _alias;
         private readonly Table _closeData;
 
-        public CloseOpportunityCommand(ICrmContext crmContext, ISeleniumContext seleniumContext,
-            string alias, Table closeData) : base(crmContext, seleniumContext)
+        public CloseOpportunityCommand(IObjectContainer container,
+            string alias, Table closeData) : base(container)
         {
             _alias = alias;
             _closeData = closeData;
@@ -34,7 +37,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
             request.Parameters["OpportunityClose"] = close.Entity;
             request.Parameters["Status"] = new OptionSetValue(close.StatusReasonNumber);
 
-            GlobalContext.ConnectionManager.CurrentConnection.Execute<OrganizationResponse>(request);
+            GlobalContext.ConnectionManager.CurrentCrmService.Execute<OrganizationResponse>(request);
         }
 
         protected override void ExecuteBrowser()
@@ -42,11 +45,13 @@ namespace PowerPlatform.SpecflowExtensions.Commands
             var record = _crmContext.RecordCache.Get(_alias, true);
             var close = OpportunityCloseHelper.Create(_crmContext, _closeData, record);
 
-            var browser = GlobalContext.ConnectionManager.GetCurrentBrowserSession(_seleniumContext);
-            var form = browser.OpenRecord(new OpenFormOptions(record));
-            var dialog = OpportunityCloseDialog.CreateDialog(browser, close.Win);
-            dialog.EnterData(_crmContext, _closeData);
-            dialog.FinishDialog();
+            var session = GlobalContext.ConnectionManager.GetCurrentBrowserSession(_seleniumContext);
+            var app = session.GetApp<CustomerEngagementApp>(_container);
+            app.OpenRecord(new OpenFormOptions(record));
+
+            var closeApp = session.GetApp<OpportunityActions>(_container);
+            closeApp.CloseOpportunity(_crmContext, app.Navigation, close.Win, _closeData);
+
         }
 
 

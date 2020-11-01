@@ -1,5 +1,8 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using BoDi;
+using Microsoft.Xrm.Sdk;
 using PowerPlatform.SpecflowExtensions.EasyRepro;
+using PowerPlatform.SpecflowExtensions.EasyRepro.Apps;
+using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,9 +19,9 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         private readonly Table _criteria;
         private readonly string _alias;
 
-        public CreateRecordCommand(ICrmContext crmContext, ISeleniumContext seleniumContext,
+        public CreateRecordCommand(IObjectContainer container,
             string entityLogicalName, Table criteria, string alias)
-            : base(crmContext, seleniumContext)
+            : base(container)
         {
             _entityLogicalName = entityLogicalName;
             _criteria = criteria;
@@ -28,7 +31,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         protected override EntityReference ExecuteApi()
         {
             Entity toCreate = _crmContext.RecordBuilder.SetupEntityWithDefaults(_entityLogicalName, _criteria);
-            GlobalContext.ConnectionManager.CurrentConnection.Create(toCreate, _alias, _crmContext.RecordCache);
+            GlobalContext.ConnectionManager.CurrentCrmService.Create(toCreate, _alias, _crmContext.RecordCache);
             return toCreate.ToEntityReference();
         }
 
@@ -36,6 +39,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         {
             var form = GlobalContext.ConnectionManager
                 .GetCurrentBrowserSession(_seleniumContext)
+                .GetApp<CustomerEngagementApp>(_container)
                 .OpenRecord(new OpenFormOptions(_entityLogicalName));
 
             var tableWithDefaults = _crmContext.RecordBuilder.AddDefaultsToTable(_entityLogicalName, _criteria);

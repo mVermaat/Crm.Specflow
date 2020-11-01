@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using BoDi;
+using Microsoft.Xrm.Sdk;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         private readonly string _entityName;
         private readonly Table _criteria;
 
-        public GetRecordsCommand(ICrmContext crmContext, string entityName, Table criteria) : base(crmContext)
+        public GetRecordsCommand(IObjectContainer container, string entityName, Table criteria) : base(container)
         {
             _entityName = entityName;
             _criteria = criteria;
@@ -23,7 +24,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         public override DataCollection<Entity> Execute()
         {
             Microsoft.Xrm.Sdk.Query.QueryExpression query = HelperMethods.CreateQueryExpressionFromTable(_entityName, _criteria, _crmContext);
-            return GlobalContext.ConnectionManager.CurrentConnection.RetrieveMultiple(query).Entities;
+            return GlobalContext.ConnectionManager.CurrentCrmService.RetrieveMultiple(query).Entities;
         }
     }
 }

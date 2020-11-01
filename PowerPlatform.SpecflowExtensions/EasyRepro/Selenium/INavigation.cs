@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 {
-    internal interface INavigation
+    public interface INavigation
     {
         void OpenRecord(OpenFormOptions options, Guid appId);
         void WaitForFormLoad(params IFormLoadCondition[] additionalConditions);

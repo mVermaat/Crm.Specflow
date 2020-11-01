@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using BoDi;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
@@ -13,7 +14,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         private readonly EntityReference _crmRecord;
         private readonly Table _criteria;
 
-        public AssertCrmRecordCommand(ICrmContext crmContext, EntityReference crmRecord, Table criteria) : base(crmContext)
+        public AssertCrmRecordCommand(IObjectContainer container, EntityReference crmRecord, Table criteria) : base(container)
         {
             _crmRecord = crmRecord;
             _criteria = criteria;
@@ -22,7 +23,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
         public override void Execute()
         {
             ColumnSet columns = new ColumnSet(_criteria.Rows.Select(r => r[Constants.SpecFlow.TABLE_KEY]).ToArray());
-            Entity record = GlobalContext.ConnectionManager.CurrentConnection.Retrieve(_crmRecord, columns);
+            Entity record = GlobalContext.ConnectionManager.CurrentCrmService.Retrieve(_crmRecord, columns);
             HasProperties(record);
         }
 

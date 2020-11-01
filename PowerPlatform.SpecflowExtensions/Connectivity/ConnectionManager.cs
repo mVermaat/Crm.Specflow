@@ -1,4 +1,5 @@
-﻿using PowerPlatform.SpecflowExtensions.EasyRepro;
+﻿using BoDi;
+using PowerPlatform.SpecflowExtensions.EasyRepro;
 using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,15 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
     {
         private readonly Dictionary<string, ICrmService> _connectionCache = new Dictionary<string, ICrmService>();
         private readonly BrowserSessionManager _browserSessionManager = new BrowserSessionManager();
-        private ICrmConnection _currentConnection;
-        private ICrmConnection _adminConnection;
 
-        public ICrmService CurrentConnection => _currentConnection.Service;
-        public ICrmService AdminConnection => _adminConnection.Service;
+        public ICrmConnection CurrentConnection { get; private set; }
+        public ICrmConnection AdminConnection { get; private set; }
+        public ICrmService CurrentCrmService => CurrentConnection.Service;
+        public ICrmService AdminCrmService => AdminConnection.Service;
 
         public BrowserSession GetCurrentBrowserSession(ISeleniumContext seleniumContext)
         {
-            var session = _browserSessionManager.GetBrowserSession(seleniumContext.BrowserOptions, _currentConnection);
-            session.ChangeApp(seleniumContext.CurrentApp);
+            var session = _browserSessionManager.GetBrowserSession(seleniumContext.BrowserOptions, CurrentConnection);
             return session;
         }
 
@@ -29,14 +29,14 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
         {
             Logger.WriteLine($"Changing admin connection to {connection.Identifier}");
             TryGetServiceFromCache(connection);
-            _adminConnection = connection;
+            AdminConnection = connection;
         }
 
         public void SetCurrentConnection(ICrmConnection connection)
         {
             Logger.WriteLine($"Changing current connection to {connection.Identifier}");
             TryGetServiceFromCache(connection);
-            _currentConnection = connection;
+            CurrentConnection = connection;
         }
 
         private void TryGetServiceFromCache(ICrmConnection connection)
