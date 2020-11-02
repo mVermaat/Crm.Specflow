@@ -14,7 +14,7 @@ using TechTalk.SpecFlow;
 
 namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium.Entity
 {
-    internal class OpportunityActions : IBrowserApp
+    public class OpportunityActions : IBrowserApp
     {
         private const string _logicalName = "opportunityclose";
         private ISeleniumExecutor _executor;
