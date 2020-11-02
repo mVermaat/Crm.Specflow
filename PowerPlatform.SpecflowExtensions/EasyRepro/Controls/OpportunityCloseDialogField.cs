@@ -100,7 +100,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Controls
         {
             Executor.Execute("Set Text Field", (driver, selectors) =>
             {
-                TemporaryFixes.SetTextField(driver, selectors, LogicalName, fieldValue, TemporaryFixes.ContainerType.Body);
+                TemporaryFixes.SetTextField(driver, selectors, LogicalName, fieldValue, TemporaryFixes.ContainerType.Dialog);
                 return true;
             });
         }

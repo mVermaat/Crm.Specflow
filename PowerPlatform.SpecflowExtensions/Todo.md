@@ -14,9 +14,6 @@ Major refactoring
 # Notifications & Errors
 Todo
 
-# Opportunity
-Todo
-
 #Quote
 Todo
 

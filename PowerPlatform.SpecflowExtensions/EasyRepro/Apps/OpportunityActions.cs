@@ -42,14 +42,14 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium.Entity
 
                     OpportunityCloseDialogField field = new OpportunityCloseDialogField(_executor, attribute, attribute.LogicalName);
                     field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
+                }
 
-                    driver.WaitUntilClickable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok]),
+                driver.WaitUntilClickable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok]),
                           new TimeSpan(0, 0, 5),
                           d => { driver.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok])); },
                           () => { throw new InvalidOperationException("The Close Opportunity dialog is not available."); });
-                    navigation.WaitForFormLoad(new NoBusinessProcessError(), new RecordHasStatus(closeAsWon ? "Won" : "Lost"));
+                navigation.WaitForFormLoad(new NoBusinessProcessError(), new RecordHasStatus(closeAsWon ? "Won" : "Lost"));
 
-                }
                 return true;
             });
         }
