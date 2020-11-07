@@ -15,24 +15,26 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
     public abstract class CrmService : ICrmService
     {
         private readonly Lazy<IOrganizationService> _service;
-        private readonly Lazy<UserSettings> _userSettings;
-        private readonly Lazy<Guid> _userId;
 
-        public Guid UserId => _userId.Value;
+        public abstract Guid UserId { get; set; }
+        public abstract UserSettings UserSettings { get; }
 
-        protected abstract IOrganizationService ConnectToCrm();
+
+        //private readonly Lazy<UserSettings> _userSettings;
+        //private readonly Lazy<Guid> _userId;
+
+
         protected IOrganizationService Service => _service.Value;
-
-        public UserSettings UserSettings => _userSettings.Value;
-        public abstract Guid CallerId { get; set; }
 
         public CrmService()
         {
             _service = new Lazy<IOrganizationService>(ConnectToCrm);
-            _userSettings = new Lazy<UserSettings>(GetUserSettings);
-            _userId = new Lazy<Guid>(GetUserId);
         }
 
+        //public abstract void Impersonate(Guid userId);
+        protected abstract IOrganizationService ConnectToCrm();
+
+        #region CRM Calls 
         public void Create(Entity entity, string alias, AliasedRecordCache recordCache)
         {
             entity.Id = Service.Create(entity);
@@ -84,19 +86,17 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
             Service.Update(entity);
         }
 
-        private Guid GetUserId()
-        {
-            return Execute<WhoAmIResponse>(new WhoAmIRequest()).UserId;
-        }
+        #endregion
 
-        private UserSettings GetUserSettings()
+
+        protected UserSettings GetUserSettings(Guid userId)
         {
             var query = new QueryExpression(UserSettings.EntityLogicalName)
             {
                 TopCount = 1,
                 ColumnSet = { AllColumns = true }
             };
-            query.Criteria.AddCondition(UserSettings.Fields.UserId, ConditionOperator.Equal, UserId);
+            query.Criteria.AddCondition(UserSettings.Fields.UserId, ConditionOperator.Equal, userId);
             var settingsEntity = RetrieveMultiple(query).Entities[0];
 
             query = new QueryExpression(TimeZoneDefinition.EntityLogicalName)

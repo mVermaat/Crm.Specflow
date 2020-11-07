@@ -12,8 +12,7 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
     public interface ICrmService
     {
         UserSettings UserSettings { get; }
-        Guid CallerId { get; set; }
-        Guid UserId { get; }
+        Guid UserId { get; set; }
 
         void Associate(string entityName, Guid entityId, Relationship relationship, EntityReferenceCollection relatedEntities);
         void Create(Entity entity, string alias, AliasedRecordCache recordCache);

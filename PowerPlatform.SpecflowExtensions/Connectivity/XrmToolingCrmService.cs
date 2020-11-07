@@ -1,5 +1,7 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
+using PowerPlatform.SpecflowExtensions.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +14,36 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
     public class XrmToolingCrmService : CrmService
     {
         private readonly string _connectionString;
+        private Guid? _userId;
+        private UserSettings _userSettings;
+        
+        public override Guid UserId 
+        {
+            get 
+            {
+                if(!_userId.HasValue)
+                {
+                    _userId = GetUserId();
+                }
+                return _userId.Value;
+            }
+            set
+            {
+                _userId = value;
+                ((CrmServiceClient)Service).CallerId = value;
+                _userSettings = null;
+            }
+        }
 
-        public override Guid CallerId 
+        public override UserSettings UserSettings 
         { 
-            get => ((CrmServiceClient)Service).CallerId;
-            set => ((CrmServiceClient)Service).CallerId = value;
+            get
+            {
+                if (_userSettings == null)
+                    _userSettings = GetUserSettings(UserId);
+
+                return _userSettings;
+            }       
         }
 
         public XrmToolingCrmService(string connectionString)
@@ -34,6 +61,11 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
                 throw new TestExecutionException(Constants.ErrorCodes.UNABLE_TO_LOGIN, client.LastCrmException, client.LastCrmError);
 
             return client;
+        }
+
+        private Guid GetUserId()
+        {
+            return Execute<WhoAmIResponse>(new WhoAmIRequest()).UserId;
         }
     }
 }

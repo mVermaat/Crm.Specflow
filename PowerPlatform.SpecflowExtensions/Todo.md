@@ -5,8 +5,6 @@ Documentation
 Interface namespace
 Verify missing steps that aren't tested
 
-# DateTimeDataType
-Chrome doesn't work: mv_dateonly input
 
 # Formstates
 Major refactoring

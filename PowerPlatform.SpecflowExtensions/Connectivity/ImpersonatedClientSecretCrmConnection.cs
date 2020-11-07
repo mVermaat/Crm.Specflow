@@ -51,7 +51,7 @@ namespace PowerPlatform.SpecflowExtensions.Connectivity
         protected override ICrmService CreateServiceInstance()
         {
             var service = new XrmToolingCrmService($"AuthType=ClientSecret;Url={Url};ClientId={_clientId};ClientSecret={_clientSecret.ToUnsecureString()};RequireNewInstance=True");
-            service.CallerId = GetImpersonatingUser(service);
+            service.UserId = GetImpersonatingUser(service);
             return service;
         }
 
