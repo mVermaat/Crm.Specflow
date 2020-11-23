@@ -75,7 +75,7 @@ namespace Vermaat.Crm.Specflow
             if (!_errorMessages.ContainsKey(errorCode))
                 return string.Format(_errorMessages[Constants.ErrorCodes.ERRORMESSAGE_NOT_FOUND], errorCode);
 
-            return string.Format(_errorMessages[errorCode] + additionalDetails, formatArgs);
+            return string.Format($"[{errorCode}] {_errorMessages[errorCode]}{additionalDetails}", formatArgs);
         }
 
         public void ChangeErrorMessage(int errorCode, string errorMessage)
