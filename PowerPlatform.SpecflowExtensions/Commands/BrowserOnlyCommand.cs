@@ -1,4 +1,5 @@
-﻿using PowerPlatform.SpecflowExtensions.Interfaces;
+﻿using BoDi;
+using PowerPlatform.SpecflowExtensions.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,13 @@ namespace PowerPlatform.SpecflowExtensions.Commands
     {
         protected readonly ICrmContext _crmContext;
         protected readonly ISeleniumContext _seleniumContext;
+        protected readonly IObjectContainer _container;
 
-        public BrowserOnlyCommandFunc(ICrmContext crmContext, ISeleniumContext seleniumContext)
+        public BrowserOnlyCommandFunc(IObjectContainer container)
         {
-            _crmContext = crmContext;
-            _seleniumContext = seleniumContext;
+            _crmContext = container.Resolve<ICrmContext>(); ;
+            _seleniumContext = container.Resolve<ISeleniumContext>();
+            _container = container;
         }
 
         public TResult Execute(ICommandTargetCalculator targetCalculator, CommandTarget? prefferedTarget)
@@ -36,11 +39,13 @@ namespace PowerPlatform.SpecflowExtensions.Commands
     {
         protected readonly ICrmContext _crmContext;
         protected readonly ISeleniumContext _seleniumContext;
+        protected readonly IObjectContainer _container;
 
-        public BrowserOnlyCommand(ICrmContext crmContext, ISeleniumContext seleniumContext)
+        public BrowserOnlyCommand(IObjectContainer container)
         {
-            _crmContext = crmContext;
-            _seleniumContext = seleniumContext;
+            _crmContext = container.Resolve<ICrmContext>(); ;
+            _seleniumContext = container.Resolve<ISeleniumContext>();
+            _container = container;
         }
 
         public abstract void Execute();

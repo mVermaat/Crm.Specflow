@@ -38,6 +38,11 @@ namespace PowerPlatform.SpecflowExtensions
             return convertedValue;
         }
 
+        public static EntityReference GetLookupValue(ICrmContext context, string textValue, string targetEntity)
+        {
+            return GetLookupValue(context, textValue, targetEntity, new ConditionExpression[0]);
+        }
+
         public static Status FromStatusText(EntityReference target, string desiredstatus, ICrmContext context)
         {
             var attributeMd = GlobalContext.Metadata.GetAttributeMetadata(target.LogicalName, "statuscode") as StatusAttributeMetadata;
@@ -178,10 +183,6 @@ namespace PowerPlatform.SpecflowExtensions
             return new OptionSetValue(option.Value.Value);
         }
 
-        private static EntityReference GetLookupValue(ICrmContext context, string alias, string targetEntity)
-        {
-            return GetLookupValue(context, alias, targetEntity, new ConditionExpression[0]);
-        }
 
         private static EntityReference GetLookupValue(ICrmContext context, string alias, string targetEntity, IEnumerable<ConditionExpression> addtionalLookupFilters)
         {

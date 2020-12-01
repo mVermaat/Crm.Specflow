@@ -55,6 +55,12 @@ namespace PowerPlatform.SpecflowExtensions.Steps
             _crmContext.CommandProcessor.Execute(new UpdateRecordCommand(_container, aliasRef, criteria));
         }
 
+        [When(@"the following records of type ([^\s]+) are connected to (.*)")]
+        public void AssociateRecordsViaNN(string relatedEntityName, string alias, Table records)
+        {
+            _crmContext.CommandProcessor.Execute(new AssociateToNNRelationshipCommand(_container, alias, relatedEntityName, records));
+        }
+
 
         [Then(@"(.*) has the following values")]
         public void ThenAliasHasValues(string alias, Table criteria)
