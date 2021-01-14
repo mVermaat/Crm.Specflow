@@ -91,7 +91,7 @@ stages:
     pool:
       vmImage: 'windows-latest'
     variables:
-    - group: 'TST'
+    - group: 'TST - New'
     environment: 'TST'
     strategy:
       runOnce:

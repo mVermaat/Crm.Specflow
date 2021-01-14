@@ -187,13 +187,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             int attempts = 0;
             do
             {
-                success = ClickStaySignedIn(driver);
+                success = ClickStaySignedIn(driver) || WaitForMainPage(driver, 15);
                 attempts++;
             }
             while (!success && attempts <= 3);
 
             if (success)
-                WaitForMainPage(driver);
+                WaitForMainPage(driver, 60);
             else
                 throw new InvalidOperationException("Login failed");
 
@@ -225,7 +225,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return element != null;
         }
 
-        internal static bool WaitForMainPage(IWebDriver driver)
+        private static bool WaitForMainPage(IWebDriver driver, int timeout)
         {
             Action<IWebElement> successCallback = _ =>
                                   {
@@ -235,7 +235,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                                   };
 
             var xpathToMainPage = By.XPath(Elements.Xpath[Reference.Login.CrmMainPage]);
-            var element = driver.WaitUntilAvailable(xpathToMainPage, TimeSpan.FromSeconds(60), successCallback);
+            var element = driver.WaitUntilAvailable(xpathToMainPage, TimeSpan.FromSeconds(timeout), successCallback);
             return element != null;
         }
 
