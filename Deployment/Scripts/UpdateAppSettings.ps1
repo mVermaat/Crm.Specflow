@@ -5,6 +5,7 @@ param(
 [string]$password,
 [string]$clientId,
 [string]$clientSecret,
+[string]$authType,
 [string]$appsettingsPath
 )
 
@@ -24,11 +25,14 @@ $usernameNode = ($content.appSettings.add | where { $_.key -eq "Username" })
 $passwordNode = ($content.appSettings.add | where { $_.key -eq "Password" })
 $clientIdNode = ($content.appSettings.add | where { $_.key -eq "ClientId" })
 $clientSecretNode = ($content.appSettings.add | where { $_.key -eq "ClientSecret" })
+$authTypeNode = ($content.appSettings.add | where { $_.key -eq "AuthType" })
+
 
 $urlNode.value = $url
 $usernameNode.value = $username
 $passwordNode.value = $password
 $clientIdNode.value = $clientId
 $clientSecretNode.value = $clientSecret
+$authTypeNode.value = $authType
 
 $content.Save($fullPath)

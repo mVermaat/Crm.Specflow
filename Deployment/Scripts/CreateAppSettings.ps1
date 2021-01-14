@@ -5,7 +5,7 @@ param(
 
 ######################### Script #########################
 $output = "<appSettings>" +
-"<add key=""AuthType"" value=""Office365"" />" +
+"<add key=""AuthType"" value="""" />" +
 "<add key=""Url"" value="""" />" +
 "<add key=""Username"" value="""" />" +
 "<add key=""Password"" value="""" />" +
