@@ -3,6 +3,8 @@ param(
 [string]$url,
 [string]$username,
 [string]$password,
+[string]$clientId,
+[string]$clientSecret,
 [string]$appsettingsPath
 )
 
@@ -20,9 +22,13 @@ Write-Host "Full Path: $fullPath"
 $urlNode = ($content.appSettings.add | where { $_.key -eq "Url" })
 $usernameNode = ($content.appSettings.add | where { $_.key -eq "Username" })
 $passwordNode = ($content.appSettings.add | where { $_.key -eq "Password" })
+$clientIdNode = ($content.appSettings.add | where { $_.key -eq "ClientId" })
+$clientSecretNode = ($content.appSettings.add | where { $_.key -eq "ClientSecret" })
 
 $urlNode.value = $url
 $usernameNode.value = $username
 $passwordNode.value = $password
+$clientIdNode.value = $clientId
+$clientSecretNode.value = $clientSecret
 
 $content.Save($fullPath)
