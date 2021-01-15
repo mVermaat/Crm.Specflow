@@ -28,5 +28,18 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         {
             _crmContext.CommandProcessor.Execute(new AssertFormNotificationsCommand(_container, alias, formNotifications));
         }
+
+
+        [Then(@"the following form notifications are on the current form")]
+        public void ThenCurrentFormNotificationExist(Table formNotifications)
+        {
+            _crmContext.CommandProcessor.Execute(new AssertFormNotificationsCommand(_container, null, formNotifications));
+        }
+
+        [Then(@"the following error message appears: '(.*)'")]
+        public void ThenErrorAppears(string errorMessage)
+        {
+            _crmContext.CommandProcessor.Execute(new AssertErrorDialogCommand(_container, errorMessage));
+        }
     }
 }

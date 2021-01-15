@@ -20,7 +20,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Apps
         private ModelApp _currentApp;
 
         public INavigation Navigation { get; private set; }
-
+        public IForm LastForm { get; private set; }
 
         public void Initialize(WebClient client, ISeleniumExecutor executor)
         {
@@ -40,7 +40,8 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Apps
 
         public IForm GetForm(string entityName)
         {
-            return new Form(_executor, entityName);
+            LastForm = new Form(_executor, entityName);
+            return LastForm;
         }
 
         public void ChangeApp(string appUniqueName)

@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using FluentAssertions;
 using PowerPlatform.SpecflowExtensions.EasyRepro.Apps;
+using PowerPlatform.SpecflowExtensions.EasyRepro.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,7 @@ namespace PowerPlatform.SpecflowExtensions.Commands
 
         public override void Execute()
         {
-            var app = GlobalContext.ConnectionManager.GetCurrentBrowserSession(_seleniumContext)
-                .GetApp<CustomerEngagementApp>(_container);
-            var aliasRef = _crmContext.RecordCache.Get(_alias);
-            var form = app.GetForm(aliasRef.LogicalName);
+            var form = GetForm();
 
             var notifications = form.GetFormNotifications();
             Logger.WriteLine($"Found {notifications.Count} notifications");
@@ -47,6 +45,24 @@ namespace PowerPlatform.SpecflowExtensions.Commands
                     , $"Notification {notification.Message} has a wrong level");
             }
 
+        }
+
+        private IForm GetForm()
+        {
+            var app = GlobalContext.ConnectionManager.GetCurrentBrowserSession(_seleniumContext)
+                .GetApp<CustomerEngagementApp>(_container);
+
+            if(string.IsNullOrEmpty(_alias))
+            {
+                return app.LastForm;
+            }
+            else
+            {
+                var aliasRef = _crmContext.RecordCache.Get(_alias);
+                return app.GetForm(aliasRef.LogicalName);
+            }
+
+            
         }
     }
 }

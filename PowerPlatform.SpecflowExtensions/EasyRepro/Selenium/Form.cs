@@ -50,6 +50,21 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
             }
         }
 
+        public ErrorDialog GetErrorDialog()
+        {
+            Logger.WriteLine("Getting error dialog");
+            return _executor.Execute("Get error dialog", (driver, selectors) => {
+
+                if (driver.TryFindElement(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Subtitle), out IWebElement subTitle))
+                    return new ErrorDialog()
+                    {
+                        Message = subTitle.GetAttribute("innerText")
+                    };
+                else
+                    return null;
+            });
+        }
+
         public IReadOnlyCollection<FormNotification> GetFormNotifications()
         {
             return _executor.Execute("Get Form Notifcations", 

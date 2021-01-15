@@ -11,6 +11,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
 {
     public interface IForm
     {
+        ErrorDialog GetErrorDialog();
         IReadOnlyCollection<FormNotification> GetFormNotifications();
         void FillForm(ICrmContext crmContext, Table tableWithDefaults);
         void Save(bool saveIfDuplicate);
