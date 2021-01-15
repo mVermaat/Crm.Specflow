@@ -26,10 +26,10 @@
 
   <ItemGroup>
     <PackageReference Include="Selenium.Chrome.WebDriver" Version="85.0.0" />
-    <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.27.0" />
-    <PackageReference Include="SpecFlow" Version="3.4.31" />
-    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.4.31" />
-    <PackageReference Include="SpecRun.SpecFlow" Version="3.4.19" />
+    <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.29.0" />
+    <PackageReference Include="SpecFlow" Version="3.5.14" />
+    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.5.14" />
+    <PackageReference Include="SpecRun.SpecFlow" Version="3.5.22" />
   </ItemGroup>
 
   <ItemGroup>

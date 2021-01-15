@@ -176,13 +176,13 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
                 int attempts = 0;
                 do
                 {
-                    success = ClickStaySignedIn(driver);
+                    success = ClickStaySignedIn(driver) || WaitForMainPage(driver, 10);
                     attempts++;
                 }
                 while (!success && attempts <= 3);
 
                 if (success)
-                    WaitForMainPage(driver);
+                    WaitForMainPage(driver, 30);
                 else
                     throw new InvalidOperationException("Login failed");
 
@@ -214,7 +214,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
             return element != null;
         }
 
-        private static bool WaitForMainPage(IWebDriver driver)
+        private static bool WaitForMainPage(IWebDriver driver, int timeout)
         {
             Action<IWebElement> successCallback = _ =>
             {
@@ -224,7 +224,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
             };
 
             var xpathToMainPage = By.XPath(Elements.Xpath[Reference.Login.CrmMainPage]);
-            var element = driver.WaitUntilAvailable(xpathToMainPage, TimeSpan.FromSeconds(30), successCallback);
+            var element = driver.WaitUntilAvailable(xpathToMainPage, TimeSpan.FromSeconds(timeout), successCallback);
             return element != null;
         }
 
