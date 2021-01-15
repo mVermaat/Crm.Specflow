@@ -12,12 +12,6 @@ Major refactoring
 # Notifications & Errors
 Todo
 
-#Quote
-Todo
-
-# Related Records
-N:N Todo
-
 # BPF
 Todo doesnt work anymore
 

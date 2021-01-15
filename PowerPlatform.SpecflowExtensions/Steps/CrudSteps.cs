@@ -102,5 +102,10 @@ namespace PowerPlatform.SpecflowExtensions.Steps
             _crmContext.CommandProcessor.Execute(new SetLookupAsAliasCommand(_container, alias, lookupField, lookupAlias));
         }
 
+        [Then(@"(.*) has the following connected records of type ([^\s]+)")]
+        public void ThenRecordsAreConnectedViaNN(string alias, string relatedEntityName, Table records)
+        {
+            _crmContext.CommandProcessor.Execute(new AssertNNRelationshipCommand(_container, alias, relatedEntityName, records));
+        }
     }
 }
