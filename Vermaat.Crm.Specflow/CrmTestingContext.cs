@@ -35,7 +35,7 @@ namespace Vermaat.Crm.Specflow
 
             _targets = ConfigurationManager.AppSettings["Target"]
                 .ToLower()
-                .Split(';')
+                .Split('_')
                 .Select(splitted => splitted.Trim())
                 .ToArray();
         }
