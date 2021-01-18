@@ -22,7 +22,6 @@ namespace PowerPlatform.SpecflowExtensions.Steps
             _container = container;
         }
 
-
         [Then(@"(.*) has the following form notifications")]
         public void ThenFormNotificationExist(string alias, Table formNotifications)
         {
@@ -40,6 +39,16 @@ namespace PowerPlatform.SpecflowExtensions.Steps
         public void ThenErrorAppears(string errorMessage)
         {
             _crmContext.CommandProcessor.Execute(new AssertErrorDialogCommand(_container, errorMessage));
+        }
+
+        [Then("(.*)'s form has the following form state")]
+        public void ThenFieldsAreVisibleOnForm(string alias, Table table)
+        {
+            var aliasRef = _crmContext.RecordCache[alias];
+            _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, table);
+
+            _crmContext.CommandProcessor.Execute(new AssertFormStateCommand(_container, aliasRef, table));
+
         }
     }
 }
