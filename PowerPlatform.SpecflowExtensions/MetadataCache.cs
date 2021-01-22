@@ -16,14 +16,14 @@ namespace PowerPlatform.SpecflowExtensions
 
         private readonly Dictionary<string, Dictionary<EntityFilters, EntityMetadata>> _entityMetadataCache;
         private readonly Dictionary<string, DataCollection<Entity>> _attributeMapCache;
-        private readonly Dictionary<string, Guid> _formCache;
+        private readonly Dictionary<string, Entity> _formCache;
         private Dictionary<string, ModelApp> _modelAppCache;
 
         public MetadataCache()
         {
             _entityMetadataCache = new Dictionary<string, Dictionary<EntityFilters, EntityMetadata>>();
             _attributeMapCache = new Dictionary<string, DataCollection<Entity>>();
-            _formCache = new Dictionary<string, Guid>();
+            _formCache = new Dictionary<string, Entity>();
         }
 
         /// <summary>
@@ -121,26 +121,60 @@ namespace PowerPlatform.SpecflowExtensions
             return result;
         }
 
-        public Guid GetFormId(string entityName, string formName)
+        public Entity GetFormByName(string entityName, string formName)
         {
-            if (!_formCache.TryGetValue($"{entityName}_{formName}", out Guid formId))
+            if (!_formCache.TryGetValue($"{entityName}_{formName}", out var form))
             {
                 var query = new QueryExpression(SystemForm.EntityLogicalName)
                 {
-                    TopCount = 1
+                    TopCount = 1,
+                    ColumnSet = new ColumnSet(true),
+                    Criteria =
+                    {
+                        Conditions =
+                        {
+                            new ConditionExpression(SystemForm.Fields.ObjectTypeCode, ConditionOperator.Equal, entityName),
+                            new ConditionExpression(SystemForm.Fields.Name, ConditionOperator.Equal, formName)
+                        }
+                    }
                 };
-                query.ColumnSet.AddColumn(SystemForm.Fields.FormId);
-                query.Criteria.AddCondition(SystemForm.Fields.ObjectTypeCode, ConditionOperator.Equal, entityName);
-                query.Criteria.AddCondition(SystemForm.Fields.Name, ConditionOperator.Equal, formName);
-
+            
                 var result = GlobalContext.ConnectionManager.AdminCrmService.RetrieveMultiple(query).Entities.FirstOrDefault();
 
                 if (result == null)
                     throw new TestExecutionException(Constants.ErrorCodes.FORM_NOT_FOUND, formName, entityName);
-                _formCache.Add($"{entityName}_{formName}", result.Id);
-                formId = result.Id;
+                _formCache.Add($"{entityName}_{formName}", result);
+                form = result;
             }
-            return formId;
+            return form;
+        }
+
+        public Entity GetFormById(string entityName, Guid formId)
+        {
+            if (!_formCache.TryGetValue($"{entityName}_{formId}", out var form))
+            {
+                var query = new QueryExpression(SystemForm.EntityLogicalName)
+                {
+                    TopCount = 1,
+                    ColumnSet = new ColumnSet(true),
+                    Criteria =
+                    {
+                        Conditions =
+                        {
+                            new ConditionExpression(SystemForm.Fields.ObjectTypeCode, ConditionOperator.Equal, entityName),
+                            new ConditionExpression(SystemForm.Fields.FormId, ConditionOperator.Equal, formId)
+                        }
+                    }
+                };
+
+                var result = GlobalContext.ConnectionManager.AdminCrmService.RetrieveMultiple(query).Entities.FirstOrDefault();
+
+                if (result == null)
+                    throw new TestExecutionException(Constants.ErrorCodes.FORM_NOT_FOUND, formId, entityName);
+                _formCache.Add($"{entityName}_{formId}", result);
+                form = result;
+            }
+            return form;
         }
 
         public ModelApp GetModelApp(string appUniqueName)

@@ -91,6 +91,20 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro
             });
         }
 
+        internal static FormStructure FromFormXml(ISeleniumExecutor executor, EntityMetadata metadata, Guid formId)
+        {
+            return executor.Execute("Build form structure", (driver, selectors) =>
+            {
+                FormStructure structure = new FormStructure();
+                var form = GlobalContext.Metadata.GetFormById(metadata.LogicalName, formId);
+
+
+                
+
+                return structure;
+            });
+        }
+
         private static FormField CreateFormField(ISeleniumExecutor executor, AttributeMetadata metadata, string[] controls)
         {
             if (controls.Length == 0)

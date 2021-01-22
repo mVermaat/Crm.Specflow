@@ -135,6 +135,7 @@ namespace PowerPlatform.SpecflowExtensions.EasyRepro.Selenium
             if (structure == null)
             {
                 structure = FormStructure.FromCurrentScreen(_executor, _entityMetadata);
+                var temp = FormStructure.FromFormXml(_executor, _entityMetadata, _formId);
                 GlobalContext.FormStructureCache.AddFormStructure(_entityMetadata.LogicalName, _formId, structure);
             }
 
