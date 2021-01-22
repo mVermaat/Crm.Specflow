@@ -17,7 +17,7 @@ namespace Vermaat.Crm.Specflow.Commands
             EntityReference crmRecord = _crmContext.RecordCache[_alias];
             var instance = BusinessProcessFlowHelper.GetProcessInstanceOfRecord(_crmContext, crmRecord);
             var path = BusinessProcessFlowHelper.GetActivePath(_crmContext, instance);
-
+            
             int currentStage = -1;
             for (int i = 0; i < path.Length; i++)
             {
@@ -32,7 +32,7 @@ namespace Vermaat.Crm.Specflow.Commands
             if (currentStage + 1 >= path.Length)
                 throw new TestExecutionException(Constants.ErrorCodes.BUSINESS_PROCESS_STAGE_CANNOT_BE_LAST);
 
-            var processRecord = BusinessProcessFlowHelper.GetProcessRecord(_crmContext, crmRecord, instance.Id);
+            var processRecord = BusinessProcessFlowHelper.GetProcessRecord(instance);
             processRecord["activestageid"] = path[currentStage + 1].ToEntityReference();
             GlobalTestingContext.ConnectionManager.CurrentConnection.Update(processRecord);
         }

@@ -29,7 +29,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
             for (int i = 0; i < path.Length && (currentStage == -1 || desiredStage == -1); i++)
             {
-                if (_stageName == path[i].GetAttributeValue<string>("stagename"))
+                if (_stageName.Equals(path[i].GetAttributeValue<string>("stagename"), StringComparison.OrdinalIgnoreCase))
                     desiredStage = i;
                 if (path[i].Id == instance.GetAttributeValue<Guid>("processstageid"))
                     currentStage = i;
@@ -43,7 +43,7 @@ namespace Vermaat.Crm.Specflow.Commands
             if (currentStage == desiredStage)
                 return;
 
-            var processRecord = BusinessProcessFlowHelper.GetProcessRecord(_crmContext, crmRecord, instance.Id);
+            var processRecord = BusinessProcessFlowHelper.GetProcessRecord(instance);
 
             if (desiredStage < currentStage)
             {
