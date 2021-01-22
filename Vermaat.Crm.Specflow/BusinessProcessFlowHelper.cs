@@ -11,9 +11,12 @@ namespace Vermaat.Crm.Specflow
 {
     static class BusinessProcessFlowHelper
     {
-        public static Entity GetProcessRecord(CrmTestingContext crmContext, EntityReference crmRecord, Guid instanceId)
+        public static Entity GetProcessRecord(Entity instance)
         {
-            return GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve($"{crmRecord.LogicalName}process", instanceId, new ColumnSet("activestageid"));
+            var process = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(
+                instance.GetAttributeValue<EntityReference>("processid"), new ColumnSet("uniquename"));
+
+          return GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve($"{process.GetAttributeValue<string>("uniquename")}", instance.Id, new ColumnSet("activestageid"));
         }
 
         public static Entity[] GetActivePath(CrmTestingContext crmContext, Entity instance)
