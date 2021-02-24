@@ -18,5 +18,5 @@ function Build-CrmConnectionString
     param($jsonSettings)
 
     $appsettings = Get-Content -Path $jsonSettings.AppsettingsPath
-    return "Url=$(Get-AppSettingValue $appsettings "Url");AuthType=$(Get-AppSettingValue $appsettings "AuthType");Username=$(Get-AppSettingValue $appsettings "Username");Password=$(Get-AppSettingValue $appsettings "Password")"
+    return "Url=$(Get-AppSettingValue $appsettings "Url");AuthType=$(Get-AppSettingValue $appsettings "AuthType");ClientId=$(Get-AppSettingValue $appsettings "ClientId");ClientSecret=$(Get-AppSettingValue $appsettings "ClientSecret")"
 }

@@ -376,6 +376,90 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         #endregion
 
+        #region https://github.com/DynamicHands/Crm.Specflow/issues/112
+
+        public static BrowserCommandResult<bool> ClickCommand(this WebClient client, string name, string subname = null, string subSecondName = null)
+        {
+            return client.Execute(BrowserOptionHelper.GetOptions($"Click Command"), driver =>
+            {
+                //Find the button in the CommandBar
+                var ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.Container]),
+            TimeSpan.FromSeconds(5));
+
+                if (ribbon == null)
+                {
+                    ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid]),
+                        TimeSpan.FromSeconds(5),
+                        "Unable to find the ribbon.");
+                }
+
+                //Get the CommandBar buttons
+                var items = ribbon.FindElements(By.TagName("button"));
+
+                //Is the button in the ribbon?
+                if (items.Any(x => x.GetAttribute("aria-label").Equals(name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    items.FirstOrDefault(x => x.GetAttribute("aria-label").Equals(name, StringComparison.OrdinalIgnoreCase)).Click(true);
+                    driver.WaitForTransaction();
+                }
+                else
+                {
+                    //Is the button in More Commands?
+                    if (items.Any(x => x.GetAttribute("aria-label").Contains("More Commands", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        //Click More Commands
+                        items.FirstOrDefault(x => x.GetAttribute("aria-label").Contains("More Commands", StringComparison.OrdinalIgnoreCase)).Click(true);
+                        driver.WaitForTransaction();
+
+                        //Click the button
+                        if (driver.HasElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Button].Replace("[NAME]", name))))
+                        {
+                            driver.FindElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Button].Replace("[NAME]", name))).Click(true);
+                            driver.WaitForTransaction();
+                        }
+                        else
+                            throw new InvalidOperationException($"No command with the name '{name}' exists inside of Commandbar.");
+                    }
+                    else
+                        throw new InvalidOperationException($"No command with the name '{name}' exists inside of Commandbar.");
+                }
+
+                if (!string.IsNullOrEmpty(subname))
+                {
+                    var submenu = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.MoreCommandsMenu]));
+
+                    var subbutton = submenu.FindElements(By.TagName("button")).FirstOrDefault(x => x.Text == subname);
+
+                    if (subbutton != null)
+                    {
+                        subbutton.Click(true);
+                    }
+                    else
+                        throw new InvalidOperationException($"No sub command with the name '{subname}' exists inside of Commandbar.");
+
+                    if (!string.IsNullOrEmpty(subSecondName))
+                    {
+                        var subSecondmenu = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.MoreCommandsMenu]));
+
+                        var subSecondbutton = subSecondmenu.FindElements(By.TagName("button")).FirstOrDefault(x => x.Text == subSecondName);
+
+                        if (subSecondbutton != null)
+                        {
+                            subSecondbutton.Click(true);
+                        }
+                        else
+                            throw new InvalidOperationException($"No sub command with the name '{subSecondName}' exists inside of Commandbar.");
+                    }
+                }
+
+                driver.WaitForTransaction();
+
+                return true;
+            });
+        }
+
+        #endregion
+
 
 
     }

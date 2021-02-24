@@ -22,7 +22,7 @@
                     <row>
                       <cell id="{076bd602-6cf5-4566-9a3d-b12aa0bdd5b7}">
                         <labels>
-                          <label description="" languagecode="1033" />
+                          <label description="Name" languagecode="1033" />
                         </labels>
                         <control id="mv_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="mv_name" />
                       </cell>
@@ -30,7 +30,7 @@
                     <row>
                       <cell id="{bc7750a8-1327-0a73-b7e2-a9bd9e16ee05}" showlabel="true" locklevel="0">
                         <labels>
-                          <label description="" languagecode="1033" />
+                          <label description="Date Only" languagecode="1033" />
                         </labels>
                         <control id="mv_dateonly" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="mv_dateonly" disabled="false" />
                       </cell>
@@ -38,7 +38,7 @@
                     <row>
                       <cell id="{7485633d-0052-4187-d72e-9a9229c010ee}" showlabel="true" locklevel="0">
                         <labels>
-                          <label description="" languagecode="1033" />
+                          <label description="User Local Date Only" languagecode="1033" />
                         </labels>
                         <control id="mv_userlocaldateonly" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="mv_userlocaldateonly" disabled="false" />
                       </cell>
@@ -46,7 +46,7 @@
                     <row>
                       <cell id="{977425c7-e08d-2dc9-aca5-163e29ed43c0}" showlabel="true" locklevel="0">
                         <labels>
-                          <label description="" languagecode="1033" />
+                          <label description="Time Zone Independent Date Only" languagecode="1033" />
                         </labels>
                         <control id="mv_timezoneindependentdateonly" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="mv_timezoneindependentdateonly" disabled="false" />
                       </cell>
@@ -65,7 +65,7 @@
                     <row>
                       <cell id="{7bf3d7f7-abf7-4afc-9e36-2753d399cc34}">
                         <labels>
-                          <label description="" languagecode="1033" />
+                          <label description="Owner" languagecode="1033" />
                         </labels>
                         <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
                       </cell>
@@ -73,7 +73,7 @@
                     <row>
                       <cell id="{c7242c0b-cd0c-66a4-016c-1726d74ca9e7}" showlabel="true" locklevel="0">
                         <labels>
-                          <label description="" languagecode="1033" />
+                          <label description="User Local Date Time" languagecode="1033" />
                         </labels>
                         <control id="mv_userlocaldatetime" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="mv_userlocaldatetime" disabled="false" />
                       </cell>
@@ -81,7 +81,7 @@
                     <row>
                       <cell id="{17da29a1-ba3c-86d4-741e-ec867d4be15a}" showlabel="true" locklevel="0">
                         <labels>
-                          <label description="" languagecode="1033" />
+                          <label description="Time Zone Independent Date Time" languagecode="1033" />
                         </labels>
                         <control id="mv_timezoneindependentdatetime" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="mv_timezoneindependentdatetime" disabled="false" />
                       </cell>

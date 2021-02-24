@@ -17,6 +17,7 @@
   <IsTransacted>1</IsTransacted>
   <IntroducedVersion>1.0.0.76</IntroducedVersion>
   <IsCustomizable>1</IsCustomizable>
+  <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
   <PrimaryEntity>Contact</PrimaryEntity>
   <LocalizedNames>
     <LocalizedName languagecode="1033" description="Contact - Set Contact present on Account" />
