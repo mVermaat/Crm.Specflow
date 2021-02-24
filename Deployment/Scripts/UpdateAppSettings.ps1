@@ -1,6 +1,8 @@
 ######################### Parameters #########################
 param(
 [string]$url,
+[string]$username,
+[string]$password,
 [string]$clientId,
 [string]$clientSecret,
 [string]$authType,
