@@ -32,6 +32,14 @@ namespace Vermaat.Crm.Specflow
                 Assert.AreEqual(((OptionSetValue)expectedValue)?.Value, ((OptionSetValue)actualValue)?.Value, $"Field {attributeName} is different");
             else if (type == typeof(Money))
                 Assert.AreEqual(((Money)expectedValue)?.Value, ((Money)actualValue)?.Value, $"Field {attributeName} is different");
+            else if(type == typeof(OptionSetValueCollection))
+            {
+                var expected = ((OptionSetValueCollection)expectedValue).Select(e => e.Value).ToArray();
+                var actual = ((OptionSetValueCollection)actualValue).Select(a => a.Value).ToArray();
+                Assert.AreEqual(expected.Length, actual.Length, $"Expected Values: {string.Join(", ", expected)} | Actual Values: {string.Join(", ", actual)}");
+                Assert.AreEqual(expected.Except(actual).Count(), 0, $"Expected Values: {string.Join(", ", expected)} | Actual Values: {string.Join(", ", actual)}");
+                Assert.AreEqual(actual.Except(expected).Count(), 0, $"Expected Values: {string.Join(", ", expected)} | Actual Values: {string.Join(", ", actual)}");
+            }
             else
                 Assert.AreEqual(expectedValue, actualValue, $"Field {attributeName} is different");
         }

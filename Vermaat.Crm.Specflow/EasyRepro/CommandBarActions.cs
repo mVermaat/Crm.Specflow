@@ -22,7 +22,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void ClickButton(string buttonText)
         {
-            _app.App.CommandBar.ClickCommand(buttonText);
+            _app.Client.ClickCommand(buttonText);
         }
 
 
@@ -107,8 +107,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return new EntityReference("quote", _app.App.Entity.GetObjectId()); ;
             }).Value;            
         }
-
-
 
         private void CreateOrderDialog()
         {
