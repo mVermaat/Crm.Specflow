@@ -150,25 +150,33 @@ namespace Vermaat.Crm.Specflow.Steps
         [Then(@"an ([^\s]+) exists with the following values")]
         public Entity ThenRecordExists(string entityName, Table criteria)
         {
+            return ThenRecordCountExists(1, entityName, criteria)[0];
+        }
+
+        [Then(@"no ([^\s]+) exists with the following values")]
+        public void ThenNoRecordExists(string entityName, Table criteria)
+        {
+            ThenRecordCountExists(0, entityName, criteria);
+        }
+
+        [Then(@"([0-9]+) ([^\s]+) records exist with the following values")]
+        public DataCollection<Entity> ThenRecordCountExists(int amount, string entityName, Table criteria)
+        {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
             DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_crmContext, entityName, criteria));
-            Assert.AreEqual(1, records.Count, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Count));
-
-            return records[0];
+            Assert.AreEqual(amount, records.Count, $"When looking for records for {entityName}, expected {amount}, but found {records.Count} records");
+            return records;
         }
 
         [Then(@"a ([^\s]+) named (.*) exists with the following values")]
         [Then(@"an ([^\s]+) named (.*) exists with the following values")]
         public Entity ThenRecordExistsAndGiveAlias(string entityName, string alias, Table criteria)
         {
-            _crmContext.TableConverter.ConvertTable(entityName, criteria);
-            DataCollection<Entity> records = _crmContext.CommandProcessor.Execute(new GetRecordsCommand(_crmContext, entityName, criteria));
-            Assert.AreEqual(1, records.Count, string.Format("When looking for records for {0}, expected 1, but found {1} records", entityName, records.Count));
-
+            var records = ThenRecordCountExists(1, entityName, criteria);
             _crmContext.RecordCache.Add(alias, records[0], false);
-
             return records[0];
         }
+
 
         [Then(@"(.*) has the following connected records of type ([^\s]+)")]
         public void ThenRecordsAreConnectedViaNN(string alias, string relatedEntityName, Table records)
