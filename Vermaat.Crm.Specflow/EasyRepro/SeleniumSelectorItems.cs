@@ -13,6 +13,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Dialog_Subtitle,
         Dialog_ErrorDialog,
 
+        DuplicateDetection_Grid,
+        DuplicateDetection_SelectedItems,
+
         Entity_ScriptErrorDialog,
 
         Entity_DateContainer,

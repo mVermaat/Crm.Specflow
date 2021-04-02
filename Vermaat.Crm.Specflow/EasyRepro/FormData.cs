@@ -74,7 +74,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, ex, ex.Message);
             }
-            ConfirmDuplicate(saveIfDuplicate);
+            _app.Client.ConfirmDuplicate(saveIfDuplicate);
             WaitUntilSaveCompleted();
         }
 
@@ -120,23 +120,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             if (!saveCompleted)
                 throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_TIMEOUT, 20);
-        }
-
-        private void ConfirmDuplicate(bool saveIfDuplicate)
-        {
-            var element = _app.WebDriver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionIgnoreAndSaveButton]), new TimeSpan(0, 0, 5));
-
-            if(element != null)
-            {
-                if (saveIfDuplicate)
-                {
-                    _app.WebDriver.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionIgnoreAndSaveButton]));
-                }
-                else
-                {
-                    throw new TestExecutionException(Constants.ErrorCodes.DUPLICATE_RECORD_DETECTED);
-                }
-            }
         }
 
         private Dictionary<string, FormField> InitializeFormData()
