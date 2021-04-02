@@ -19,23 +19,21 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public Guid? FormId { get; set; }
 
         public OpenFormOptions(EntityReference recordToOpen)
+            : this(recordToOpen.LogicalName)
         {
-            EntityName = recordToOpen.LogicalName;
             EntityId = recordToOpen.Id;
-            _baseUrl = HelperMethods.GetAppSettingsValue("Url");
-            if (_baseUrl.EndsWith("/"))
-                _baseUrl = _baseUrl.Substring(0, _baseUrl.Length - 1);
         }
 
         public OpenFormOptions(string entityName)
         {
             EntityName = entityName;
+            _baseUrl = HelperMethods.GetAppSettingsValue("Url");
+            if (_baseUrl.EndsWith("/"))
+                _baseUrl = _baseUrl.Substring(0, _baseUrl.Length - 1);
         }
 
         public string GetUrl(IWebDriver driver, Guid? appId)
         {
-            Uri currentUrl = new Uri(driver.Url);
-
             StringBuilder builder = new StringBuilder($"{_baseUrl}/main.aspx?etn={EntityName}&pagetype=entityrecord&flags=testmode=true");
 
             if (EntityId.HasValue)
