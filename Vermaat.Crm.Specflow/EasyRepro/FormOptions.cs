@@ -11,10 +11,20 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public class OpenFormOptions
     {
+        private readonly string _baseUrl;
+
+        public EntityReference Parent { get; set; }
+        public string EntityName { get; }
+        public Guid? EntityId { get; }
+        public Guid? FormId { get; set; }
+
         public OpenFormOptions(EntityReference recordToOpen)
         {
             EntityName = recordToOpen.LogicalName;
             EntityId = recordToOpen.Id;
+            _baseUrl = HelperMethods.GetAppSettingsValue("Url");
+            if (_baseUrl.EndsWith("/"))
+                _baseUrl = _baseUrl.Substring(0, _baseUrl.Length - 1);
         }
 
         public OpenFormOptions(string entityName)
@@ -22,17 +32,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             EntityName = entityName;
         }
 
-
-        public EntityReference Parent { get; set; }
-        public string EntityName { get; }
-        public Guid? EntityId { get; }
-        public Guid? FormId { get; set; }
-
         public string GetUrl(IWebDriver driver, Guid? appId)
         {
             Uri currentUrl = new Uri(driver.Url);
 
-            StringBuilder builder = new StringBuilder($"{currentUrl.Scheme}://{currentUrl.Authority}/main.aspx?etn={EntityName}&pagetype=entityrecord&flags=testmode=true");
+            StringBuilder builder = new StringBuilder($"{_baseUrl}/main.aspx?etn={EntityName}&pagetype=entityrecord&flags=testmode=true");
 
             if (EntityId.HasValue)
                 builder.Append($"&id=%7B{EntityId:D}%7D");
