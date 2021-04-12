@@ -84,10 +84,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 foreach(var item in notificationListItems)
                 {
                     var icon = item.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationTypeIcon));
+                    var message = item.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotification_NotificationMessage));
+
 
                     var notification = new FormNotification
                     {
-                        Message = item.GetAttribute("aria-label")
+                        Message = message.GetAttribute("innerText")
                     };
 
                     if (icon.HasClass("MarkAsLost-symbol"))
