@@ -29,6 +29,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Entity_FormNotifcation_ExpandButton,
         Entity_FormNotifcation_NotificationList,
         Entity_FormNotifcation_NotificationTypeIcon,
+        Entity_FormNotification_NotificationMessage,
 
         Entity_FormState_LockedIcon,
         Entity_FormState_RequiredOrRecommended,
