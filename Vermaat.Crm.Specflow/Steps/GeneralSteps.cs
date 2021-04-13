@@ -114,6 +114,7 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new MergeRecordsCommand(_crmContext, targetRecord, subordinateRecord, mergeTable));
         }
 
+        [Given(@"the following records of type ([^\s]+) are connected to ([^\s]+)")]
         [When(@"the following records of type ([^\s]+) are connected to (.*)")]
         public void AssociateRecordsViaNN(string relatedEntityName, string alias, Table records)
         {
