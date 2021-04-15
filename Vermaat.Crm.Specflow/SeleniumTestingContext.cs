@@ -1,4 +1,5 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+using System;
 using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow
@@ -24,7 +25,7 @@ namespace Vermaat.Crm.Specflow
                 UCITestMode = true,
             };
             CurrentApp = HelperMethods.GetAppSettingsValue("AppName", true);
-
+            BrowserOptions.Headless = Convert.ToBoolean(HelperMethods.GetAppSettingsValue("Headless", true, "false"));
         }
 
         public UCIBrowser GetBrowser()
