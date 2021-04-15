@@ -52,6 +52,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         d => dateField.GetAttribute("value") == date,
                         new TimeSpan(0, 0, 9), 3
                     );
+                    driver.ClearFocus();
                     driver.WaitForTransaction();
                 }
                 catch (WebDriverTimeoutException ex)
