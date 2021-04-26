@@ -28,7 +28,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         /// <param name="formatDate">Datetime format matching Short Date formatting personal options.</param>
         /// <param name="formatTime">Datetime format matching Short Time formatting personal options.</param>
         /// <example>xrmApp.Entity.SetValue("birthdate", DateTime.Parse("11/1/1980"));</example>
-        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, DateTime? value, string formatDate = null, string formatTime = null)
+        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, DateTime? value, bool dateOnly, string formatDate = null, string formatTime = null)
         {
             return client.Execute(BrowserOptionHelper.GetOptions($"Set Date/Time Value: {field}"), driver =>
             {
@@ -59,11 +59,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 {
                     throw new InvalidOperationException($"Timeout after 10 seconds. Expected: {value}. Actual: {dateField.GetAttribute("value")}", ex);
                 }
-                // Try Set Time
-                var timeFieldXPath = By.XPath($"//div[contains(@data-id,'{field}.fieldControl._timecontrol-datetime-container')]/div/div/input");
-                bool success = driver.TryFindElement(timeFieldXPath, out var timeField);
-                if (!success || timeField == null)
+
+                if (dateOnly)
                     return true;
+
+                var timeFieldXPath = By.XPath($"//div[contains(@data-id,'{field}.fieldControl._timecontrol-datetime-container')]/div/div/input");
+                var timeField = driver.WaitUntilAvailable(timeFieldXPath, TimeSpan.FromSeconds(5), "Time control of datetime field not available");
                 try
                 {
                     var time = value.HasValue ? formatTime == null ? value.Value.ToShortTimeString() : value.Value.ToString(formatTime) : string.Empty;
