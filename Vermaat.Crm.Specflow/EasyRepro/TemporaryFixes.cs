@@ -414,7 +414,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         //Click the button
                         if (driver.HasElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Button].Replace("[NAME]", name))))
                         {
-                            driver.FindElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Button].Replace("[NAME]", name))).Click(true);
+                            driver.WaitUntilClickable(By.XPath(AppElements.Xpath[AppReference.CommandBar.Button].Replace("[NAME]", name)), TimeSpan.FromSeconds(5), $"Unable to click on button: {name}").Click(true);
                             driver.WaitForTransaction();
                         }
                         else
