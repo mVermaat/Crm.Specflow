@@ -409,10 +409,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 else
                 {
                     //Is the button in More Commands?
-                    if (items.Any(x => x.GetAttribute("aria-label").Contains("More Commands", StringComparison.OrdinalIgnoreCase)))
+                    var moreCommands = items.FirstOrDefault(x => x.HasAttribute("data-id") && x.GetAttribute("data-id").Equals("OverflowButton", StringComparison.OrdinalIgnoreCase));
+                    if (moreCommands != null)
                     {
                         //Click More Commands
-                        items.FirstOrDefault(x => x.GetAttribute("aria-label").Contains("More Commands", StringComparison.OrdinalIgnoreCase)).Click(true);
+                        moreCommands.Click(true);
                         driver.WaitForTransaction();
 
                         //Click the button
