@@ -60,7 +60,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     throw new InvalidOperationException($"Timeout after 10 seconds. Expected: {value}. Actual: {dateField.GetAttribute("value")}", ex);
                 }
 
-                if (dateOnly)
+                // date only fields don't have a time control
+                // clearing the date part of a datetime field is enough to clear both
+                if (dateOnly || !value.HasValue)
                     return true;
 
                 var timeFieldXPath = By.XPath($"//div[contains(@data-id,'{field}.fieldControl._timecontrol-datetime-container')]/div/div/input");
