@@ -48,7 +48,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     {
                         Logger.WriteLine($"Setting date to {date}");
                         ClearFieldValue(dateField, client.Browser);
-                        dateField.SendKeys(date);
+                        dateField.SendKeys(date + Keys.Tab);
                     },
                     d =>
                     {
@@ -77,10 +77,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     var time = value.HasValue ? formatTime == null ? value.Value.ToShortTimeString() : value.Value.ToString(formatTime) : string.Empty;
                     driver.RepeatUntil(() =>
                     {
+                        Logger.WriteLine($"Setting time to {time}");
                         ClearFieldValue(timeField, client.Browser);
                         timeField.SendKeys(time + Keys.Tab);
                     },
-                        d => timeField.GetAttribute("value") == time,
+                    d =>
+                    {
+                        Logger.WriteLine($"Current value is {timeField.GetAttribute("value")}");
+                        return timeField.GetAttribute("value") == time;
+                    },
                         new TimeSpan(0, 0, 9), 3
                     );
                     driver.WaitForTransaction();
