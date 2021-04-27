@@ -13,10 +13,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             { SeleniumSelectorItems.Dialog_Subtitle, "//h2[@id='subtitle']" },
             { SeleniumSelectorItems.Dialog_ErrorDialog, "//div[@data-id='errorDialogdialog']" },
+            { SeleniumSelectorItems.DuplicateDetection_Grid, "//div[@data-id='manage_duplicates_grid.fieldControl.ManageDuplicatesGrid_container']"},
+            { SeleniumSelectorItems.DuplicateDetection_SelectedItems, ".//div[@aria-checked='true']/.."},
             { SeleniumSelectorItems.Entity_FormNotifcation_NotificationBar, "//div[@data-id='notificationWrapper']" },
             { SeleniumSelectorItems.Entity_FormNotifcation_ExpandButton, ".//span[@id='notificationExpandIcon']" },
             { SeleniumSelectorItems.Entity_FormNotifcation_NotificationList, ".//ul[@data-id='notificationList']" },
             { SeleniumSelectorItems.Entity_FormNotifcation_NotificationTypeIcon, ".//span[contains(@id,'notification_icon_')]" },
+            { SeleniumSelectorItems.Entity_FormNotification_NotificationMessage, ".//span[@data-id='warningNotification']" },
             { SeleniumSelectorItems.Entity_SubGrid, "//div[@id=\"dataSetRoot_[NAME]\"]" },
             { SeleniumSelectorItems.Entity_SubGrid_ButtonList, ".//ul[@data-id='CommandBar']" },
             { SeleniumSelectorItems.Entity_SubGrid_Button, ".//button[contains(@data-id,'[NAME]')]" },
@@ -32,7 +35,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Dialog_Container, "id(\"dialogContentContainer_1\")" },
             { SeleniumSelectorItems.Entity_FieldContainer, "//div[@data-id='[NAME]']" },
             { SeleniumSelectorItems.Dialog_OK, "//button[@data-id='ok_id']" },
-            { SeleniumSelectorItems.Entity_Header, "//button[@id='headerFieldsExpandButton']" },
+            { SeleniumSelectorItems.Entity_Header, "//button[@data-id='header_overflowButton']" },
             { SeleniumSelectorItems.Popup_TeachingBubble_CloseButton, "//button[contains(@class, 'ms-TeachingBubble-closebutton')]/span" }
         };
 

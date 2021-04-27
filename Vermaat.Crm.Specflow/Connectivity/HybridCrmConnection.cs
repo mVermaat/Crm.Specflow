@@ -1,10 +1,12 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Connectivity
 {
@@ -49,12 +51,33 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         public override CrmService CreateCrmServiceInstance()
         {
-            return new CrmService($"AuthType={_authType};Url={_loginInfo.Url};ClientId={_clientId};ClientSecret={_clientSecret};RequireNewInstance=True");
+            var service = new CrmService($"AuthType={_authType};Url={_loginInfo.Url};ClientId={_clientId};ClientSecret={_clientSecret};RequireNewInstance=True");
+            service.CallerId = GetImpersonatingUser(service);
+            return service;
         }
 
         public override BrowserLoginDetails GetBrowserLoginInformation()
         {
             return _loginInfo;
+        }
+
+        private Guid GetImpersonatingUser(CrmService service)
+        {
+            var queryResult = service.RetrieveMultiple(new QueryExpression(SystemUser.EntityLogicalName)
+            {
+                NoLock = true,
+                TopCount = 1,
+                Criteria =
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression(SystemUser.Fields.UserName, ConditionOperator.Equal, _loginInfo.Username)
+                    }
+                }
+            });
+            if (queryResult.Entities.Count == 0)
+                throw new TestExecutionException(Constants.ErrorCodes.USER_NOT_FOUND);
+            return queryResult.Entities[0].Id;
         }
     }
 }

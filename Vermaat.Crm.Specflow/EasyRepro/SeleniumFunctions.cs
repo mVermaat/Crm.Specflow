@@ -84,10 +84,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 foreach(var item in notificationListItems)
                 {
                     var icon = item.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationTypeIcon));
+                    var message = item.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotification_NotificationMessage));
+
 
                     var notification = new FormNotification
                     {
-                        Message = item.GetAttribute("aria-label")
+                        Message = message.GetAttribute("innerText")
                     };
 
                     if (icon.HasClass("MarkAsLost-symbol"))
@@ -136,8 +138,39 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             });
         }
 
-       
-        
+        public static void ConfirmDuplicate(this WebClient client, bool saveIfDuplicate)
+        {
+            client.Execute(BrowserOptionHelper.GetOptions($"Confirm or Cancel Confirmation Dialog"), driver =>
+            {
+                var element = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionIgnoreAndSaveButton]), new TimeSpan(0, 0, 5));
+
+                if (element != null)
+                {
+                    if (saveIfDuplicate)
+                    {
+                        var duplicateDetectionGrid = driver.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.DuplicateDetection_Grid));
+                        var selectedItems = duplicateDetectionGrid.FindElements(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.DuplicateDetection_SelectedItems));
+
+                        foreach(var item in selectedItems)
+                        {
+                            item.Click();
+                        }
+
+                        driver.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionIgnoreAndSaveButton]));
+                    }
+                    else
+                    {
+                        throw new TestExecutionException(Constants.ErrorCodes.DUPLICATE_RECORD_DETECTED);
+                    }
+                }
+
+                return true;
+            });
+
+           
+        }
+
+
 
     }
 }

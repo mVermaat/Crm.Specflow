@@ -18,9 +18,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro.FieldTypes
             }
             else
                 Value = value;
+
+            DateOnly = metadata.Format == DateTimeFormat.DateOnly;
         }
 
         public DateTime? Value { get; }
+
+        public bool DateOnly { get; }
 
     }
 }

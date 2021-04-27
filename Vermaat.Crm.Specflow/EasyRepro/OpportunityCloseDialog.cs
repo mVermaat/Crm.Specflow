@@ -27,9 +27,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         }
 
 
-        public static OpportunityCloseDialog CreateDialog(UCIApp app, bool closeAsWon)
+        public static OpportunityCloseDialog CreateDialog(UCIApp app, FormData formData, bool closeAsWon)
         {
-            OpenOpportunityCloseDialog(app.Client, closeAsWon);
+            OpenOpportunityCloseDialog(app.Client, formData, closeAsWon);
 
             var metadata = GlobalTestingContext.Metadata.GetEntityMetadata("opportunityclose");
             return new OpportunityCloseDialog(app, metadata, closeAsWon);
@@ -62,20 +62,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return true;
             });
         }
-        private static bool OpenOpportunityCloseDialog(WebClient client, bool closeAsWon)
+        private static bool OpenOpportunityCloseDialog(WebClient client, FormData formData, bool closeAsWon)
         {
+            if(closeAsWon)
+                formData.CommandBar.ClickButton("Close as Won");
+            else
+                formData.CommandBar.ClickButton("Close as Lost");
+
             return client.Execute(BrowserOptionHelper.GetOptions($"Opening opportunity close dialog"), driver =>
             {
-                string xPathQuery = String.Empty;
-                if (closeAsWon)
-                    xPathQuery = AppElements.Xpath[AppReference.Entity.CloseOpportunityWin];
-                else
-                    xPathQuery = AppElements.Xpath[AppReference.Entity.CloseOpportunityLoss];
-
-                var closeBtn = driver.WaitUntilAvailable(By.XPath(xPathQuery), "Opportunity Close Button is not available");
-                closeBtn?.Click();
                 driver.WaitUntilVisible(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok]));
-
                 return true;
             });
         }

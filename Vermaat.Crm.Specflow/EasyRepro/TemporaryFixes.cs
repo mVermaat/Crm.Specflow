@@ -28,7 +28,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         /// <param name="formatDate">Datetime format matching Short Date formatting personal options.</param>
         /// <param name="formatTime">Datetime format matching Short Time formatting personal options.</param>
         /// <example>xrmApp.Entity.SetValue("birthdate", DateTime.Parse("11/1/1980"));</example>
-        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, DateTime? value, string formatDate = null, string formatTime = null)
+        public static BrowserCommandResult<bool> SetValueFix(this WebClient client, string field, DateTime? value, bool dateOnly, string formatDate = null, string formatTime = null)
         {
             return client.Execute(BrowserOptionHelper.GetOptions($"Set Date/Time Value: {field}"), driver =>
             {
@@ -59,11 +59,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 {
                     throw new InvalidOperationException($"Timeout after 10 seconds. Expected: {value}. Actual: {dateField.GetAttribute("value")}", ex);
                 }
-                // Try Set Time
-                var timeFieldXPath = By.XPath($"//div[contains(@data-id,'{field}.fieldControl._timecontrol-datetime-container')]/div/div/input");
-                bool success = driver.TryFindElement(timeFieldXPath, out var timeField);
-                if (!success || timeField == null)
+
+                // date only fields don't have a time control
+                // clearing the date part of a datetime field is enough to clear both
+                if (dateOnly || !value.HasValue)
                     return true;
+
+                var timeFieldXPath = By.XPath($"//div[contains(@data-id,'{field}.fieldControl._timecontrol-datetime-container')]/div/div/input");
+                var timeField = driver.WaitUntilAvailable(timeFieldXPath, TimeSpan.FromSeconds(5), "Time control of datetime field not available");
                 try
                 {
                     var time = value.HasValue ? formatTime == null ? value.Value.ToShortTimeString() : value.Value.ToString(formatTime) : string.Empty;
@@ -406,16 +409,17 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 else
                 {
                     //Is the button in More Commands?
-                    if (items.Any(x => x.GetAttribute("aria-label").Contains("More Commands", StringComparison.OrdinalIgnoreCase)))
+                    var moreCommands = items.FirstOrDefault(x => x.HasAttribute("data-id") && x.GetAttribute("data-id").Equals("OverflowButton", StringComparison.OrdinalIgnoreCase));
+                    if (moreCommands != null)
                     {
                         //Click More Commands
-                        items.FirstOrDefault(x => x.GetAttribute("aria-label").Contains("More Commands", StringComparison.OrdinalIgnoreCase)).Click(true);
+                        moreCommands.Click(true);
                         driver.WaitForTransaction();
 
                         //Click the button
                         if (driver.HasElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Button].Replace("[NAME]", name))))
                         {
-                            driver.FindElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Button].Replace("[NAME]", name))).Click(true);
+                            driver.WaitUntilClickable(By.XPath(AppElements.Xpath[AppReference.CommandBar.Button].Replace("[NAME]", name)), TimeSpan.FromSeconds(5), $"Unable to click on button: {name}").Click(true);
                             driver.WaitForTransaction();
                         }
                         else
