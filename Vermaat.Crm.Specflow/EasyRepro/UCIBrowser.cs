@@ -62,8 +62,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             Logger.WriteLine($"Opening record {formOptions.EntityName} with ID {formOptions.EntityId}");
             App.Client.Execute(BrowserOptionHelper.GetOptions($"Open: {formOptions.EntityName}"), driver =>
             {
-
-                driver.Navigate().GoToUrl(formOptions.GetUrl(driver, _currentAppId));
+                var url = formOptions.GetUrl(driver, _currentAppId);
+                Logger.WriteLine($"Navigating to Url: {url}")
+                driver.Navigate().GoToUrl(url);
                 CheckAlert(driver);
                 HelperMethods.WaitForFormLoad(driver);
                 CheckForWavePopup(driver);
