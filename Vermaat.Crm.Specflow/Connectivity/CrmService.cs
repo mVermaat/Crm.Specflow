@@ -19,10 +19,11 @@ namespace Vermaat.Crm.Specflow.Connectivity
     public class CrmService : IOrganizationService
     {
         private readonly Lazy<CrmServiceClient> _service;
-        private readonly Lazy<UserSettings> _userSettings;
-        private readonly Lazy<Guid> _userId;
         private readonly string _connectionString;
+        private Lazy<UserSettings> _userSettings;
+        private Lazy<Guid> _userId;
         private Guid _callerId;
+
 
         private CrmServiceClient Service => _service.Value;
         public UserSettings UserSettings => _userSettings.Value;
@@ -36,6 +37,8 @@ namespace Vermaat.Crm.Specflow.Connectivity
             {
                 _callerId = value;
                 Service.CallerId = CallerId;
+                _userSettings = new Lazy<UserSettings>(GetUserSettings);
+                _userId = new Lazy<Guid>(GetUserId);
             }
         }
 
@@ -100,6 +103,9 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         public Guid GetUserId()
         {
+            if (_callerId != Guid.Empty)
+                return _callerId;
+
             return Execute<WhoAmIResponse>(new WhoAmIRequest()).UserId;
         }
 
