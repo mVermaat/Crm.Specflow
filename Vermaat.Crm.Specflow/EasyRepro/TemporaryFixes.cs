@@ -46,10 +46,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     var date = value.HasValue ? formatDate == null ? value.Value.ToShortDateString() : value.Value.ToString(formatDate) : string.Empty;
                     driver.RepeatUntil(() =>
                     {
+                        Logger.WriteLine($"Setting date to {date}");
                         ClearFieldValue(dateField, client.Browser);
                         dateField.SendKeys(date);
                     },
-                        d => dateField.GetAttribute("value") == date,
+                    d =>
+                    {
+                        Logger.WriteLine($"Current value is {dateField.GetAttribute("value")}");
+                        return dateField.GetAttribute("value") == date;
+                    },
                         new TimeSpan(0, 0, 9), 3
                     );
                     driver.ClearFocus();
