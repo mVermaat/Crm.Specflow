@@ -63,7 +63,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             App.Client.Execute(BrowserOptionHelper.GetOptions($"Open: {formOptions.EntityName}"), driver =>
             {
                 var url = formOptions.GetUrl(driver, _currentAppId);
-                Logger.WriteLine($"Navigating to Url: {url}")
+                Logger.WriteLine($"Navigating to Url: {url}");
                 driver.Navigate().GoToUrl(url);
                 CheckAlert(driver);
                 HelperMethods.WaitForFormLoad(driver);
