@@ -88,15 +88,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 {
                     Logger.WriteLine("Save not yet completed. Waiting..");
                     Thread.Sleep(500);
-                }
-                else
-                {
                     var formNotifications = GetFormNotifications();
                     if (formNotifications.Any())
                     {
                         throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
                     }
-
+                }
+                else
+                {
                     Logger.WriteLine("Save sucessfull");
                     saveCompleted = true;
                 }
