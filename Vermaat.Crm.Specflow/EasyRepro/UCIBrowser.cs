@@ -1,12 +1,8 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-using Microsoft.Dynamics365.UIAutomation.Browser;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Vermaat.Crm.Specflow.Connectivity;
 using Vermaat.Crm.Specflow.Entities;
 
@@ -19,6 +15,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private bool _isDisposed = false;
 
         private readonly Dictionary<string, FormData> _forms;
+        private readonly Dictionary<string, QuickFormData> _quickForms;
         private readonly CrmModelApps _apps;
 
         public UCIApp App { get; }
@@ -26,13 +23,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         static UCIBrowser()
         {
-          
+
         }
 
         public UCIBrowser(BrowserOptions browserOptions, ButtonTexts buttonTexts, CrmModelApps apps)
         {
             App = new UCIApp(browserOptions, buttonTexts);
             _forms = new Dictionary<string, FormData>();
+            _quickForms = new Dictionary<string, QuickFormData>();
             _apps = apps;
         }
 
@@ -79,7 +77,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void CheckForWavePopup(IWebDriver driver)
         {
-            if(driver.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Popup_TeachingBubble_CloseButton), out var closeButton))
+            if (driver.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Popup_TeachingBubble_CloseButton), out var closeButton))
             {
                 closeButton.Click();
             }
@@ -91,7 +89,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 var alert = driver.SwitchTo().Alert();
                 alert.Accept();
-            }   
+            }
             catch (NoAlertPresentException)
             {
             }
@@ -101,13 +99,25 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             var currentFormId = App.WebDriver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId()")?.ToString();
 
-            if(!_forms.TryGetValue(entityMetadata.LogicalName + currentFormId, out FormData formData))
+            if (!_forms.TryGetValue(entityMetadata.LogicalName + currentFormId, out FormData formData))
             {
                 formData = new FormData(App, entityMetadata);
                 _forms.Add(entityMetadata.LogicalName + currentFormId, formData);
             }
 
             LastFormData = formData;
+            return formData;
+        }
+
+        public QuickFormData GetQuickFormData(EntityMetadata entityMetadata)
+        {
+            var currentFormId = App.WebDriver.ExecuteScript("return Xrm.Page.ui.formSelector._formId.guid")?.ToString();
+
+            if (!_quickForms.TryGetValue(entityMetadata.LogicalName + currentFormId, out QuickFormData formData))
+            {
+                formData = new QuickFormData(App, entityMetadata);
+                _quickForms.Add(entityMetadata.LogicalName + currentFormId, formData);
+            }
             return formData;
         }
 
