@@ -102,6 +102,7 @@ namespace Vermaat.Crm.Specflow
                 if (timeLeft.TotalMilliseconds > 0)
                 {
                     driver.WaitForPageToLoad();
+                    driver.WaitForTransaction();
                     driver.WaitUntilClickable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormLoad),
                         timeLeft,
                         null,
