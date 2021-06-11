@@ -107,10 +107,7 @@ namespace Vermaat.Crm.Specflow
                         return lookup;
 
                 case AttributeTypeCode.Uniqueidentifier:
-                    if (objectType == ConvertedObjectType.Primitive)
                         return Guid.Parse(value);
-                    else
-                        return new EntityReference(metadata.EntityLogicalName, Guid.Parse(value));
 
                 case AttributeTypeCode.Virtual:
                     return ParseVirtualType(context, metadata, value);
