@@ -107,7 +107,7 @@ namespace Vermaat.Crm.Specflow
                         return lookup;
 
                 case AttributeTypeCode.Uniqueidentifier:
-                    return GetLookupValue(context, metadata, value).Id;
+                        return Guid.Parse(value);
 
                 case AttributeTypeCode.Virtual:
                     return ParseVirtualType(context, metadata, value);
