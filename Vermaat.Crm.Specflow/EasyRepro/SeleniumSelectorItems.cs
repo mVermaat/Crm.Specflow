@@ -34,6 +34,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Entity_FormState_LockedIcon,
         Entity_FormState_RequiredOrRecommended,
 
+        Entity_QuickCreate_OpenChildButton,
+
         Entity_SubGrid,
         Entity_SubGrid_Button,
         Entity_SubGrid_ButtonList,
