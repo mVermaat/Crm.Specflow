@@ -58,6 +58,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.RIBBON_NOT_FOUND, "Unable to find the ribbon");
             AddError(Constants.ErrorCodes.UNEXPECTED_PROCESS_COUNT, "Expected 1 process with name {0}, but found {1}");
             AddError(Constants.ErrorCodes.USER_NOT_FOUND, "User {0} doesn't exist");
+            AddError(Constants.ErrorCodes.QUICK_CREATE_CHILD_NOT_AVAILABLE, "Couldn't open quick created record");
         }
 
         public void AddError(int errorCode, string message)
