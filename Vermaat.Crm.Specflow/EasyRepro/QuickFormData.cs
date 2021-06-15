@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.EasyRepro.Fields;
+using Vermaat.Crm.Specflow.FormLoadConditions;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -46,6 +47,22 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public IReadOnlyCollection<FormNotification> GetFormNotifications()
         {
             return _app.Client.GetFormNotifications();
+        }
+
+        public FormData OpenCreatedRecord(UCIBrowser browser, string childEntityName)
+        {
+            _app.Client.Execute(BrowserOptionHelper.GetOptions("Open Quick Create Child"), (driver) =>
+                {
+                    driver.WaitUntilClickable(
+                        SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_OpenChildButton),
+                        TimeSpan.FromSeconds(5),
+                        null,
+                        () => throw new TestExecutionException(Constants.ErrorCodes.QUICK_CREATE_CHILD_NOT_AVAILABLE)).Click();
+
+                    HelperMethods.WaitForFormLoad(driver, new FormIsOfEntity(childEntityName));
+                    return true;
+                });
+            return browser.GetFormData(GlobalTestingContext.Metadata.GetEntityMetadata(childEntityName));
         }
 
         public void Save(bool saveIfDuplicate)
