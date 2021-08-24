@@ -2,6 +2,8 @@ name: $(Major).$(Minor)$(Rev:.r)
 
 variables:
 - group: Versioning
+- name: 'System.Debug'
+  value: 'true'
 
 stages:
 - stage: Build
