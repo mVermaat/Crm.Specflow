@@ -2,6 +2,8 @@ name: $(Major).$(Minor)$(Rev:.r)
 
 variables:
 - group: Versioning
+- name: 'System.Debug'
+  value: 'true'
 
 stages:
 - stage: Build
@@ -134,8 +136,21 @@ stages:
             displayName: 'Update AppSettings.config'
             inputs:
               filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
-              arguments: '-url $(Url) -username $(Username) -password $(Password) -clientId $(ClientId) -clientSecret $(ClientSecret) -authType $(AuthType) -appsettingsPath "$(Agent.BuildDirectory)/SampleSolution/SpecFlow/appsettings.config"'
-          
+              arguments: '-url "$(Url)" -username "$(Username)" -password "$(Password)" -clientId "$(ClientId)" -clientSecret "$(ClientSecret)" -authType "$(AuthType)" -appsettingsPath "$(Agent.BuildDirectory)/SampleSolution/SpecFlow/appsettings.config"'
+
+
+          - task: CopyFiles@2
+            displayName: 'Copy Data'
+            inputs:
+              SourceFolder: '$(Agent.BuildDirectory)/SampleSolution'
+              TargetFolder: '$(build.artifactstagingdirectory)\Data'
+      
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+              PathtoPublish: '$(build.artifactstagingdirectory)'
+              ArtifactName: Temp
+
           - task: VSTest@2
             displayName: 'Run SpecFlow Tests - API'
             continueOnError: true
