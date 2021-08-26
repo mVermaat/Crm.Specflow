@@ -45,7 +45,7 @@ namespace Vermaat.Crm.Specflow.Commands
             var formData = browser.OpenRecord(new OpenFormOptions(record));
             var dialog = OpportunityCloseDialog.CreateDialog(browser.App, formData, close.Win);
             dialog.EnterData(_crmContext, _closeData);
-            dialog.FinishDialog();
+            dialog.FinishDialog(record);
         }
 
 

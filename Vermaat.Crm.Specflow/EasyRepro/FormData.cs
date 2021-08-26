@@ -68,7 +68,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             Logger.WriteLine($"Saving Record");
             try
             {
-                _app.App.Entity.Save();
+                _app.Client.Save();
             }
             catch(InvalidOperationException ex)
             {
@@ -95,31 +95,37 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void WaitUntilSaveCompleted()
         {
-            var timeout = DateTime.Now.AddSeconds(20);
-            bool saveCompleted = false;
-            while (!saveCompleted && DateTime.Now < timeout)
+            _app.Client.Execute(BrowserOptionHelper.GetOptions($"WaitUntilSaveCompleted"), driver =>
             {
-                var footerElement = _app.WebDriver.FindElement(By.XPath("//span[@data-id='edit-form-footer-message']"));
+                var timeout = DateTime.Now.AddSeconds(20);
+                bool saveCompleted = false;
+                while (!saveCompleted && DateTime.Now < timeout)
+                {
+                    var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
 
-                if (!string.IsNullOrEmpty(footerElement.Text) && footerElement.Text.ToLower() == "saving")
-                {
-                    Logger.WriteLine("Save not yet completed. Waiting..");
-                    Thread.Sleep(500);
+                    if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- saving")
+                    {
+                        Logger.WriteLine("Save not yet completed. Waiting..");
+                        Thread.Sleep(500);
+                    }
+                    else if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- unsaved")
+                    {
+                        var formNotifications = GetFormNotifications();
+                        throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
+                    }
+                    else
+                    {
+                        Logger.WriteLine("Save sucessfull");
+                        saveCompleted = true;
+                    }
                 }
-                else if(!string.IsNullOrEmpty(footerElement.Text) && footerElement.Text.ToLower() == "unsaved changes")
-                {
-                    var formNotifications = GetFormNotifications();
-                    throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
-                }
-                else
-                {
-                    Logger.WriteLine("Save sucessfull");
-                    saveCompleted = true;
-                }
-            }
 
-            if (!saveCompleted)
-                throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_TIMEOUT, 20);
+                if (!saveCompleted)
+                    throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_TIMEOUT, 20);
+
+
+                return true;
+            });
         }
 
         private Dictionary<string, FormField> InitializeFormData()
