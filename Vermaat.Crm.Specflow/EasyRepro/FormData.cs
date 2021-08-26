@@ -74,7 +74,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, ex, ex.Message);
             }
-            _app.Client.ConfirmDuplicate(saveIfDuplicate);
             WaitUntilSaveCompleted();
         }
 
