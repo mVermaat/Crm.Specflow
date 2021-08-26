@@ -36,6 +36,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_QuickCreate_OpenChildButton,
 
+        Entity_SaveStatus,
+
         Entity_SubGrid,
         Entity_SubGrid_Button,
         Entity_SubGrid_ButtonList,
