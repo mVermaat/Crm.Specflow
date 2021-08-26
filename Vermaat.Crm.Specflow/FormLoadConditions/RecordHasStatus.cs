@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Dynamics365.UIAutomation.Browser;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using OpenQA.Selenium;
 using Vermaat.Crm.Specflow.EasyRepro;
 
@@ -11,24 +13,22 @@ namespace Vermaat.Crm.Specflow.FormLoadConditions
 {
     public class RecordHasStatus : IFormLoadCondition
     {
-        private readonly string _status;
+        private readonly EntityReference _record;
+        private readonly int _statecode;
 
-        public RecordHasStatus(string status)
+        public RecordHasStatus(EntityReference record, int statecode)
         {
-            _status = status;
+            _record = record;
+            _statecode = statecode;
         }
 
         public bool Evaluate(IWebDriver driver)
         {
-            Logger.WriteLine($"Evaluating if current record's footer status is {_status}");
-            var footerStatus = driver.WaitUntilAvailable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Footer_Status), TimeSpan.FromSeconds(5));
+            Logger.WriteLine($"Evaluating if current record's statecode is {_statecode}");
 
-            if (footerStatus == null)
-                return false;
-
-            var value = footerStatus.Text;
-
-            return !string.IsNullOrEmpty(value) && value.Equals(_status, StringComparison.CurrentCultureIgnoreCase);
+            var record = GlobalTestingContext.ConnectionManager.AdminConnection.Retrieve(_record, new ColumnSet("statecode"));
+            return _statecode.Equals(record.GetAttributeValue<OptionSetValue>("statecode")?.Value);
+            
         }
     }
 }
