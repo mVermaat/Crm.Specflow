@@ -1,5 +1,6 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
 using System;
@@ -48,7 +49,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
         }
 
-        public void FinishDialog()
+        public void FinishDialog(EntityReference opportunity)
         {
             _app.Client.Execute(BrowserOptionHelper.GetOptions($"Opening opportunity close dialog"), driver =>
             {
@@ -57,7 +58,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                                d => { driver.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok])); },
                                () => { throw new InvalidOperationException("The Close Opportunity dialog is not available."); });
 
-                    HelperMethods.WaitForFormLoad(_app.WebDriver, new NoBusinessProcessError(), new RecordHasStatus(_closeAsWon ? "Won" : "Lost"));
+                    HelperMethods.WaitForFormLoad(_app.WebDriver, new NoBusinessProcessError(), new RecordHasStatus(opportunity, _closeAsWon ? 1 : 2));
                 
                 return true;
             });
