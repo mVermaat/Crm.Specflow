@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow
 {
-    static class BusinessProcessFlowHelper
+    public static class BusinessProcessFlowHelper
     {
         public static Entity GetProcessRecord(Entity instance)
         {
