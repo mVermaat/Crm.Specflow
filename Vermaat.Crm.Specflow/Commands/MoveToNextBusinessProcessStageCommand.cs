@@ -1,40 +1,70 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System;
+using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
-    public class MoveToNextBusinessProcessStageCommand : ApiOnlyCommand
+    public class MoveToNextBusinessProcessStageCommand : BrowserCommand
     {
+        private class StageInfo
+        {
+            public int StageIndex { get; set; }
+            public string StageName { get; set; }
+        }
+
         private readonly string _alias;
 
-        public MoveToNextBusinessProcessStageCommand(CrmTestingContext crmContext, string alias) : base(crmContext)
+        public MoveToNextBusinessProcessStageCommand(CrmTestingContext crmContext, SeleniumTestingContext seleniumContext,
+            string alias) : base(crmContext, seleniumContext)
         {
             _alias = alias;
         }
 
-        public override void Execute()
+        protected override void ExecuteApi()
         {
-            EntityReference crmRecord = _crmContext.RecordCache[_alias];
+            var crmRecord = _crmContext.RecordCache[_alias];
             var instance = BusinessProcessFlowHelper.GetProcessInstanceOfRecord(_crmContext, crmRecord);
             var path = BusinessProcessFlowHelper.GetActivePath(_crmContext, instance);
-            
-            int currentStage = -1;
+
+            var stageInfo = GetCurrentStage(instance, path);
+
+            var processRecord = BusinessProcessFlowHelper.GetProcessRecord(instance);
+            processRecord["activestageid"] = path[stageInfo.StageIndex + 1].ToEntityReference();
+            GlobalTestingContext.ConnectionManager.CurrentConnection.Update(processRecord);
+        }
+
+        protected override void ExecuteBrowser()
+        {
+            var crmRecord = _crmContext.RecordCache[_alias];
+            var instance = BusinessProcessFlowHelper.GetProcessInstanceOfRecord(_crmContext, crmRecord);
+            var path = BusinessProcessFlowHelper.GetActivePath(_crmContext, instance);
+            var stageInfo = GetCurrentStage(instance, path);
+
+            var browser = _seleniumContext.GetBrowser();
+            browser.OpenRecord(new OpenFormOptions(crmRecord));
+            browser.App.App.BusinessProcessFlow.NextStage(stageInfo.StageName);
+        }
+
+        private static StageInfo GetCurrentStage(Entity instance, Entity[] path)
+        {
+            var stageInfo = new StageInfo()
+            {
+                StageIndex = -1
+            };
             for (int i = 0; i < path.Length; i++)
             {
                 if (path[i].Id == instance.GetAttributeValue<Guid>("processstageid"))
                 {
-                    currentStage = i;
+                    stageInfo.StageIndex = i;
+                    stageInfo.StageName = path[i].GetAttributeValue<string>("stagename");
                 }
             }
 
-            if (currentStage == -1)
+            if (stageInfo.StageIndex == -1)
                 throw new TestExecutionException(Constants.ErrorCodes.CURRENT_BUSINESS_PROCESS_STAGE_NOT_FOUND);
-            if (currentStage + 1 >= path.Length)
+            if (stageInfo.StageIndex + 1 >= path.Length)
                 throw new TestExecutionException(Constants.ErrorCodes.BUSINESS_PROCESS_STAGE_CANNOT_BE_LAST);
-
-            var processRecord = BusinessProcessFlowHelper.GetProcessRecord(instance);
-            processRecord["activestageid"] = path[currentStage + 1].ToEntityReference();
-            GlobalTestingContext.ConnectionManager.CurrentConnection.Update(processRecord);
+            return stageInfo;
         }
     }
 }
