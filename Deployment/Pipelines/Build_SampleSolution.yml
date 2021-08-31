@@ -1,4 +1,4 @@
-ame: $(Major).$(Minor)$(Rev:.r)
+name: $(Major).$(Minor)$(Rev:.r)
 
 variables:
 - group: Versioning
