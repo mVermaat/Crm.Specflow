@@ -41,8 +41,9 @@ namespace Vermaat.Crm.Specflow.Commands
             var stageInfo = GetCurrentStage(instance, path);
 
             var browser = _seleniumContext.GetBrowser();
-            browser.OpenRecord(new OpenFormOptions(crmRecord));
+            var record = browser.OpenRecord(new OpenFormOptions(crmRecord));
             browser.App.App.BusinessProcessFlow.NextStage(stageInfo.StageName);
+            record.Save(true);
         }
 
         private static StageInfo GetCurrentStage(Entity instance, Entity[] path)
