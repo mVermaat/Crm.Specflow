@@ -142,6 +142,7 @@ stages:
             inputs:
               testSelector: 'testAssemblies'
               testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
+              testFiltercriteria: 'TestCategory=DateTime'
               searchFolder: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow'
               runSettingsFile: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow/API.runsettings'
               testRunTitle: 'SpecFlow_API'
@@ -161,6 +162,7 @@ stages:
             inputs:
               testSelector: 'testAssemblies'
               testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
+              testFiltercriteria: 'TestCategory=DateTime'
               searchFolder: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow'
               runSettingsFile: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow/Chrome.runsettings'
               testRunTitle: 'SpecFlow_Chrome'
@@ -180,6 +182,7 @@ stages:
             inputs:
               testSelector: 'testAssemblies'
               testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
+              testFiltercriteria: 'TestCategory=DateTime'
               searchFolder: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow'
               runSettingsFile: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow/Firefox.runsettings'
               testRunTitle: 'SpecFlow_Firefox'

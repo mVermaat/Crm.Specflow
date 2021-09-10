@@ -1,7 +1,7 @@
 ﻿Feature: DateTimeDataType
 
 # Make sure your user is a non UTC timezone
-@Cleanup @API @Chrome @Firefox
+@Cleanup @API @Chrome @Firefox @DateTime
 Scenario: Test all Date and Time formats
 Given a mv_datetester named TestDateTime with the following values
 	| Property                        | Value          |
@@ -19,7 +19,7 @@ Then TestDateTime has the following values
 	| Time Zone Independent Date Only | 1-1-2010       |
 	| Time Zone Independent Date Time | 1-1-2010 10:00 |
 	
-@Cleanup @API @Chrome @Firefox
+@Cleanup @API @Chrome @Firefox @DateTime
 Scenario: Test updating all Date and Time formats
 Given a mv_datetester named TestDateTime with the following values
 	| Property                        | Value          |
