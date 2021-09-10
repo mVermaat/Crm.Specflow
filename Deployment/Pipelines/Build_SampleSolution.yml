@@ -97,10 +97,10 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: MSCRMToolInstaller@9
+          - task: MSCRMToolInstaller@12
             displayName: 'MSCRM Tool Installer'
           
-          - task: MSCRMPackSolution@10
+          - task: MSCRMPackSolution@12
             displayName: 'Pack SpecFlowDemo'
             inputs:
               crmSdkVersion: '9.0.0'
@@ -109,7 +109,7 @@ stages:
               packageType: 'Managed'
               outputPath: '$(Agent.BuildDirectory)/SampleSolution/Solution'
 
-          - task: MSCRMImportSolution@11
+          - task: MSCRMImportSolution@12
             displayName: 'Import SpecFlowDemo'
             inputs:
               crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);ClientId=$(ClientId);ClientSecret=$(ClientSecret)'
@@ -118,14 +118,14 @@ stages:
               overwriteUnmanagedCustomizations: true
               holdingSolution: true
 
-          - task: MSCRMApplySolution@10
+          - task: MSCRMApplySolution@12
             displayName: 'Apply SpecFlowDemo'
             inputs:
               crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);ClientId=$(ClientId);ClientSecret=$(ClientSecret)'
               solutionName: 'SpecFlowDemo'
               useAsyncMode: true
 
-          - task: MSCRMImportCMData@9
+          - task: MSCRMImportCMData@12
             inputs:
               crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);ClientId=$(ClientId);ClientSecret=$(ClientSecret)'
               dataFile: '$(Agent.BuildDirectory)/SampleSolution/Data/CMData.zip'
