@@ -92,6 +92,7 @@ stages:
   - template: 'Template_Deploy.yml'
   - template: 'Template_RunTests.yml'
     parameters:
-    - name: 'API'
-    - name: 'Chrome'
-    - name: 'Firefox'
+      automatedTestSet:
+      - name: 'API'
+      - name: 'Chrome'
+      - name: 'Firefox'
