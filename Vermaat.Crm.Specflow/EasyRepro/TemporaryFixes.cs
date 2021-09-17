@@ -48,6 +48,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     {
                         ClearFieldValue(dateField, client.Browser);
                         dateField.SendKeys(date);
+                        Logger.WriteLine($"Current date value: {dateField.GetAttribute("value")}");
                     },
                         d => dateField.GetAttribute("value") == date,
                         new TimeSpan(0, 0, 9), 3
@@ -74,6 +75,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     {
                         ClearFieldValue(timeField, client.Browser);
                         timeField.SendKeys(time + Keys.Tab);
+                        Logger.WriteLine($"Current time value: {timeField.GetAttribute("value")}");
                     },
                         d => timeField.GetAttribute("value") == time,
                         new TimeSpan(0, 0, 9), 3
@@ -92,12 +94,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private static void ClearFieldValue(IWebElement field, InteractiveBrowser browser)
         {
+            Logger.WriteLine("Clearing date field");
             if (field.GetAttribute("value").Length > 0)
             {
                 field.SendKeys(Keys.Control + "a");
                 field.SendKeys(Keys.Backspace);
             }
             browser.ThinkTime(2000);
+            Logger.WriteLine($"Current value: {field.GetAttribute("value")}");
         }
 
         public static bool RepeatUntil(this IWebDriver driver, Action action, Predicate<IWebDriver> predicate,
