@@ -2,7 +2,7 @@ parameters:
   automatedTestSet: []
 
 jobs:
-- ${{ each testSet in parameters.automatedTests }}:
+- ${{ each testSet in parameters.automatedTestSet }}:
   - deployment: 'Deployment'
     displayName: 'Deploy Sample Solution'
     timeoutInMinutes: 600
