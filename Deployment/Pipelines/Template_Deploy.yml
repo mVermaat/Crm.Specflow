@@ -42,12 +42,6 @@ jobs:
             crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);ClientId=$(ClientId);ClientSecret=$(ClientSecret)'
             dataFile: '$(Agent.BuildDirectory)/SampleSolution/Data/CMData.zip'
   
-        - task: PowerShell@2
-          displayName: 'Update AppSettings.config'
-          inputs:
-            filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
-            arguments: '-url "$(Url)" -username "$(Username)" -password "$(Password)" -clientId "$(ClientId)" -clientSecret "$(ClientSecret)" -authType "$(AuthType)" -appsettingsPath "$(Agent.BuildDirectory)/SampleSolution/SpecFlow/appsettings.config"'
-  
         - task: CopyFiles@2
           displayName: 'Copy Data'
           inputs:
