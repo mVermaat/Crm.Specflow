@@ -53,7 +53,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         d => dateField.GetAttribute("value") == date,
                         new TimeSpan(0, 0, 9), 3
                     );
-                    driver.ClearFocus();
                     driver.WaitForTransaction();
                 }
                 catch (WebDriverTimeoutException ex)
@@ -65,6 +64,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 // clearing the date part of a datetime field is enough to clear both
                 if (dateOnly || !value.HasValue)
                     return true;
+
+                dateField.SendKeys(Keys.Tab);
+                driver.WaitForTransaction();
 
                 var timeFieldXPath = By.XPath($"//div[contains(@data-id,'{field}.fieldControl._timecontrol-datetime-container')]/div/div/input");
                 var timeField = driver.WaitUntilAvailable(timeFieldXPath, TimeSpan.FromSeconds(5), "Time control of datetime field not available");
