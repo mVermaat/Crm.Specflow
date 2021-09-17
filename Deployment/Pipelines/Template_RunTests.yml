@@ -1,5 +1,5 @@
 parameters:
-  automatedTests: []
+  automatedTestSet: []
 
 jobs:
 - ${{ each testSet in parameters.automatedTests }}:
