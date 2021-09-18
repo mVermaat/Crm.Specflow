@@ -5,6 +5,7 @@ jobs:
 - ${{ each testSet in parameters.automatedTestSet }}:
   - deployment: 'AutoTest${{ testSet.name }}'
     displayName: 'Automated Testing - ${{ testSet.name }}'
+    dependsOn: 'Deployment'
     timeoutInMinutes: 600
     pool:
       vmImage: 'windows-latest'
