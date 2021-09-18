@@ -9,7 +9,6 @@ Given a contact named TestContact with the following values
     | Job Title  | CLO   |
 Then TestContact's form has the following form state
     | Property           | State       |
-    | First Name         | Recommended |
     | Last Name          | Required    |
     | Job Title          | Optional    |
 
@@ -47,11 +46,11 @@ Given a contact named TestContact with the following values
     | Last Name  | Smith |
     | Job Title  | CLO   |
 Then TestContact's form has the following form state
-    | Property                       | State                          |
-    | First Name                     | Recommended, Unlocked, Visible |
-    | Last Name                      | Required, Unlocked, Visible    |
-    | Job Title                      | Optional, Unlocked, Visible    |
-    | Last Date Included in Campaign | Locked, Optional, Visible      |
+    | Property                       | State                       |
+    | First Name                     | Unlocked, Visible           |
+    | Last Name                      | Required, Unlocked, Visible |
+    | Job Title                      | Optional, Unlocked, Visible |
+    | Last Date Included in Campaign | Locked, Optional, Visible   |
 
 @Chrome @Firefox @Cleanup
 Scenario: Ribbon button availability

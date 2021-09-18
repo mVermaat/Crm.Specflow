@@ -29,6 +29,7 @@ jobs:
               runSettingsFile: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow/${{ testSet.name }}.runsettings'
               testRunTitle: 'SpecFlow_${{ testSet.name }}'
               diagnosticsEnabled: true
+              testFiltercriteria: '${{ testSet.filter }}'
     
           - task: PowerShell@2
             displayName: 'Add Screenshots to ${{ testSet.name }} Test Results'

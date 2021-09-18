@@ -96,3 +96,4 @@ stages:
       - name: 'API'
       - name: 'Chrome'
       - name: 'Firefox'
+        filter: 'TestCategory=SingleFilter'

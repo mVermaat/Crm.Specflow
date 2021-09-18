@@ -71,6 +71,7 @@ namespace Vermaat.Crm.Specflow
             public const int UNEXPECTED_PROCESS_COUNT = 39;
             public const int USER_NOT_FOUND = 40;
             public const int QUICK_CREATE_CHILD_NOT_AVAILABLE = 41;
+            public const int RECOMMENDED_NOT_SUPPORTED = 42;
         }
     }
 }
