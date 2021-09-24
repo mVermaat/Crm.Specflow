@@ -62,7 +62,7 @@ namespace Vermaat.Crm.Specflow.Steps
         [When(@"(.*) is moved to the next process stage")]
         public void MoveToNextStage(string alias)
         {
-            _crmContext.CommandProcessor.Execute(new MoveToNextBusinessProcessStageCommand(_crmContext, alias));
+            _crmContext.CommandProcessor.Execute(new MoveToNextBusinessProcessStageCommand(_crmContext, _seleniumContext, alias));
         }
 
         [When(@"(.*) is updated with the following values")]
