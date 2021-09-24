@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="93.0.4577.6300" />
-    <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.29.1" />
-    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.8.14" />
-    <PackageReference Include="SpecRun.SpecFlow" Version="3.8.12" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="94.0.4606.4101" />
+    <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.30.0" />
+    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.22" />
+    <PackageReference Include="SpecRun.SpecFlow" Version="3.9.7" />
   </ItemGroup>
 
   <ItemGroup>
