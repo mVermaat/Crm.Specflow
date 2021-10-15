@@ -65,10 +65,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void Save(bool saveIfDuplicate)
         {
+            client.Browser.ThinkTime(500);
             Logger.WriteLine($"Saving Record");
             try
             {
-                _app.Client.Save();
+                if(MustSave())
+                    _app.Client.Save();
             }
             catch(InvalidOperationException ex)
             {
@@ -90,6 +92,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }
+        }
+
+        private bool MustSave()
+        {
+            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"WaitUntilSaveCompleted"), driver =>
+            {
+                var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
+                return !(!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- saved");
+            });
         }
 
         private void WaitUntilSaveCompleted()

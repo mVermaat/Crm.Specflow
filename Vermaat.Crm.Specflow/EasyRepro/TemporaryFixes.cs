@@ -472,7 +472,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public static void Save(this WebClient client)
         {
-            client.Browser.ThinkTime(500);
             client.ClickCommand("Save (CTRL+S)");
 
             client.HandleSaveDialog();
