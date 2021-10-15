@@ -65,7 +65,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void Save(bool saveIfDuplicate)
         {
-            client.Browser.ThinkTime(500);
+            _app.Client.Browser.ThinkTime(500);
             Logger.WriteLine($"Saving Record");
             try
             {
