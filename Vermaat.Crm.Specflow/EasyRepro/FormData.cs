@@ -99,7 +99,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return _app.Client.Execute(BrowserOptionHelper.GetOptions($"WaitUntilSaveCompleted"), driver =>
             {
                 var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
-                return !(!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- saved");
+                return !string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- unsaved";
             });
         }
 
