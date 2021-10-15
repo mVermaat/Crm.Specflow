@@ -68,14 +68,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             Logger.WriteLine($"Saving Record");
             try
             {
-                _app.Client.Save();
+                if (MustSave())
+                    _app.Client.Save();
             }
-            catch(InvalidOperationException ex)
+            catch (InvalidOperationException ex)
             {
                 throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, ex, ex.Message);
             }
             WaitUntilSaveCompleted();
         }
+
 
         public void FillForm(CrmTestingContext crmContext, Table formData)
         {
@@ -91,6 +93,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }
         }
+
+        private bool MustSave()
+        {
+            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"WaitUntilSaveCompleted"), driver =>
+            {
+                var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
+                return !(!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- saved");
+            });
+        }
+
 
         private void WaitUntilSaveCompleted()
         {
@@ -145,7 +157,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 FormField field = CreateFormField(metadataDic[attribute["name"]], controls);
                 if (field != null)
                     formFields.Add(attribute["name"], field);
-                
+
             }
 
             return formFields;
@@ -157,9 +169,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return null;
 
             // Take the first control that isn't in the header
-            for(int i = 0; i < controls.Length; i++)
+            for (int i = 0; i < controls.Length; i++)
             {
-                if(!controls[i].StartsWith("header"))
+                if (!controls[i].StartsWith("header"))
                 {
                     return new BodyFormField(_app, metadata, controls[i]);
                 }
