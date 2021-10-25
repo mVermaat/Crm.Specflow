@@ -1,0 +1,55 @@
+jobs:
+- deployment: 'Deployment'
+  displayName: 'Deploy Sample Solution'
+  timeoutInMinutes: 600
+  pool:
+    vmImage: 'windows-latest'
+  environment: 'TST'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: MSCRMToolInstaller@12
+          displayName: 'MSCRM Tool Installer'
+        
+        - task: MSCRMPackSolution@12
+          displayName: 'Pack SpecFlowDemo'
+          inputs:
+            crmSdkVersion: '9.0.0'
+            unpackedFilesFolder: '$(Agent.BuildDirectory)/SampleSolution/Solution/SpecFlowDemo'
+            mappingFile: '$(Agent.BuildDirectory)/SampleSolution/Solution/EmptyMapping.xml'
+            packageType: 'Managed'
+            outputPath: '$(Agent.BuildDirectory)/SampleSolution/Solution'
+  
+        - task: MSCRMImportSolution@12
+          displayName: 'Import SpecFlowDemo'
+          inputs:
+            crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);ClientId=$(ClientId);ClientSecret=$(ClientSecret)'
+            solutionFile: '$(Agent.BuildDirectory)/SampleSolution/Solution/SpecFlowDemo_managed.zip'
+            publishWorkflows: true
+            overwriteUnmanagedCustomizations: true
+            holdingSolution: true
+  
+        - task: MSCRMApplySolution@12
+          displayName: 'Apply SpecFlowDemo'
+          inputs:
+            crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);ClientId=$(ClientId);ClientSecret=$(ClientSecret)'
+            solutionName: 'SpecFlowDemo'
+            useAsyncMode: true
+  
+        - task: MSCRMImportCMData@12
+          inputs:
+            crmConnectionString: 'Url=$(Url);AuthType=$(AuthType);ClientId=$(ClientId);ClientSecret=$(ClientSecret)'
+            dataFile: '$(Agent.BuildDirectory)/SampleSolution/Data/CMData.zip'
+  
+        - task: CopyFiles@2
+          displayName: 'Copy Data'
+          inputs:
+            SourceFolder: '$(Agent.BuildDirectory)/SampleSolution'
+            TargetFolder: '$(build.artifactstagingdirectory)\Data'
+    
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish Artifact'
+          inputs:
+            PathtoPublish: '$(build.artifactstagingdirectory)'
+            ArtifactName: Temp

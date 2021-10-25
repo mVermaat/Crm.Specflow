@@ -85,6 +85,8 @@
     <AppModuleComponent type="1" schemaName="opportunityproduct" />
     <AppModuleComponent type="26" id="{e175dfbf-8eae-4af2-9dd2-68c43c14d40f}" />
     <AppModuleComponent type="26" id="{01010de7-749e-4fe6-8037-aca560a4fcbe}" />
+    <AppModuleComponent type="1" schemaName="salesorder" />
+    <AppModuleComponent type="1" schemaName="pricelevel" />
     <AppModuleComponent type="1" schemaName="quote" />
     <AppModuleComponent type="26" id="{61a4c932-d775-e211-b420-00155d806600}" />
     <AppModuleComponent type="1" schemaName="systemuser" />

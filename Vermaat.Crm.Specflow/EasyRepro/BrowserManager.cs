@@ -24,6 +24,23 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _appCache = new Lazy<CrmModelApps>(InitializeCache);
         }
 
+        internal void EndSession(BrowserOptions options, BrowserLoginDetails browserLoginDetails)
+        {
+            Logger.WriteLine($"Ending {options.BrowserType} sesion for {browserLoginDetails.Username}");
+            if (_browserCache.TryGetValue(options.BrowserType, out var dic))
+            {
+                if (dic.TryGetValue(browserLoginDetails.Username, out UCIBrowser browser))
+                {
+                    dic.Remove(browserLoginDetails.Username);
+                    browser.Dispose();
+                }
+                else
+                    Logger.WriteLine("No session exists.");
+            }
+            else
+                Logger.WriteLine("No session exists.");
+        }
+
         public UCIBrowser GetBrowser(BrowserOptions options, BrowserLoginDetails browserLoginDetails)
         {
             Logger.WriteLine("Getting Browser");
@@ -121,6 +138,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
         }
+
+        
         #endregion
     }
 }

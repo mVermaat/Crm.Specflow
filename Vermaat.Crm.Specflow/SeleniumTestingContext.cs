@@ -28,6 +28,11 @@ namespace Vermaat.Crm.Specflow
             BrowserOptions.Headless = Convert.ToBoolean(HelperMethods.GetAppSettingsValue("Headless", true, "false"));
         }
 
+        public void EndCurrentBrowserSession()
+        {
+            GlobalTestingContext.BrowserManager.EndSession(BrowserOptions, GlobalTestingContext.ConnectionManager.CurrentBrowserLoginDetails);
+        }
+
         public UCIBrowser GetBrowser()
         {
             if (_crmContext.IsTarget("API"))

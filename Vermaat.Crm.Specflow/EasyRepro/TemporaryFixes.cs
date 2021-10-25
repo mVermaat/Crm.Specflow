@@ -52,8 +52,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         d => dateField.GetAttribute("value") == date,
                         new TimeSpan(0, 0, 9), 3
                     );
-                    driver.ClearFocus();
-                    driver.WaitForTransaction();
                 }
                 catch (WebDriverTimeoutException ex)
                 {
@@ -64,6 +62,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 // clearing the date part of a datetime field is enough to clear both
                 if (dateOnly || !value.HasValue)
                     return true;
+
+                // Time field becomes visible after focus is lost.
+                // Clearfocus will have unwanted side effects like popups or redirects for some reason.
+                dateField.SendKeys(Keys.Tab);
+                driver.WaitForTransaction();
 
                 var timeFieldXPath = By.XPath($"//div[contains(@data-id,'{field}.fieldControl._timecontrol-datetime-container')]/div/div/input");
                 var timeField = driver.WaitUntilAvailable(timeFieldXPath, TimeSpan.FromSeconds(5), "Time control of datetime field not available");
@@ -465,6 +468,57 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         #endregion
 
+        #region https://github.com/DynamicHands/Crm.Specflow/issues/126
+
+        public static void Save(this WebClient client)
+        {
+            client.ClickCommand("Save (CTRL+S)");
+
+            client.HandleSaveDialog();
+            client.Browser.Driver.WaitForTransaction();
+        }
+
+        private static BrowserCommandResult<bool> HandleSaveDialog(this WebClient client)
+        {
+            //If you click save and something happens, handle it.  Duplicate Detection/Errors/etc...
+            //Check for Dialog and figure out which type it is and return the dialog type.
+
+            //Introduce think time to avoid timing issues on save dialog
+            client.Browser.ThinkTime(1000);
+
+            return client.Execute(BrowserOptionHelper.GetOptions($"Validate Save"), driver =>
+            {
+                //Is it Duplicate Detection?
+                if (driver.HasElement(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionWindowMarker])))
+                {
+                    if (driver.HasElement(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionGridRows])))
+                    {
+                        //Select the first record in the grid
+                        driver.FindElements(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionGridRows]))[0].Click(true);
+
+                        //Click Ignore and Save
+                        driver.FindElement(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionIgnoreAndSaveButton])).Click(true);
+                        driver.WaitForTransaction();
+                    }
+                }
+
+                //Is it an Error?
+                if (driver.HasElement(By.XPath("//div[contains(@data-id,'errorDialogdialog')]")))
+                {
+                    var errorDialog = driver.FindElement(By.XPath("//div[contains(@data-id,'errorDialogdialog')]"));
+
+                    var errorDetails = errorDialog.FindElement(By.XPath(".//*[contains(@data-id,'errorDialog_subtitle')]"));
+
+                    if (!String.IsNullOrEmpty(errorDetails.Text))
+                        throw new InvalidOperationException(errorDetails.Text);
+                }
+
+
+                return true;
+            });
+        }
+
+        #endregion
 
 
     }

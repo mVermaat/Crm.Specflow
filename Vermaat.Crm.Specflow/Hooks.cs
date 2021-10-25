@@ -152,6 +152,11 @@ namespace Vermaat.Crm.Specflow
             {
                 TakeScreenshot(_seleniumContext.GetBrowser().App.WebDriver);
             }
+
+            if (_scenarioContext.TestError is WebDriverException)
+            {
+                _seleniumContext.EndCurrentBrowserSession();
+            }
         }
 
         [AfterTestRun]

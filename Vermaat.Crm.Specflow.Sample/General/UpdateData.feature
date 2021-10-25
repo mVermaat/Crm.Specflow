@@ -1,6 +1,6 @@
 ﻿Feature: UpdateData
 
-@API @Chrome @Firefox @Cleanup
+@API @Chrome @Firefox @Cleanup @SingleFilter
 Scenario: Update an existing Account
 Given an account named TestAccount with the following values
 	| Property     | Value                   |
