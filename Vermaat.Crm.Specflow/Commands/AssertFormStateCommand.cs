@@ -64,7 +64,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 {
                     case "required": result.Required = RequiredState.Required; break;
                     case "optional": result.Required = RequiredState.Optional; break;
-                    case "recommended": throw new TestExecutionException(Constants.ErrorCodes.RECOMMENDED_NOT_SUPPORTED);
+                    case "recommended": result.Required = RequiredState.Recommended; break;
                     case "locked": result.Locked = true; break;
                     case "unlocked": result.Locked = false; break;
                     case "visible": result.Visible = FormVisibility.Visible; break;
