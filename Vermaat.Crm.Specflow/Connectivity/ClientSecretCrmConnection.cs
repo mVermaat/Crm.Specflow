@@ -10,7 +10,6 @@ namespace Vermaat.Crm.Specflow.Connectivity
 {
     public class ClientSecretCrmConnection : CrmConnection
     {
-        private readonly string _authType;
         private readonly string _url;
         private readonly string _clientId;
         private readonly string _clientSecret;
@@ -18,7 +17,6 @@ namespace Vermaat.Crm.Specflow.Connectivity
         public ClientSecretCrmConnection(string clientId, string clientSecret)
             : base(clientId)
         {
-            _authType = HelperMethods.GetAppSettingsValue("AuthType", false);
             _url = HelperMethods.GetAppSettingsValue("Url", false);
             _clientId = clientId;
             _clientSecret = clientSecret;
@@ -40,7 +38,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         public override CrmService CreateCrmServiceInstance()
         {
-            return new CrmService($"AuthType={_authType};Url={_url};ClientId={_clientId};ClientSecret={_clientSecret};RequireNewInstance=True");
+            return new CrmService($"AuthType=ClientSecret;Url='{_url}';ClientId='{_clientId}';ClientSecret='{_clientSecret}';RequireNewInstance=True");
         }
 
         public override BrowserLoginDetails GetBrowserLoginInformation()

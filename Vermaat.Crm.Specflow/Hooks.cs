@@ -123,6 +123,10 @@ namespace Vermaat.Crm.Specflow
                     connection = ClientSecretCrmConnection.CreateFromAppConfig();
                     adminConnection = ClientSecretCrmConnection.CreateAdminConnectionFromAppConfig();
                     break;
+                case "OAuth":
+                    connection = OAuthCrmConnection.FromAppConfig();
+                    adminConnection = OAuthCrmConnection.AdminConnectionFromAppConfig();
+                    break;
                 case "Hybrid":
                     connection = HybridCrmConnection.CreateFromAppConfig();
                     adminConnection = HybridCrmConnection.CreateAdminConnectionFromAppConfig();
