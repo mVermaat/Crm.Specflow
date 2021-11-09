@@ -59,7 +59,6 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.UNEXPECTED_PROCESS_COUNT, "Expected 1 process with name {0}, but found {1}");
             AddError(Constants.ErrorCodes.USER_NOT_FOUND, "User {0} doesn't exist");
             AddError(Constants.ErrorCodes.QUICK_CREATE_CHILD_NOT_AVAILABLE, "Couldn't open quick created record");
-            AddError(Constants.ErrorCodes.RECOMMENDED_NOT_SUPPORTED, "Form State Recommended no longer supported since Wave2 2021. Please update to required or optional");
         }
 
         public void AddError(int errorCode, string message)
