@@ -97,29 +97,32 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void WaitUntilSaveCompleted()
         {
-            var timeout = DateTime.Now.AddSeconds(20);
-            var saveCompleted = false;
-            while (!saveCompleted && DateTime.Now < timeout)
+            _app.Client.Execute(BrowserOptionHelper.GetOptions("Open Quick Create Child"), (driver) =>
             {
-                if (IsItQuickCreate())
+                var timeout = DateTime.Now.AddSeconds(20);
+                var saveCompleted = false;
+                while (!saveCompleted && DateTime.Now < timeout)
                 {
-                    Logger.WriteLine("Save not yet completed. Waiting..");
-                    Thread.Sleep(500);
-                    var formNotifications = GetFormNotifications();
-                    if (formNotifications.Any())
+                    if (driver.HasElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_OpenChildButton)))
+                        saveCompleted = true;
+                    else
                     {
-                        throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
+                        var formNotifications = GetFormNotifications();
+                        if (formNotifications.Any())
+                        {
+                            throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
+                        }
+                        Logger.WriteLine("Save not yet completed. Waiting..");
+                        Thread.Sleep(250);
                     }
-                }
-                else
-                {
-                    Logger.WriteLine("Save sucessfull");
-                    saveCompleted = true;
-                }
-            }
 
-            if (!saveCompleted)
-                throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_TIMEOUT, 20);
+                }
+
+                if (!saveCompleted)
+                    throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_TIMEOUT, 20);
+
+                return true;
+            });
         }
 
         public bool IsItQuickCreate()
