@@ -46,7 +46,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         public override CrmService CreateCrmServiceInstance()
         {
-            return new CrmService($"AuthType=OAuth;Url='{_loginInfo.Url}';Username='{_loginInfo.Username}';Password='{_loginInfo.Password.ToUnsecureString()}';AppId='{_appId}';RedirectUri='{_redirectUrl}';LoginPrompt=Never;TokenCacheStorePath='{_tokenCachePath}';RequireNewInstance=True");
+            return new CrmService($"AuthType=OAuth;Url='{_loginInfo.Url}';Username='{_loginInfo.Username}';Password='{_loginInfo.Password.ToUnsecureString()}';AppId='{_appId}';RedirectUri='{_redirectUrl}';LoginPrompt=Never;RequireNewInstance=True");
         }
 
         public override BrowserLoginDetails GetBrowserLoginInformation()
