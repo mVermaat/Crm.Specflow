@@ -9,6 +9,21 @@ param(
 [string]$appsettingsPath
 )
 
+######################### Functions #########################
+
+function Set-AppSetting {
+	param(
+		[string]$key,
+		[string]$value
+	)
+	$node = ($content.appSettings.add | where { $_.key -eq $key })
+
+	if($node -ne $null -and $value -ne $null) {
+		Write-Host "Updating $key"
+		$node.value = $value
+	}
+}
+
 ######################### Script #########################
 
 Set-Location $PSScriptRoot
@@ -20,19 +35,11 @@ Write-Host "Full Path: $fullPath"
 
 [xml]$content = Get-Content $fullPath
 
-$urlNode = ($content.appSettings.add | where { $_.key -eq "Url" })
-$usernameNode = ($content.appSettings.add | where { $_.key -eq "Username" })
-$passwordNode = ($content.appSettings.add | where { $_.key -eq "Password" })
-$clientIdNode = ($content.appSettings.add | where { $_.key -eq "ClientId" })
-$clientSecretNode = ($content.appSettings.add | where { $_.key -eq "ClientSecret" })
-$authTypeNode = ($content.appSettings.add | where { $_.key -eq "AuthType" })
-
-
-$urlNode.value = $url
-$usernameNode.value = $username
-$passwordNode.value = $password
-$clientIdNode.value = $clientId
-$clientSecretNode.value = $clientSecret
-$authTypeNode.value = $authType
+Set-AppSetting -key "Url" -value $url
+Set-AppSetting -key "Username" -value $username
+Set-AppSetting -key "Password" -value $password
+Set-AppSetting -key "ClientId" -value $clientId
+Set-AppSetting -key "ClientSecret" -value $clientSecret
+Set-AppSetting -key "AuthType" -value $authType 
 
 $content.Save($fullPath)
