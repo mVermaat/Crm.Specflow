@@ -7,9 +7,8 @@ namespace Vermaat.Crm.Specflow.Connectivity
         private readonly BrowserLoginDetails _loginInfo;
         private readonly string _appId;
         private readonly string _redirectUrl;
-        private readonly string _tokenCachePath;
 
-        public OAuthCrmConnection(string username, string password, string appId, string redirectUrl, string tokenCachePath)
+        public OAuthCrmConnection(string username, string password, string appId, string redirectUrl)
             : base(username)
         {
             _loginInfo = new BrowserLoginDetails
@@ -20,7 +19,6 @@ namespace Vermaat.Crm.Specflow.Connectivity
             };
             _appId = appId;
             _redirectUrl = redirectUrl;
-            _tokenCachePath = tokenCachePath;
         }
 
         public static OAuthCrmConnection FromAppConfig()
@@ -29,8 +27,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
                 HelperMethods.GetAppSettingsValue("Username", false),
                 HelperMethods.GetAppSettingsValue("Password", false),
                 HelperMethods.GetAppSettingsValue("ClientId", false),
-                HelperMethods.GetAppSettingsValue("RedirectUrl", false),
-                HelperMethods.GetAppSettingsValue("TokenCachePath", false));
+                HelperMethods.GetAppSettingsValue("RedirectUrl", false));
         }
 
         public static OAuthCrmConnection AdminConnectionFromAppConfig()
@@ -39,14 +36,13 @@ namespace Vermaat.Crm.Specflow.Connectivity
             var password = HelperMethods.GetAppSettingsValue("AdminPassword", true) ?? HelperMethods.GetAppSettingsValue("Password");
             return new OAuthCrmConnection(userName, password,
                 HelperMethods.GetAppSettingsValue("ClientId", false),
-                HelperMethods.GetAppSettingsValue("RedirectUrl", false),
-                HelperMethods.GetAppSettingsValue("TokenCachePath", false));
+                HelperMethods.GetAppSettingsValue("RedirectUrl", false));
         }
 
 
         public override CrmService CreateCrmServiceInstance()
         {
-            return new CrmService($"AuthType=OAuth;Url='{_loginInfo.Url}';Username='{_loginInfo.Username}';Password='{_loginInfo.Password.ToUnsecureString()}';AppId='{_appId}';RedirectUri='{_redirectUrl}';LoginPrompt=Never;TokenCacheStorePath='{_tokenCachePath}';RequireNewInstance=True");
+            return new CrmService($"AuthType=OAuth;Url='{_loginInfo.Url}';Username='{_loginInfo.Username}';Password='{_loginInfo.Password.ToUnsecureString()}';AppId='{_appId}';RedirectUri='{_redirectUrl}';LoginPrompt=Never;RequireNewInstance=True");
         }
 
         public override BrowserLoginDetails GetBrowserLoginInformation()
