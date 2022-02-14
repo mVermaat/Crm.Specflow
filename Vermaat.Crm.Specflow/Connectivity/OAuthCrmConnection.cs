@@ -26,7 +26,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
             return new OAuthCrmConnection(
                 HelperMethods.GetAppSettingsValue("Username", false),
                 HelperMethods.GetAppSettingsValue("Password", false),
-                HelperMethods.GetAppSettingsValue("ClientId", false),
+                HelperMethods.GetAppSettingsValue("AppId", false),
                 HelperMethods.GetAppSettingsValue("RedirectUrl", false));
         }
 
@@ -35,7 +35,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
             var userName = HelperMethods.GetAppSettingsValue("AdminUsername", true) ?? HelperMethods.GetAppSettingsValue("Username");
             var password = HelperMethods.GetAppSettingsValue("AdminPassword", true) ?? HelperMethods.GetAppSettingsValue("Password");
             return new OAuthCrmConnection(userName, password,
-                HelperMethods.GetAppSettingsValue("ClientId", false),
+                HelperMethods.GetAppSettingsValue("AppId", false),
                 HelperMethods.GetAppSettingsValue("RedirectUrl", false));
         }
 

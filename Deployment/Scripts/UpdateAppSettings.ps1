@@ -6,6 +6,7 @@ param(
 [string]$clientId,
 [string]$clientSecret,
 [string]$authType,
+[string]$appId,
 [string]$appsettingsPath
 )
 
@@ -41,5 +42,6 @@ Set-AppSetting -key "Password" -value $password
 Set-AppSetting -key "ClientId" -value $clientId
 Set-AppSetting -key "ClientSecret" -value $clientSecret
 Set-AppSetting -key "AuthType" -value $authType 
+Set-AppSetting -key "AppId" -value $appId
 
 $content.Save($fullPath)
