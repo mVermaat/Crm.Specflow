@@ -31,7 +31,9 @@ namespace Vermaat.Crm.Specflow.Commands
                 ExcludeInteractiveBrowserCredential = true,
             }));
 
-            var secret = client.GetSecret(_userProfile.Username);
+            var secretName = _userProfile.SecretName ?? _userProfile.Profile;
+            Logger.WriteLine($"Getting secret {secretName}");
+            var secret = client.GetSecret(secretName);
 
             GlobalTestingContext.ConnectionManager.SetCurrentConnection(new OAuthCrmConnection(_userProfile.Username, secret.Value.Value));
             

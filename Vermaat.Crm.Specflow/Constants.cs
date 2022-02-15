@@ -72,6 +72,8 @@ namespace Vermaat.Crm.Specflow
             public const int USER_NOT_FOUND = 40;
             public const int QUICK_CREATE_CHILD_NOT_AVAILABLE = 41;
             // Error 42 is removed
+            public const int USERPROFILE_NOT_FOUND = 43;
+            public const int USERPROFILE_FILE_NOT_FOUND = 44;
         }
     }
 }

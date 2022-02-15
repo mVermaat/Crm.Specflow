@@ -59,6 +59,8 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.UNEXPECTED_PROCESS_COUNT, "Expected 1 process with name {0}, but found {1}");
             AddError(Constants.ErrorCodes.USER_NOT_FOUND, "User {0} doesn't exist");
             AddError(Constants.ErrorCodes.QUICK_CREATE_CHILD_NOT_AVAILABLE, "Couldn't open quick created record");
+            AddError(Constants.ErrorCodes.USERPROFILE_NOT_FOUND, "User profile '{0}' doesn't exist");
+            AddError(Constants.ErrorCodes.USERPROFILE_FILE_NOT_FOUND, "User profile file '{0}' doesn't exist");
         }
 
         public void AddError(int errorCode, string message)

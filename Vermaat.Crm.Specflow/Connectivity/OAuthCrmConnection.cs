@@ -8,6 +8,19 @@ namespace Vermaat.Crm.Specflow.Connectivity
         private readonly string _appId;
         private readonly string _redirectUrl;
 
+        public OAuthCrmConnection(string username, string password)
+           : base(username)
+        {
+            _loginInfo = new BrowserLoginDetails
+            {
+                Username = username,
+                Password = password.ToSecureString(),
+                Url = HelperMethods.GetAppSettingsValue("Url", false)
+            };
+            _appId = HelperMethods.GetAppSettingsValue("AppId", false);
+            _redirectUrl = HelperMethods.GetAppSettingsValue("RedirectUrl", false);
+        }
+
         public OAuthCrmConnection(string username, string password, string appId, string redirectUrl)
             : base(username)
         {
