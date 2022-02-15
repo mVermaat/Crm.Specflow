@@ -2,7 +2,7 @@
 
 namespace Vermaat.Crm.Specflow.Connectivity
 {
-    class OAuthCrmConnection : CrmConnection
+    public class OAuthCrmConnection : CrmConnection
     {
         private readonly BrowserLoginDetails _loginInfo;
         private readonly string _appId;
