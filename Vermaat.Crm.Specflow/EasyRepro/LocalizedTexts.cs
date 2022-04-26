@@ -22,7 +22,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             ReviseQuoteButton = "Revise";
             CloseQuoteButton = "Close Quote";
             SaveStatusSaving = "saving";
-            SaveStatusUnsaved = "unsaved;";
+            SaveStatusUnsaved = "unsaved";
         }
 
         public string SaveAndCloseButton { get; set; }
