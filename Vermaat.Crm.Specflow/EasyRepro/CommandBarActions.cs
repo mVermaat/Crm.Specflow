@@ -75,13 +75,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void ActivateQuote()
         {
             Logger.WriteLine("Activating Quote");
-            ClickButton(_app.LocalizedTexts.ActivateQuote);
+            ClickButton(_app.LocalizedTexts.ActivateQuoteButton);
         }
 
         public EntityReference CreateOrder()
         {
             Logger.WriteLine("Creating Sales Order from Quote");
-            ClickButton(_app.LocalizedTexts.CreateOrder);
+            ClickButton(_app.LocalizedTexts.CreateOrderButton);
             CreateOrderDialog();
 
             return new EntityReference("salesorder", _app.App.Entity.GetObjectId());
@@ -90,7 +90,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void Delete()
         {
             Logger.WriteLine($"Deleting record");
-            ClickButton(_app.LocalizedTexts.Delete);
+            ClickButton(_app.LocalizedTexts.DeleteButton);
             _app.App.Dialogs.ConfirmationDialog(true);
         }
 
@@ -99,7 +99,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             Logger.WriteLine("Revising Quote");
             return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Revise Quote"), driver =>
             {
-                ClickButton(_app.LocalizedTexts.ReviseQuote);
+                ClickButton(_app.LocalizedTexts.ReviseQuoteButton);
 
                 _app.Client.Browser.ThinkTime(1000);
                 HelperMethods.WaitForFormLoad(driver);

@@ -472,7 +472,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public static void Save(this WebClient client, LocalizedTexts buttonTexts)
         {
-            client.ClickCommand(buttonTexts.Save);
+            client.ClickCommand(buttonTexts.SaveButton);
 
             client.HandleSaveDialog();
             client.Browser.Driver.WaitForTransaction();

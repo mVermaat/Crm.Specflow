@@ -99,7 +99,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return _app.Client.Execute(BrowserOptionHelper.GetOptions($"WaitUntilSaveCompleted"), driver =>
             {
                 var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
-                return !string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- unsaved";
+                return !string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts.SaveStatusUnsaved}", StringComparison.OrdinalIgnoreCase);
             });
         }
 
@@ -113,12 +113,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 {
                     var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
 
-                    if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- saving")
+                    if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts.SaveStatusSaving}", StringComparison.OrdinalIgnoreCase))
                     {
                         Logger.WriteLine("Save not yet completed. Waiting..");
                         Thread.Sleep(500);
                     }
-                    else if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- unsaved")
+                    else if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts.SaveStatusUnsaved}", StringComparison.OrdinalIgnoreCase))
                     {
                         var formNotifications = GetFormNotifications();
                         throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");

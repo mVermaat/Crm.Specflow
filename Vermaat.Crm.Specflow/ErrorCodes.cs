@@ -59,6 +59,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.UNEXPECTED_PROCESS_COUNT, "Expected 1 process with name {0}, but found {1}");
             AddError(Constants.ErrorCodes.USER_NOT_FOUND, "User {0} doesn't exist");
             AddError(Constants.ErrorCodes.QUICK_CREATE_CHILD_NOT_AVAILABLE, "Couldn't open quick created record");
+            AddError(Constants.ErrorCodes.LOCALIZATION_OVERRIDES_NOT_FOUND, "Localization JSON file not found at: {0}");
         }
 
         public void AddError(int errorCode, string message)

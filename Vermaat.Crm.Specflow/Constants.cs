@@ -72,6 +72,7 @@ namespace Vermaat.Crm.Specflow
             public const int USER_NOT_FOUND = 40;
             public const int QUICK_CREATE_CHILD_NOT_AVAILABLE = 41;
             // Error 42 is removed
+            public const int LOCALIZATION_OVERRIDES_NOT_FOUND = 43;
         }
     }
 }
