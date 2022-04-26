@@ -13,11 +13,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     internal class BrowserManager : IDisposable
     {
-        private readonly ButtonTexts _buttonTexts;
+        private readonly LocalizedTexts _buttonTexts;
         private readonly Dictionary<BrowserType, Dictionary<string, UCIBrowser>> _browserCache;
         private readonly Lazy<CrmModelApps> _appCache;
 
-        public BrowserManager(ButtonTexts buttonTexts)
+        public BrowserManager(LocalizedTexts buttonTexts)
         {
             _browserCache = new Dictionary<BrowserType, Dictionary<string, UCIBrowser>>();
             _buttonTexts = buttonTexts;

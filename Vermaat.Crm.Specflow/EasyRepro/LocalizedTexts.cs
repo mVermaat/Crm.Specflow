@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    public partial class ButtonTexts
+    public partial class LocalizedTexts
     {
-        public ButtonTexts(bool setDefaults = true)
+        public LocalizedTexts(bool setDefaults = true)
         {
             if (setDefaults)
             {
                 SaveAndClose = "Save & Close";
                 New = "New";
                 Delete = "Delete";
-                Save = "Save";
+                Save = "Save (CTRL+S)";
                 ActivateQuote = "Activate Quote";
                 CreateOrder = "Create Order";
                 ReviseQuote = "Revise";

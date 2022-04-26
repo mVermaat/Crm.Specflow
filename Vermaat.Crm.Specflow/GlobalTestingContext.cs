@@ -12,7 +12,7 @@ namespace Vermaat.Crm.Specflow
     {
         public static ConnectionManager ConnectionManager { get; }
         public static MetadataCache Metadata { get; }
-        public static ButtonTexts ButtonTexts { get; }
+        public static LocalizedTexts ButtonTexts { get; }
         public static ErrorCodes ErrorCodes { get; }
 
         internal static BrowserManager BrowserManager { get; }
@@ -21,7 +21,7 @@ namespace Vermaat.Crm.Specflow
         {
             ConnectionManager = new ConnectionManager();
             Metadata = new MetadataCache();
-            ButtonTexts = new ButtonTexts();
+            ButtonTexts = new LocalizedTexts();
             BrowserManager = new BrowserManager(ButtonTexts);
             ErrorCodes = new ErrorCodes();
         }

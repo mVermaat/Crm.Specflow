@@ -70,7 +70,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             try
             {
                 if(MustSave())
-                    _app.Client.Save();
+                    _app.Client.Save(_app.LocalizedTexts);
             }
             catch(InvalidOperationException ex)
             {
