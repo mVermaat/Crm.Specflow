@@ -92,7 +92,6 @@ stages:
   - template: 'Template_Deploy.yml'
   - template: 'Template_RunTests.yml'
     parameters:
-      name: 'ENG'
       variableGroup: 'User - ENG'
       automatedTestSet:
       - name: 'API'
