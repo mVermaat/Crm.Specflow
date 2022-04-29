@@ -92,15 +92,22 @@ stages:
   - template: 'Template_Deploy.yml'
   - template: 'Template_RunTests.yml'
     parameters:
+      name: 'ENG'
       variableGroup: 'User - ENG'
       automatedTestSet:
       - name: 'API'
+        runSettings: 'ENG_API'
       - name: 'Chrome'
+        runSettings: 'ENG_Chrome'
       - name: 'Firefox'
+        runSettings: 'ENG_Firefox'
   - template: 'Template_RunTests.yml'
     parameters:
       variableGroup: 'User - NL'
       automatedTestSet:
       - name: 'API'
+        runSettings: 'ENG_API'
       - name: 'Chrome'
+        runSettings: 'ENG_Chrome'
       - name: 'Firefox'
+        runSettings: 'ENG_Firefox'

@@ -35,7 +35,7 @@ jobs:
               testSelector: 'testAssemblies'
               testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
               searchFolder: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow'
-              runSettingsFile: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow/${{ testSet.name }}.runsettings'
+              runSettingsFile: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow/${{ testSet.runSettings }}.runsettings'
               testRunTitle: 'SpecFlow_${{ testSet.name }}'
               diagnosticsEnabled: true
               testFiltercriteria: '${{ testSet.filter }}'
