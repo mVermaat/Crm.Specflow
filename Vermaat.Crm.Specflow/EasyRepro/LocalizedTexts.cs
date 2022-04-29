@@ -11,37 +11,29 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public partial class LocalizedTexts
     {
+        private readonly Dictionary<string, string> _localizedTexts;
+
         public LocalizedTexts()
         {
-            SaveAndCloseButton = "Save & Close";
-            NewButton = "New";
-            DeleteButton = "Delete";
-            SaveButton = "Save (CTRL+S)";
-            ActivateQuoteButton = "Activate Quote";
-            CreateOrderButton = "Create Order";
-            ReviseQuoteButton = "Revise";
-            CloseQuoteButton = "Close Quote";
-            SaveStatusSaving = "saving";
-            SaveStatusUnsaved = "unsaved";
+            _localizedTexts = LoadOverrideFile();
         }
 
-        public string SaveAndCloseButton { get; set; }
-        public string NewButton { get; set; }
-        public string DeleteButton { get; set; }
-        public string SaveButton { get; set; }
-        public string ActivateQuoteButton { get; set; }
-        public string CreateOrderButton { get; set; }
-        public string ReviseQuoteButton { get; set; }
-        public string CloseQuoteButton { get; set; }
+        /// <summary>
+        /// Gets a localized text
+        /// </summary>
+        /// <param name="key">Key of the text (Constants.LocalizedTexts or a custom class)</param>
+        /// <returns></returns>
+        public string this[string key]
+        {
+            get => _localizedTexts[key];
+        }
 
-        public string SaveStatusSaving { get; set; }
-        public string SaveStatusUnsaved { get; set; }
 
-        public static LocalizedTexts FromOverrideFile()
+        private Dictionary<string,string> LoadOverrideFile()
         {
             var overridesJsonPath = HelperMethods.GetAppSettingsValue("LocalizationOverrides", true);
             if (string.IsNullOrWhiteSpace(overridesJsonPath))
-                return new LocalizedTexts();
+                return GetDefaults();
 
             FileInfo dllPath = new FileInfo(Assembly.GetExecutingAssembly().Location);
             FileInfo fileInfo = new FileInfo(Path.Combine(dllPath.DirectoryName, overridesJsonPath));
@@ -53,7 +45,21 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 NullValueHandling = NullValueHandling.Ignore
             };
-            return JsonConvert.DeserializeObject<LocalizedTexts>(File.ReadAllText(fileInfo.FullName), settings);
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(fileInfo.FullName), settings);
         }
+
+        private Dictionary<string, string> GetDefaults()
+            => new Dictionary<string, string>()
+            {
+                { Constants.LocalizedTexts.ActivateQuoteButton, "Activate Quote" },
+                { Constants.LocalizedTexts.CloseAsLost, "Close as Lost" },
+                { Constants.LocalizedTexts.CloseAsWon, "Close as Won" },
+                { Constants.LocalizedTexts.CreateOrderButton, "Create Order" },
+                { Constants.LocalizedTexts.DeleteButton, "Delete" },
+                { Constants.LocalizedTexts.ReviseQuoteButton, "Revise" },
+                { Constants.LocalizedTexts.SaveButton, "Save (CTRL+S)" },
+                { Constants.LocalizedTexts.SaveStatusSaving, "saving" },
+                { Constants.LocalizedTexts.SaveStatusUnsaved, "unsaved" },
+            };
     }
 }

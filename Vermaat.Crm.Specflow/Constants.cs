@@ -74,5 +74,18 @@ namespace Vermaat.Crm.Specflow
             // Error 42 is removed
             public const int LOCALIZATION_OVERRIDES_NOT_FOUND = 43;
         }
+
+        public class LocalizedTexts
+        {   // Specifically not an enum as you want extenders to be able to add their own items
+            public const string DeleteButton = "DeleteButton";
+            public const string SaveButton = "SaveButton";
+            public const string ActivateQuoteButton = "ActivateQuoteButton";
+            public const string CreateOrderButton = "CreateOrderButton";
+            public const string ReviseQuoteButton = "ReviseQuoteButton";
+            public const string SaveStatusSaving = "SaveStatusSaving";
+            public const string SaveStatusUnsaved = "SaveStatusUnsaved";
+            public const string CloseAsWon = "CloseAsWon";
+            public const string CloseAsLost = "CloseAsLost";
+        }
     }
 }

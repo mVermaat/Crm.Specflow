@@ -1,0 +1,11 @@
+{
+  "ActivateQuoteButton": "Prijsopgave activeren",
+  "CloseAsLost": "Afsluiten als gemist",
+  "CloseAsWon": "Afsluiten als binnengehaald",
+  "CreateOrderButton": "Order Maken",
+  "DeleteButton": "Verwijderen",
+  "ReviseQuoteButton": "Herzien",
+  "SaveButton": "Opslaan (Ctrl+S)",
+  "SaveStatusSaving": "Bezig met opslaan",
+  "SaveStatusUnsaved": "Niet-opgeslagen"
+}

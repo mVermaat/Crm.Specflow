@@ -86,12 +86,20 @@ stages:
 
 - stage: Deploy
   variables:
-  - group: 'TST - New'
+  - group: 'TST'
   displayName: 'Deployment Stage'
   jobs:
   - template: 'Template_Deploy.yml'
   - template: 'Template_RunTests.yml'
     parameters:
+      variableGroup: 'User - ENG'
+      automatedTestSet:
+      - name: 'API'
+      - name: 'Chrome'
+      - name: 'Firefox'
+  - template: 'Template_RunTests.yml'
+    parameters:
+      variableGroup: 'User - NL'
       automatedTestSet:
       - name: 'API'
       - name: 'Chrome'

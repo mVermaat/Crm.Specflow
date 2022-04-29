@@ -21,7 +21,7 @@ namespace Vermaat.Crm.Specflow
         {
             ConnectionManager = new ConnectionManager();
             Metadata = new MetadataCache();
-            LocalizedTexts = LocalizedTexts.FromOverrideFile();
+            LocalizedTexts = new LocalizedTexts();
             BrowserManager = new BrowserManager(LocalizedTexts);
             ErrorCodes = new ErrorCodes();
         }

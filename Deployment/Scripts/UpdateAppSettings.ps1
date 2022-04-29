@@ -1,13 +1,14 @@
 ######################### Parameters #########################
 param(
-[string]$url,
-[string]$username,
-[string]$password,
-[string]$clientId,
-[string]$clientSecret,
-[string]$authType,
-[string]$appId,
-[string]$appsettingsPath
+	[string]$url,
+	[string]$username,
+	[string]$password,
+	[string]$clientId,
+	[string]$clientSecret,
+	[string]$authType,
+	[string]$appId,
+	[string]$appsettingsPath,
+	[string]$localizationOverrides
 )
 
 ######################### Functions #########################
@@ -43,5 +44,6 @@ Set-AppSetting -key "ClientId" -value $clientId
 Set-AppSetting -key "ClientSecret" -value $clientSecret
 Set-AppSetting -key "AuthType" -value $authType 
 Set-AppSetting -key "AppId" -value $appId
+Set-AppSetting -key "LocalizationOverrides" -value $localizationOverrides
 
 $content.Save($fullPath)

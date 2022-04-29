@@ -47,7 +47,7 @@
     <None Update="Firefox.srprofile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="LocalizedTexts.json">
+    <None Update="LocalizedTexts - NL.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
