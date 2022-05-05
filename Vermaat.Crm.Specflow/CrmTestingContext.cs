@@ -23,13 +23,10 @@ namespace Vermaat.Crm.Specflow
 
         private readonly string[] _targets;
 
-        public int LanguageCode { get; set; }
-
         public CrmTestingContext(ScenarioContext scenarioContext)
         {
             RecordBuilder = new RecordBuilder(this);
             TableConverter = new TableConverter(this);
-            LanguageCode = GetLanguageCode();
             CommandProcessor = new CommandProcessor(scenarioContext);
             RecordCache = new AliasedRecordCache(GlobalTestingContext.Metadata);
 
@@ -47,15 +44,6 @@ namespace Vermaat.Crm.Specflow
 
             return _targets.Contains(target.ToLower());
         }
-
-        private int GetLanguageCode()
-        {
-            if (!int.TryParse(HelperMethods.GetAppSettingsValue("LanguageCode"), out int lcid))
-                throw new TestExecutionException(Constants.ErrorCodes.LANGUAGECODE_MUST_BE_INTEGER);
-
-            return lcid;
-        }
-
         
     }
 }
