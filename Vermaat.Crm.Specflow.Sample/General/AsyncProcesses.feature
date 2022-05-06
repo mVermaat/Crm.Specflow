@@ -1,6 +1,6 @@
 ﻿Feature: AsyncProcesses
 
-@Cleanup @API
+@Cleanup @API @Set2
 Scenario: Wait for Async processes to finish
 Given an account named TestAccount with the following values
     | Property     | Value     |

@@ -1,6 +1,6 @@
 ﻿Feature: Merging
 
-@API @Cleanup
+@API @Cleanup @Set2
 Scenario: Full Merge of two accounts into one
 Given an account named MergeSource with the following values
 	| Property     | Value          |
@@ -19,7 +19,7 @@ Then MergeTarget has the following values
 	| Industry     | Consulting              |
 	| Main Phone   | 0612345678              |
 
-@API @Cleanup
+@API @Cleanup @Set2
 Scenario: Partial Merge of two accounts into one
 Given an account named MergeSource with the following values
 	| Property     | Value          |

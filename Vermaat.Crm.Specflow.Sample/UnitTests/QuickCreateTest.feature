@@ -1,6 +1,6 @@
 ﻿Feature: QuickCreateTest
 
-@Chrome @Firefox @Cleanup
+@Chrome @Firefox @Cleanup @Set1
 Scenario: Create a contact via quick create
 	Given an account named TestAccount with the following values
 		| Property     | Value        |

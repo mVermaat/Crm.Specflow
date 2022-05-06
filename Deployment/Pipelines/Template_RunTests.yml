@@ -4,46 +4,54 @@ parameters:
   type: object
   default: []
 
-- name: variableGroup
-  type: string
+- name: automatedTestLanguages
+  type: object
+  default: []
+
+- name: automatedTestSplits
+  type: object
+  default: []
 
 jobs:
 - ${{ each testSet in parameters.automatedTestSet }}:
-  - deployment: 'AutoTest${{ testSet.name }}'
-    displayName: 'Automated Testing - ${{ testSet.name }}'
-    dependsOn: 'Deployment'
-    timeoutInMinutes: 600
-    pool:
-      vmImage: 'windows-latest'
-    environment: 'TST'
-    variables:
-    - group: ${{ parameters.variableGroup }}
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: PowerShell@2
-            displayName: 'Update AppSettings.config'
-            inputs:
-              filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
-              arguments: '-url "$(Url)" -username "$(Username)" -password "$(Password)" -localizationOverrides "$(LanguageOverride)" -appsettingsPath "$(Agent.BuildDirectory)/SampleSolution/SpecFlow/appsettings.config"'
-  
-          - task: VSTest@2
-            displayName: 'Run SpecFlow Tests - ${{ testSet.name }}'
-            continueOnError: true
-            inputs:
-              testSelector: 'testAssemblies'
-              testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
-              searchFolder: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow'
-              runSettingsFile: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow/${{ testSet.runSettings }}.runsettings'
-              testRunTitle: 'SpecFlow_${{ testSet.name }}'
-              diagnosticsEnabled: true
-              testFiltercriteria: '${{ testSet.filter }}'
-    
-          - task: PowerShell@2
-            displayName: 'Add Screenshots to ${{ testSet.name }} Test Results'
-            inputs:
-              filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/AddScreenshotsToTestResults.ps1'
-              arguments: '-isRelease $false -testRunTitle "SpecFlow_${{ testSet.name }}"'
-            env:
-              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+  - ${{ each languageSet in parameters.automatedTestLanguages }}:
+    - ${{ each split in parameters.automatedTestSplits }}:
+
+      - deployment: 'AutoTest${{ testSet.name }}'
+        displayName: 'Automated Testing - ${{ testSet.name }}'
+        dependsOn: 'Deployment'
+        timeoutInMinutes: 600
+        pool:
+          vmImage: 'windows-latest'
+        environment: 'TST'
+        variables:
+        - group: ${{ languageSet.variableGroup }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - task: PowerShell@2
+                displayName: 'Update AppSettings.config'
+                inputs:
+                  filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
+                  arguments: '-url "$(Url)" -username "$(Username)" -password "$(Password)" -localizationOverrides "$(LanguageOverride)" -appsettingsPath "$(Agent.BuildDirectory)/SampleSolution/SpecFlow/appsettings.config"'
+      
+              - task: VSTest@2
+                displayName: 'Run SpecFlow Tests - ${{ languageSet.name }}_${{ split.name }}_${{ testSet.name }}'
+                continueOnError: true
+                inputs:
+                  testSelector: 'testAssemblies'
+                  testAssemblyVer2: '**\Vermaat.Crm.SpecFlow.Sample.dll'
+                  searchFolder: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow'
+                  runSettingsFile: '$(Agent.BuildDirectory)/SampleSolution/SpecFlow/${{ testSet.runSettings }}.runsettings'
+                  testRunTitle: 'SpecFlow_${{ languageSet.name }}_${{ split.name }}_${{ testSet.name }}'
+                  diagnosticsEnabled: true
+                  testFiltercriteria: '${{ split.filter }}'
+        
+              - task: PowerShell@2
+                displayName: 'Add Screenshots to ${{ testSet.name }} Test Results'
+                inputs:
+                  filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/AddScreenshotsToTestResults.ps1'
+                  arguments: '-isRelease $false -testRunTitle "SpecFlow_${{ languageSet.name }}_${{ split.name }}_${{ testSet.name }}"'
+                env:
+                  SYSTEM_ACCESSTOKEN: $(System.AccessToken)

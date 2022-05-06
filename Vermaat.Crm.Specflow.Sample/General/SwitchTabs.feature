@@ -1,6 +1,6 @@
 ﻿Feature: SwitchTabs
 
-@Chrome @Firefox @Cleanup
+@Chrome @Firefox @Cleanup @Set1
 Scenario: Setting values while switching tabs
 When an account named TestAccount is created with the following values
 	| Property     | Value                   |

@@ -1,7 +1,7 @@
 ﻿Feature: NotificationsAndErrors
 
 
-@Chrome @Firefox @Cleanup
+@Chrome @Firefox @Cleanup @Set1
 Scenario: Single form notification
 Given an account named NotificationAccount with the following values
 	| Property     | Value               |
@@ -11,7 +11,7 @@ Then NotificationAccount has the following form notifications
 	| Message                                             | Level   |
 	| The credit limit of this account is under 1.000.000 | Warning |
 
-@Chrome @Firefox @Cleanup
+@Chrome @Firefox @Cleanup @Set1
 Scenario: Multiple form notifications
 Given an account named NotificationAccount with the following values
 	| Property     | Value                  |
@@ -23,7 +23,7 @@ Then NotificationAccount has the following form notifications
 	| The credit limit of this account is under 1.000.000                    | Warning |
 	| This account is from the broker industry. Additional rules applicable. | Warning |
 
-@Chrome @Firefox @Cleanup @ExpectedError
+@Chrome @Firefox @Cleanup @ExpectedError @Set1
 Scenario: Required field not filled error notification
 When an account named NotificationAccount is created with the following values
 	| Property     | Value |
@@ -34,7 +34,7 @@ Then the following form notifications are on the current form
 	| Account Name : Required fields must be filled in.   | Error   |
 	| The credit limit of this account is under 1.000.000 | Warning |
 
-@Cleanup @ExpectedError @Chrome @Firefox
+@Cleanup @ExpectedError @Chrome @Firefox @Set1
 Scenario: Verify error popup
 When an account named TestAccount is created with the following values
 		 | Property     | Value             |
