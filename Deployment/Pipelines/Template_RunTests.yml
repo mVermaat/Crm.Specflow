@@ -18,7 +18,7 @@ jobs:
     - ${{ each split in parameters.automatedTestSplits }}:
 
       - deployment: 'AutoTest_${{ languageSet.name }}_${{ split.name }}_${{ testSet.name }}'
-        displayName: 'Automated Testing - ${{ testSet.name }}'
+        displayName: 'Automated Testing - ${{ testSet.name }} - ${{ languageSet.name }} - ${{ split.name }}'
         dependsOn: 'Deployment'
         timeoutInMinutes: 600
         pool:
