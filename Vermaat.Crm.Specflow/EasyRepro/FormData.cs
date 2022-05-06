@@ -66,11 +66,17 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void Save(bool saveIfDuplicate)
         {
             _app.Client.Browser.ThinkTime(500);
-            Logger.WriteLine($"Saving Record");
+            Logger.WriteLine($"Checking save status");
             try
             {
-                if(MustSave())
+                if (MustSave())
+                {
+                    Logger.WriteLine($"Saving record");
                     _app.Client.Save(_app.LocalizedTexts);
+                    Logger.WriteLine($"Record saved");
+                }
+                else
+                    Logger.WriteLine("No save required");
             }
             catch(InvalidOperationException ex)
             {

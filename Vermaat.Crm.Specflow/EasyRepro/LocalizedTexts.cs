@@ -33,8 +33,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             var overridesJsonPath = HelperMethods.GetAppSettingsValue("LocalizationOverrides", true);
             if (string.IsNullOrWhiteSpace(overridesJsonPath))
+            {
+                Logger.WriteLine("No localization found. Using Defaults");
                 return GetDefaults();
+            }
 
+            Logger.WriteLine($"Localization found: {overridesJsonPath}");
             FileInfo dllPath = new FileInfo(Assembly.GetExecutingAssembly().Location);
             FileInfo fileInfo = new FileInfo(Path.Combine(dllPath.DirectoryName, overridesJsonPath));
 
