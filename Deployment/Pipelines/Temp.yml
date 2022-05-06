@@ -1,0 +1,35 @@
+name: $(Major).$(Minor)$(Rev:.r)
+
+pool:
+  vmImage: 'windows-latest'
+
+trigger: none
+        
+variables:
+- group: User - NL
+- group: 'TST'
+
+steps:
+- task: PowerShell@2
+  inputs:
+    filePath: 'Deployment/Scripts/CreateAppSettings.ps1'
+    arguments: '-outputPath "$(build.artifactstagingdirectory)\appsettings.config"'
+
+- task: PowerShell@2
+  displayName: 'Update AppSettings.config'
+  inputs:
+   filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
+   arguments: '-url "$(Url)" -username "$(Username)" -password "$(Password)" -languageOverride "$(LanguageOverride)" -appsettingsPath "$(build.artifactstagingdirectory)\appsettings.config"'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)'
+    Contents: '**\bin\$(BuildConfiguration)\**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: Temp
