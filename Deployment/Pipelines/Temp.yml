@@ -19,7 +19,7 @@ steps:
   displayName: 'Update AppSettings.config'
   inputs:
    filePath: 'Deployment/Scripts/UpdateAppSettings.ps1'
-   arguments: '-url "$(Url)" -username "$(Username)" -password "$(Password)" -languageOverride "$(LanguageOverride)" -appsettingsPath "$(build.artifactstagingdirectory)\appsettings.config"'
+   arguments: '-url "$(Url)" -username "$(Username)" -password "$(Password)" -localizationOverrides "$(LanguageOverride)" -appsettingsPath "$(build.artifactstagingdirectory)\appsettings.config"'
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
