@@ -18,7 +18,7 @@ steps:
 - task: PowerShell@2
   displayName: 'Update AppSettings.config'
   inputs:
-   filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
+   filePath: 'Deployment/Scripts/UpdateAppSettings.ps1'
    arguments: '-url "$(Url)" -username "$(Username)" -password "$(Password)" -languageOverride "$(LanguageOverride)" -appsettingsPath "$(build.artifactstagingdirectory)\appsettings.config"'
 
 - task: CopyFiles@2
