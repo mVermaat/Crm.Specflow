@@ -30,8 +30,9 @@ namespace Vermaat.Crm.Specflow.Sample.UnitTests
         {
             var browser = _seleniumContext.GetBrowser();
 
+            var summaryTabLabel = GlobalTestingContext.LocalizedTexts["AccountSummaryTab"] ?? "Summary";
             _crmContext.CommandProcessor.Execute(new ClickSubgridButtonCommand(_crmContext, _seleniumContext, _accountAlias,
-                "Summary", "Contacts", "Mscrm.SubGrid.contact.AddNewStandard"));
+                summaryTabLabel, "Contacts", "Mscrm.SubGrid.contact.AddNewStandard"));
             HelperMethods.WaitForFormLoad(browser.App.WebDriver, new FormIsOfEntity("contact"));
 
             var formData = browser.GetQuickFormData(GlobalTestingContext.Metadata.GetEntityMetadata("contact"));

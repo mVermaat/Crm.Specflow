@@ -1,4 +1,5 @@
 {
+  "AccountSummaryTab": "Samenvatting", // only for specific test
   "ActivateQuoteButton": "Prijsopgave activeren",
   "CloseAsLost": "Afsluiten als gemist",
   "CloseAsWon": "Afsluiten als binnengehaald",

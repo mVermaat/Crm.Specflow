@@ -25,7 +25,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         /// <returns></returns>
         public string this[string key]
         {
-            get => _localizedTexts[key];
+            get => _localizedTexts.ContainsKey(key) ? _localizedTexts[key] : null;
         }
 
 
