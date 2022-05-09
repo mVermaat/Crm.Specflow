@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vermaat.Crm.Specflow.EasyRepro
+namespace Vermaat.Crm.Specflow
 {
     public partial class LocalizedTexts
     {
@@ -49,7 +49,19 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 NullValueHandling = NullValueHandling.Ignore
             };
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(fileInfo.FullName), settings);
+            return MergeObjects(GetDefaults(), JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(fileInfo.FullName), settings));
+        }
+
+        private Dictionary<string, string> MergeObjects(Dictionary<string, string> localizedTexts, Dictionary<string, string> overrides)
+        {
+            foreach(var item in overrides)
+            {
+                if (localizedTexts.ContainsKey(item.Key))
+                    localizedTexts[item.Key] = item.Value;
+                else
+                    localizedTexts.Add(item.Key, item.Value);
+            }
+            return localizedTexts;
         }
 
         private Dictionary<string, string> GetDefaults()

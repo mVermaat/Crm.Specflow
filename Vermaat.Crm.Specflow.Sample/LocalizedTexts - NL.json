@@ -1,5 +1,4 @@
 {
-  "AccountSummaryTab": "Samenvatting", // only for specific test
   "ActivateQuoteButton": "Prijsopgave activeren",
   "CloseAsLost": "Afsluiten als gemist",
   "CloseAsWon": "Afsluiten als binnengehaald",
@@ -8,5 +7,9 @@
   "ReviseQuoteButton": "Herzien",
   "SaveButton": "Opslaan (Ctrl+S)",
   "SaveStatusSaving": "Bezig met opslaan",
-  "SaveStatusUnsaved": "Niet-opgeslagen"
+  "SaveStatusUnsaved": "Niet-opgeslagen",
+
+  // Below are localizations specific to the sample project. No need to copy these:
+  "AccountSummaryTab": "Samenvatting",
+  "AccountNameRequired": "Accountnaam : Vereiste velden moeten worden ingevuld."
 }
