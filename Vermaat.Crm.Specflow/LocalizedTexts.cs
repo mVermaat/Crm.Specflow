@@ -11,7 +11,7 @@ namespace Vermaat.Crm.Specflow
 {
     public partial class LocalizedTexts
     {
-        private readonly Dictionary<string, string> _localizedTexts;
+        private Dictionary<string, Dictionary<string, string>> _localizedTexts;
 
         public LocalizedTexts()
         {
@@ -23,19 +23,22 @@ namespace Vermaat.Crm.Specflow
         /// </summary>
         /// <param name="key">Key of the text (Constants.LocalizedTexts or a custom class)</param>
         /// <returns></returns>
-        public string this[string key]
+        public string this[string key, int lcid]
         {
-            get => _localizedTexts.ContainsKey(key) ? _localizedTexts[key] : null;
+            get => _localizedTexts[lcid.ToString()].ContainsKey(key) ? _localizedTexts[lcid.ToString()][key] : null;
         }
 
 
-        private Dictionary<string,string> LoadOverrideFile()
+        private Dictionary<string, Dictionary<string, string>> LoadOverrideFile()
         {
             var overridesJsonPath = HelperMethods.GetAppSettingsValue("LocalizationOverrides", true);
             if (string.IsNullOrWhiteSpace(overridesJsonPath))
             {
                 Logger.WriteLine("No localization found. Using Defaults");
-                return GetDefaults();
+                return new Dictionary<string, Dictionary<string, string>>()
+                {
+                    { HelperMethods.GetAppSettingsValue("LanguageCode"), GetDefaults() }
+                };
             }
 
             Logger.WriteLine($"Localization found: {overridesJsonPath}");
@@ -49,7 +52,15 @@ namespace Vermaat.Crm.Specflow
             {
                 NullValueHandling = NullValueHandling.Ignore
             };
-            return MergeObjects(GetDefaults(), JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(fileInfo.FullName), settings));
+
+            var localizedTextSet = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(File.ReadAllText(fileInfo.FullName), settings);
+
+            foreach(var key in localizedTextSet.Keys.ToArray())
+            {
+                localizedTextSet[key] = MergeObjects(GetDefaults(), localizedTextSet[key]);
+            }
+
+            return localizedTextSet;
         }
 
         private Dictionary<string, string> MergeObjects(Dictionary<string, string> localizedTexts, Dictionary<string, string> overrides)

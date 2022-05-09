@@ -72,7 +72,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 if (MustSave())
                 {
                     Logger.WriteLine($"Saving record");
-                    _app.Client.Save(_app.LocalizedTexts);
+                    _app.Client.Save(_app.LocalizedTexts, _app.UILanguageCode);
                     Logger.WriteLine($"Record saved");
                 }
                 else
@@ -105,7 +105,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return _app.Client.Execute(BrowserOptionHelper.GetOptions($"WaitUntilSaveCompleted"), driver =>
             {
                 var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
-                return !string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusUnsaved]}", StringComparison.OrdinalIgnoreCase);
+                return !string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusUnsaved, _app.UILanguageCode]}", StringComparison.OrdinalIgnoreCase);
             });
         }
 
@@ -119,12 +119,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 {
                     var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
 
-                    if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusSaving]}", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusSaving, _app.UILanguageCode]}", StringComparison.OrdinalIgnoreCase))
                     {
                         Logger.WriteLine("Save not yet completed. Waiting..");
                         Thread.Sleep(500);
                     }
-                    else if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusUnsaved]}", StringComparison.OrdinalIgnoreCase))
+                    else if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusUnsaved, _app.UILanguageCode]}", StringComparison.OrdinalIgnoreCase))
                     {
                         var formNotifications = GetFormNotifications();
                         throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");

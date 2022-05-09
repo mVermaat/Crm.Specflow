@@ -28,7 +28,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public UCIBrowser(BrowserOptions browserOptions, LocalizedTexts localizedTexts, CrmModelApps apps)
         {
-            App = new UCIApp(browserOptions, localizedTexts);
+            App = new UCIApp(browserOptions, localizedTexts, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage);
             _forms = new Dictionary<string, FormData>();
             _quickForms = new Dictionary<string, QuickFormData>();
             _apps = apps;

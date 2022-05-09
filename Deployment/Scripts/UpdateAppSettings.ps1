@@ -7,8 +7,7 @@ param(
 	[string]$clientSecret,
 	[string]$authType,
 	[string]$appId,
-	[string]$appsettingsPath,
-	[string]$localizationOverrides
+	[string]$appsettingsPath
 )
 
 ######################### Functions #########################

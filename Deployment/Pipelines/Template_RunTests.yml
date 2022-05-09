@@ -34,7 +34,7 @@ jobs:
                 displayName: 'Update AppSettings.config'
                 inputs:
                   filePath: '$(Agent.BuildDirectory)/SampleSolution/Scripts/UpdateAppSettings.ps1'
-                  arguments: '-url "$(Url)" -username "$(Username)" -password "$(Password)" -localizationOverrides "$(LanguageOverride)" -appsettingsPath "$(Agent.BuildDirectory)/SampleSolution/SpecFlow/appsettings.config"'
+                  arguments: '-url "$(Url)" -username "$(Username)" -password "$(Password)" -appsettingsPath "$(Agent.BuildDirectory)/SampleSolution/SpecFlow/appsettings.config"'
       
               - task: VSTest@2
                 displayName: 'Run SpecFlow Tests - ${{ languageSet.name }}_${{ split.name }}_${{ testSet.name }}'

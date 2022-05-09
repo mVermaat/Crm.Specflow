@@ -75,13 +75,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void ActivateQuote()
         {
             Logger.WriteLine("Activating Quote");
-            ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.ActivateQuoteButton]);
+            ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.ActivateQuoteButton, _app.UILanguageCode]);
         }
 
         public EntityReference CreateOrder()
         {
             Logger.WriteLine("Creating Sales Order from Quote");
-            ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.CreateOrderButton]);
+            ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.CreateOrderButton, _app.UILanguageCode]);
             CreateOrderDialog();
 
             return new EntityReference("salesorder", _app.App.Entity.GetObjectId());
@@ -90,7 +90,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void Delete()
         {
             Logger.WriteLine($"Deleting record");
-            ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.DeleteButton]);
+            ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.DeleteButton, _app.UILanguageCode]);
             _app.App.Dialogs.ConfirmationDialog(true);
         }
 
@@ -99,7 +99,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             Logger.WriteLine("Revising Quote");
             return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Revise Quote"), driver =>
             {
-                ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.ReviseQuoteButton]);
+                ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.ReviseQuoteButton, _app.UILanguageCode]);
 
                 _app.Client.Browser.ThinkTime(1000);
                 HelperMethods.WaitForFormLoad(driver);

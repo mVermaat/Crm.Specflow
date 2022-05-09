@@ -42,13 +42,13 @@ namespace Vermaat.Crm.Specflow
             OnTableProcessed?.Invoke(this, new TableEventArgs(entityName, table));
         }
 
-        public void LocalizeColumn(Table table, string column)
+        public void LocalizeColumn(Table table, string column, int languageCode)
         {
             foreach (var row in table.Rows)
             {
                 if(row.ContainsKey(column) && !string.IsNullOrWhiteSpace(row[column]))
                 {
-                    row[column] = GlobalTestingContext.LocalizedTexts[column] ?? row[column];
+                    row[column] = GlobalTestingContext.LocalizedTexts[column, languageCode] ?? row[column];
                 }
             }
         }

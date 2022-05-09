@@ -66,9 +66,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private static bool OpenOpportunityCloseDialog(UCIApp app, FormData formData, bool closeAsWon)
         {
             if(closeAsWon)
-                formData.CommandBar.ClickButton(app.LocalizedTexts[Constants.LocalizedTexts.CloseAsWon]);
+                formData.CommandBar.ClickButton(app.LocalizedTexts[Constants.LocalizedTexts.CloseAsWon, app.UILanguageCode]);
             else
-                formData.CommandBar.ClickButton(app.LocalizedTexts[Constants.LocalizedTexts.CloseAsLost]);
+                formData.CommandBar.ClickButton(app.LocalizedTexts[Constants.LocalizedTexts.CloseAsLost, app.UILanguageCode]);
 
             return app.Client.Execute(BrowserOptionHelper.GetOptions($"Opening opportunity close dialog"), driver =>
             {

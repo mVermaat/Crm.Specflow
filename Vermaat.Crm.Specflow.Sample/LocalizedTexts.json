@@ -1,0 +1,21 @@
+{
+  "1043": {
+    "ActivateQuoteButton": "Prijsopgave activeren",
+    "CloseAsLost": "Afsluiten als gemist",
+    "CloseAsWon": "Afsluiten als binnengehaald",
+    "CreateOrderButton": "Order maken",
+    "DeleteButton": "Verwijderen",
+    "ReviseQuoteButton": "Herzien",
+    "SaveButton": "Opslaan (Ctrl+S)",
+    "SaveStatusSaving": "Bezig met opslaan",
+    "SaveStatusUnsaved": "Niet-opgeslagen",
+
+    // Below are localizations specific to the sample project. No need to copy these:
+    "AccountSummaryTab": "Samenvatting",
+    "AccountNameRequired": "Accountnaam : Vereiste velden moeten worden ingevuld."
+  },
+  "1033": {
+    "AccountNameRequired": "Account Name : Required fields must be filled in."
+  }
+
+}
