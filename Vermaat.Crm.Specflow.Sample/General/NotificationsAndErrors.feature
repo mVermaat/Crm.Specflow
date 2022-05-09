@@ -28,12 +28,10 @@ Scenario: Required field not filled error notification
 		| Property     | Value |
 		| Account Name |       |
 		| Credit Limit | 10000 |
-	Then the following form notifications are on the current form
-		| Message                                             | Level   |
-		| The credit limit of this account is under 1.000.000 | Warning |
-	And the following localized form notifications are on the current form
-		| Message             | Level |
-		| AccountNameRequired | Error |
+	Then the following localized form notifications are on the current form
+		| Message             | Level   |
+		| CreditLimitReached  | Warning |
+		| AccountNameRequired | Error   |
 
 @Cleanup @ExpectedError @Chrome @Firefox @Set1
 Scenario: Verify error popup
