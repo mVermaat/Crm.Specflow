@@ -105,7 +105,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         private FieldTypes.OptionSetValue ToOptionSetObject(int? value, string label)
         {
-            if (GlobalTestingContext.LanguageCode == GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage)
+            if (value == null || GlobalTestingContext.LanguageCode == GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage)
                 return new FieldTypes.OptionSetValue(value, label);
 
             var optionMd = Metadata as EnumAttributeMetadata;
