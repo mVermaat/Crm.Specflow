@@ -45,6 +45,9 @@ You use both Username/Password and ClientSecret authentication for API connectio
 ## Multi user support
 You can login with other users by writing a simple extension
 
+## Multi language support
+You can test using users with different languages using the same test scripts. See [here](https://github.com/DynamicHands/Crm.Specflow/wiki/Writing-Features#localization) for more info.
+
 # NuGet packages
 
 Two nuget packages are available.
