@@ -1,7 +1,7 @@
 ﻿Feature: BusinessProcessFlows
 
 
-@API @Chrome @Cleanup
+@API @Chrome @Cleanup @Set2
 Scenario: Moving across business process flow steps
 Given an account named TestAccount with the following values
 	| Property     | Value       |

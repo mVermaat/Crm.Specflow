@@ -152,7 +152,7 @@ namespace Vermaat.Crm.Specflow
         public static SetStateRequest ToSetStateRequest(EntityReference target, string desiredstatus, CrmTestingContext context)
         {
             var attributeMd = GlobalTestingContext.Metadata.GetAttributeMetadata(target.LogicalName, Constants.CRM.STATUSCODE) as StatusAttributeMetadata;
-            var optionMd = attributeMd.OptionSet.Options.Where(o => o.Label.IsLabel(context.LanguageCode, desiredstatus)).FirstOrDefault() as StatusOptionMetadata;
+            var optionMd = attributeMd.OptionSet.Options.Where(o => o.Label.IsLabel(GlobalTestingContext.LanguageCode, desiredstatus)).FirstOrDefault() as StatusOptionMetadata;
 
             return new SetStateRequest()
             {
@@ -220,9 +220,9 @@ namespace Vermaat.Crm.Specflow
         {
             var optionMd = metadata as EnumAttributeMetadata;
 
-            var option = optionMd.OptionSet.Options.Where(o => o.Label.IsLabel(context.LanguageCode, value)).FirstOrDefault();
+            var option = optionMd.OptionSet.Options.Where(o => o.Label.IsLabel(GlobalTestingContext.LanguageCode, value)).FirstOrDefault();
 
-            Assert.IsNotNull(option, $"Option {value} not found. AvailaleOptions: { string.Join(", ", optionMd.OptionSet.Options.Select(o => o.Label?.GetLabelInLanguage(context.LanguageCode)))}");
+            Assert.IsNotNull(option, $"Option {value} not found. AvailaleOptions: { string.Join(", ", optionMd.OptionSet.Options.Select(o => o.Label?.GetLabelInLanguage(GlobalTestingContext.LanguageCode)))}");
             Assert.IsTrue(option.Value.HasValue);
 
             return new OptionSetValue(option.Value.Value);
@@ -243,9 +243,9 @@ namespace Vermaat.Crm.Specflow
         {
             var optionMd = metadata as BooleanAttributeMetadata;
 
-            if (value.ToLower() == optionMd.OptionSet.TrueOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
+            if (value.ToLower() == optionMd.OptionSet.TrueOption.Label.GetLabelInLanguage(GlobalTestingContext.LanguageCode).ToLower())
                 return true;
-            else if (value.ToLower() == optionMd.OptionSet.FalseOption.Label.GetLabelInLanguage(context.LanguageCode).ToLower())
+            else if (value.ToLower() == optionMd.OptionSet.FalseOption.Label.GetLabelInLanguage(GlobalTestingContext.LanguageCode).ToLower())
                 return false;
             else
                 throw new TestExecutionException(Constants.ErrorCodes.OPTION_NOT_FOUND, metadata.LogicalName, value);

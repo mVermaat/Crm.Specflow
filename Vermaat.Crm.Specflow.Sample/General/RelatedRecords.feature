@@ -1,7 +1,7 @@
 ﻿Feature: RelatedRecords
 
 
-@API @Chrome @Firefox @Cleanup
+@API @Chrome @Firefox @Cleanup @Set1
 Scenario: Creating child contact from account
 Given an account named TestAccount with the following values
 	| Property                   | Value                   |
@@ -30,7 +30,7 @@ Then ChildContact has the following values
 	| Address 1: City            | City          |
 	| Address 1: State/Province  | State         |
 
-@API @Cleanup
+@API @Cleanup @Set1
 Scenario: Connect records via a N:N Relationship
 Given an account named NNAccount with the following values
 	| Property     | Value           |

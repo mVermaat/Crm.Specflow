@@ -1,6 +1,6 @@
 ﻿Feature: LeadTests
 
-@API @Chrome @Firefox @Cleanup
+@API @Chrome @Firefox @Cleanup @Set2
 Scenario: Lead Qualification
 Given a lead named ToQualify with the following values
 	| Property     | Value              |

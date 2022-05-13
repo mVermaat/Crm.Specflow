@@ -12,7 +12,8 @@ namespace Vermaat.Crm.Specflow
     {
         public static ConnectionManager ConnectionManager { get; }
         public static MetadataCache Metadata { get; }
-        public static ButtonTexts ButtonTexts { get; }
+        public static LocalizedTexts LocalizedTexts { get; }
+        public static int LanguageCode { get; set; }
         public static ErrorCodes ErrorCodes { get; }
 
         internal static BrowserManager BrowserManager { get; }
@@ -21,9 +22,18 @@ namespace Vermaat.Crm.Specflow
         {
             ConnectionManager = new ConnectionManager();
             Metadata = new MetadataCache();
-            ButtonTexts = new ButtonTexts();
-            BrowserManager = new BrowserManager(ButtonTexts);
+            LocalizedTexts = new LocalizedTexts();
+            BrowserManager = new BrowserManager(LocalizedTexts);
             ErrorCodes = new ErrorCodes();
+            LanguageCode = GetLanguageCode();
+        }
+
+        private static int GetLanguageCode()
+        {
+            if (!int.TryParse(HelperMethods.GetAppSettingsValue("LanguageCode"), out int lcid))
+                throw new TestExecutionException(Constants.ErrorCodes.LANGUAGECODE_MUST_BE_INTEGER);
+
+            return lcid;
         }
 
     }

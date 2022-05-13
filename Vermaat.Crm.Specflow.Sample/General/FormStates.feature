@@ -1,6 +1,6 @@
 ﻿Feature: FormStates
 
-@Chrome @Firefox @Cleanup
+@Chrome @Firefox @Cleanup @Set2
 Scenario: Check required of form items
 Given a contact named TestContact with the following values
     | Property   | Value |
@@ -13,7 +13,7 @@ Then TestContact's form has the following form state
     | Last Name          | Required    |
     | Job Title          | Optional    |
 
-@Chrome @Firefox @Cleanup
+@Chrome @Firefox @Cleanup @Set2
 Scenario: Check locked state of form items
 Given a contact named TestContact with the following values
     | Property   | Value |
@@ -26,7 +26,7 @@ Then TestContact's form has the following form state
     | Last Date Included in Campaign | Locked   |
 
 
-@Chrome @Firefox @Cleanup
+@Chrome @Firefox @Cleanup @Set2
 Scenario: Check visiblity of form items
 When an account named TestAccount is created with the following values
 	| Property     | Value                   |
@@ -39,7 +39,7 @@ Then TestAccount's form has the following form state
 	| SIC Code  | Visible   |
 	| Ownership | Invisible |
 
-@Chrome @Firefox @Cleanup
+@Chrome @Firefox @Cleanup @Set2
 Scenario: Check combined state of form items
 Given a contact named TestContact with the following values
     | Property   | Value |
@@ -53,7 +53,7 @@ Then TestContact's form has the following form state
     | Job Title                      | Optional, Unlocked, Visible    |
     | Last Date Included in Campaign | Locked, Optional, Visible      |
 
-@Chrome @Firefox @Cleanup
+@Chrome @Firefox @Cleanup @Set2
 Scenario: Ribbon button availability
 Given a account named TestAccount with the following values
     | Property     | Value        |

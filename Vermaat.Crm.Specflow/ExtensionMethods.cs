@@ -13,5 +13,10 @@ namespace Vermaat.Crm.Specflow
         {
             return new EntityReference(entity.LogicalName, entity.Id) { Name = entity.GetAttributeValue<string>(primaryFieldAttribute) };
         }
+
+        public static string GetFormattedValue(this Entity entity, string columnName)
+        {
+            return entity.FormattedValues.ContainsKey(columnName) ? entity.FormattedValues[columnName] : null;
+        }
     }
 }

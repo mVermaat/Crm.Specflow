@@ -86,7 +86,7 @@ stages:
 
 - stage: Deploy
   variables:
-  - group: 'TST - New'
+  - group: 'TST'
   displayName: 'Deployment Stage'
   jobs:
   - template: 'Template_Deploy.yml'
@@ -94,5 +94,18 @@ stages:
     parameters:
       automatedTestSet:
       - name: 'API'
+        runSettings: 'API'
       - name: 'Chrome'
+        runSettings: 'Chrome'
       - name: 'Firefox'
+        runSettings: 'Firefox'
+      automatedTestLanguages:
+      - name: 'EN'
+        variableGroup: 'User - ENG'
+      - name: 'NL'
+        variableGroup: 'User - NL'
+      automatedTestSplits:
+      - name: 'Set1'
+        filter: 'TestCategory=Set1'
+      - name: 'Set2'
+        filter: 'TestCategory=Set2'

@@ -1,6 +1,6 @@
 ﻿Feature: DateFormulas
 
-@API @Cleanup
+@API @Cleanup @Set1
 Scenario: Test Date Formulas
 
 When an appointment named TestAppointment is created with the following values

@@ -43,7 +43,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                     SetLookupValue(new LookupValue((EntityReference)fieldValue));
                     break;
                 case AttributeTypeCode.Picklist:
-                    SetOptionSetField(new FieldTypes.OptionSetValue(((Microsoft.Xrm.Sdk.OptionSetValue)fieldValue)?.Value, fieldValueText));
+                    SetOptionSetField(ToOptionSetObject(((Microsoft.Xrm.Sdk.OptionSetValue)fieldValue)?.Value, fieldValueText));
                     break;
                 case AttributeTypeCode.Money:
                     SetMoneyField(new DecimalValue(((Money)fieldValue)?.Value));
@@ -73,11 +73,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
         protected virtual void SetVirtualField(string fieldValueText)
         {
             if (Metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
-                SetMultiSelectOptionSetField(new MultiSelectOptionSetValue(fieldValueText.Split(',').Select(v => v.Trim()).ToArray()));
+                SetMultiSelectOptionSetField(ToMultiSelectOptionSetObject(fieldValueText.Split(',').Select(v => v.Trim()).ToArray()));
             else
                 throw new NotImplementedException(string.Format("Virtual type {0} not implemented", Metadata.AttributeTypeName.Value));
         }
 
+       
 
         protected abstract void SetIntegerField(IntegerValue value);
 
@@ -102,17 +103,35 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
         protected abstract void SetMultiSelectOptionSetField(MultiSelectOptionSetValue value);
 
 
-        
+        private FieldTypes.OptionSetValue ToOptionSetObject(int? value, string label)
+        {
+            if (value == null || GlobalTestingContext.LanguageCode == GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage)
+                return new FieldTypes.OptionSetValue(value, label);
 
-       
-        
+            var optionMd = Metadata as EnumAttributeMetadata;
+            var option = optionMd.OptionSet.Options.Where(o => o.Value == value).First();
 
-        
+            // Try translating to UI language, but in case there is no translation get the input label
+            return new FieldTypes.OptionSetValue(value, option.Label.GetLabelInLanguage(GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage, true) ?? label);
+        }
 
-        
+        private MultiSelectOptionSetValue ToMultiSelectOptionSetObject(string[] labels)
+        {
+            if (GlobalTestingContext.LanguageCode != GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage)
+            {
+                var optionMd = Metadata as MultiSelectPicklistAttributeMetadata;
+                for (int i = 0; i < labels.Length; i++)
+                {
+                    var option = optionMd.OptionSet.Options.Where(o => o.Label.IsLabel(GlobalTestingContext.LanguageCode, labels[i])).FirstOrDefault();
+                    var translation = option.Label.GetLabelInLanguage(GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage, true);
 
-        
+                    if (!string.IsNullOrEmpty(translation))
+                        labels[i] = translation;
+                }
+            }
 
-       
+
+            return new MultiSelectOptionSetValue(labels);
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿Feature: NumericFormulas
 
 
-@API @Cleanup
+@API @Cleanup @Set1
 Scenario: Filling Decimal fields
 Given an account named TestAccount with the following values
 	| Property     | Value       |

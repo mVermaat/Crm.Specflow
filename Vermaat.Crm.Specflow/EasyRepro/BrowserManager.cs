@@ -13,14 +13,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     internal class BrowserManager : IDisposable
     {
-        private readonly ButtonTexts _buttonTexts;
+        private readonly LocalizedTexts _localizedTexts;
         private readonly Dictionary<BrowserType, Dictionary<string, UCIBrowser>> _browserCache;
         private readonly Lazy<CrmModelApps> _appCache;
 
-        public BrowserManager(ButtonTexts buttonTexts)
+        public BrowserManager(LocalizedTexts buttonTexts)
         {
             _browserCache = new Dictionary<BrowserType, Dictionary<string, UCIBrowser>>();
-            _buttonTexts = buttonTexts;
+            _localizedTexts = buttonTexts;
             _appCache = new Lazy<CrmModelApps>(InitializeCache);
         }
 
@@ -60,7 +60,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     options.DriversPath = GetDriverPath(options);
                 }
                 
-                browser = new UCIBrowser(options, _buttonTexts, _appCache.Value);
+                browser = new UCIBrowser(options, _localizedTexts, _appCache.Value);
                 dic.Add(browserLoginDetails.Username, browser);
                 browser.Login(browserLoginDetails);
             }

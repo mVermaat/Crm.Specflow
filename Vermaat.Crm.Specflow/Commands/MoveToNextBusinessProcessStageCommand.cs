@@ -57,7 +57,8 @@ namespace Vermaat.Crm.Specflow.Commands
                 if (path[i].Id == instance.GetAttributeValue<Guid>("processstageid"))
                 {
                     stageInfo.StageIndex = i;
-                    stageInfo.StageName = path[i].GetAttributeValue<string>("stagename");
+                    stageInfo.StageName = path[i].GetFormattedValue("stagecategory");
+                    break;
                 }
             }
 

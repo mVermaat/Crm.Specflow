@@ -30,7 +30,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public static OpportunityCloseDialog CreateDialog(UCIApp app, FormData formData, bool closeAsWon)
         {
-            OpenOpportunityCloseDialog(app.Client, formData, closeAsWon);
+            OpenOpportunityCloseDialog(app, formData, closeAsWon);
 
             var metadata = GlobalTestingContext.Metadata.GetEntityMetadata("opportunityclose");
             return new OpportunityCloseDialog(app, metadata, closeAsWon);
@@ -63,14 +63,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return true;
             });
         }
-        private static bool OpenOpportunityCloseDialog(WebClient client, FormData formData, bool closeAsWon)
+        private static bool OpenOpportunityCloseDialog(UCIApp app, FormData formData, bool closeAsWon)
         {
             if(closeAsWon)
-                formData.CommandBar.ClickButton("Close as Won");
+                formData.CommandBar.ClickButton(app.LocalizedTexts[Constants.LocalizedTexts.CloseAsWon, app.UILanguageCode]);
             else
-                formData.CommandBar.ClickButton("Close as Lost");
+                formData.CommandBar.ClickButton(app.LocalizedTexts[Constants.LocalizedTexts.CloseAsLost, app.UILanguageCode]);
 
-            return client.Execute(BrowserOptionHelper.GetOptions($"Opening opportunity close dialog"), driver =>
+            return app.Client.Execute(BrowserOptionHelper.GetOptions($"Opening opportunity close dialog"), driver =>
             {
                 driver.WaitUntilVisible(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok]));
                 return true;

@@ -26,7 +26,7 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             var aliasRef = _crmContext.RecordCache[_alias];
-            var attribute = GlobalTestingContext.Metadata.GetAttributeMetadata(aliasRef.LogicalName, _lookupFieldName, _crmContext.LanguageCode);
+            var attribute = GlobalTestingContext.Metadata.GetAttributeMetadata(aliasRef.LogicalName, _lookupFieldName, GlobalTestingContext.LanguageCode);
             Entity record = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(aliasRef, new ColumnSet(attribute.LogicalName));
             var value = record.Contains(attribute.LogicalName) ? record[attribute.LogicalName] : null;
 

@@ -54,11 +54,11 @@ namespace Vermaat.Crm.Specflow
             }
         }
 
-        public static string GetLabelInLanguage(this Label label, int lcid)
+        public static string GetLabelInLanguage(this Label label, int lcid, bool allowNull = false)
         {
             string result = label.LocalizedLabels.Where(l => l.LanguageCode == lcid).FirstOrDefault()?.Label;
 
-            if (label.UserLocalizedLabel != null && !string.IsNullOrEmpty(label.UserLocalizedLabel.Label) && string.IsNullOrEmpty(result))
+            if (!allowNull && label.UserLocalizedLabel != null && !string.IsNullOrEmpty(label.UserLocalizedLabel.Label) && string.IsNullOrEmpty(result))
                 throw new TestExecutionException(Constants.ErrorCodes.LABEL_NOT_TRANSLATED, label.UserLocalizedLabel.Label, lcid);
 
             return result;

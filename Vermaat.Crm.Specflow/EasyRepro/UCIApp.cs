@@ -11,16 +11,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public class UCIApp : IDisposable
     {
-        public UCIApp(BrowserOptions options, ButtonTexts buttonTexts)
+        public UCIApp(BrowserOptions options, LocalizedTexts localizedTexts, int uiLanguageCode)
         {
             Client = new WebClient(options);
             App = new XrmApp(Client);
-            ButtonTexts = buttonTexts;
+            LocalizedTexts = localizedTexts;
+            UILanguageCode = uiLanguageCode;
         }
 
         public XrmApp App { get; }
         public WebClient Client { get; }
-        public ButtonTexts ButtonTexts { get; }
+        public LocalizedTexts LocalizedTexts { get; }
+        public int UILanguageCode { get; }
         public IWebDriver WebDriver => Client?.Browser.Driver;
 
         #region IDisposable Support

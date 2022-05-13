@@ -470,9 +470,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         #region https://github.com/DynamicHands/Crm.Specflow/issues/126
 
-        public static void Save(this WebClient client)
+        public static void Save(this WebClient client, LocalizedTexts buttonTexts, int lcid)
         {
-            client.ClickCommand("Save (CTRL+S)");
+            client.ClickCommand(buttonTexts[Constants.LocalizedTexts.SaveButton, lcid]);
 
             client.HandleSaveDialog();
             client.Browser.Driver.WaitForTransaction();

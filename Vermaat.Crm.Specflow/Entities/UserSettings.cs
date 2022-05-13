@@ -21,6 +21,7 @@ namespace Vermaat.Crm.Specflow.Entities
             public const string DateSeparator = "dateseparator";
             public const string TimeSeparator = "timeseparator";
             public const string DecimalSymbol = "decimalsymbol";
+            public const string UILanguage = "uilanguageid"; 
         }
 
         public UserSettings(Entity userSettingsEntity, TimeZoneInfo timeZoneInfo)
@@ -43,6 +44,8 @@ namespace Vermaat.Crm.Specflow.Entities
 
         public string TimeFormat => _userSettingsEntity.GetAttributeValue<string>(Fields.TimeFormat)
             .Replace(":", _userSettingsEntity.GetAttributeValue<string>(Fields.TimeSeparator));
+
+        public int UILanguage => _userSettingsEntity.GetAttributeValue<int>(Fields.UILanguage);
 
         public string DateTimeFormat => $"{DateFormat} {TimeFormat}";
 

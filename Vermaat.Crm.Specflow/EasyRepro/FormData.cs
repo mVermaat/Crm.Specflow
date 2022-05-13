@@ -66,11 +66,17 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void Save(bool saveIfDuplicate)
         {
             _app.Client.Browser.ThinkTime(500);
-            Logger.WriteLine($"Saving Record");
+            Logger.WriteLine($"Checking save status");
             try
             {
-                if(MustSave())
-                    _app.Client.Save();
+                if (MustSave())
+                {
+                    Logger.WriteLine($"Saving record");
+                    _app.Client.Save(_app.LocalizedTexts, _app.UILanguageCode);
+                    Logger.WriteLine($"Record saved");
+                }
+                else
+                    Logger.WriteLine("No save required");
             }
             catch(InvalidOperationException ex)
             {
@@ -99,7 +105,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return _app.Client.Execute(BrowserOptionHelper.GetOptions($"WaitUntilSaveCompleted"), driver =>
             {
                 var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
-                return !string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- unsaved";
+                return !string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusUnsaved, _app.UILanguageCode]}", StringComparison.OrdinalIgnoreCase);
             });
         }
 
@@ -113,12 +119,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 {
                     var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
 
-                    if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- saving")
+                    if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusSaving, _app.UILanguageCode]}", StringComparison.OrdinalIgnoreCase))
                     {
                         Logger.WriteLine("Save not yet completed. Waiting..");
                         Thread.Sleep(500);
                     }
-                    else if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.ToLower() == "- unsaved")
+                    else if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusUnsaved, _app.UILanguageCode]}", StringComparison.OrdinalIgnoreCase))
                     {
                         var formNotifications = GetFormNotifications();
                         throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
