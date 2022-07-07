@@ -1,4 +1,5 @@
-﻿using Azure.Identity;
+﻿using Azure.Core;
+using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using System;
 using System.Collections.Generic;
@@ -23,13 +24,7 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             var kvUri = new Uri($"https://{HelperMethods.GetAppSettingsValue("KeyVaultName", false)}.vault.azure.net");
-
-            var client = new SecretClient(kvUri, new DefaultAzureCredential(new DefaultAzureCredentialOptions()
-            {
-                ExcludeEnvironmentCredential = true,
-                ExcludeManagedIdentityCredential = true,
-                ExcludeInteractiveBrowserCredential = true,
-            }));
+            var client = new SecretClient(kvUri, GetCredential());
 
             var secretName = _userProfile.SecretName ?? _userProfile.Profile;
             Logger.WriteLine($"Getting secret {secretName}");
@@ -38,6 +33,34 @@ namespace Vermaat.Crm.Specflow.Commands
             GlobalTestingContext.ConnectionManager.SetCurrentConnection(new OAuthCrmConnection(_userProfile.Username, secret.Value.Value));
             
             Logger.WriteLine($"Successfully logged in with {_userProfile.Profile}");
+        }
+
+        private TokenCredential GetCredential()
+        {
+            var clientId = HelperMethods.GetAppSettingsValue("KeyVaultClientId", true);
+            if(!string.IsNullOrEmpty(clientId))
+            {
+                return new ClientSecretCredential(
+                    HelperMethods.GetAppSettingsValue("TenantId", false),
+                    clientId,
+                    HelperMethods.GetAppSettingsValue("KeyVaultClientSecret", false));
+            }
+            
+            clientId = HelperMethods.GetAppSettingsValue("ClientId", true);
+            if (!string.IsNullOrEmpty(clientId))
+            {
+                return new ClientSecretCredential(
+                    HelperMethods.GetAppSettingsValue("TenantId", false),
+                    clientId,
+                    HelperMethods.GetAppSettingsValue("ClientSecret", false));
+            }
+
+            return new DefaultAzureCredential(new DefaultAzureCredentialOptions()
+            {
+                ExcludeEnvironmentCredential = true,
+                ExcludeManagedIdentityCredential = true,
+                ExcludeInteractiveBrowserCredential = true,
+            });
         }
     }
 }
