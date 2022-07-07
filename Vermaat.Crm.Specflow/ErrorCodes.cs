@@ -60,6 +60,8 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.USER_NOT_FOUND, "User {0} doesn't exist");
             AddError(Constants.ErrorCodes.QUICK_CREATE_CHILD_NOT_AVAILABLE, "Couldn't open quick created record");
             AddError(Constants.ErrorCodes.LOCALIZATION_OVERRIDES_NOT_FOUND, "Localization JSON file not found at: {0}");
+            AddError(Constants.ErrorCodes.USERPROFILE_NOT_FOUND, "User profile '{0}' doesn't exist");
+            AddError(Constants.ErrorCodes.USERPROFILE_FILE_NOT_FOUND, "User profile file '{0}' doesn't exist");
         }
 
         public void AddError(int errorCode, string message)
