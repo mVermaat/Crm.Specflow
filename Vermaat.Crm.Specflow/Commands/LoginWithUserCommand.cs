@@ -14,8 +14,9 @@ namespace Vermaat.Crm.Specflow.Commands
     public class LoginWithUserCommand : ApiOnlyCommand
     {
         private readonly UserProfile _userProfile;
+        private readonly string _userAlias;
 
-        public LoginWithUserCommand(CrmTestingContext crmContext, UserProfile userProfile, string userAlias) 
+        public LoginWithUserCommand(CrmTestingContext crmContext, UserProfile userProfile)
             : base(crmContext)
         {
             _userProfile = userProfile;
@@ -31,7 +32,6 @@ namespace Vermaat.Crm.Specflow.Commands
             var secret = client.GetSecret(secretName);
 
             GlobalTestingContext.ConnectionManager.SetCurrentConnection(new OAuthCrmConnection(_userProfile.Username, secret.Value.Value));
-            
             Logger.WriteLine($"Successfully logged in with {_userProfile.Profile}");
         }
 

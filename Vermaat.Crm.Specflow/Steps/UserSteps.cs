@@ -22,10 +22,17 @@ namespace Vermaat.Crm.Specflow.Steps
             _userProfileHandler = userProfileHandler;
         }
 
+        [Given(@"a logged in '(.*)'")]
+        public void LoginWithUser(string profile)
+        {
+            _crmContext.CommandProcessor.Execute(new LoginWithUserCommand(_crmContext, _userProfileHandler.GetProfile(profile)));
+        }
+
         [Given(@"a logged in '(.*)' named ([^\s]+)")]
         public void LoginWithUser(string profile, string alias)
         {
-            _crmContext.CommandProcessor.Execute(new LoginWithUserCommand(_crmContext, _userProfileHandler.GetProfile(profile), alias));
+            LoginWithUser(profile);
+            _crmContext.CommandProcessor.Execute(new GetCurrentUserCommand(_crmContext, alias));
         }
 
         [Given(@"the current logged in user named (.*)")]
