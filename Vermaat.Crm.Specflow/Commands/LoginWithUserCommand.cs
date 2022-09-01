@@ -1,4 +1,5 @@
-﻿using Azure.Core;
+﻿using Azure;
+using Azure.Core;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using System;
@@ -31,8 +32,25 @@ namespace Vermaat.Crm.Specflow.Commands
             Logger.WriteLine($"Getting secret {secretName}");
             var secret = client.GetSecret(secretName);
 
-            GlobalTestingContext.ConnectionManager.SetCurrentConnection(new OAuthCrmConnection(_userProfile.Username, secret.Value.Value));
+            GlobalTestingContext.ConnectionManager.SetCurrentConnection(CreateConnection(secret.Value));
             Logger.WriteLine($"Successfully logged in with {_userProfile.Profile}");
+        }
+
+        private CrmConnection CreateConnection(KeyVaultSecret secret)
+        {
+            var loginType = HelperMethods.GetAppSettingsValue("LoginType", true) ?? "Default";
+
+            switch (loginType)
+            {
+                case "Hybrid":
+                    return new HybridCrmConnection(
+                        HelperMethods.GetAppSettingsValue("ClientId", false),
+                        HelperMethods.GetAppSettingsValue("ClientSecret", false),
+                        _userProfile.Username, 
+                        secret.Value);
+                default:
+                    return new OAuthCrmConnection(_userProfile.Username, secret.Value);
+            }
         }
 
         private TokenCredential GetCredential()
