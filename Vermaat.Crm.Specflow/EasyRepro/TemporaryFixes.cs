@@ -503,13 +503,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 }
 
                 //Is it an Error?
-                if (driver.HasElement(By.XPath("//div[contains(@data-id,'errorDialogdialog')]")))
+                
+                if (driver.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_ErrorDialog), out var errorDialog))
                 {
-                    var errorDialog = driver.FindElement(By.XPath("//div[contains(@data-id,'errorDialogdialog')]"));
+                    var errorDetails = errorDialog.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Subtitle));
 
-                    var errorDetails = errorDialog.FindElement(By.XPath(".//*[contains(@data-id,'errorDialog_subtitle')]"));
-
-                    if (!String.IsNullOrEmpty(errorDetails.Text))
+                    if (!string.IsNullOrEmpty(errorDetails.Text))
                         throw new InvalidOperationException(errorDetails.Text);
                 }
 

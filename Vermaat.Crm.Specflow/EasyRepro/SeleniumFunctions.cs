@@ -52,8 +52,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public static string GetErrorDialogMessage(IWebDriver driver)
         {
-            if (driver.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Subtitle), out IWebElement subTitle))
-                return subTitle.Text;
+            if (driver.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_ErrorDialog), out var errorDialog))
+            {
+                var errorDetails = errorDialog.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Subtitle));
+                return errorDetails.Text;
+            }
             else
                 return null;
         }
