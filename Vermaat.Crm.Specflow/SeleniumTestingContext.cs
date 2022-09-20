@@ -23,6 +23,7 @@ namespace Vermaat.Crm.Specflow
                 StartMaximized = true,
                 PrivateMode = true,
                 UCITestMode = true,
+                CookieСontrolsMode = 0
             };
             CurrentApp = HelperMethods.GetAppSettingsValue("AppName", true);
             BrowserOptions.Headless = Convert.ToBoolean(HelperMethods.GetAppSettingsValue("Headless", true, "false"));

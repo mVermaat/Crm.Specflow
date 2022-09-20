@@ -11,7 +11,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         private readonly Dictionary<SeleniumSelectorItems, string> _selectors = new Dictionary<SeleniumSelectorItems, string>()
         {
-            { SeleniumSelectorItems.Dialog_Subtitle, "//h2[@id='subtitle']" },
+            { SeleniumSelectorItems.Dialog_Subtitle, ".//h2[@data-id='errorDialog_subtitle']" },
             { SeleniumSelectorItems.Dialog_ErrorDialog, "//div[@data-id='errorDialogdialog']" },
             { SeleniumSelectorItems.DuplicateDetection_Grid, "//div[@data-id='manage_duplicates_grid.fieldControl.ManageDuplicatesGrid_container']"},
             { SeleniumSelectorItems.DuplicateDetection_SelectedItems, ".//div[@aria-checked='true']/.."},
