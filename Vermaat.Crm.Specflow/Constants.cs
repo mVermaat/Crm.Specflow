@@ -75,6 +75,7 @@ namespace Vermaat.Crm.Specflow
             public const int LOCALIZATION_OVERRIDES_NOT_FOUND = 43;
             public const int USERPROFILE_NOT_FOUND = 44;
             public const int USERPROFILE_FILE_NOT_FOUND = 45;
+            public const int TRYUNTIL_TIMEOUT = 45;
         }
 
         public class LocalizedTexts
