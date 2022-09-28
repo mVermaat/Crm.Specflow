@@ -14,7 +14,6 @@ namespace Vermaat.Crm.Specflow.Commands
     public class LoginWithUserCommand : ApiOnlyCommand
     {
         private readonly UserProfile _userProfile;
-        private readonly string _userAlias;
 
         public LoginWithUserCommand(CrmTestingContext crmContext, UserProfile userProfile)
             : base(crmContext)
