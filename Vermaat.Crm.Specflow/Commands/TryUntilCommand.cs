@@ -25,17 +25,22 @@ namespace Vermaat.Crm.Specflow.Commands
         public void Execute(CommandAction commandAction)
         {
             DateTime timeoutDateTime = DateTime.Now.Add(_timeout);
+            ExecuteUntil(timeoutDateTime, commandAction);
+            
+        }
 
+        private void ExecuteUntil(DateTime timeoutDateTime, CommandAction commandAction)
+        {
             try
             {
                 _crmContext.CommandProcessor.Execute(_childCommand, commandAction);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 if (DateTime.Now < timeoutDateTime)
                 {
                     Thread.Sleep((int)_waitPeriod.TotalMilliseconds);
-                    Execute(commandAction);
+                    ExecuteUntil(timeoutDateTime, commandAction);
                 }
                 else
                     throw;
@@ -67,6 +72,11 @@ namespace Vermaat.Crm.Specflow.Commands
         {
             DateTime timeoutDateTime = DateTime.Now.Add(_timeout);
 
+            return ExecuteUntil(timeoutDateTime, commandAction);
+        }
+
+        private TResult ExecuteUntil(DateTime timeoutDateTime, CommandAction commandAction)
+        {
             try
             {
                 var result = _crmContext.CommandProcessor.Execute(_childCommand, commandAction);
@@ -76,7 +86,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 else if (DateTime.Now < timeoutDateTime)
                 {
                     Thread.Sleep((int)_waitPeriod.TotalMilliseconds);
-                    return Execute(commandAction);
+                    return ExecuteUntil(timeoutDateTime, commandAction);
                 }
                 else
                     throw new TestExecutionException(Constants.ErrorCodes.TRYUNTIL_TIMEOUT, _timeoutMessageFunc(result));
@@ -87,7 +97,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 if (DateTime.Now < timeoutDateTime)
                 {
                     Thread.Sleep((int)_waitPeriod.TotalMilliseconds);
-                    return Execute(commandAction);
+                    return ExecuteUntil(timeoutDateTime, commandAction);
                 }
                 else
                     throw;
