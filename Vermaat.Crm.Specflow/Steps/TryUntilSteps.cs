@@ -11,6 +11,7 @@ using Vermaat.Crm.Specflow.Commands;
 
 namespace Vermaat.Crm.Specflow.Steps
 {
+    [Binding]
     public class TryUntilSteps
     {
         private readonly CrmTestingContext _crmContext;
