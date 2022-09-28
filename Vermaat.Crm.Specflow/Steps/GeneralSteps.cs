@@ -138,7 +138,7 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssertBusinessProcessStageCommand(_crmContext, alias, stageName));
         }
 
-        [Then(@"(.*) has the following values")]
+        [Then(@"([^\s]+) has the following values")]
         public void ThenAliasHasValues(string alias, Table criteria)
         {
             EntityReference aliasRef = _crmContext.RecordCache[alias];
