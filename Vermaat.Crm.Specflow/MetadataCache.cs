@@ -47,7 +47,15 @@ namespace Vermaat.Crm.Specflow
             if (attributeMd.Length == 0)
                 throw new TestExecutionException(Constants.ErrorCodes.ATTRIBUTE_DOESNT_EXIST, displayName, entityName);
             else if (attributeMd.Length > 1)
-                throw new TestExecutionException(Constants.ErrorCodes.MULTIPLE_ATTRIBUTES_FOUND, displayName, string.Join(", ", attributeMd.Select(md => md.LogicalName)));
+            {
+                // If multiple attributes are found, but one matches the logical name. Always take the logical name
+                var logicalNameOnly = attributeMd.FirstOrDefault(a => a.LogicalName.Equals(displayName));
+                if (logicalNameOnly != null)
+                    return logicalNameOnly;
+                else
+                    throw new TestExecutionException(Constants.ErrorCodes.MULTIPLE_ATTRIBUTES_FOUND, displayName, string.Join(", ", attributeMd.Select(md => md.LogicalName)));
+
+            }
 
             return attributeMd.First();
 
