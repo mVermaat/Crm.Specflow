@@ -23,6 +23,19 @@ namespace Vermaat.Crm.Specflow.Steps
             _seleniumContext = seleniumContext;
         }
 
+        #region Given
+
+        [Given(@"an existing ([^\s]+) named ([^\s]+) with the following values is available within ([0-9]+) seconds")]
+        public void GivenExistingWithValues(string entityName, string alias, int seconds, Table criteria)
+        {
+            Entity entity = ThenRecordExists(seconds, entityName, criteria);
+            _crmContext.RecordCache.Add(alias, entity, false);
+        }
+
+        #endregion
+
+        #region Then
+
         [Then(@"within ([0-9]+) seconds ([^\s]+) has the following values")]
         public void ThenAliasHasValues(int seconds, string alias, Table criteria)
         {
@@ -48,6 +61,8 @@ namespace Vermaat.Crm.Specflow.Steps
                 r => r.Count == amount,
                 r => $"When looking for records for {entityName}, expected {amount}, but found {r.Count} records");
         }
+
+        #endregion
 
         private void TryUntil<TCommand>(TCommand command, int seconds) where TCommand : ICommand
         {
