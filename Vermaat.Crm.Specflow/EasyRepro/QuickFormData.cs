@@ -103,7 +103,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 var saveCompleted = false;
                 while (!saveCompleted && DateTime.Now < timeout)
                 {
-                    if (driver.HasElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_OpenChildButton)))
+                    if (HasViewRecordButton(driver))
                         saveCompleted = true;
                     else
                     {
@@ -115,7 +115,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         Logger.WriteLine("Save not yet completed. Waiting..");
                         Thread.Sleep(250);
                     }
-
                 }
 
                 if (!saveCompleted)
@@ -123,6 +122,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 return true;
             });
+        }
+
+        private bool HasViewRecordButton(IWebDriver driver)
+        {
+            return driver.HasElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_Notification_Window));
         }
 
         public bool IsItQuickCreate()
