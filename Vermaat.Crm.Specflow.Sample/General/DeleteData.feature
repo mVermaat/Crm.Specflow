@@ -17,6 +17,6 @@ Scenario: Delete a contact
 	Then TestAccount has the following values
 		| Property        | Value |
 		| Contact Deleted | Yes   |
-	And no contact exists with the following values
+	And within 30 seconds no contact exists with the following values
 		| Property     | Value       |
 		| Company Name | TestAccount |
