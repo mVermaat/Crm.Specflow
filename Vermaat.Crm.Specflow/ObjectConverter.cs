@@ -40,9 +40,9 @@ namespace Vermaat.Crm.Specflow
 
         public static string ToSpecflowTableValue(AttributeMetadata metadata, object parsed)
         {
-            switch(metadata.AttributeType)
+            switch (metadata.AttributeType)
             {
-                case AttributeTypeCode.Double: 
+                case AttributeTypeCode.Double:
                     return Convert.ToDouble(parsed).ToString(NumberFormatInfo.InvariantInfo);
 
                 case AttributeTypeCode.Decimal:
@@ -107,12 +107,57 @@ namespace Vermaat.Crm.Specflow
                         return lookup;
 
                 case AttributeTypeCode.Uniqueidentifier:
-                        return Guid.Parse(value);
+                    return Guid.Parse(value);
 
                 case AttributeTypeCode.Virtual:
                     return ParseVirtualType(context, metadata, value);
 
+                case AttributeTypeCode.PartyList:
+                    return ParsePartyList(context, metadata, value);
+
                 default: throw new NotImplementedException(string.Format("Type {0} not implemented", metadata.AttributeType));
+            }
+        }
+
+        private static object ParsePartyList(CrmTestingContext context, AttributeMetadata metadata, string value)
+        {
+            var splitted = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            EntityCollection partyList = new EntityCollection();
+            partyList.EntityName = "activityparty";
+            foreach (var item in splitted)
+            {
+                var entityRef = GetLookupValue(context, metadata, item.Trim());
+                partyList.Entities.Add(ToActivityParty(entityRef, metadata));
+            }
+
+            return partyList;
+
+        }
+
+        private static Entity ToActivityParty(EntityReference entityRef, AttributeMetadata metadata)
+        {
+            var party = new Entity("activityparty", entityRef.Id);
+
+            party["participationtypemask"] = GetTypeMask(metadata);
+            party["partyid"] = entityRef;
+
+            return party;
+        }
+
+        private static OptionSetValue GetTypeMask(AttributeMetadata metadata)
+        {
+            switch (metadata.LogicalName)
+            {
+                case "from": return new OptionSetValue(1);
+                case "to": return new OptionSetValue(2);
+                case "cc": return new OptionSetValue(3);
+                case "bcc": return new OptionSetValue(4);
+                case "requiredattendees": return new OptionSetValue(5);
+                case "optionalattendees": return new OptionSetValue(6);
+                case "organizer": return new OptionSetValue(7);
+
+                default: throw new NotImplementedException($"Type mask for field {metadata.LogicalName} not implemented");
             }
         }
 
@@ -127,7 +172,7 @@ namespace Vermaat.Crm.Specflow
             if (((DateTimeAttributeMetadata)metadata).DateTimeBehavior == DateTimeBehavior.UserLocal)
             {
                 return TimeZoneInfo.ConvertTimeToUtc(
-                    DateTime.ParseExact(value, format, CultureInfo.InvariantCulture), 
+                    DateTime.ParseExact(value, format, CultureInfo.InvariantCulture),
                     GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeZoneInfo);
             }
             else
@@ -138,7 +183,7 @@ namespace Vermaat.Crm.Specflow
 
         private static object ParseVirtualType(CrmTestingContext context, AttributeMetadata metadata, string value)
         {
-            
+
             if (metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
             {
                 return new OptionSetValueCollection(value.Split(',').Select(v => GetOptionSetValue(metadata, v.Trim(), context)).ToList());
@@ -187,9 +232,9 @@ namespace Vermaat.Crm.Specflow
             };
             qe.Criteria.AddCondition(targetMd.PrimaryNameAttribute, ConditionOperator.Equal, alias);
 
-            if(addtionalLookupFilters != null)
+            if (addtionalLookupFilters != null)
             {
-                foreach(var filter in addtionalLookupFilters)
+                foreach (var filter in addtionalLookupFilters)
                 {
                     qe.Criteria.AddCondition(filter);
                 }
@@ -204,10 +249,10 @@ namespace Vermaat.Crm.Specflow
         private static EntityReference GetLookupValue(CrmTestingContext context, AttributeMetadata metadata, string alias)
         {
             var lookupMd = (LookupAttributeMetadata)metadata;
-            foreach(string targetEntity in lookupMd.Targets)
+            foreach (string targetEntity in lookupMd.Targets)
             {
                 var result = GetLookupValue(context, alias, targetEntity);
-                if(result != null)
+                if (result != null)
                 {
                     return result;
                 }
@@ -222,7 +267,7 @@ namespace Vermaat.Crm.Specflow
 
             var option = optionMd.OptionSet.Options.Where(o => o.Label.IsLabel(GlobalTestingContext.LanguageCode, value)).FirstOrDefault();
 
-            Assert.IsNotNull(option, $"Option {value} not found. AvailaleOptions: { string.Join(", ", optionMd.OptionSet.Options.Select(o => o.Label?.GetLabelInLanguage(GlobalTestingContext.LanguageCode)))}");
+            Assert.IsNotNull(option, $"Option {value} not found. AvailaleOptions: {string.Join(", ", optionMd.OptionSet.Options.Select(o => o.Label?.GetLabelInLanguage(GlobalTestingContext.LanguageCode)))}");
             Assert.IsTrue(option.Value.HasValue);
 
             return new OptionSetValue(option.Value.Value);

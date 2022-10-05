@@ -40,8 +40,34 @@ namespace Vermaat.Crm.Specflow
                 Assert.AreEqual(expected.Except(actual).Count(), 0, $"Expected Values: {string.Join(", ", expected)} | Actual Values: {string.Join(", ", actual)}");
                 Assert.AreEqual(actual.Except(expected).Count(), 0, $"Expected Values: {string.Join(", ", expected)} | Actual Values: {string.Join(", ", actual)}");
             }
+            else if(type == typeof(EntityCollection))
+            {
+                var expected = ParseEntityCollection((EntityCollection)expectedValue);
+                var actual = ParseEntityCollection((EntityCollection)actualValue);
+
+                Assert.AreEqual(expected.Length, actual.Length, $"Expected Values: {string.Join(", ", expected)} | Actual Values: {string.Join(", ", actual)}");
+                Assert.AreEqual(expected.Except(actual).Count(), 0, $"Expected Values: {string.Join(", ", expected)} | Actual Values: {string.Join(", ", actual)}");
+                Assert.AreEqual(actual.Except(expected).Count(), 0, $"Expected Values: {string.Join(", ", expected)} | Actual Values: {string.Join(", ", actual)}");
+            }
             else
                 Assert.AreEqual(expectedValue, actualValue, $"Field {attributeName} is different");
+        }
+
+        private static Guid[] ParseEntityCollection(EntityCollection col)
+        {
+            if (col == null || col.Entities == null || col.Entities.Count == 0)
+                return new Guid[0];
+
+            string entityName = col.EntityName ?? col.Entities[0]?.LogicalName;
+            if(!string.IsNullOrEmpty(entityName) && entityName.Equals("activityparty"))
+            {
+                return col.Entities.Select(e => e.GetAttributeValue<EntityReference>("partyid").Id).ToArray();
+            }
+            else
+            {
+                return col.Entities.Select(e => e.Id).ToArray();
+            } 
+                
         }
 
         /// <summary>

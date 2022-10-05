@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -94,6 +95,28 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 App.App.Entity.ClearValue(value.ToLookupItem(Metadata));
             }
         }
-        
+
+        protected override void SetLookupValues(LookupValue[] values)
+        {
+            var lookupValues = new List<string>();
+            foreach (var value in values)
+            {
+                if (value.Value != null)
+                {
+                    lookupValues.Add($"{{ id: '{value.Value.Id}', name: '{value.Value.Name?.Replace("'", @"\'")}', entityType: '{value.Value.LogicalName}' }}");
+                }
+            }
+
+            if (lookupValues.Count > 0)
+            {
+                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {string.Join(", ", lookupValues)} ])");
+                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
+            }
+            else
+            {
+                App.App.Entity.ClearValue(new LookupItem() { Name = Metadata.LogicalName });
+            }
+        }
+
     }
 }
