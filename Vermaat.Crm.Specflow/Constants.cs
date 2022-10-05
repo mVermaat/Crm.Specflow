@@ -89,6 +89,7 @@ namespace Vermaat.Crm.Specflow
             public const string SaveStatusUnsaved = "SaveStatusUnsaved";
             public const string CloseAsWon = "CloseAsWon";
             public const string CloseAsLost = "CloseAsLost";
+            public const string QuickCreateViewRecord = "View Record";
         }
     }
 }

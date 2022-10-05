@@ -55,7 +55,7 @@ namespace Vermaat.Crm.Specflow
 
             var localizedTextSet = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(File.ReadAllText(fileInfo.FullName), settings);
 
-            foreach(var key in localizedTextSet.Keys.ToArray())
+            foreach (var key in localizedTextSet.Keys.ToArray())
             {
                 localizedTextSet[key] = MergeObjects(GetDefaults(), localizedTextSet[key]);
             }
@@ -65,7 +65,7 @@ namespace Vermaat.Crm.Specflow
 
         private Dictionary<string, string> MergeObjects(Dictionary<string, string> localizedTexts, Dictionary<string, string> overrides)
         {
-            foreach(var item in overrides)
+            foreach (var item in overrides)
             {
                 if (localizedTexts.ContainsKey(item.Key))
                     localizedTexts[item.Key] = item.Value;
@@ -87,6 +87,7 @@ namespace Vermaat.Crm.Specflow
                 { Constants.LocalizedTexts.SaveButton, "Save (CTRL+S)" },
                 { Constants.LocalizedTexts.SaveStatusSaving, "saving" },
                 { Constants.LocalizedTexts.SaveStatusUnsaved, "unsaved" },
+                { Constants.LocalizedTexts.QuickCreateViewRecord, "View Record" },
             };
     }
 }
