@@ -9,6 +9,7 @@
     "SaveButton": "Opslaan (Ctrl+S)",
     "SaveStatusSaving": "Bezig met opslaan",
     "SaveStatusUnsaved": "Niet-opgeslagen",
+    "QuickCreateViewRecord": "Record bekijken",
 
     // Below are localizations specific to the sample project. No need to copy these:
     "AccountSummaryTab": "Samenvatting",

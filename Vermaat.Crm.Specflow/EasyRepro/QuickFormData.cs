@@ -53,8 +53,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             _app.Client.Execute(BrowserOptionHelper.GetOptions("Open Quick Create Child"), (driver) =>
                 {
-                    driver.WaitUntilClickable(
-                        SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_OpenChildButton),
+                    var window = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_Notification_Window));
+                    window.WaitUntilClickable(
+                        SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_OpenChildButton, _app.LocalizedTexts[Constants.LocalizedTexts.QuickCreateViewRecord, _app.UILanguageCode]),
                         TimeSpan.FromSeconds(5),
                         null,
                         () => throw new TestExecutionException(Constants.ErrorCodes.QUICK_CREATE_CHILD_NOT_AVAILABLE)).Click();
@@ -103,7 +104,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 var saveCompleted = false;
                 while (!saveCompleted && DateTime.Now < timeout)
                 {
-                    if (driver.HasElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_OpenChildButton)))
+                    if (driver.HasElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_Notification_Window)))
                         saveCompleted = true;
                     else
                     {
@@ -115,7 +116,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         Logger.WriteLine("Save not yet completed. Waiting..");
                         Thread.Sleep(250);
                     }
-
                 }
 
                 if (!saveCompleted)

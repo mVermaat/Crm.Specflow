@@ -63,6 +63,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 case AttributeTypeCode.Decimal:
                     SetDecimalField(new DecimalValue((decimal?)fieldValue));
                     break;
+                case AttributeTypeCode.PartyList:
+                    SetLookupValues(((EntityCollection)fieldValue).Entities.Select(e => new LookupValue(e.GetAttributeValue<EntityReference>("partyid"))).ToArray());
+                    break;
                 default:
                     SetTextField((string)fieldValue);
                     break;
@@ -99,6 +102,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
         protected abstract void SetTextField(string fieldValue);
 
         protected abstract void SetLookupValue(LookupValue value);
+
+        protected abstract void SetLookupValues(LookupValue[] values);
 
         protected abstract void SetMultiSelectOptionSetField(MultiSelectOptionSetValue value);
 

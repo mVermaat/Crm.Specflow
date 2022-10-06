@@ -86,6 +86,10 @@ namespace Vermaat.Crm.Specflow
             {
                 return ((OptionSetValueCollection)value).Where(ov => ov != null).Select(ov => ov.Value);
             }
+            else if (type == typeof(EntityCollection))
+            {
+                return ((EntityCollection)value)?.Entities?.Where(en => en != null).Select(en => en.Id);
+            }
             return value;
         }
 

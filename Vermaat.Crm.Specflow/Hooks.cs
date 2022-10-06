@@ -163,6 +163,13 @@ namespace Vermaat.Crm.Specflow
             }
         }
 
+        [BeforeTestRun]
+        public static void BeforeTestRunXPathFixes()
+        {
+            AppElements.Xpath[AppReference.Dialogs.ConfirmButton] = "//button[@data-id='confirmButton']";
+            AppElements.Xpath[AppReference.Dialogs.CancelButton] = "//button[@data-id='cancelButton']";
+        }
+
         [AfterTestRun]
         public static void AfterTestRunCleanup()
         {

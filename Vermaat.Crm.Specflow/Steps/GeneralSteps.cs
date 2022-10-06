@@ -23,7 +23,7 @@ namespace Vermaat.Crm.Specflow.Steps
 
         #region Given
 
-        [Given(@"an existing ([^\s]+) named (.*) with the following values")]
+        [Given(@"an existing ([^\s]+) named ([^\s]+) with the following values")]
         public void GivenExistingWithValues(string entityName, string alias, Table criteria)
         {
             Entity entity = ThenRecordExists(entityName, criteria);
@@ -138,7 +138,7 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssertBusinessProcessStageCommand(_crmContext, alias, stageName));
         }
 
-        [Then(@"(.*) has the following values")]
+        [Then(@"([^\s]+) has the following values")]
         public void ThenAliasHasValues(string alias, Table criteria)
         {
             EntityReference aliasRef = _crmContext.RecordCache[alias];

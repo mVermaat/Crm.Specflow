@@ -62,6 +62,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.LOCALIZATION_OVERRIDES_NOT_FOUND, "Localization JSON file not found at: {0}");
             AddError(Constants.ErrorCodes.USERPROFILE_NOT_FOUND, "User profile '{0}' doesn't exist");
             AddError(Constants.ErrorCodes.USERPROFILE_FILE_NOT_FOUND, "User profile file '{0}' doesn't exist");
+            AddError(Constants.ErrorCodes.TRYUNTIL_TIMEOUT, "Timeout for retry reached: {0}");
         }
 
         public void AddError(int errorCode, string message)
