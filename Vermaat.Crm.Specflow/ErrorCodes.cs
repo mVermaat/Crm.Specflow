@@ -63,6 +63,9 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.USERPROFILE_NOT_FOUND, "User profile '{0}' doesn't exist");
             AddError(Constants.ErrorCodes.USERPROFILE_FILE_NOT_FOUND, "User profile file '{0}' doesn't exist");
             AddError(Constants.ErrorCodes.TRYUNTIL_TIMEOUT, "Timeout for retry reached: {0}");
+            AddError(Constants.ErrorCodes.SELECTOR_NOT_FOUND, "Selenium Selector {0} doesn't exist");
+            AddError(Constants.ErrorCodes.LOCALIZED_LANGUAGE_MISSING, "No localized texts for language {0} are available. See https://github.com/DynamicHands/Crm.Specflow/wiki/Writing-Features#localization for more information.");
+
         }
 
         public void AddError(int errorCode, string message)

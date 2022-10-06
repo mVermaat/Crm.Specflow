@@ -25,7 +25,15 @@ namespace Vermaat.Crm.Specflow
         /// <returns></returns>
         public string this[string key, int lcid]
         {
-            get => _localizedTexts[lcid.ToString()].ContainsKey(key) ? _localizedTexts[lcid.ToString()][key] : null;
+            get
+            {
+                if (!_localizedTexts.TryGetValue(lcid.ToString(), out var textsForLcid))
+                    throw new TestExecutionException();
+                if (textsForLcid.TryGetValue(key, out var localizedText))
+                    return localizedText;
+                else
+                    return null;
+            }
         }
 
 
