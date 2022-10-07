@@ -65,6 +65,8 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.TRYUNTIL_TIMEOUT, "Timeout for retry reached: {0}");
             AddError(Constants.ErrorCodes.SELECTOR_NOT_FOUND, "Selenium Selector {0} doesn't exist");
             AddError(Constants.ErrorCodes.LOCALIZED_LANGUAGE_MISSING, "No localized texts for language {0} are available. See https://github.com/DynamicHands/Crm.Specflow/wiki/Writing-Features#localization for more information.");
+            AddError(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, "Selenium command {0} couldn't be completed: {1}");
+            AddError(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, "Selenium command {0} didn't have a result. Can't display a proper error.");
 
         }
 
