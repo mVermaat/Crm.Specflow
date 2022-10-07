@@ -44,12 +44,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public By GetXPathSeleniumSelector(SeleniumSelectorItems itemName)
         {
-            return By.XPath(_selectors[itemName]);
+            if (_selectors.TryGetValue(itemName, out var selector))
+                return By.XPath(selector);
+            else
+                throw new TestExecutionException(Constants.ErrorCodes.SELECTOR_NOT_FOUND, itemName);
         }
 
         public By GetXPathSeleniumSelector(SeleniumSelectorItems itemName, string nameReplacement)
         {
-            return By.XPath(_selectors[itemName].Replace("[NAME]", nameReplacement));
+            if (_selectors.TryGetValue(itemName, out var selector))
+                return By.XPath(selector.Replace("[NAME]", nameReplacement));
+            else
+                throw new TestExecutionException(Constants.ErrorCodes.SELECTOR_NOT_FOUND, itemName);
         }
     }
 }
