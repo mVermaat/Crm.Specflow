@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
-    internal class GetRibbonItemCommand : ISeleniumCommandFunc<IWebElement>
+    public class GetRibbonItemCommand : ISeleniumCommandFunc<IWebElement>
     {
         private readonly string _buttonName;
 
@@ -19,45 +19,43 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             _buttonName = buttonName;
         }
 
-        public CommandResult<IWebElement> Execute(IWebDriver driver, SeleniumSelectorData selectors)
+        public virtual CommandResult<IWebElement> Execute(IWebDriver driver, SeleniumSelectorData selectors)
         {
+            // Get ribbon
             var ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.Container]),
                     TimeSpan.FromSeconds(5));
 
+            // Get ribbon (alternative)
             if (ribbon == null)
             {
                 ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid]));
                 if (ribbon == null)
-                    throw new TestExecutionException(Constants.ErrorCodes.RIBBON_NOT_FOUND);
+                    return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND);
             }
 
-            var items = ribbon.FindElements(By.TagName("button"));
-            var item = FindButton(items, ribbon);
-            if (item != null)
-                return new CommandResult<IWebElement>() { IsSuccessfull = true, Result = item };
+            // Find in regular buttons, return if found
+            if (ribbon.TryFindElement(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _buttonName), out var item))
+                return CommandResult<IWebElement>.Success(item);
 
-            var moreCommands = items.FirstOrDefault(x => x.GetAttribute("aria-label").Equals("More Commands", StringComparison.OrdinalIgnoreCase));
-
-            if(moreCommands != null)
+            // Not found, look for more commands button
+            if(ribbon.TryFindElement(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_More_Commands), out var moreCommands))
             {
                 moreCommands.Click();
                 
+                // Find the ribbon in the flyout
                 ribbon = driver.WaitUntilAvailable(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Flyout_Container), TimeSpan.FromSeconds(5));
-                if(ribbon == null)
-                    throw new TestExecutionException(Constants.ErrorCodes.RIBBON_NOT_FOUND);
+                if (ribbon == null)
+                    return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND);
 
-                items = ribbon.FindElements(By.TagName("button"));
-                item = FindButton(items, ribbon);
-                if (item != null)
-                    return new CommandResult<IWebElement>() { IsSuccessfull = true, Result = item };
+
+                // Find in more commands list
+                if (ribbon.TryFindElement(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _buttonName), out item))
+                    return CommandResult<IWebElement>.Success(item);
             }
-            
-            return new CommandResult<IWebElement>() { IsSuccessfull = false, AllowRetry = false };
 
-        }
+            // Item isn't in the ribbon
+            return CommandResult<IWebElement>.Success(null);
 
-        private IWebElement FindButton(ReadOnlyCollection<IWebElement> items, IWebElement ribbon)
-         => items.FirstOrDefault(item => item.GetAttribute("aria-label").Equals(_buttonName, StringComparison.OrdinalIgnoreCase));
-        
+        }        
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro.Commands;
+using static Vermaat.Crm.Specflow.Constants;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -43,7 +44,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     if(result.AllowRetry && retries > 0)
                         ExecuteCommand(driver, command, retries - 1);
                     else
-                        throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, result.Message);
+                        throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, GlobalTestingContext.ErrorCodes.GetErrorMessage(result.ErrorCode, result.ErrorMessageFormatArgs));
                 }
             }
             catch(Exception ex)
@@ -73,7 +74,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     if (result.AllowRetry && retries > 0)
                         return ExecuteCommand(driver, command, retries - 1);
                     else
-                        throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, result.Message);
+                        throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, GlobalTestingContext.ErrorCodes.GetErrorMessage(result.ErrorCode, result.ErrorMessageFormatArgs));
                 }
 
                 Logger.WriteLine($"Executing Selenium Command {command.GetType().Name} successfull");

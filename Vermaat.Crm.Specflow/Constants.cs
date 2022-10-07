@@ -80,6 +80,7 @@ namespace Vermaat.Crm.Specflow
             public const int LOCALIZED_LANGUAGE_MISSING = 48;
             public const int SELENIUM_COMMAND_FAILED = 49;
             public const int SELENIUM_COMMAND_NO_RESULT = 50;
+            public const int RIBBON_BUTTON_DOESNT_EXIT = 51;
         }
 
         public class LocalizedTexts

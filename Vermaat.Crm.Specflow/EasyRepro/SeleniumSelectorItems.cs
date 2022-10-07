@@ -37,6 +37,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Entity_QuickCreate_Notification_Window,
         Entity_QuickCreate_OpenChildButton,
 
+        Entity_Ribbon_Button,
+        Entity_Ribbon_More_Commands,
         Entity_Ribbon_Flyout_Container,
 
         Entity_SaveStatus,

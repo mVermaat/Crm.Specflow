@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.FormLoadConditions;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -22,55 +23,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void ClickButton(string buttonText)
         {
-            _app.Client.ClickCommand(buttonText);
+            SeleniumCommandProcessor.ExecuteCommand(_app.WebDriver, new ClickRibbonItemCommand(buttonText));
         }
 
 
         public bool IsButtonAvailable(string name)
-        {
-            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Check ribbon button"), driver =>
-            {
-
-                //Find the button in the CommandBar
-                var ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.Container]), 
-                    TimeSpan.FromSeconds(5));
-
-                if(ribbon == null)
-                {
-                    ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid]), 
-                        TimeSpan.FromSeconds(5),
-                        null,
-                        () => // FailureCallback
-                        {
-                            throw new TestExecutionException(Constants.ErrorCodes.RIBBON_NOT_FOUND);
-                        });
-                
-                }
-                //Get the CommandBar buttons
-                var items = ribbon.FindElements(By.TagName("button"));
-
-                //Is the button in the ribbon?
-                if (items.Any(x => x.GetAttribute("aria-label").Equals(name, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return true;
-                }
-                else
-                {
-                    //Is the button in More Commands?
-                    if (items.Any(x => x.GetAttribute("aria-label").Equals("More Commands", StringComparison.OrdinalIgnoreCase)))
-                    {
-                        //Click More Commands
-                        items.FirstOrDefault(x => x.GetAttribute("aria-label").Equals("More Commands", StringComparison.OrdinalIgnoreCase)).Click(true);
-                        driver.WaitForTransaction();
-
-                        //Find the button
-                        return driver.HasElement(By.XPath(AppElements.Xpath[AppReference.CommandBar.Button].Replace("[NAME]", name)));
-                    }
-                    else
-                        return false;
-                }
-            });
-        }
+            => SeleniumCommandProcessor.ExecuteCommand(_app.WebDriver, new GetRibbonItemCommand(name)) != null;
+        
 
         public void ActivateQuote()
         {
