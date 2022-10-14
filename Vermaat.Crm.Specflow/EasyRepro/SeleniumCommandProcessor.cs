@@ -42,77 +42,48 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private static void ExecuteCommand(BrowserInteraction browserInteraction, ISeleniumCommand command, int retries)
         {
-            try
+            Logger.WriteLine($"Executing Selenium Command {command.GetType().Name}. Retries left: {retries}");
+            var result = command.Execute(browserInteraction);
+
+            if(result == null)
+                throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, command.GetType().Name);
+
+
+            if (!result.IsSuccessfull)
             {
-                Logger.WriteLine($"Executing Selenium Command {command.GetType().Name}. Retries left: {retries}");
-                var result = command.Execute(browserInteraction);
-
-                if(result == null)
-                    throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, command.GetType().Name);
-
-
-                if (!result.IsSuccessfull)
-                {
-                    if (result.AllowRetry && retries > 0)
-                    {
-                        Delay();
-                        ExecuteCommand(browserInteraction, command, retries - 1);
-                    }
-                    else
-                        throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, GlobalTestingContext.ErrorCodes.GetErrorMessage(result.ErrorCode, result.ErrorMessageFormatArgs));
-                }
-            }
-            catch(Exception ex)
-            {
-                if (retries > 0)
+                if (result.AllowRetry && retries > 0)
                 {
                     Delay();
                     ExecuteCommand(browserInteraction, command, retries - 1);
                 }
                 else
-                    throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, ex, command.GetType().Name, $"{ex.GetType().Name} with message: {ex.Message}");
+                    throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, GlobalTestingContext.ErrorCodes.GetErrorMessage(result.ErrorCode, result.ErrorMessageFormatArgs));
             }
-
             Logger.WriteLine($"Executing Selenium Command {command.GetType().Name} successfull");
         }
 
         private static T ExecuteCommand<T>(BrowserInteraction browserInteraction, ISeleniumCommandFunc<T> command, int retries)
         {
-            try
+            Logger.WriteLine($"Executing Selenium Command {command.GetType().Name}. Retries left: {retries}");
+            var result = command.Execute(browserInteraction);
+
+            if (result == null)
+                throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, command.GetType().Name);
+
+
+            if (!result.IsSuccessfull)
             {
-                Logger.WriteLine($"Executing Selenium Command {command.GetType().Name}. Retries left: {retries}");
-                var result = command.Execute(browserInteraction);
-
-                if (result == null)
-                    throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, command.GetType().Name);
-
-
-                if (!result.IsSuccessfull)
-                {
-                    if (result.AllowRetry && retries > 0)
-                    {
-                        Delay();
-                        return ExecuteCommand(browserInteraction, command, retries - 1);
-                    }
-                    else
-                        throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, GlobalTestingContext.ErrorCodes.GetErrorMessage(result.ErrorCode, result.ErrorMessageFormatArgs));
-                }
-
-                Logger.WriteLine($"Executing Selenium Command {command.GetType().Name} successfull");
-                return result.Result;
-
-            }
-            catch (Exception ex)
-            {
-                if (retries > 0)
+                if (result.AllowRetry && retries > 0)
                 {
                     Delay();
                     return ExecuteCommand(browserInteraction, command, retries - 1);
                 }
                 else
-                    throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, ex, command.GetType().Name, $"{ex.GetType().Name} with message: {ex.Message}");
+                    throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, GlobalTestingContext.ErrorCodes.GetErrorMessage(result.ErrorCode, result.ErrorMessageFormatArgs));
             }
 
+            Logger.WriteLine($"Executing Selenium Command {command.GetType().Name} successfull");
+            return result.Result;
         }
 
         private static void Delay()

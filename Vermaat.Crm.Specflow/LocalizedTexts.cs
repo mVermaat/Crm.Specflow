@@ -93,7 +93,7 @@ namespace Vermaat.Crm.Specflow
                 { Constants.LocalizedTexts.DeleteButton, "Delete" },
                 { Constants.LocalizedTexts.ReviseQuoteButton, "Revise" },
                 { Constants.LocalizedTexts.SaveButton, "Save" },
-                { Constants.LocalizedTexts.SaveStatusSaving, "saved" },
+                { Constants.LocalizedTexts.SaveStatusSaved, "saved" },
                 { Constants.LocalizedTexts.SaveStatusSaving, "saving" },
                 { Constants.LocalizedTexts.SaveStatusUnsaved, "unsaved" },
                 { Constants.LocalizedTexts.QuickCreateViewRecord, "View Record" },
