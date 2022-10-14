@@ -51,37 +51,37 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
             SeleniumCommandProcessor.ExecuteCommand(browserInteraction, new ClickRibbonItemCommand(browserInteraction.LocalizedTexts[Constants.LocalizedTexts.SaveButton, browserInteraction.UiLanguageCode]));
 
-            if (HasDuplicateDetection(browserInteraction))
-            {
-                if (_saveIfDuplicate)
-                    AcceptDuplicateDetection(browserInteraction.Driver);
-                else
-                    return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, $"Duplicate detected and saving with duplicate is not allowed");
-            }
-            if (browserInteraction.Driver.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_ErrorDialog), out var errorDialog))
-            {
-                var errorDetails = errorDialog.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Subtitle));
-                if (!string.IsNullOrEmpty(errorDetails.Text))
-                    return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, errorDetails.Text);
-            }
-
             var timeout = DateTime.Now.AddSeconds(20);
-            var unsavedTimeout = DateTime.Now.AddSeconds(5);
+            var unsavedTimeout = DateTime.Now.AddSeconds(10);
             bool saveCompleted = false;
             while (!saveCompleted && DateTime.Now < timeout)
             {
+                Thread.Sleep(200);
                 var saveStatus = GetSaveStatus(browserInteraction);
 
                 if (saveStatus == SaveStatus.Saved)
                     saveCompleted = true;
-                else if (saveStatus == SaveStatus.Unsaved && DateTime.Now > unsavedTimeout)
+                else if (saveStatus == SaveStatus.Unsaved)
                 {
-                    var formNotifications = SeleniumCommandProcessor.ExecuteCommand(browserInteraction, new GetFormNotificationsCommand());
-                    return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
-
-                }
-                else
-                    Thread.Sleep(200);
+                    if (HasDuplicateDetection(browserInteraction))
+                    {
+                        if (_saveIfDuplicate)
+                            AcceptDuplicateDetection(browserInteraction.Driver);
+                        else
+                            return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, $"Duplicate detected and saving with duplicate is not allowed");
+                    }
+                    else if (browserInteraction.Driver.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_ErrorDialog), out var errorDialog))
+                    {
+                        var errorDetails = errorDialog.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Subtitle));
+                        if (!string.IsNullOrEmpty(errorDetails.Text))
+                            return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, errorDetails.Text);
+                    }
+                    else if(DateTime.Now > unsavedTimeout)
+                    {
+                        var formNotifications = SeleniumCommandProcessor.ExecuteCommand(browserInteraction, new GetFormNotificationsCommand());
+                        return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
+                    }
+                } 
             }
 
             if (!saveCompleted)
@@ -93,34 +93,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
         private bool HasDuplicateDetection(BrowserInteraction browserInteraction)
         {
-            var timeout = DateTime.Now.AddSeconds(5);
-            bool isSaving = false;
-
-            while (DateTime.Now < timeout)
-            {
-                if (browserInteraction.Driver.HasElement(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionWindowMarker])) &&
-                    browserInteraction.Driver.HasElement(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionGridRows])))
-                    return true;
-
-                if (browserInteraction.Driver.HasElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_ErrorDialog)))
-                    return false;
-
-                var status = GetSaveStatus(browserInteraction);
-                if (status == SaveStatus.Saved || status == SaveStatus.Saving)
-                {
-                    // When duplicate detection is found it will go to saving and then back to unsaved.
-                    // This goes really fast, so this will make sure it was saving/saved and still saving/saved after 100ms
-                    if (isSaving)
-                        return false;
-                    else
-                        isSaving = true;
-                }
-
-                Thread.Sleep(100);
-            }
-            return false;
-
-
+            return browserInteraction.Driver.HasElement(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionWindowMarker])) 
+                && browserInteraction.Driver.HasElement(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionGridRows]));
         }
 
         private void AcceptDuplicateDetection(IWebDriver driver)

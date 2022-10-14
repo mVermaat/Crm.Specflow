@@ -34,7 +34,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void ActivateQuote()
         {
             Logger.WriteLine("Activating Quote");
+            var record = new EntityReference("quote", _app.App.Entity.GetObjectId());
             ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.ActivateQuoteButton, _app.UILanguageCode]);
+            HelperMethods.WaitForFormLoad(_app.WebDriver, new RecordHasStatus(record, 1)); // Active status
+
         }
 
         public EntityReference CreateOrder()
@@ -63,7 +66,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 _app.Client.Browser.ThinkTime(1000);
                 HelperMethods.WaitForFormLoad(driver);
 
-                return new EntityReference("quote", _app.App.Entity.GetObjectId()); ;
+                return new EntityReference("quote", _app.App.Entity.GetObjectId());
             }).Value;            
         }
 
