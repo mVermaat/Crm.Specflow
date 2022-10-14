@@ -90,6 +90,7 @@ namespace Vermaat.Crm.Specflow
             public const string ActivateQuoteButton = "ActivateQuoteButton";
             public const string CreateOrderButton = "CreateOrderButton";
             public const string ReviseQuoteButton = "ReviseQuoteButton";
+            public const string SaveStatusSaved = "SaveStatusSaved";
             public const string SaveStatusSaving = "SaveStatusSaving";
             public const string SaveStatusUnsaved = "SaveStatusUnsaved";
             public const string CloseAsWon = "CloseAsWon";

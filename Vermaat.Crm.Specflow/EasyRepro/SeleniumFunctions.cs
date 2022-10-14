@@ -61,59 +61,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return null;
         }
 
-        public static IReadOnlyCollection<FormNotification> GetFormNotifications(this WebClient client)
-        {
-            return client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
-            {
-                List<FormNotification> notifications = new List<FormNotification>();
-
-                if(!driver.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationBar),
-                    out var notificationBar))
-                {
-                    return notifications;
-                }
-
-                if(notificationBar.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_ExpandButton), out var expandButton))
-                {
-                    if(!Convert.ToBoolean(notificationBar.GetAttribute("aria-expanded")))
-                        expandButton.Click();
-
-                    notificationBar = driver.WaitUntilAvailable(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.FlyoutRoot), TimeSpan.FromSeconds(2), "Failed to open the form notifications");
-                }
-
-                var notificationList = notificationBar.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationList));
-                var notificationListItems = notificationList.FindElements(By.TagName("li"));
-
-                foreach(var item in notificationListItems)
-                {
-                    var icon = item.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotifcation_NotificationTypeIcon));
-                    var message = item.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormNotification_NotificationMessage));
-
-
-                    var notification = new FormNotification
-                    {
-                        Message = message.GetAttribute("innerText")
-                    };
-
-                    if (icon.HasClass("MarkAsLost-symbol"))
-                        notification.Type = FormNotificationType.Error;
-                    else if (icon.HasClass("Warning-symbol"))
-                        notification.Type = FormNotificationType.Warning;
-                    else if (icon.HasClass("InformationIcon-symbol"))
-                        notification.Type = FormNotificationType.Information;
-                    else
-                        throw new TestExecutionException(Constants.ErrorCodes.UNKNOWN_FORM_NOTIFICATION_TYPE, icon.GetAttribute("class"));
-
-                    notifications.Add(notification);
-                }
-
-
-
-                return notifications;
-
-            }).Value;
-        }
-
         public static bool TryFindElement(this IWebDriver driver, By by, out IWebElement element)
             {
                 try

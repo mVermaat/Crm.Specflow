@@ -9,6 +9,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
     public interface ISeleniumCommand
     {
-        CommandResult Execute(IWebDriver driver, SeleniumSelectorData selectors);
+        CommandResult Execute(BrowserInteraction browserInteraction);
     }
 }

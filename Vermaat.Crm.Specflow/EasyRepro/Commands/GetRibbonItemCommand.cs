@@ -19,37 +19,37 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             _buttonName = buttonName;
         }
 
-        public virtual CommandResult<IWebElement> Execute(IWebDriver driver, SeleniumSelectorData selectors)
+        public virtual CommandResult<IWebElement> Execute(BrowserInteraction browserInteraction)
         {
             // Get ribbon
-            var ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.Container]),
+            var ribbon = browserInteraction.Driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.Container]),
                     TimeSpan.FromSeconds(5));
 
             // Get ribbon (alternative)
             if (ribbon == null)
             {
-                ribbon = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid]));
+                ribbon = browserInteraction.Driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid]));
                 if (ribbon == null)
                     return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND);
             }
 
             // Find in regular buttons, return if found
-            if (ribbon.TryFindElement(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _buttonName), out var item))
+            if (ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _buttonName), out var item))
                 return CommandResult<IWebElement>.Success(item);
 
             // Not found, look for more commands button
-            if(ribbon.TryFindElement(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_More_Commands), out var moreCommands))
+            if(ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_More_Commands), out var moreCommands))
             {
                 moreCommands.Click();
                 
                 // Find the ribbon in the flyout
-                ribbon = driver.WaitUntilAvailable(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Flyout_Container), TimeSpan.FromSeconds(5));
+                ribbon = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Flyout_Container), TimeSpan.FromSeconds(5));
                 if (ribbon == null)
                     return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND);
 
 
                 // Find in more commands list
-                if (ribbon.TryFindElement(selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _buttonName), out item))
+                if (ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _buttonName), out item))
                     return CommandResult<IWebElement>.Success(item);
             }
 

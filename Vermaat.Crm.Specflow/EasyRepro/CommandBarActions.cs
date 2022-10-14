@@ -23,12 +23,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void ClickButton(string buttonText)
         {
-            SeleniumCommandProcessor.ExecuteCommand(_app.WebDriver, new ClickRibbonItemCommand(buttonText));
+            SeleniumCommandProcessor.ExecuteCommand(_app, new ClickRibbonItemCommand(buttonText));
         }
 
 
         public bool IsButtonAvailable(string name)
-            => SeleniumCommandProcessor.ExecuteCommand(_app.WebDriver, new GetRibbonItemCommand(name)) != null;
+            => SeleniumCommandProcessor.ExecuteCommand(_app, new GetRibbonItemCommand(name)) != null;
         
 
         public void ActivateQuote()

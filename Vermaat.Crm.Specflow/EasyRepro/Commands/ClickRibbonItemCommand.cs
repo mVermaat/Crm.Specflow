@@ -17,9 +17,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             _buttonName = buttonName;
         }
 
-        public override CommandResult<IWebElement> Execute(IWebDriver driver, SeleniumSelectorData selectors)
+        public override CommandResult<IWebElement> Execute(BrowserInteraction browserInteraction)
         {
-            var result = base.Execute(driver, selectors);
+            var result = base.Execute(browserInteraction);
 
             if (result == null || !result.IsSuccessfull)
                 return result;

@@ -1,8 +1,10 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Activities.Statements;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using static Vermaat.Crm.Specflow.Constants;
@@ -18,22 +20,32 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _selectors = new SeleniumSelectorData();
         }
 
-        public static void ExecuteCommand(IWebDriver driver, ISeleniumCommand command)
+        public static void ExecuteCommand(UCIApp app, ISeleniumCommand command)
         {
-            ExecuteCommand(driver, command, 2);
+            ExecuteCommand(GetBrowserInteraction(app), command, 2);
         }
 
-        public static T ExecuteCommand<T>(IWebDriver driver, ISeleniumCommandFunc<T> command)
+        public static void ExecuteCommand(BrowserInteraction browserInteraction, ISeleniumCommand command)
         {
-            return ExecuteCommand(driver, command, 2);
+            ExecuteCommand(browserInteraction, command, 2);
         }
 
-        private static void ExecuteCommand(IWebDriver driver, ISeleniumCommand command, int retries)
+        public static T ExecuteCommand<T>(UCIApp app, ISeleniumCommandFunc<T> command)
+        {
+            return ExecuteCommand(GetBrowserInteraction(app), command, 2);
+        }
+
+        public static T ExecuteCommand<T>(BrowserInteraction browserInteraction, ISeleniumCommandFunc<T> command)
+        {
+            return ExecuteCommand(browserInteraction, command, 2);
+        }
+
+        private static void ExecuteCommand(BrowserInteraction browserInteraction, ISeleniumCommand command, int retries)
         {
             try
             {
                 Logger.WriteLine($"Executing Selenium Command {command.GetType().Name}. Retries left: {retries}");
-                var result = command.Execute(driver, _selectors);
+                var result = command.Execute(browserInteraction);
 
                 if(result == null)
                     throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, command.GetType().Name);
@@ -41,8 +53,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 if (!result.IsSuccessfull)
                 {
-                    if(result.AllowRetry && retries > 0)
-                        ExecuteCommand(driver, command, retries - 1);
+                    if (result.AllowRetry && retries > 0)
+                    {
+                        Delay();
+                        ExecuteCommand(browserInteraction, command, retries - 1);
+                    }
                     else
                         throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, GlobalTestingContext.ErrorCodes.GetErrorMessage(result.ErrorCode, result.ErrorMessageFormatArgs));
                 }
@@ -50,7 +65,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             catch(Exception ex)
             {
                 if (retries > 0)
-                    ExecuteCommand(driver, command, retries - 1);
+                {
+                    Delay();
+                    ExecuteCommand(browserInteraction, command, retries - 1);
+                }
                 else
                     throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, ex, command.GetType().Name, $"{ex.GetType().Name} with message: {ex.Message}");
             }
@@ -58,12 +76,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             Logger.WriteLine($"Executing Selenium Command {command.GetType().Name} successfull");
         }
 
-        private static T ExecuteCommand<T>(IWebDriver driver, ISeleniumCommandFunc<T> command, int retries)
+        private static T ExecuteCommand<T>(BrowserInteraction browserInteraction, ISeleniumCommandFunc<T> command, int retries)
         {
             try
             {
                 Logger.WriteLine($"Executing Selenium Command {command.GetType().Name}. Retries left: {retries}");
-                var result = command.Execute(driver, _selectors);
+                var result = command.Execute(browserInteraction);
 
                 if (result == null)
                     throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, command.GetType().Name);
@@ -72,7 +90,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 if (!result.IsSuccessfull)
                 {
                     if (result.AllowRetry && retries > 0)
-                        return ExecuteCommand(driver, command, retries - 1);
+                    {
+                        Delay();
+                        return ExecuteCommand(browserInteraction, command, retries - 1);
+                    }
                     else
                         throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, GlobalTestingContext.ErrorCodes.GetErrorMessage(result.ErrorCode, result.ErrorMessageFormatArgs));
                 }
@@ -84,11 +105,23 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             catch (Exception ex)
             {
                 if (retries > 0)
-                    return ExecuteCommand(driver, command, retries - 1);
+                {
+                    Delay();
+                    return ExecuteCommand(browserInteraction, command, retries - 1);
+                }
                 else
                     throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, ex, command.GetType().Name, $"{ex.GetType().Name} with message: {ex.Message}");
             }
 
         }
+
+        private static void Delay()
+        {
+            Logger.WriteLine("Waiting for a moment before next try");
+            Thread.Sleep(1000);
+        }
+
+        private static BrowserInteraction GetBrowserInteraction(UCIApp app)
+            => new BrowserInteraction(app.WebDriver, _selectors, app.LocalizedTexts, app.UILanguageCode);
     }
 }
