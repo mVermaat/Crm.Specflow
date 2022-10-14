@@ -55,7 +55,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.MULTIPLE_ATTRIBUTES_FOUND, "Multiple attributes found for {0}. Results: {1}");
             AddError(Constants.ErrorCodes.APPLICATIONUSER_CANNOT_LOGIN, "An application user can't login via the browser");
             AddError(Constants.ErrorCodes.NO_CONTROL_FOUND, "No controls found for attribute {0}");
-            AddError(Constants.ErrorCodes.RIBBON_NOT_FOUND, "Unable to find the ribbon");
+            AddError(Constants.ErrorCodes.RIBBON_NOT_FOUND, "Unable to find the {0} ribbon");
             AddError(Constants.ErrorCodes.UNEXPECTED_PROCESS_COUNT, "Expected 1 process with name {0}, but found {1}");
             AddError(Constants.ErrorCodes.USER_NOT_FOUND, "User {0} doesn't exist");
             AddError(Constants.ErrorCodes.QUICK_CREATE_CHILD_NOT_AVAILABLE, "Couldn't open quick created record");
@@ -65,7 +65,6 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.TRYUNTIL_TIMEOUT, "Timeout for retry reached: {0}");
             AddError(Constants.ErrorCodes.SELECTOR_NOT_FOUND, "Selenium Selector {0} doesn't exist");
             AddError(Constants.ErrorCodes.LOCALIZED_LANGUAGE_MISSING, "No localized texts for language {0} are available. See https://github.com/DynamicHands/Crm.Specflow/wiki/Writing-Features#localization for more information.");
-            AddError(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, "Selenium command {0} couldn't be completed: {1}");
             AddError(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, "Selenium command {0} didn't have a result. Can't display a proper error.");
             AddError(Constants.ErrorCodes.RIBBON_BUTTON_DOESNT_EXIT, "Ribbon button {0} doesn't exist");
         }

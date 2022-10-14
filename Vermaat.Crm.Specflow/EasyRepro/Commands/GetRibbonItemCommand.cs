@@ -30,7 +30,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             {
                 ribbon = browserInteraction.Driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.CommandBar.ContainerGrid]));
                 if (ribbon == null)
-                    return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND);
+                    return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND, "main");
             }
 
             // Find in regular buttons, return if found
@@ -45,7 +45,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 // Find the ribbon in the flyout
                 ribbon = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Flyout_Container), TimeSpan.FromSeconds(5));
                 if (ribbon == null)
-                    return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND);
+                    return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND, "more commands");
 
 
                 // Find in more commands list

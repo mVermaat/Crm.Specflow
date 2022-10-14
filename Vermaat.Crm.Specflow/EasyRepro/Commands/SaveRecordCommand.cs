@@ -136,7 +136,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
         private SaveStatus GetSaveStatus(BrowserInteraction browserInteraction)
         {
-            var saveStatusText = browserInteraction.Driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus))?.Text;
+            var saveStatusText = browserInteraction.Driver.WaitUntilAvailable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus), TimeSpan.FromSeconds(2))?.Text;
 
             if (string.IsNullOrEmpty(saveStatusText))
                 return SaveStatus.Unknown;

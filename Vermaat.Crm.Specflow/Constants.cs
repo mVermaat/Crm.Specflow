@@ -78,7 +78,7 @@ namespace Vermaat.Crm.Specflow
             public const int TRYUNTIL_TIMEOUT = 46;
             public const int SELECTOR_NOT_FOUND = 47;
             public const int LOCALIZED_LANGUAGE_MISSING = 48;
-            public const int SELENIUM_COMMAND_FAILED = 49;
+            // Error 49 removed
             public const int SELENIUM_COMMAND_NO_RESULT = 50;
             public const int RIBBON_BUTTON_DOESNT_EXIT = 51;
         }

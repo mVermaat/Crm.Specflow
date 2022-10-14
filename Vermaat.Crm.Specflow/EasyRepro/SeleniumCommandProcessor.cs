@@ -57,7 +57,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     ExecuteCommand(browserInteraction, command, retries - 1);
                 }
                 else
-                    throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, GlobalTestingContext.ErrorCodes.GetErrorMessage(result.ErrorCode, result.ErrorMessageFormatArgs));
+                    throw new TestExecutionException(result.ErrorCode, result.ErrorMessageFormatArgs);
             }
             Logger.WriteLine($"Executing Selenium Command {command.GetType().Name} successfull");
         }
@@ -79,7 +79,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     return ExecuteCommand(browserInteraction, command, retries - 1);
                 }
                 else
-                    throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_FAILED, command.GetType().Name, GlobalTestingContext.ErrorCodes.GetErrorMessage(result.ErrorCode, result.ErrorMessageFormatArgs));
+                    throw new TestExecutionException(result.ErrorCode, result.ErrorMessageFormatArgs);
             }
 
             Logger.WriteLine($"Executing Selenium Command {command.GetType().Name} successfull");
