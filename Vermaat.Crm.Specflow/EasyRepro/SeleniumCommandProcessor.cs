@@ -93,6 +93,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         }
 
         private static BrowserInteraction GetBrowserInteraction(UCIApp app)
-            => new BrowserInteraction(app.WebDriver, _selectors, app.LocalizedTexts, app.UILanguageCode);
+            => new BrowserInteraction(app.WebDriver, _selectors, app.SeleniumCommandFactory, app.LocalizedTexts, app.UILanguageCode);
     }
 }

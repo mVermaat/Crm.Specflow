@@ -53,7 +53,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public IReadOnlyCollection<FormNotification> GetFormNotifications()
         {
-            return SeleniumCommandProcessor.ExecuteCommand(_app, new GetFormNotificationsCommand());
+            return SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateGetFormNotificationsCommand());
         }
 
         public Guid GetRecordId()
@@ -66,7 +66,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void Save(bool saveIfDuplicate)
         {
-            SeleniumCommandProcessor.ExecuteCommand(_app, new SaveRecordCommand(saveIfDuplicate));
+            SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateSaveRecordCommand(saveIfDuplicate));
         }
 
         public void FillForm(CrmTestingContext crmContext, Table formData)

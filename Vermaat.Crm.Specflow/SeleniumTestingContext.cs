@@ -1,6 +1,7 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using Vermaat.Crm.Specflow.EasyRepro;
+using Vermaat.Crm.Specflow.EasyRepro.Commands;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -12,6 +13,7 @@ namespace Vermaat.Crm.Specflow
         public BrowserOptions BrowserOptions { get; }
         public string CurrentApp { get; set; }
         public bool IsLoggedIn { get; set; }
+        public SeleniumCommandFactory SeleniumCommandFactory { get; set; }
 
         public SeleniumTestingContext(CrmTestingContext crmContext)
         {
@@ -27,6 +29,7 @@ namespace Vermaat.Crm.Specflow
             };
             CurrentApp = HelperMethods.GetAppSettingsValue("AppName", true);
             BrowserOptions.Headless = Convert.ToBoolean(HelperMethods.GetAppSettingsValue("Headless", true, "false"));
+            SeleniumCommandFactory = new SeleniumCommandFactory();
         }
 
         public void EndCurrentBrowserSession()
@@ -39,7 +42,7 @@ namespace Vermaat.Crm.Specflow
             if (_crmContext.IsTarget("API"))
                 throw new TestExecutionException(Constants.ErrorCodes.CANT_START_BROWSER_FOR_API_TESTS);
 
-            var browser = GlobalTestingContext.BrowserManager.GetBrowser(BrowserOptions, GlobalTestingContext.ConnectionManager.CurrentBrowserLoginDetails);
+            var browser = GlobalTestingContext.BrowserManager.GetBrowser(BrowserOptions, GlobalTestingContext.ConnectionManager.CurrentBrowserLoginDetails, SeleniumCommandFactory);
             browser.ChangeApp(CurrentApp);
             IsLoggedIn = true;
             return browser;

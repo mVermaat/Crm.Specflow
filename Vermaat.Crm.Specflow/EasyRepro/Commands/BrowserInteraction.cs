@@ -10,11 +10,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
     public class BrowserInteraction
     {
-        public BrowserInteraction(IWebDriver driver, SeleniumSelectorData seleniumSelectorData, 
-            LocalizedTexts localizedTexts, int uiLanguageCode)
+        public BrowserInteraction(IWebDriver driver, SeleniumSelectorData seleniumSelectorData,
+            SeleniumCommandFactory seleniumCommandFactory, LocalizedTexts localizedTexts, int uiLanguageCode)
         {
             Driver = driver;
             Selectors = seleniumSelectorData;
+            SeleniumCommandFactory = seleniumCommandFactory;
             LocalizedTexts = localizedTexts;
             UiLanguageCode = uiLanguageCode;
         }
@@ -22,6 +23,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public IWebDriver Driver { get; }
         public LocalizedTexts LocalizedTexts { get; }
         public SeleniumSelectorData Selectors { get; }
+        public SeleniumCommandFactory SeleniumCommandFactory { get; }
+
         public int UiLanguageCode { get; }
 
         public WebDriverWait GetWaitObject(TimeSpan? timeout = null)

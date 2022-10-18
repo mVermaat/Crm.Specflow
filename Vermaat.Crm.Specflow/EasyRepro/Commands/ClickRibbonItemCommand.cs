@@ -7,30 +7,27 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
-    public class ClickRibbonItemCommand : GetRibbonItemCommand
+    public class ClickRibbonItemCommand : ISeleniumCommand
     {
         private readonly string _buttonName;
 
-        public ClickRibbonItemCommand(string buttonName) 
-            : base(buttonName)
+        internal ClickRibbonItemCommand(string buttonName) 
         {
             _buttonName = buttonName;
         }
 
-        public override CommandResult<IWebElement> Execute(BrowserInteraction browserInteraction)
+        public CommandResult Execute(BrowserInteraction browserInteraction)
         {
-            var result = base.Execute(browserInteraction);
+            var result = SeleniumCommandProcessor.ExecuteCommand(browserInteraction,
+                browserInteraction.SeleniumCommandFactory.CreateGetRibbonItemCommand(_buttonName));
 
-            if (result == null || !result.IsSuccessfull)
-                return result;
-
-            if (result.Result != null)
+            if (result != null)
             {
-                result.Result.Click();
-                return result;
+                result.Click();
+                return CommandResult.Success();
             }
             else
-                return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_BUTTON_DOESNT_EXIT, _buttonName);
+                return CommandResult.Fail(true, Constants.ErrorCodes.RIBBON_BUTTON_DOESNT_EXIT, _buttonName);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         {
             Logger.WriteLine($"Saving record");
 
-            SeleniumCommandProcessor.ExecuteCommand(browserInteraction, new ClickRibbonItemCommand(browserInteraction.LocalizedTexts[Constants.LocalizedTexts.SaveButton, browserInteraction.UiLanguageCode]));
+            SeleniumCommandProcessor.ExecuteCommand(browserInteraction, browserInteraction.SeleniumCommandFactory.CreateClickRibbonItemCommand(browserInteraction.LocalizedTexts[Constants.LocalizedTexts.SaveButton, browserInteraction.UiLanguageCode]));
 
             var timeout = DateTime.Now.AddSeconds(20);
             var unsavedTimeout = DateTime.Now.AddSeconds(10);
@@ -78,7 +78,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                     }
                     else if(DateTime.Now > unsavedTimeout)
                     {
-                        var formNotifications = SeleniumCommandProcessor.ExecuteCommand(browserInteraction, new GetFormNotificationsCommand());
+                        var formNotifications = SeleniumCommandProcessor.ExecuteCommand(browserInteraction, browserInteraction.SeleniumCommandFactory.CreateGetFormNotificationsCommand());
                         return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
                     }
                 } 

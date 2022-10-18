@@ -47,7 +47,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public IReadOnlyCollection<FormNotification> GetFormNotifications()
         {
-            return SeleniumCommandProcessor.ExecuteCommand(_app, new GetFormNotificationsCommand());
+            return SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateGetFormNotificationsCommand());
         }
 
         public FormData OpenCreatedRecord(UCIBrowser browser, string childEntityName)
