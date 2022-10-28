@@ -3,6 +3,7 @@ using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro;
@@ -16,7 +17,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
         private readonly string _clientId;
         private readonly string _clientSecret;
 
-        public HybridCrmConnection(string clientId, string clientSecret, string browserUsername, string browserPassword)
+        public HybridCrmConnection(string clientId, string clientSecret, string browserUsername, string browserPassword, SecureString browserMfaKey = null)
             : base(browserUsername)
         {
             _clientId = clientId;
@@ -25,7 +26,8 @@ namespace Vermaat.Crm.Specflow.Connectivity
             {
                 Url = HelperMethods.GetAppSettingsValue("Url", false),
                 Username = browserUsername,
-                Password = browserPassword.ToSecureString()
+                Password = browserPassword.ToSecureString(),
+                MfaKey = browserMfaKey,
             };
         }
 
@@ -35,7 +37,8 @@ namespace Vermaat.Crm.Specflow.Connectivity
                 HelperMethods.GetAppSettingsValue("ClientId", false),
                 HelperMethods.GetAppSettingsValue("ClientSecret", false),
                 HelperMethods.GetAppSettingsValue("Username", false),
-                HelperMethods.GetAppSettingsValue("Password", false));
+                HelperMethods.GetAppSettingsValue("Password", false),
+                HelperMethods.GetAppSettingsValue("MfaKey", true)?.ToSecureString());
         }
 
         public static HybridCrmConnection CreateAdminConnectionFromAppConfig()
@@ -44,7 +47,8 @@ namespace Vermaat.Crm.Specflow.Connectivity
             var clientSecret = HelperMethods.GetAppSettingsValue("AdminClientSecret", true) ?? HelperMethods.GetAppSettingsValue("ClientSecret");
             var username = HelperMethods.GetAppSettingsValue("AdminUsername", true) ?? HelperMethods.GetAppSettingsValue("Username");
             var password = HelperMethods.GetAppSettingsValue("AdminPassword", true) ?? HelperMethods.GetAppSettingsValue("Password");
-            return new HybridCrmConnection(clientId, clientSecret, username, password);
+            var mfaKey = HelperMethods.GetAppSettingsValue("AdminMfaKey", true)?.ToSecureString() ?? HelperMethods.GetAppSettingsValue("MfaKey", true)?.ToSecureString();
+            return new HybridCrmConnection(clientId, clientSecret, username, password, mfaKey);
         }
 
         public override CrmService CreateCrmServiceInstance()
