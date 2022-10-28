@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.EasyRepro.Fields;
 using Vermaat.Crm.Specflow.FormLoadConditions;
 
@@ -46,7 +47,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public IReadOnlyCollection<FormNotification> GetFormNotifications()
         {
-            return _app.Client.GetFormNotifications();
+            return SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateGetFormNotificationsCommand());
         }
 
         public FormData OpenCreatedRecord(UCIBrowser browser, string childEntityName)

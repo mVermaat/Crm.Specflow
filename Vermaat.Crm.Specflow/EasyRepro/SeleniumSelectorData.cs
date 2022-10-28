@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
-    internal class SeleniumSelectorData
+    public class SeleniumSelectorData
     {
         private readonly Dictionary<SeleniumSelectorItems, string> _selectors = new Dictionary<SeleniumSelectorItems, string>()
         {
@@ -20,6 +20,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_FormNotifcation_NotificationList, ".//ul[@data-id='notificationList']" },
             { SeleniumSelectorItems.Entity_FormNotifcation_NotificationTypeIcon, ".//span[contains(@id,'notification_icon_')]" },
             { SeleniumSelectorItems.Entity_FormNotification_NotificationMessage, ".//span[@data-id='warningNotification']" },
+            { SeleniumSelectorItems.Entity_Ribbon_Button, ".//button[starts-with(@aria-label,'[NAME]') and span/span/text() = '[NAME]']" },
+            { SeleniumSelectorItems.Entity_Ribbon_Flyout_Container, "//ul[@data-id='OverflowFlyout']" },
+            { SeleniumSelectorItems.Entity_Ribbon_More_Commands, ".//button[@data-id='OverflowButton']" },
             { SeleniumSelectorItems.Entity_QuickCreate_Notification_Window, "//div[contains(@data-id,'ToastNotification_quickcreate')]" },
             { SeleniumSelectorItems.Entity_QuickCreate_OpenChildButton, ".//p[text() = '[NAME]']" },
             { SeleniumSelectorItems.Entity_SaveStatus, "//span[@data-id='header_saveStatus']" },

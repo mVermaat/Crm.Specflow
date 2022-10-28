@@ -31,6 +31,7 @@ namespace Vermaat.Crm.Specflow.Sample.UnitTests
             var browser = _seleniumContext.GetBrowser();
 
             var summaryTabLabel = GlobalTestingContext.LocalizedTexts["AccountSummaryTab", GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage] ?? "Summary";
+            var text = browser.App.LocalizedTexts[Constants.LocalizedTexts.QuickCreateViewRecord, browser.App.UILanguageCode];
             _crmContext.CommandProcessor.Execute(new ClickSubgridButtonCommand(_crmContext, _seleniumContext, _accountAlias,
                 summaryTabLabel, "Contacts", "Mscrm.SubGrid.contact.AddNewStandard"));
             HelperMethods.WaitForFormLoad(browser.App.WebDriver, new FormIsOfEntity("contact"));

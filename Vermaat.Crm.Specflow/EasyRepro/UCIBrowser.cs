@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using Vermaat.Crm.Specflow.Connectivity;
+using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -26,9 +27,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         }
 
-        public UCIBrowser(BrowserOptions browserOptions, LocalizedTexts localizedTexts, CrmModelApps apps)
+        public UCIBrowser(BrowserOptions browserOptions, LocalizedTexts localizedTexts, CrmModelApps apps, SeleniumCommandFactory seleniumCommandFactory)
         {
-            App = new UCIApp(browserOptions, localizedTexts, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage);
+            App = new UCIApp(browserOptions, localizedTexts, seleniumCommandFactory, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage);
             _forms = new Dictionary<string, FormData>();
             _quickForms = new Dictionary<string, QuickFormData>();
             _apps = apps;

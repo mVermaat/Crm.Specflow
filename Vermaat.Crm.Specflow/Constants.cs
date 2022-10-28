@@ -78,6 +78,9 @@ namespace Vermaat.Crm.Specflow
             public const int TRYUNTIL_TIMEOUT = 46;
             public const int SELECTOR_NOT_FOUND = 47;
             public const int LOCALIZED_LANGUAGE_MISSING = 48;
+            // Error 49 removed
+            public const int SELENIUM_COMMAND_NO_RESULT = 50;
+            public const int RIBBON_BUTTON_DOESNT_EXIT = 51;
         }
 
         public class LocalizedTexts
@@ -87,11 +90,12 @@ namespace Vermaat.Crm.Specflow
             public const string ActivateQuoteButton = "ActivateQuoteButton";
             public const string CreateOrderButton = "CreateOrderButton";
             public const string ReviseQuoteButton = "ReviseQuoteButton";
+            public const string SaveStatusSaved = "SaveStatusSaved";
             public const string SaveStatusSaving = "SaveStatusSaving";
             public const string SaveStatusUnsaved = "SaveStatusUnsaved";
             public const string CloseAsWon = "CloseAsWon";
             public const string CloseAsLost = "CloseAsLost";
-            public const string QuickCreateViewRecord = "View Record";
+            public const string QuickCreateViewRecord = "QuickCreateViewRecord";
         }
     }
 }

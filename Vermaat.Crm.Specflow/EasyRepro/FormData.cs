@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.EasyRepro.Fields;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -52,7 +53,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public IReadOnlyCollection<FormNotification> GetFormNotifications()
         {
-            return _app.Client.GetFormNotifications();
+            return SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateGetFormNotificationsCommand());
         }
 
         public Guid GetRecordId()
@@ -65,24 +66,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void Save(bool saveIfDuplicate)
         {
-            _app.Client.Browser.ThinkTime(500);
-            Logger.WriteLine($"Checking save status");
-            try
-            {
-                if (MustSave())
-                {
-                    Logger.WriteLine($"Saving record");
-                    _app.Client.Save(_app.LocalizedTexts, _app.UILanguageCode);
-                    Logger.WriteLine($"Record saved");
-                }
-                else
-                    Logger.WriteLine("No save required");
-            }
-            catch(InvalidOperationException ex)
-            {
-                throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, ex, ex.Message);
-            }
-            WaitUntilSaveCompleted();
+            SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateSaveRecordCommand(saveIfDuplicate));
         }
 
         public void FillForm(CrmTestingContext crmContext, Table formData)
@@ -98,50 +82,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }
-        }
-
-        private bool MustSave()
-        {
-            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"WaitUntilSaveCompleted"), driver =>
-            {
-                var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
-                return !string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusUnsaved, _app.UILanguageCode]}", StringComparison.OrdinalIgnoreCase);
-            });
-        }
-
-        private void WaitUntilSaveCompleted()
-        {
-            _app.Client.Execute(BrowserOptionHelper.GetOptions($"WaitUntilSaveCompleted"), driver =>
-            {
-                var timeout = DateTime.Now.AddSeconds(20);
-                bool saveCompleted = false;
-                while (!saveCompleted && DateTime.Now < timeout)
-                {
-                    var saveStatus = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SaveStatus));
-
-                    if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusSaving, _app.UILanguageCode]}", StringComparison.OrdinalIgnoreCase))
-                    {
-                        Logger.WriteLine("Save not yet completed. Waiting..");
-                        Thread.Sleep(500);
-                    }
-                    else if (!string.IsNullOrEmpty(saveStatus.Text) && saveStatus.Text.Equals($"- {_app.LocalizedTexts[Constants.LocalizedTexts.SaveStatusUnsaved, _app.UILanguageCode]}", StringComparison.OrdinalIgnoreCase))
-                    {
-                        var formNotifications = GetFormNotifications();
-                        throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
-                    }
-                    else
-                    {
-                        Logger.WriteLine("Save sucessfull");
-                        saveCompleted = true;
-                    }
-                }
-
-                if (!saveCompleted)
-                    throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_TIMEOUT, 20);
-
-
-                return true;
-            });
         }
 
         private Dictionary<string, FormField> InitializeFormData()

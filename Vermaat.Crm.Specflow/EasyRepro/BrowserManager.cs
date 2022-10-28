@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Connectivity;
+using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -41,7 +42,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 Logger.WriteLine("No session exists.");
         }
 
-        public UCIBrowser GetBrowser(BrowserOptions options, BrowserLoginDetails browserLoginDetails)
+        public UCIBrowser GetBrowser(BrowserOptions options, BrowserLoginDetails browserLoginDetails, SeleniumCommandFactory seleniumCommandFactory)
         {
             Logger.WriteLine("Getting Browser");
             if(!_browserCache.TryGetValue(options.BrowserType, out var dic))
@@ -60,10 +61,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     options.DriversPath = GetDriverPath(options);
                 }
                 
-                browser = new UCIBrowser(options, _localizedTexts, _appCache.Value);
+                browser = new UCIBrowser(options, _localizedTexts, _appCache.Value, seleniumCommandFactory);
                 dic.Add(browserLoginDetails.Username, browser);
                 browser.Login(browserLoginDetails);
             }
+            browser.App.SeleniumCommandFactory = seleniumCommandFactory;
             return browser;
         }
 

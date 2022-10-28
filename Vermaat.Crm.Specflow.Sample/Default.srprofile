@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TestProfile xmlns="http://www.specflow.org/schemas/plus/TestProfile/1.5">
   <Settings projectName="Vermaat.Crm.Specflow.Sample" projectId="{40155862-3830-401c-945a-70e57b35f7a1}" />
-  <Execution stopAfterFailures="0" testThreadCount="1" testSchedulingMode="Sequential" retryCount="1" retryFor="Failing" />
+  <Execution stopAfterFailures="0" testThreadCount="1" testSchedulingMode="Sequential" retryCount="0" retryFor="None" />
   <VSTest testRetryResults="Unified" passRateAbsolute="1"/>
   <!-- For collecting by a SpecRun server update and enable the following element. For using the 
       collected statistics, set testSchedulingMode="Adaptive" attribute on the <Execution> element.
@@ -15,13 +15,13 @@
       <ConfigFileTransformation configFile="app.config" >
         <Transformation>
           <![CDATA[<?xml version="1.0" encoding="utf-8"?>
-							<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+                            <configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
                               <appSettings>
                                 <add key="Target" value="{Target}" 
                                  xdt:Locator="Match(key)" xdt:Transform="SetAttributes(value)" />
                               </appSettings>
-							</configuration>
-						]]>
+                            </configuration>
+                        ]]>
         </Transformation>
       </ConfigFileTransformation>
     </Steps>
@@ -30,9 +30,9 @@
     <!--<Target name="IE">
       <Filter>IE</Filter>
     </Target>-->
-    <Target name="Firefox">
+    <!--<Target name="Firefox">
       <Filter>Firefox</Filter>
-    </Target>
+    </Target>-->
     <Target name="Chrome">
       <Filter>Chrome</Filter>
     </Target>
