@@ -1,9 +1,11 @@
 ﻿using Azure.Core;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Connectivity;
@@ -30,8 +32,30 @@ namespace Vermaat.Crm.Specflow.Commands
             Logger.WriteLine($"Getting secret {secretName}");
             var secret = client.GetSecret(secretName);
 
-            GlobalTestingContext.ConnectionManager.SetCurrentConnection(new OAuthCrmConnection(_userProfile.Username, secret.Value.Value));
+            if (_userProfile.MFA)
+            {
+                GlobalTestingContext.ConnectionManager.SetCurrentConnection(
+                    new HybridCrmConnection(
+                        HelperMethods.GetAppSettingsValue("ClientId", false),
+                        HelperMethods.GetAppSettingsValue("ClientSecret", false), 
+                        _userProfile.Username, 
+                        secret.Value.Value,
+                        GetMFAKey(client, $"{secretName}MFA")));
+            }
+            else
+            {
+                GlobalTestingContext.ConnectionManager.SetCurrentConnection(
+                    new OAuthCrmConnection(_userProfile.Username, secret.Value.Value));
+            }
+
             Logger.WriteLine($"Successfully logged in with {_userProfile.Profile}");
+        }
+
+        private SecureString GetMFAKey(SecretClient client, string secretName)
+        {
+            var secret = client.GetSecret(secretName);
+
+            return secret.Value.Value.ToSecureString();
         }
 
         private TokenCredential GetCredential()

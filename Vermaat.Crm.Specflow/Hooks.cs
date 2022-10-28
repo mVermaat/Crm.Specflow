@@ -116,8 +116,8 @@ namespace Vermaat.Crm.Specflow
             switch (loginType)
             {
                 case "Default":
-                    connection = UsernamePasswordCrmConnection.FromAppConfig();
-                    adminConnection = UsernamePasswordCrmConnection.AdminConnectionFromAppConfig();
+                    connection = OAuthCrmConnection.FromAppConfig();
+                    adminConnection = OAuthCrmConnection.AdminConnectionFromAppConfig();
                     break;
                 case "ClientSecret":
                     connection = ClientSecretCrmConnection.CreateFromAppConfig();
