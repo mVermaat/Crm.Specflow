@@ -67,6 +67,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.LOCALIZED_LANGUAGE_MISSING, "No localized texts for language {0} are available. See https://github.com/DynamicHands/Crm.Specflow/wiki/Writing-Features#localization for more information.");
             AddError(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, "Selenium command {0} didn't have a result. Can't display a proper error.");
             AddError(Constants.ErrorCodes.RIBBON_BUTTON_DOESNT_EXIT, "Ribbon button {0} doesn't exist");
+            AddError(Constants.ErrorCodes.FAILED_TO_PARSE_CONDITION_OPERATOR, "Failed to parse condition '{0}'. {1}. See https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/conditionoperator?view=dataverse-latest#members for all valid values");
         }
 
         public void AddError(int errorCode, string message)

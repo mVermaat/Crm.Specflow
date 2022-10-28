@@ -11,6 +11,7 @@ namespace Vermaat.Crm.Specflow
         public static class SpecFlow
         {
             public const string TABLE_KEY = "Property";
+            public const string TABLE_CONDITION = "Condition";
             public const string TABLE_VALUE = "Value";
             public const string TABLE_FORMSTATE = "State";
             public const string TABLE_FORMNOTIFICATION_MESSAGE = "Message";
@@ -81,6 +82,7 @@ namespace Vermaat.Crm.Specflow
             // Error 49 removed
             public const int SELENIUM_COMMAND_NO_RESULT = 50;
             public const int RIBBON_BUTTON_DOESNT_EXIT = 51;
+            public const int FAILED_TO_PARSE_CONDITION_OPERATOR = 52;
         }
 
         public class LocalizedTexts
