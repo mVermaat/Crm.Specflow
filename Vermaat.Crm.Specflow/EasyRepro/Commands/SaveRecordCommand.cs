@@ -27,7 +27,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public CommandResult Execute(BrowserInteraction browserInteraction)
         {
             Logger.WriteLine($"Checking save status");
+            
+
+            DateTime timeout = DateTime.Now.AddSeconds(3);
             var status = GetSaveStatus(browserInteraction);
+
+            while (status != SaveStatus.Unsaved && DateTime.Now < timeout)
+            {
+                Thread.Sleep(250);
+                status = GetSaveStatus(browserInteraction);
+            }
 
             switch (status)
             {
