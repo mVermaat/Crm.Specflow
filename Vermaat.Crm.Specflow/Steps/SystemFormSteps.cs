@@ -43,17 +43,17 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssertFormRolesCommand(_crmContext, entityName, formName, ParseRoles(roles)));
         }
 
-        private string[] ParseRoles(Table roles)
+        private IEnumerable<string> ParseRoles(Table roles)
         {
-            return roles.Rows.Select(r => r[Constants.SpecFlow.TABLE_ROLE]?.Trim()).ToArray();
+            return roles.Rows.Select(r => r[Constants.SpecFlow.TABLE_ROLE]?.Trim());
         }
 
-        private string[] ParseRoles(string roles)
+        private IEnumerable<string> ParseRoles(string roles)
         {
            if(string.IsNullOrWhiteSpace(roles))
                 return Array.Empty<string>();
 
-            return roles.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s?.Trim()).ToArray();
+            return roles.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s?.Trim());
         }
     }
 }

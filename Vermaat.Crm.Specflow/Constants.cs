@@ -86,6 +86,7 @@ namespace Vermaat.Crm.Specflow
             public const int FAILED_TO_PARSE_CONDITION_OPERATOR = 52;
             public const int SYSTEMFORM_NOT_FOUND = 53;
             public const int DASHBOARD_NOT_FOUND = 54;
+            public const int ROLE_COUNT_ASSERT_FAILED = 55;
         }
 
         public class LocalizedTexts

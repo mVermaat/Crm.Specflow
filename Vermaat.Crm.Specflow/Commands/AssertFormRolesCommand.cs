@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,14 +14,14 @@ namespace Vermaat.Crm.Specflow.Commands
     {
         private readonly string _entityTypeCode;
         private readonly string _name;
-        private readonly string[] _roles;
+        private readonly string[] _expectedRoles;
 
-        public AssertFormRolesCommand(CrmTestingContext crmContext, string entityTypeCode, string name, string[] roles) 
+        public AssertFormRolesCommand(CrmTestingContext crmContext, string entityTypeCode, string name, IEnumerable<string> roles) 
             : base(crmContext)
         {
             _entityTypeCode = entityTypeCode;
             _name = name;
-            _roles = roles;
+            _expectedRoles = roles.Select(r => r.ToLowerInvariant()).ToArray();
         }
 
         public override void Execute()
@@ -35,8 +36,40 @@ namespace Vermaat.Crm.Specflow.Commands
             }
 
             var xml = form.FormXml;
-                
+
+            var actualRoles = GetRoles(form.FormXml.DisplayConditions?.Select(r => Guid.Parse(r.Id))?.ToArray());
+
+            var extraRoles = actualRoles.Except(_expectedRoles).ToArray();
+            var missingRoles = _expectedRoles.Except(actualRoles).ToArray();
+
+            if(extraRoles.Length > 0 || missingRoles.Length > 0)
+            {
+                throw new TestExecutionException(Constants.ErrorCodes.ROLE_COUNT_ASSERT_FAILED, _name, 
+                    missingRoles.Length, string.Join(", ", missingRoles),
+                    extraRoles.Length, string.Join(", ", extraRoles));
+            }
         }
 
+        private string[] GetRoles(Guid[] roleIds)
+        {
+            if(roleIds == null || roleIds.Length == 0)
+                return Array.Empty<string>();
+
+            return GlobalTestingContext.ConnectionManager.AdminConnection.RetrieveMultiple(new QueryExpression("role")
+            {
+                ColumnSet = new ColumnSet("name"),
+                NoLock = true,
+                Criteria =
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression("roleid", ConditionOperator.In, roleIds)
+                    }
+                }
+            })
+            .Entities
+            .Select(e => e.GetAttributeValue<string>("name")?.ToLowerInvariant())
+            .ToArray();
+        }
     }
 }
