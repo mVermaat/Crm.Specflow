@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <LocalizedNames>
+    <LocalizedName description="MV - Dashboard 2" languagecode="1033" />
+  </LocalizedNames>
+  <FormId>{8ff3434f-d56b-ed11-9561-000d3adf75a9}</FormId>
+  <IsCustomizable>1</IsCustomizable>
+  <IsDefault>0</IsDefault>
+  <FormXml>
+    <forms type="dashboard">
+      <form>
+        <tabs>
+          <tab showlabel="false" verticallayout="true" id="{782aed1b-ca70-4a00-b982-0bb1c2f008ef}">
+            <labels>
+              <label description="Tab" languagecode="1033" />
+            </labels>
+            <columns>
+              <column width="100%">
+                <sections>
+                  <section showlabel="false" showbar="false" columns="1111" id="{971f7032-20f1-4d5a-a52f-092e9e04c8f1}">
+                    <labels>
+                      <label description="Section" languagecode="1033" />
+                    </labels>
+                    <rows>
+                      <row>
+                        <cell colspan="2" rowspan="12" showlabel="false" ispreviewcell="true" id="{1f9293cf-8b76-4fd3-8340-5b30b072bc1a}">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                        </cell>
+                        <cell colspan="2" rowspan="12" showlabel="false" ispreviewcell="true" id="{64318088-8d12-4be5-a7bb-f8ab7119ca08}">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row>
+                        <cell colspan="2" rowspan="12" showlabel="false" ispreviewcell="true" id="{6efd6982-c5d3-4111-9312-39b65a5c1b18}">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                        </cell>
+                        <cell colspan="2" rowspan="12" showlabel="false" ispreviewcell="true" id="{c2010f6c-38d0-40e1-9e51-09ac07c693a8}">
+                          <labels>
+                            <label description="" languagecode="1033" />
+                          </labels>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                    </rows>
+                  </section>
+                </sections>
+              </column>
+            </columns>
+          </tab>
+        </tabs>
+        <DisplayConditions FallbackForm="true">
+          <Role Id="{F59D8F17-D56B-ED11-9561-000D3ADF75A9}" />
+          <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+          <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+        </DisplayConditions>
+      </form>
+    </forms>
+  </FormXml>
+  <IntroducedVersion>1.0.0.149</IntroducedVersion>
+  <IsTabletEnabled>0</IsTabletEnabled>
+</Dashboard>

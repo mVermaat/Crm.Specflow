@@ -259,6 +259,7 @@
       <events>
         <event name="onload" application="true" active="true">
           <Handlers>
+            <Handler functionName="AssetCommon.Account.OnLoad" libraryName="msdyn_/Account/AssetCommon.Account.Library.js" handlerUniqueId="{4537b2be-b015-726d-2973-c312209337ba}" enabled="true" parameters="" passExecutionContext="true" ordinalvalue="2" solutionaction="Modified" />
             <Handler functionName="vrm.Account.onLoad" libraryName="mv_account.js" handlerUniqueId="{05724338-172c-6351-92e3-47d059ade946}" enabled="true" parameters="" passExecutionContext="true" ordinalvalue="1" solutionaction="Added" />
           </Handlers>
         </event>
@@ -352,7 +353,7 @@
         </NavBarAreas>
       </Navigation>
       <controlDescriptions>
-        <controlDescription forControl="{3ff9a528-dd50-4aca-8f10-2e5ed73513ad}" solutionaction="Modified">
+        <controlDescription forControl="{3FF9A528-DD50-4ACA-8F10-2E5ED73513AD}" solutionaction="Modified">
           <customControl formFactor="2" name="MscrmControls.CardFeedContainer.CardFeedContainer">
             <parameters>
               <data-set name="SubGrid">
@@ -396,17 +397,19 @@
             </parameters>
           </customControl>
         </controlDescription>
-        <controlDescription forControl="{47183c8b-b45d-7551-25e7-14c19d3b21a8}" solutionaction="Removed" />
+        <controlDescription forControl="{47183C8B-B45D-7551-25E7-14C19D3B21A8}" solutionaction="Removed" />
       </controlDescriptions>
-      <formLibraries solutionaction="Added">
-        <Library name="mv_account.js" libraryUniqueId="{90e47e79-2870-d2b8-d52c-51e001a97a9d}" />
+      <formLibraries>
+        <Library name="mv_account.js" libraryUniqueId="{90e47e79-2870-d2b8-d52c-51e001a97a9d}" solutionaction="Added" />
       </formLibraries>
     </form>
     <LocalizedNames>
       <LocalizedName description="Account" languagecode="1033" />
+      <LocalizedName description="" languagecode="1043" />
     </LocalizedNames>
     <Descriptions>
       <Description description="Updated default Account form." languagecode="1033" />
+      <Description description="Bijgewerkt standaardformulier Account." languagecode="1043" />
     </Descriptions>
   </systemform>
 </forms>

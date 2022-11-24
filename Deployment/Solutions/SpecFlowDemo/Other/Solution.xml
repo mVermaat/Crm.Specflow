@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.21074.129" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.22103.194" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
     <UniqueName>SpecFlowDemo</UniqueName>
     <LocalizedNames>
@@ -86,270 +86,602 @@
       <RootComponent type="1" schemaName="mv_datetester" behavior="0" />
       <RootComponent type="1" schemaName="opportunity" behavior="2" />
       <RootComponent type="9" schemaName="mv_subscriptions" behavior="0" />
+      <RootComponent type="20" id="{f59d8f17-d56b-ed11-9561-000d3adf75a9}" behavior="0" />
+      <RootComponent type="20" id="{ff10cd1d-d56b-ed11-9561-000d3adf75a9}" behavior="0" />
       <RootComponent type="29" id="{2647bd65-bbe2-4fca-9df5-dfd661491c90}" behavior="0" />
       <RootComponent type="29" id="{4b0d104f-7f76-4277-b0b2-1967d0236016}" behavior="0" />
       <RootComponent type="29" id="{bcfff598-9531-4922-9355-ee87c9f37070}" behavior="0" />
       <RootComponent type="29" id="{fd14f3d4-b715-416f-aeb1-521f49737ab3}" behavior="0" />
+      <RootComponent type="60" id="{8ff3434f-d56b-ed11-9561-000d3adf75a9}" behavior="0" />
+      <RootComponent type="60" id="{bdd1f93e-d56b-ed11-9561-000d3adf75a9}" behavior="0" />
       <RootComponent type="61" schemaName="mv_account.js" behavior="0" />
       <RootComponent type="62" schemaName="mv_SpecFlowDemo" behavior="0" />
       <RootComponent type="80" schemaName="mv_SpecFlowDemo" behavior="0" />
     </RootComponents>
     <MissingDependencies>
       <MissingDependency>
-        <Required type="1" schemaName="campaign" displayName="Campaign" solution="msdynce_Marketing (9.0.4.37)" />
+        <Required type="1" schemaName="campaign" displayName="Campaign" solution="msdynce_Marketing (9.0.4.37)">
+          <package>msdynce_MarketingAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="competitor" displayName="Competitor" solution="msdynce_Sales (9.0.4.0076)" />
+        <Required type="1" schemaName="competitor" displayName="Competitor" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="entitlement" displayName="Entitlement" solution="msdynce_Service (9.0.5.56)" />
+        <Required type="1" schemaName="entitlement" displayName="Entitlement" solution="msdynce_Service (9.0.5.56)">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="entitlement" displayName="Entitlement" solution="msdynce_Service (9.0.5.56)" />
+        <Required type="1" schemaName="entitlement" displayName="Entitlement" solution="msdynce_Service (9.0.5.56)">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="entitlement" displayName="Entitlement" solution="msdynce_Service (9.0.5.56)">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="entitlement" displayName="Entitlement" solution="msdynce_Service (9.0.5.56)">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="incident" displayName="Case" solution="msdynce_Service (9.0.5.56)" />
+        <Required type="1" schemaName="incident" displayName="Case" solution="msdynce_Service (9.0.5.56)">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="incident" displayName="Case" solution="msdynce_Service (9.0.5.56)" />
+        <Required type="1" schemaName="incident" displayName="Case" solution="msdynce_Service (9.0.5.56)">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="incident" displayName="Case" solution="msdynce_Service (9.0.5.56)">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="incident" displayName="Case" solution="msdynce_Service (9.0.5.56)">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="lead" displayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" />
+        <Required type="1" schemaName="lead" displayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="opportunity" displayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" />
+        <Required type="1" schemaName="opportunity" displayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="1" schemaName="opportunity" displayName="Opportunity" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="opportunity" displayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" />
+        <Required type="1" schemaName="opportunity" displayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="opportunity" displayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" />
+        <Required type="1" schemaName="opportunity" displayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="opportunity" displayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="opportunity" displayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="62" schemaName="mv_SpecFlowDemo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="opportunity" displayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" />
+        <Required type="1" schemaName="opportunity" displayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="opportunityproduct" displayName="Opportunity Product" solution="msdynce_Sales (9.0.4.0076)" />
+        <Required type="1" schemaName="opportunityproduct" displayName="Opportunity Product" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="pricelevel" displayName="Price List" solution="msdynce_ProductManagement (9.0.4.0066)" />
+        <Required type="1" schemaName="pricelevel" displayName="Price List" solution="msdynce_ProductManagement (9.0.4.0066)">
+          <package>msdynce_ProductManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="62" schemaName="mv_SpecFlowDemo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="pricelevel" displayName="Price List" solution="msdynce_ProductManagement (9.0.4.0066)" />
+        <Required type="1" schemaName="pricelevel" displayName="Price List" solution="msdynce_ProductManagement (9.0.4.0066)">
+          <package>msdynce_ProductManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="quote" displayName="Quote" solution="msdynce_Sales (9.0.4.0076)" />
+        <Required type="1" schemaName="quote" displayName="Quote" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="62" schemaName="mv_SpecFlowDemo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="quote" displayName="Quote" solution="msdynce_Sales (9.0.4.0076)" />
+        <Required type="1" schemaName="quote" displayName="Quote" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="salesorder" displayName="Order" solution="msdynce_Sales (9.0.4.0076)" />
+        <Required type="1" schemaName="salesorder" displayName="Order" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="62" schemaName="mv_SpecFlowDemo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="salesorder" displayName="Order" solution="msdynce_Sales (9.0.4.0076)" />
+        <Required type="1" schemaName="salesorder" displayName="Order" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="2" schemaName="originatingleadid" displayName="Originating Lead" parentSchemaName="account" parentDisplayName="Account" solution="msdynce_LeadManagement (9.0.4.0066)" />
+        <Required type="2" schemaName="originatingleadid" displayName="Originating Lead" parentSchemaName="account" parentDisplayName="Account" solution="msdynce_LeadManagement (9.0.4.0066)">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Lead Advanced Find View" displayName="Lead Advanced Find View" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{00000000-0000-0000-00aa-000000666700}" />
+        <Required type="2" schemaName="originatingleadid" displayName="Originating Lead" parentSchemaName="account" parentDisplayName="Account" solution="msdynce_LeadManagement (9.0.4.0066)">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="businesscard" displayName="Business Card" parentSchemaName="contact" parentDisplayName="Contact" solution="msdynce_SalesPatch201904 (9.0.1912.1007)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="businesscardattributes" displayName="BusinessCardAttributes" parentSchemaName="contact" parentDisplayName="Contact" solution="msdynce_SalesPatch201904 (9.0.1912.1007)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="originatingleadid" displayName="Originating Lead" parentSchemaName="contact" parentDisplayName="Contact" solution="msdynce_LeadManagement (9.0.4.0066)">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Lead Advanced Find View" displayName="Lead Advanced Find View" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{00000000-0000-0000-00aa-000000666700}">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Opportunity Advanced Find View" displayName="Opportunity Advanced Find View" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000000666800}" />
+        <Required type="26" schemaName="Opportunity Advanced Find View" displayName="Opportunity Advanced Find View" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000000666800}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="My Open Leads" displayName="My Open Leads" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{00000000-0000-0000-00aa-000010001005}" />
+        <Required type="26" schemaName="My Open Leads" displayName="My Open Leads" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{00000000-0000-0000-00aa-000010001005}">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Open Leads" displayName="Open Leads" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{00000000-0000-0000-00aa-000010001006}" />
+        <Required type="26" schemaName="Open Leads" displayName="Open Leads" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{00000000-0000-0000-00aa-000010001006}">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Closed Leads" displayName="Closed Leads" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{00000000-0000-0000-00aa-000010001009}" />
+        <Required type="26" schemaName="Closed Leads" displayName="Closed Leads" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{00000000-0000-0000-00aa-000010001009}">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="My Active Cases" displayName="My Active Cases" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{00000000-0000-0000-00aa-000010001028}" />
+        <Required type="26" schemaName="My Active Cases" displayName="My Active Cases" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{00000000-0000-0000-00aa-000010001028}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="My Active Cases" displayName="My Active Cases" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{00000000-0000-0000-00aa-000010001028}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="All Cases for Customer" displayName="All Cases for Customer" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{00000000-0000-0000-00aa-000010001039}" />
+        <Required type="26" schemaName="All Cases for Customer" displayName="All Cases for Customer" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{00000000-0000-0000-00aa-000010001039}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Opportunity Associated View" displayName="Opportunity Associated View" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010001203}" />
+        <Required type="26" schemaName="All Cases for Customer" displayName="All Cases for Customer" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{00000000-0000-0000-00aa-000010001039}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Opportunity Associated View" displayName="Opportunity Associated View" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010001203}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="My Open Opportunities" displayName="My Open Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010003000}" />
+        <Required type="26" schemaName="My Open Opportunities" displayName="My Open Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010003000}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="My Open Opportunities" displayName="My Open Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010003000}" />
+        <Required type="26" schemaName="My Open Opportunities" displayName="My Open Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010003000}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="My Open Opportunities" displayName="My Open Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010003000}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="My Open Opportunities" displayName="My Open Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010003000}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Open Opportunities" displayName="Open Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010003001}" />
+        <Required type="26" schemaName="Open Opportunities" displayName="Open Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010003001}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Closed Opportunities" displayName="Closed Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010003006}" />
+        <Required type="26" schemaName="Closed Opportunities" displayName="Closed Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{00000000-0000-0000-00aa-000010003006}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Opportunity Product Inline Edit View" displayName="Opportunity Product Inline Edit View" parentSchemaName="opportunityproduct" parentDisplayName="Opportunity Product" solution="msdynce_Sales (9.0.4.0076)" id="{01010de7-749e-4fe6-8037-aca560a4fcbe}" />
+        <Required type="26" schemaName="Opportunity Product Inline Edit View" displayName="Opportunity Product Inline Edit View" parentSchemaName="opportunityproduct" parentDisplayName="Opportunity Product" solution="msdynce_Sales (9.0.4.0076)" id="{01010de7-749e-4fe6-8037-aca560a4fcbe}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="All Contacts" displayName="All Contacts" parentSchemaName="contact" parentDisplayName="Contact" solution="msdynce_AppCommon (9.0.4.0066)" id="{0d5d377b-5e7c-47b5-bab1-a5cb8b4ac105}" />
+        <Required type="26" schemaName="All Contacts" displayName="All Contacts" parentSchemaName="contact" parentDisplayName="Contact" solution="msdynce_AppCommon (9.0.4.0066)" id="{0d5d377b-5e7c-47b5-bab1-a5cb8b4ac105}">
+          <package>msdynce_AppCommonAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Campaign Lookup View" displayName="Campaign Lookup View" parentSchemaName="campaign" parentDisplayName="Campaign" solution="msdynce_Marketing (9.0.4.37)" id="{0e76dc73-2052-484e-8c00-a760f8d522ec}" />
+        <Required type="26" schemaName="Campaign Lookup View" displayName="Campaign Lookup View" parentSchemaName="campaign" parentDisplayName="Campaign" solution="msdynce_Marketing (9.0.4.37)" id="{0e76dc73-2052-484e-8c00-a760f8d522ec}">
+          <package>msdynce_MarketingAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="My Closed Opportunities in Current Fiscal Year" displayName="My Closed Opportunities in Current Fiscal Year" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{31dae384-a86f-df11-986c-00155d2e3002}" />
+        <Required type="26" schemaName="My Closed Opportunities in Current Fiscal Year" displayName="My Closed Opportunities in Current Fiscal Year" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{31dae384-a86f-df11-986c-00155d2e3002}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="All Competitors (summary)" displayName="All Competitors (summary)" parentSchemaName="competitor" parentDisplayName="Competitor" solution="msdynce_Sales (9.0.4.0076)" id="{57bca9ac-87a0-4c28-adc8-2d0a4645f29e}" />
+        <Required type="26" schemaName="All Competitors (summary)" displayName="All Competitors (summary)" parentSchemaName="competitor" parentDisplayName="Competitor" solution="msdynce_Sales (9.0.4.0076)" id="{57bca9ac-87a0-4c28-adc8-2d0a4645f29e}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="All Leads" displayName="All Leads" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{5a926b99-3a5f-df11-ae90-00155d2e3002}" />
+        <Required type="26" schemaName="All Leads" displayName="All Leads" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{5a926b99-3a5f-df11-ae90-00155d2e3002}">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Opportunity Quotes" displayName="Opportunity Quotes" parentSchemaName="quote" parentDisplayName="Quote" solution="msdynce_Sales (9.0.4.0076)" id="{61a4c932-d775-e211-b420-00155d806600}" />
+        <Required type="26" schemaName="Opportunity Quotes" displayName="Opportunity Quotes" parentSchemaName="quote" parentDisplayName="Quote" solution="msdynce_Sales (9.0.4.0076)" id="{61a4c932-d775-e211-b420-00155d806600}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="All Accounts" displayName="All Accounts" parentSchemaName="account" parentDisplayName="Account" solution="msdynce_AppCommon (9.0.4.0066)" id="{65ffaf9a-e8c5-432d-860b-32f841b00d87}" />
+        <Required type="26" schemaName="All Accounts" displayName="All Accounts" parentSchemaName="account" parentDisplayName="Account" solution="msdynce_AppCommon (9.0.4.0066)" id="{65ffaf9a-e8c5-432d-860b-32f841b00d87}">
+          <package>msdynce_AppCommonAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Account Entitlements" displayName="Account Entitlements" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{961bf8aa-042f-4f4d-bcca-935bfc9a6994}" />
+        <Required type="26" schemaName="Account Entitlements" displayName="Account Entitlements" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{961bf8aa-042f-4f4d-bcca-935bfc9a6994}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Account Entitlements" displayName="Account Entitlements" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{961bf8aa-042f-4f4d-bcca-935bfc9a6994}" />
+        <Required type="26" schemaName="Account Entitlements" displayName="Account Entitlements" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{961bf8aa-042f-4f4d-bcca-935bfc9a6994}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Account Entitlements" displayName="Account Entitlements" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{961bf8aa-042f-4f4d-bcca-935bfc9a6994}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Recent Opportunities" displayName="Recent Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{9c3f7ee8-eca7-e211-9fb6-00155dd0ea05}" />
+        <Required type="26" schemaName="Recent Opportunities" displayName="Recent Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{9c3f7ee8-eca7-e211-9fb6-00155dd0ea05}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Recent Opportunities" displayName="Recent Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{9c3f7ee8-eca7-e211-9fb6-00155dd0ea05}" />
+        <Required type="26" schemaName="Recent Opportunities" displayName="Recent Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{9c3f7ee8-eca7-e211-9fb6-00155dd0ea05}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Recent Opportunities" displayName="Recent Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{9c3f7ee8-eca7-e211-9fb6-00155dd0ea05}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Recent Opportunities" displayName="Recent Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{9c3f7ee8-eca7-e211-9fb6-00155dd0ea05}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Opportunity Lookup View" displayName="Opportunity Lookup View" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{9eb361b4-67ac-4830-8abf-2d29efbaee2c}" />
+        <Required type="26" schemaName="Opportunity Lookup View" displayName="Opportunity Lookup View" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{9eb361b4-67ac-4830-8abf-2d29efbaee2c}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="All Entitlements" displayName="All Entitlements" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{aa69e7e2-913a-4a5a-8609-8ca443554909}" />
+        <Required type="26" schemaName="All Entitlements" displayName="All Entitlements" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{aa69e7e2-913a-4a5a-8609-8ca443554909}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="All Entitlements" displayName="All Entitlements" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{aa69e7e2-913a-4a5a-8609-8ca443554909}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="All Opportunities" displayName="All Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{c6f6fc1b-1b3e-e711-80e1-00155d871bb4}" />
+        <Required type="26" schemaName="All Opportunities" displayName="All Opportunities" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{c6f6fc1b-1b3e-e711-80e1-00155d871bb4}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Opportunity Product Inline Edit View: Bundle Products" displayName="Opportunity Product Inline Edit View: Bundle Products" parentSchemaName="opportunityproduct" parentDisplayName="Opportunity Product" solution="msdynce_SalesPatch (9.0.1904.3002)" id="{e175dfbf-8eae-4af2-9dd2-68c43c14d40f}" />
+        <Required type="26" schemaName="Opportunity Product Inline Edit View: Bundle Products" displayName="Opportunity Product Inline Edit View: Bundle Products" parentSchemaName="opportunityproduct" parentDisplayName="Opportunity Product" solution="msdynce_SalesPatch (9.0.1904.3002)" id="{e175dfbf-8eae-4af2-9dd2-68c43c14d40f}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Recent Cases" displayName="Recent Cases" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{ebd1d24a-eea7-e211-9fb6-00155dd0ea05}" />
+        <Required type="26" schemaName="Recent Cases" displayName="Recent Cases" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{ebd1d24a-eea7-e211-9fb6-00155dd0ea05}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="26" schemaName="Recent Cases" displayName="Recent Cases" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{ebd1d24a-eea7-e211-9fb6-00155dd0ea05}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Lead Lookup View" displayName="Lead Lookup View" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{ecbac1a3-f8d8-4423-8f7e-10b11119739a}" />
+        <Required type="26" schemaName="Lead Lookup View" displayName="Lead Lookup View" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{ecbac1a3-f8d8-4423-8f7e-10b11119739a}">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="26" schemaName="Lead Associated View" displayName="Lead Associated View" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{f7ba26ee-3f8e-4cf2-8e02-0b4bbcd16da8}" />
+        <Required type="26" schemaName="Lead Associated View" displayName="Lead Associated View" parentSchemaName="lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{f7ba26ee-3f8e-4cf2-8e02-0b4bbcd16da8}">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="59" schemaName="Sales Pipeline" displayName="Sales Pipeline" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{87293554-2482-de11-9ff3-00155da3b012}" />
+        <Required type="59" schemaName="Sales Pipeline" displayName="Sales Pipeline" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{87293554-2482-de11-9ff3-00155da3b012}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="59" schemaName="Top Customers" displayName="Top Customers" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{8bc5fb18-48f2-4782-9e16-3d452fa4ddce}" />
+        <Required type="59" schemaName="Top Customers" displayName="Top Customers" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{8bc5fb18-48f2-4782-9e16-3d452fa4ddce}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="59" schemaName="Top Customers" displayName="Top Customers" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{8bc5fb18-48f2-4782-9e16-3d452fa4ddce}" />
+        <Required type="59" schemaName="Top Customers" displayName="Top Customers" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{8bc5fb18-48f2-4782-9e16-3d452fa4ddce}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="59" schemaName="Top Customers" displayName="Top Customers" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{8bc5fb18-48f2-4782-9e16-3d452fa4ddce}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="59" schemaName="Top Customers" displayName="Top Customers" parentSchemaName="opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{8bc5fb18-48f2-4782-9e16-3d452fa4ddce}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="59" schemaName="Case Mix (By Business Unit)" displayName="Case Mix (By Business Unit)" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{f10375a6-4893-de11-97d4-00155da3b01e}" />
+        <Required type="59" schemaName="Case Mix (By Business Unit)" displayName="Case Mix (By Business Unit)" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{f10375a6-4893-de11-97d4-00155da3b01e}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="59" schemaName="Case Mix (By Business Unit)" displayName="Case Mix (By Business Unit)" parentSchemaName="incident" parentDisplayName="Case" solution="msdynce_Service (9.0.5.56)" id="{f10375a6-4893-de11-97d4-00155da3b01e}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="59" schemaName="Entitlements Expiration" displayName="Entitlements Expiration" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{fdb919bb-c6fc-4fc8-8fa5-67ace68e41d1}" />
+        <Required type="59" schemaName="Entitlements Expiration" displayName="Entitlements Expiration" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{fdb919bb-c6fc-4fc8-8fa5-67ace68e41d1}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="59" schemaName="Entitlements Expiration" displayName="Entitlements Expiration" parentSchemaName="entitlement" parentDisplayName="Entitlement" solution="msdynce_Service (9.0.5.56)" id="{fdb919bb-c6fc-4fc8-8fa5-67ace68e41d1}">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="60" displayName="Contact" parentDisplayName="Contact" solution="msdynce_AppCommon (9.0.4.0066)" id="{1fed44d1-ae68-4a41-bd2b-f13acac4acfa}" />
+        <Required type="60" displayName="Contact" parentDisplayName="Contact" solution="msdynce_AppCommon (9.0.4.0066)" id="{1fed44d1-ae68-4a41-bd2b-f13acac4acfa}">
+          <package>msdynce_AppCommonAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="60" displayName="account contact card" parentDisplayName="Contact" solution="msdynce_AppCommon (9.0.4.0066)" id="{29de27bc-a257-4f29-99cf-bab4a84e688f}" />
+        <Required type="60" displayName="account contact card" parentDisplayName="Contact" solution="msdynce_AppCommon (9.0.4.0066)" id="{29de27bc-a257-4f29-99cf-bab4a84e688f}">
+          <package>msdynce_AppCommonAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="60" displayName="account contact card" parentDisplayName="Contact" solution="msdynce_AppCommon (9.0.4.0066)" id="{29de27bc-a257-4f29-99cf-bab4a84e688f}" />
+        <Required type="60" displayName="account contact card" parentDisplayName="Contact" solution="msdynce_AppCommon (9.0.4.0066)" id="{29de27bc-a257-4f29-99cf-bab4a84e688f}">
+          <package>msdynce_AppCommonAnchor (9.0.22103.10001)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="60" displayName="account contact card" parentDisplayName="Contact" solution="msdynce_AppCommon (9.0.4.0066)" id="{29de27bc-a257-4f29-99cf-bab4a84e688f}">
+          <package>msdynce_AppCommonAnchor (9.0.22103.10001)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="60" displayName="account contact card" parentDisplayName="Contact" solution="msdynce_AppCommon (9.0.4.0066)" id="{29de27bc-a257-4f29-99cf-bab4a84e688f}">
+          <package>msdynce_AppCommonAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="60" displayName="Account" parentDisplayName="Account" solution="msdynce_AppCommon (9.0.4.0066)" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
+        <Required type="60" displayName="Account" parentDisplayName="Account" solution="msdynce_AppCommon (9.0.4.0066)" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}">
+          <package>msdynce_AppCommonAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="60" displayName="Opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{a837e4a7-01b8-4f82-a475-be9abd67e667}" />
+        <Required type="60" displayName="Opportunity" parentDisplayName="Opportunity" solution="msdynce_Sales (9.0.4.0076)" id="{a837e4a7-01b8-4f82-a475-be9abd67e667}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="60" displayName="Sales Dashboard" solution="msdynce_Sales (9.0.4.0076)" id="{d1f511a8-1ead-e211-bb72-00155da9a201}" />
+        <Required type="60" displayName="Sales Dashboard" solution="msdynce_Sales (9.0.4.0076)" id="{d1f511a8-1ead-e211-bb72-00155da9a201}">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="60" displayName="Lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{e3b6ddb7-8df0-4410-ac7b-fd32e5053d38}" />
+        <Required type="60" displayName="Lead" parentDisplayName="Lead" solution="msdynce_LeadManagement (9.0.4.0066)" id="{e3b6ddb7-8df0-4410-ac7b-fd32e5053d38}">
+          <package>msdynce_LeadManagementAnchor (9.0.22103.10001)</package>
+        </Required>
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="AppCommon/Account/Account_main_system_library.js" displayName="AppCommon/Account/Account_main_system_library.js" solution="msdynce_AppCommon (9.0.4.0066)">
+          <package>msdynce_AppCommonAnchor (9.0.22103.10001)</package>
+        </Required>
+        <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_/Account/AssetCommon.Account.Library.js" displayName="msdyn_/Account/AssetCommon.Account.Library.js" solution="msdyn_AssetCommon (1.0.26.9)">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_/Account/AssetCommon.Account.Library.js" displayName="msdyn_/Account/AssetCommon.Account.Library.js" solution="msdyn_AssetCommon (1.0.26.9)">
+          <package>msdynce_ServiceAnchor (9.0.22103.1008)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
       </MissingDependency>
       <MissingDependency>
         <Required type="61" schemaName="msdyn_/Images/AppModule_Default_Icon.png" displayName="msdyn_/Images/AppModule_Default_Icon.png" solution="AppModuleWebResources (2.5)" />
         <Dependent type="80" schemaName="mv_SpecFlowDemo" displayName="SpecFlow Demo" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="66" schemaName="MscrmControls.CardFeedContainer.CardFeedContainer" displayName="MscrmControls.CardFeedContainer.CardFeedContainer" solution="BaseCustomControlsCore (9.0.2107.4011)" />
+        <Required type="61" schemaName="msdyn_talkingpointsloader.js" displayName="msdyn_talkingpointsloader.js" solution="msdynce_Talkingpoints (9.0.1.701894)">
+          <package>msdynce_SalesInsightsAnchor (9.0.22103.10006)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="Sales/ClientCommon/Sales_ClientCommon.js" displayName="Sales/ClientCommon/Sales_ClientCommon.js" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
         <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="Sales/ClientCommon/Sales_ClientCommon.js" displayName="Sales/ClientCommon/Sales_ClientCommon.js" solution="msdynce_Sales (9.0.4.0076)">
+          <package>msdynce_SalesAnchor (9.0.22103.10003)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="Intelligence.BusinessCardReaderControl.BusinessCardReader" displayName="Intelligence.BusinessCardReaderControl.BusinessCardReader" solution="BaseCustomControlsCore (9.0.2210.3015)" />
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="MscrmControls.CardFeedContainer.CardFeedContainer" displayName="MscrmControls.CardFeedContainer.CardFeedContainer" solution="BaseCustomControlsCore (9.0.2210.3015)" />
+        <Dependent type="60" displayName="Account" parentDisplayName="Account" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="MscrmControls.CardFeedContainer.CardFeedContainer" displayName="MscrmControls.CardFeedContainer.CardFeedContainer" solution="BaseCustomControlsCore (9.0.2210.3015)" />
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="MscrmControls.CardFeedContainer.CardFeedContainer" displayName="MscrmControls.CardFeedContainer.CardFeedContainer" solution="BaseCustomControlsCore (9.0.2210.3015)" />
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Account" id="{f94fa263-d56b-ed11-9561-000d3adf75a9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="MscrmControls.TalkingPointsControl.TalkingPoints" displayName="MscrmControls.TalkingPointsControl.TalkingPoints" solution="msdynce_Talkingpoints (9.0.1.701894)">
+          <package>msdynce_SalesInsightsAnchor (9.0.22103.10006)</package>
+        </Required>
+        <Dependent type="60" displayName="MV Role Form" parentDisplayName="Contact" id="{a760ffca-d66b-ed11-9561-000d3adf75a9}" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
