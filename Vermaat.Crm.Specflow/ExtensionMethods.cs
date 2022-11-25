@@ -34,5 +34,15 @@ namespace Vermaat.Crm.Specflow
 
             return (T)aliasedValue.Value;
         }
+
+        public static object GetAliasedValue(this Entity entity, string fieldName, string alias)
+        {
+            var aliasedValue = entity.GetAttributeValue<AliasedValue>($"{alias}.{fieldName}");
+
+            if (aliasedValue == null || aliasedValue.Value == null)
+                return null;
+
+            return aliasedValue.Value;
+        }
     }
 }

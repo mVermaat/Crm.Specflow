@@ -2,6 +2,7 @@
 using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,8 @@ namespace Vermaat.Crm.Specflow.Entities
 {
     public class EnvironmentVariable
     {
-        public Guid Id { get; private set; }
+        public Guid? Id { get; private set; }
+        public Guid DefintionId { get; private set; }
         public string Name { get; private set; }
         public object Value { get; private set; }
         public EnvironmentVariableType Type { get; private set; }
@@ -24,60 +26,58 @@ namespace Vermaat.Crm.Specflow.Entities
         public void UpdateValue(CrmService svc, string newValue)
         {
             Logger.WriteLine($"Updating Environment Variable {Name} to {newValue}");
-            var toUpdate = new Entity("environmentvariablevalue", Id);
-            toUpdate["value"] = ParseValue(newValue);
-            Value = toUpdate["value"];
-            svc.Update(toUpdate);
-        }
+            var record = new Entity("environmentvariablevalue");
+            record["value"] = newValue;
+            Value = record["value"];
 
-        private object ParseValue(string newValue)
-        {
-            switch(Type)
+            if(Id != null && Id != Guid.Empty)
             {
-                case EnvironmentVariableType.Boolean:
-                    return bool.Parse(newValue);
-                case EnvironmentVariableType.Number:
-                    return decimal.Parse(newValue);
-                default: 
-                    return Value;
+                record.Id = Id.Value;
+                svc.Update(record);
             }
-        }
+            else
+            {
+                record["environmentvariabledefinitionid"] = new EntityReference("environmentvariabledefinition", DefintionId);
+                svc.CreateRecord(record);
+            }
+        } 
 
         public static EnvironmentVariable GetEnvironmentVariable(CrmService svc, string name)
         {
             Logger.WriteLine($"Getting Environment Variable {name}");
             var result = svc.RetrieveMultiple(
-                new QueryExpression("environmentvariablevalue")
-            {
-                NoLock = true,
-                ColumnSet = new ColumnSet("value"),
-                LinkEntities =
+                new QueryExpression("environmentvariabledefinition")
                 {
-                    new LinkEntity("environmentvariablevalue", "environmentvariabledefinition", "environmentvariabledefinitionid", 
-                        "environmentvariabledefinitionid", JoinOperator.Inner)
+                    NoLock = true,
+                    ColumnSet = new ColumnSet("type"),
+                    Criteria =
                     {
-                        EntityAlias = "ed",
-                        Columns = new ColumnSet("type"),
-                        LinkCriteria =
-                        {
-                            Conditions =
+                        Conditions =
                             {
                                 new ConditionExpression("schemaname", ConditionOperator.Equal, name)
                             }
+                    },
+                    LinkEntities =
+                    {
+                        new LinkEntity("environmentvariabledefinition", "environmentvariablevalue", "environmentvariabledefinitionid",
+                            "environmentvariabledefinitionid", JoinOperator.LeftOuter)
+                        {
+                            EntityAlias = "ev",
+                            Columns = new ColumnSet("environmentvariablevalueid", "value"),
                         }
                     }
-                }
-            }).Entities;
+                }).Entities;
 
-            if (result == null)
+            if (result == null || result.Count == 0)
                 throw new TestExecutionException(Constants.ErrorCodes.ENVIRONMENT_VARIABLE_NOT_FOUND, name);
 
             var variable = new EnvironmentVariable()
             {
-                Id = result[0].Id,
+                DefintionId = result[0].Id,
+                Id = result[0].GetAliasedValue<Guid?>("ev", "environmentvariablevalueid"),
                 Name = name,
-                Type = (EnvironmentVariableType)result[0].GetAliasedValue<int>("ed", "type"),
-                Value = result[0]["value"]
+                Type = (EnvironmentVariableType)result[0].GetAttributeValue<OptionSetValue>("type").Value,
+                Value = result[0].GetAliasedValue("ev", "value"),
             };
 
             Logger.WriteLine($"Found Environment Variable {variable.Id}");
