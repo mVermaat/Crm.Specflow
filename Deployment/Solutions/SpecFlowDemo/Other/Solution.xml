@@ -8,7 +8,7 @@
     <Descriptions>
       <Description description="* App to display the entities included in specflow &#xA;&#xA;Account:&#xA;* Set field 'Ownership' on account form invisible" languagecode="1033" />
     </Descriptions>
-    <Version>1.0.0.149</Version>
+    <Version>1.0.0.150</Version>
     <Managed>2</Managed>
     <Publisher>
       <UniqueName>martijnvermaat</UniqueName>
