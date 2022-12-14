@@ -89,6 +89,7 @@ namespace Vermaat.Crm.Specflow
             public const int ROLE_COUNT_ASSERT_FAILED = 55;
             public const int ENVIRONMENT_VARIABLE_NOT_FOUND = 56;
             public const int ENVIRONMENT_VARIABLE_TYPE_NOT_SUPPORTED = 57;
+            public const int FORMID_NOT_FOUND = 58;
         }
 
         public class LocalizedTexts

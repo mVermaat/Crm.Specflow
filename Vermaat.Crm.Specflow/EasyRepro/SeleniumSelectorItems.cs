@@ -23,6 +23,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_Footer_Status,
 
+        Entity_FormId,
         Entity_FormLoad,
 
         Entity_FormNotifcation_NotificationBar,

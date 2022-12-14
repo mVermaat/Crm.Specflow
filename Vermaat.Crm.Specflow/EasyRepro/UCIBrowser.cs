@@ -98,7 +98,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public FormData GetFormData(EntityMetadata entityMetadata)
         {
-            var currentFormId = App.WebDriver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId()")?.ToString();
+            var currentFormId = SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateGetCurrentFormCommand()).Id.ToString();
 
             if (!_forms.TryGetValue(entityMetadata.LogicalName + currentFormId, out FormData formData))
             {
