@@ -4,30 +4,212 @@
         <name>CrmSvcUtil</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters">
+            <summary>
+            Command Line Properties for the CrmSvcUtil Instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.SuppressGenVersionAttribute">
+            <summary>
+            Suppresses the GeneratedCodeAttribute on all classes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.NoLogo">
+            <summary>
+            Suppresses the banner.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.Language">
+            <summary>
+            The language to use for the generated proxy code.  This can be either 'CS' or 'VB'.  The default language is 'CS'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.Url">
+            <summary>
+            A url or path to the SDK endpoint to contact for metadata
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.OutputFile">
+            <summary>
+            The filename for the generated proxy code
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.Namespace">
+            <summary>
+            The namespace for the generated proxy code.  The default namespace is the global namespace.
+            </summary>
+        </member>
         <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.UseInteractiveLogin">
             <summary>
-            Used to raise the interactive dialog to login. 
+            Used to raise the interactive dialog to login.
             </summary>
         </member>
         <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.ConnectionString">
             <summary>
-            Used to create a connection utilizing a passed in connection string. 
+            Used to create a connection utilizing a passed in connection string.
             </summary>
         </member>
-        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.UseOAuth">
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.AccessToken">
             <summary>
-            Used to login via OAuth to CRM Online, Hidden for initial ship... but here to allow for complex auth situations. 
+            Used to login via OAuth to Dataverse, Hidden for initial ship... but here to allow for complex auth situations.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.UserName">
+            <summary>
+            Username to use when connecting to the server for authentication.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.Password">
+            <summary>
+            Password to use when connecting to the server for authentication.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.Domain">
+            <summary>
+            Domain to authenticate against when connecting to the server.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.ServiceContextName">
+            <summary>
+            The name for the generated service context. If a value is passed in, it will be used for the Service Context.  If not, no Service Context will be generated
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.MessageNamespace">
+            <summary>
+            Namespace of messages to generate.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.ShowHelp">
+            <summary>
+            Show this usage message.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.CodeCustomizationService">
+            <summary>
+            Full name of the type to use as the ICustomizeCodeDomService
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.CodeWriterFilterService">
+            <summary>
+            Full name of the type to use as the ICodeWriterFilterService
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.CodeWriterMessageFilterService">
+            <summary>
+            Full name of the type to use as the ICodeWriterMessageFilterService
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.MetadataProviderService">
+            <summary>
+            Full name of the type to use as the IMetadataProviderService
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.MetadataQueryProvider">
+            <summary>
+            Full name of the type to use as the IMetaDataProviderQueryService
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.CodeGenerationService">
+            <summary>
+            Full name of the type to use as the ICodeGenerationService
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.NamingService">
+            <summary>
+            Full name of the type to use as the INamingService
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.Private">
+            <summary>
+            Generate unsupported classes
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.GenerateCustomActions">
+            <summary>
+            Generate wrapper classes for custom actions
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.GenerateMessages">
+            <summary>
+            Generate messages
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.EmitFieldClasses">
+            <summary>
+            Generate Field Constants for entities
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.EntityNamesFilter">
+            <summary>
+            Provides a means to provide a filtered list of entities. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.MessageNamesFilter">
+            <summary>
+            Provides a means to provide a filtered list of entities. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.SplitFilesByObject">
+            <summary>
+            Askes the system to emit a file per type. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.OutDirectory">
+            <summary>
+            Sets the output directory for files when split files are setup
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.EntityFolderName">
+            <summary>
+            Sets the folder name for Entity files. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.MessagesFolderName">
+            <summary>
+            Sets the folder name for Messages files. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.OptionSetFolderName">
+            <summary>
+            Sets the folder name for OptionSets files. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.GenerateGlobalOptionSets">
+            <summary>
+            If set, Causes Global optionsets to be read from the server and emitted. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.LegacyMode">
+            <summary>
+            if Set, Causes the system to behave as the CrmServiceUtil did pre Feb/2022. 
             </summary>
         </member>
         <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.ConnectionProfileName">
             <summary>
-            Hidden... Used by devToolkit to set the Connection profile to use for this call. 
+            Used by devToolkit to set the Connection profile to use for this call.
             </summary>
         </member>
         <member name="P:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.ConnectionAppName">
             <summary>
-            Hidden... Used by the devToolkit to set the appName whos connection is being used. 
+            Used by the devToolkit to set the appName whos connection is being used.
             </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Services.Utility.CrmSvcUtilParameters.ToDictionary">
+            <summary>
+            Gets Dictionary of parameters
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Crm.Services.Utility.IOrganizationMetadata2">
+            <summary>
+            Extends the OrganizationServiceMetadata interface to allow for adding optionsets. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Services.Utility.IOrganizationMetadata2.AddOptionSetInfo(Microsoft.Xrm.Sdk.Metadata.OptionSetMetadata)">
+            <summary>
+            Adds an OptionSet Metadata Object to the Global OptionSets array 
+            </summary>
+            <param name="optionSet"></param>
         </member>
         <member name="T:Microsoft.Crm.Services.Utility.ArgumentType">
             <remarks>
@@ -136,7 +318,7 @@
         </member>
         <member name="F:Microsoft.Crm.Services.Utility.CommandLineParser._arguments">
             <summary>
-            A list of all of the arguments that are supported 
+            A list of all of the arguments that are supported
             </summary>
         </member>
         <member name="M:Microsoft.Crm.Services.Utility.CommandLineParser.#ctor(Microsoft.Crm.Services.Utility.ICommandLineArgumentSource)">
@@ -169,6 +351,12 @@
             <summary>
             All SdkMessages for the Organization.
             </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Services.Utility.OrganizationMetadata.AddOptionSetInfo(Microsoft.Xrm.Sdk.Metadata.OptionSetMetadata)">
+            <summary>
+            Add OptionSet to OptionSets list. 
+            </summary>
+            <param name="optionSet"></param>
         </member>
         <member name="T:Microsoft.Crm.Services.Utility.Result">
             <summary>
@@ -612,9 +800,92 @@
             Gets the message paging info from a set of message results
             </summary>
         </member>
+        <member name="T:Microsoft.Crm.Services.Utility.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.Properties.Resources.RetrieveAllSDKMessages">
+            <summary>
+              Looks up a localized string similar to &lt;fetch distinct=&apos;true&apos; version=&apos;1.0&apos;&gt;
+            &lt;entity name=&apos;sdkmessage&apos;&gt;
+            	&lt;attribute name=&apos;name&apos;/&gt;
+            	&lt;attribute name=&apos;isprivate&apos;/&gt;
+            	&lt;attribute name=&apos;sdkmessageid&apos;/&gt;
+            	&lt;attribute name=&apos;customizationlevel&apos;/&gt;
+            	&lt;link-entity name=&apos;sdkmessagepair&apos; alias=&apos;sdkmessagepair&apos; to=&apos;sdkmessageid&apos; from=&apos;sdkmessageid&apos; link-type=&apos;inner&apos;&gt;
+            		&lt;filter&gt;
+            			&lt;condition alias=&apos;sdkmessagepair&apos; attribute=&apos;endpoint&apos; operator=&apos;eq&apos; value=&apos;2011/Organization.svc&apos; /&gt;
+            		&lt;/filter&gt;
+            		&lt;attribute name=&apos;sdkmessagepairid&apos;/&gt;
+            		&lt;attribut [rest of string was truncated]&quot;;.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Crm.Services.Utility.Properties.Resources.RetrieveFilterdListOfSdkMessages">
+            <summary>
+              Looks up a localized string similar to &lt;fetch distinct=&apos;true&apos; version=&apos;1.0&apos; returntotalrecordcount=&apos;true&apos; &gt;
+               &lt;entity name=&apos;sdkmessage&apos; &gt;
+                   &lt;attribute name=&apos;name&apos; /&gt;
+                   &lt;attribute name=&apos;isprivate&apos; /&gt;
+                   &lt;attribute name=&apos;sdkmessageid&apos; /&gt;
+                   &lt;attribute name=&apos;customizationlevel&apos; /&gt;
+                   &lt;link-entity name=&apos;sdkmessagepair&apos; alias=&apos;sdkmessagepair&apos; to=&apos;sdkmessageid&apos; from=&apos;sdkmessageid&apos; link-type=&apos;inner&apos; &gt;
+                       &lt;filter&gt;
+                           &lt;condition alias=&apos;sdkmessagepair&apos; attribute=&apos;endpoint&apos; operator=&apos;eq&apos; value=&apos;201 [rest of string was truncated]&quot;;.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Services.Utility.CodeGenerationService.BuildAttributeOptionSet(Microsoft.Xrm.Sdk.Metadata.EntityMetadata,Microsoft.Xrm.Sdk.Metadata.AttributeMetadata,System.CodeDom.CodeTypeMember,Microsoft.Crm.Services.Utility.ServiceProvider,System.Boolean)">
+            <summary>
+            Builds OptionSet Enum and returns that class. 
+            </summary>
+            <param name="entity"></param>
+            <param name="attribute"></param>
+            <param name="attributeMember"></param>
+            <param name="serviceProvider"></param>
+            <param name="useLegacyMode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Crm.Services.Utility.CodeGenerationService.GetAttributeConstantLogicalName(System.CodeDom.CodeMemberProperty)">
+            <summary>
+            Generate the Constant name for an attribute property.
+            </summary>
+            <param name="prop"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Crm.Services.Utility.CodeGenerationService.IsConstGeneratingAttribute(System.CodeDom.CodeMemberProperty,System.CodeDom.CodeAttributeDeclaration)">
+            <summary>
+            Determine if this should be generated for the constants lists.
+            </summary>
+            <param name="prop"></param>
+            <param name="att"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Crm.Services.Utility.CodeGenerationService.GenerateTypeWithoutEmptyLines(System.CodeDom.CodeTypeDeclaration)">
+            <summary>
+            Removes the blank lines spaces by generating the code as a string without BlankLinesBetweenMembers
+            </summary>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
         <member name="M:Microsoft.Crm.Services.Utility.CodeWriterFilterService.IsNotExposedChildAttribute(Microsoft.Xrm.Sdk.Metadata.AttributeMetadata)">
             <summary>
-            If true a child attribute cannot be published or externally consumed. 
+            If true a child attribute cannot be published or externally consumed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Crm.Services.Utility.DefaultCustomziations.EnumPropertyGenerator.#ctor">
+            <summary>
+            default implementation. 
             </summary>
         </member>
         <member name="T:Microsoft.Crm.Services.Utility.DeviceIdManager">
@@ -952,14 +1223,14 @@
             Static constructor.
             </summary>
         </member>
-        <member name="M:Microsoft.Crm.Services.Utility.SdkMetadataProviderService.SetConnectionTimeoutValues">
+        <member name="F:Microsoft.Crm.Services.Utility.NamingService._reservedSystemAttributeNames">
             <summary>
-            Updates the timeout value to extend the amount of item that a request will wait. 
+            List of attribute names that will conflict with system properties.
             </summary>
         </member>
         <member name="M:Microsoft.Crm.Services.Utility.SdkMetadataProviderService.GetConnectionString">
             <summary>
-            Builds a connection string from the passed in parameters. 
+            Builds a connection string from the passed in parameters.
             </summary>
             <returns></returns>
         </member>
@@ -1302,6 +1573,13 @@
             <param name="sw">Stream writer to use to write the exception.</param>
             <param name="level">level of the exception, this deals with inner exceptions.</param>
         </member>
+        <member name="M:Microsoft.Crm.Services.Utility.Utility.Utilites.WriteObjectToDisk(System.Object,System.String)">
+            <summary>
+            Writes a binary object to disk
+            </summary>
+            <param name="o">object to write</param>
+            <param name="filename">fileName to write too.</param>
+        </member>
         <member name="T:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin">
             <summary>
             Interaction logic for CRMInteractiveLogin.xaml
@@ -1317,27 +1595,27 @@
         </member>
         <member name="F:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.bIsConnectedComplete">
             <summary>
-            Bool flag to determine if there is a connection 
+            Bool flag to determine if there is a connection
             </summary>
         </member>
         <member name="F:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.mgr">
             <summary>
-            CRM Connection Manager component. 
+            CRM Connection Manager component.
             </summary>
         </member>
         <member name="F:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.resetUiFlag">
             <summary>
-             This is used to allow the UI to reset w/out closing 
+             This is used to allow the UI to reset w/out closing
             </summary>
         </member>
         <member name="P:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.CrmConnectionMgr">
             <summary>
-            CRM Connection Manager 
+            CRM Connection Manager
             </summary>
         </member>
         <member name="P:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.HostApplicatioNameOveride">
             <summary>
-            Host Name to use.. 
+            Host Name to use..
             </summary>
         </member>
         <member name="P:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.HostProfileName">
@@ -1347,12 +1625,12 @@
         </member>
         <member name="P:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.ForceDirectLogin">
             <summary>
-            When set to true, forces a user login, 
+            When set to true, forces a user login,
             </summary>
         </member>
         <member name="E:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.ConnectionToCrmCompleted">
             <summary>
-            Raised when a connection to CRM has completed. 
+            Raised when a connection to CRM has completed.
             </summary>
         </member>
         <member name="M:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.#ctor">
@@ -1362,19 +1640,19 @@
         </member>
         <member name="M:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.Window_Loaded(System.Object,System.Windows.RoutedEventArgs)">
             <summary>
-            Raised when the window loads for the first time. 
+            Raised when the window loads for the first time.
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
         <member name="M:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.ExecuteLoginProcess">
             <summary>
-            Run Login process. 
+            Run Login process.
             </summary>
         </member>
         <member name="M:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.mgr_ServerConnectionStatusUpdate(System.Object,Microsoft.Xrm.Tooling.CrmConnectControl.ServerConnectStatusEventArgs)">
             <summary>
-            Updates from the Auto Login process. 
+            Updates from the Auto Login process.
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
@@ -1388,28 +1666,28 @@
         </member>
         <member name="M:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.CrmLoginCtrl_ConnectionCheckBegining(System.Object,System.EventArgs)">
             <summary>
-             Login control connect check starting. 
+             Login control connect check starting.
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
         <member name="M:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.CrmLoginCtrl_ConnectionStatusEvent(System.Object,Microsoft.Xrm.Tooling.CrmConnectControl.ConnectStatusEventArgs)">
             <summary>
-            Login control connect check status event. 
+            Login control connect check status event.
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
         <member name="M:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.CrmLoginCtrl_ConnectErrorEvent(System.Object,Microsoft.Xrm.Tooling.CrmConnectControl.ConnectErrorEventArgs)">
             <summary>
-            Login control Error event. 
+            Login control Error event.
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
         <member name="M:CrmSvcUtil.InteractiveLogin.CRMInteractiveLogin.CrmLoginCtrl_UserCancelClicked(System.Object,System.EventArgs)">
             <summary>
-            Login Control Cancel event raised. 
+            Login Control Cancel event raised.
             </summary>
             <param name="sender"></param>
             <param name="e"></param>

@@ -68,6 +68,11 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, "Selenium command {0} didn't have a result. Can't display a proper error.");
             AddError(Constants.ErrorCodes.RIBBON_BUTTON_DOESNT_EXIT, "Ribbon button {0} doesn't exist");
             AddError(Constants.ErrorCodes.FAILED_TO_PARSE_CONDITION_OPERATOR, "Failed to parse condition '{0}'. {1}. See https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/conditionoperator?view=dataverse-latest#members for all valid values");
+            AddError(Constants.ErrorCodes.SYSTEMFORM_NOT_FOUND, "Form {0} of entity {1} doesn't exist");
+            AddError(Constants.ErrorCodes.DASHBOARD_NOT_FOUND, "Dashoard {0} doesn't exist");
+            AddError(Constants.ErrorCodes.ROLE_COUNT_ASSERT_FAILED, "Assertion failed for checking roles on {0}. {1} missing roles: {2} and {3} extra roles: {4}");
+            AddError(Constants.ErrorCodes.ENVIRONMENT_VARIABLE_NOT_FOUND, "Environment variable {0} doesn't exist");
+            AddError(Constants.ErrorCodes.ENVIRONMENT_VARIABLE_TYPE_NOT_SUPPORTED, "Environment variable {0} with type {1} isn't supported by this step");
         }
 
         public void AddError(int errorCode, string message)

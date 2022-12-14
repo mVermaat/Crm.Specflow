@@ -16,6 +16,7 @@ namespace Vermaat.Crm.Specflow
             public const string TABLE_FORMSTATE = "State";
             public const string TABLE_FORMNOTIFICATION_MESSAGE = "Message";
             public const string TABLE_FORMNOTIFICATION_LEVEL = "Level";
+            public const string TABLE_ROLE = "Role";
 
             public const string TARGET_API = "API";
             public const string TARGET_Chrome = "Chrome";
@@ -83,6 +84,11 @@ namespace Vermaat.Crm.Specflow
             public const int SELENIUM_COMMAND_NO_RESULT = 50;
             public const int RIBBON_BUTTON_DOESNT_EXIT = 51;
             public const int FAILED_TO_PARSE_CONDITION_OPERATOR = 52;
+            public const int SYSTEMFORM_NOT_FOUND = 53;
+            public const int DASHBOARD_NOT_FOUND = 54;
+            public const int ROLE_COUNT_ASSERT_FAILED = 55;
+            public const int ENVIRONMENT_VARIABLE_NOT_FOUND = 56;
+            public const int ENVIRONMENT_VARIABLE_TYPE_NOT_SUPPORTED = 57;
         }
 
         public class LocalizedTexts

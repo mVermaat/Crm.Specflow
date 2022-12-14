@@ -149,7 +149,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
             return Service.Execute(request);
         }
 
-        private Guid CreateRecord(Entity entity)
+        internal Guid CreateRecord(Entity entity)
         {
             return Service.Create(entity);
         }
