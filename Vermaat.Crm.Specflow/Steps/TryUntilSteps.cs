@@ -52,6 +52,15 @@ namespace Vermaat.Crm.Specflow.Steps
             return ThenRecordCountExists(seconds, 1, entityName, criteria)[0];
         }
 
+        [Then(@"within ([0-9]+) seconds a ([^\s]+) named ([^\s]+) exists with the following values")]
+        [Then(@"within ([0-9]+) seconds an ([^\s]+) named ([^\s]+) exists with the following values")]
+        public Entity ThenRecordExists(int seconds, string entityName, string alias, Table criteria)
+        {
+            var record = ThenRecordExists(seconds, entityName, criteria);
+            _crmContext.RecordCache.Add(alias, record);
+            return record;
+        }
+
         [Then(@"within ([0-9]+) seconds no ([^\s]+) exists with the following values")]
         public void ThenNoRecordExists(int seconds, string entityName, Table criteria)
         {
