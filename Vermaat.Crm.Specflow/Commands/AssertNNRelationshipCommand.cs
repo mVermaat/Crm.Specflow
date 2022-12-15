@@ -26,7 +26,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public override void Execute()
         {
-            var record = _crmContext.RecordCache.Get(_alias);
+            var record = _crmContext.RecordCache.Get(_alias, true);
             var md = GlobalTestingContext.Metadata.GetEntityMetadata(record.LogicalName, EntityFilters.Relationships);
 
             var relationship = md.ManyToManyRelationships.FirstOrDefault(r => (r.Entity1LogicalName == record.LogicalName && r.Entity2LogicalName == _relatedEntityName) ||
