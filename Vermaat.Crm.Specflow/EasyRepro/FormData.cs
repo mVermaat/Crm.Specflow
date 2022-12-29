@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.EasyRepro.Fields;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -19,18 +20,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         private readonly UCIApp _app;
         private readonly EntityMetadata _entityMetadata;
-        private readonly Dictionary<string, FormField> _formFields;
+        private readonly Dictionary<string, FormFieldSet> _formFields;
 
-        public FormField this[string attributeName] => _formFields[attributeName];
+        public FormField this[string attributeName] => _formFields[attributeName].Get();
         public CommandBarActions CommandBar { get; }
 
-        public FormData(UCIApp app, EntityMetadata entityMetadata)
+        internal FormData(UCIApp app, EntityMetadata entityMetadata, SystemForm currentForm)
         {
             _app = app;
             _entityMetadata = entityMetadata;
             CommandBar = new CommandBarActions(_app);
 
-            _formFields = InitializeFormData();
+            _formFields = InitializeFormData(currentForm);
         }
 
         public void ClickSubgridButton(string subgridName, string subgridButton)
@@ -76,7 +77,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             foreach (var row in formData.Rows)
             {
                 Assert.IsTrue(ContainsField(row[Constants.SpecFlow.TABLE_KEY]), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
-                var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];
+                var field = this[row[Constants.SpecFlow.TABLE_KEY]];
                 Assert.IsTrue(field.IsVisible(formState), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't visible");
                 Assert.IsFalse(field.IsLocked(formState), $"Field {row[Constants.SpecFlow.TABLE_KEY]} is read-only");
 
@@ -84,45 +85,92 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             }
         }
 
-        private Dictionary<string, FormField> InitializeFormData()
+        private Dictionary<string, FormFieldSet> InitializeFormData(SystemForm currentForm)
         {
+            var definition = currentForm.FormXml;
             dynamic attributeCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.data.entity.attributes.getAll().map(function(a) { return { name: a.getName(), controls: a.controls.getAll().map(function(c) { return c.getName() }) } })");
 
-            var formFields = new Dictionary<string, FormField>();
+            var formFields = new Dictionary<string, FormFieldSet>();
             var metadataDic = _entityMetadata.Attributes.ToDictionary(a => a.LogicalName);
-            foreach (var attribute in attributeCollection)
+
+
+            int tabNr = 0;
+            foreach(var tab in definition.Tabs)
             {
-                var controls = new string[attribute["controls"].Count];
-
-                for (int i = 0; i < attribute["controls"].Count; i++)
+                tabNr++;
+                int columnNr = 0;
+                foreach (var column in tab.Columns)
                 {
-                    controls[i] = attribute["controls"][i];
+                    columnNr++;
+                    int sectionNr = 0;
+                    foreach (var section in column.Sections)
+                    {
+                        sectionNr++;
+                        int rowNr = 0;
+                        foreach (var row in section.Rows)
+                        {
+                            rowNr++;
+                            ProcessFormRow(formFields, metadataDic, row);
+                        }
+                    }
                 }
-
-                FormField field = CreateFormField(metadataDic[attribute["name"]], controls);
-                if (field != null)
-                    formFields.Add(attribute["name"], field);
-                
             }
+
+            int headerRowNr = 0;
+            foreach(var row in definition.Header.Rows)
+            {
+                headerRowNr++;
+                ProcessFormRow(formFields, metadataDic, row);
+            }
+
+
+            //foreach (var attribute in attributeCollection)
+            //{
+            //    var controls = new string[attribute["controls"].Count];
+
+            //    for (int i = 0; i < attribute["controls"].Count; i++)
+            //    {
+            //        controls[i] = attribute["controls"][i];
+            //    }
+
+            //    FormField field = CreateFormField(metadataDic[attribute["name"]], controls);
+            //    if (field != null)
+            //        formFields.Add(attribute["name"], field);
+                
+            //}
 
             return formFields;
         }
 
-        private FormField CreateFormField(AttributeMetadata metadata, string[] controls)
+        private void ProcessFormRow(Dictionary<string, FormFieldSet> formFields, Dictionary<string, AttributeMetadata> metadataDic, FormRow row)
         {
-            if (controls.Length == 0)
-                return null;
+            if (row.Cells == null)
+                return;
 
-            // Take the first control that isn't in the header
-            for(int i = 0; i < controls.Length; i++)
+            foreach (var cell in row.Cells)
             {
-                if(!controls[i].StartsWith("header"))
+                // mapcontrol and alike will be skipped)
+                if (cell.IsSpacer || string.IsNullOrEmpty(cell.Control.AttributeName))
+                    continue;
+
+                var formField = CreateFormField(metadataDic[cell.Control.AttributeName], cell.Control);
+                if (!formFields.TryGetValue(cell.Control.AttributeName, out var formFieldSet))
                 {
-                    return new BodyFormField(_app, metadata, controls[i]);
+                    formFieldSet = new FormFieldSet();
+                    formFields.Add(cell.Control.AttributeName, formFieldSet);
                 }
+                formFieldSet.Add(formField);
             }
-            // If all are in the header, take the first header control
-            return new HeaderFormField(_app, metadata, controls[0]);
+        }
+
+        private FormField CreateFormField(AttributeMetadata metadata, FormControl cell)
+        { 
+            if(!cell.ControlName.StartsWith("header"))
+            {
+                return new BodyFormField(_app, metadata, cell);
+            }
+            
+            return new HeaderFormField(_app, metadata, cell);
         }
     }
 }

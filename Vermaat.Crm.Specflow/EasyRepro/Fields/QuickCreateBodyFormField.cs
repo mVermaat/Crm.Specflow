@@ -3,12 +3,13 @@ using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk.Metadata;
 using System.Collections.Generic;
 using Vermaat.Crm.Specflow.EasyRepro.FieldTypes;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
     public class QuickCreateBodyFormField : FormField
     {
-        public QuickCreateBodyFormField(UCIApp app, AttributeMetadata attributeMetadata, string control)
+        public QuickCreateBodyFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control)
             : base(app, attributeMetadata, control)
         {
         }

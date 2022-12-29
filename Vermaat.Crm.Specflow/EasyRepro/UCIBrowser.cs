@@ -102,11 +102,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public FormData GetFormData(EntityMetadata entityMetadata)
         {
-            var currentFormId = SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateGetCurrentFormCommand()).Id.ToString();
+            var currentForm = SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateGetCurrentFormCommand());
+            var currentFormId = currentForm.Id.ToString();
 
             if (!_forms.TryGetValue(entityMetadata.LogicalName + currentFormId, out FormData formData))
             {
-                formData = new FormData(App, entityMetadata);
+                formData = new FormData(App, entityMetadata, currentForm);
                 _forms.Add(entityMetadata.LogicalName + currentFormId, formData);
             }
 

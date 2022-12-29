@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro.FieldTypes;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
@@ -17,7 +18,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
     {
         private string _tabLabel;
 
-        public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, string control) 
+        public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control) 
             : base(app, attributeMetadata, control)
         {
         }
@@ -44,7 +45,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
         {
             if (string.IsNullOrEmpty(_tabLabel))
             {
-                _tabLabel = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{Control}').getParent().getParent().getLabel()")?.ToString();
+                _tabLabel = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{Control.ControlName}').getParent().getParent().getLabel()")?.ToString();
             }
             return _tabLabel;
         }

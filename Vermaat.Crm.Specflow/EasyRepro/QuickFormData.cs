@@ -167,31 +167,32 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private Dictionary<string, QuickCreateBodyFormField> InitializeFormData()
         {
-            dynamic attributeCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.data.entity.attributes.getAll().map(function(a) { return { name: a.getName(), controls: a.controls.getAll().map(function(c) { return c.getName() }) } })");
+            throw new NotImplementedException();
+            //dynamic attributeCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.data.entity.attributes.getAll().map(function(a) { return { name: a.getName(), controls: a.controls.getAll().map(function(c) { return c.getName() }) } })");
 
-            var formFields = new Dictionary<string, QuickCreateBodyFormField>();
-            var metadataDic = _entityMetadata.Attributes.ToDictionary(a => a.LogicalName);
-            foreach (var attribute in attributeCollection)
-            {
-                var controls = new string[attribute["controls"].Count];
+            //var formFields = new Dictionary<string, QuickCreateBodyFormField>();
+            //var metadataDic = _entityMetadata.Attributes.ToDictionary(a => a.LogicalName);
+            //foreach (var attribute in attributeCollection)
+            //{
+            //    var controls = new string[attribute["controls"].Count];
 
-                for (int i = 0; i < attribute["controls"].Count; i++)
-                {
-                    controls[i] = attribute["controls"][i];
-                }
+            //    for (int i = 0; i < attribute["controls"].Count; i++)
+            //    {
+            //        controls[i] = attribute["controls"][i];
+            //    }
 
-                QuickCreateBodyFormField field = CreateFormField(metadataDic[attribute["name"]], controls);
-                if (field != null)
-                    formFields.Add(attribute["name"], field);
+            //    QuickCreateBodyFormField field = CreateFormField(metadataDic[attribute["name"]], controls);
+            //    if (field != null)
+            //        formFields.Add(attribute["name"], field);
 
-            }
+            //}
 
-            return formFields;
+            //return formFields;
         }
 
-        private QuickCreateBodyFormField CreateFormField(AttributeMetadata metadata, string[] controls)
-        {
-            return controls.Length == 0 ? null : new QuickCreateBodyFormField(_app, metadata, controls[0]);
-        }
+        //private QuickCreateBodyFormField CreateFormField(AttributeMetadata metadata, string[] controls)
+        //{
+        //    return controls.Length == 0 ? null : new QuickCreateBodyFormField(_app, metadata, controls[0]);
+        //}
     }
 }
