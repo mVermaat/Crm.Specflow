@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,8 @@ namespace Vermaat.Crm.Specflow
         public static ErrorCodes ErrorCodes { get; }
 
         internal static BrowserManager BrowserManager { get; }
+
+        public static Action<LoginRedirectEventArgs> RedirectAction { get; set; }
 
         static GlobalTestingContext()
         {

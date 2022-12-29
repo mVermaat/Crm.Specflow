@@ -1,4 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
 using System;
@@ -18,6 +19,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private readonly Dictionary<string, FormData> _forms;
         private readonly Dictionary<string, QuickFormData> _quickForms;
         private readonly CrmModelApps _apps;
+        private readonly Action<LoginRedirectEventArgs> _redirectAction;
 
         public UCIApp App { get; }
         public FormData LastFormData { get; private set; }
@@ -27,18 +29,20 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         }
 
-        public UCIBrowser(BrowserOptions browserOptions, LocalizedTexts localizedTexts, CrmModelApps apps, SeleniumCommandFactory seleniumCommandFactory)
+        public UCIBrowser(BrowserOptions browserOptions, LocalizedTexts localizedTexts, CrmModelApps apps, SeleniumCommandFactory seleniumCommandFactory,
+            Action<LoginRedirectEventArgs> redirectAction = null)
         {
             App = new UCIApp(browserOptions, localizedTexts, seleniumCommandFactory, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage);
             _forms = new Dictionary<string, FormData>();
             _quickForms = new Dictionary<string, QuickFormData>();
             _apps = apps;
+            _redirectAction = redirectAction;
         }
 
         public void Login(BrowserLoginDetails loginDetails)
         {
             Logger.WriteLine("Logging in CRM");
-            App.App.OnlineLogin.Login(new Uri(loginDetails.Url), loginDetails.Username.ToSecureString(), loginDetails.Password, loginDetails.MfaKey);
+            App.App.OnlineLogin.Login(new Uri(loginDetails.Url), loginDetails.Username.ToSecureString(), loginDetails.Password, loginDetails.MfaKey, _redirectAction);
         }
 
         public void ChangeApp(string appUniqueName)
@@ -98,7 +102,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public FormData GetFormData(EntityMetadata entityMetadata)
         {
-            var currentFormId = App.WebDriver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId()")?.ToString();
+            var currentFormId = SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateGetCurrentFormCommand()).Id.ToString();
 
             if (!_forms.TryGetValue(entityMetadata.LogicalName + currentFormId, out FormData formData))
             {

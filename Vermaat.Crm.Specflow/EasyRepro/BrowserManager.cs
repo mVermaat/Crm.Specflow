@@ -1,4 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private readonly Dictionary<BrowserType, Dictionary<string, UCIBrowser>> _browserCache;
         private readonly Lazy<CrmModelApps> _appCache;
 
+        
         public BrowserManager(LocalizedTexts buttonTexts)
         {
             _browserCache = new Dictionary<BrowserType, Dictionary<string, UCIBrowser>>();
@@ -61,7 +63,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                     options.DriversPath = GetDriverPath(options);
                 }
                 
-                browser = new UCIBrowser(options, _localizedTexts, _appCache.Value, seleniumCommandFactory);
+                browser = new UCIBrowser(options, _localizedTexts, _appCache.Value, seleniumCommandFactory, GlobalTestingContext.RedirectAction);
                 dic.Add(browserLoginDetails.Username, browser);
                 browser.Login(browserLoginDetails);
             }

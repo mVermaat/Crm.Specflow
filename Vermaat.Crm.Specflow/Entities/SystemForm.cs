@@ -29,6 +29,7 @@ namespace Vermaat.Crm.Specflow.Entities
         private readonly Lazy<FormXmlDefinition> _parsedFormXml;
 
         public FormXmlDefinition FormXml => _parsedFormXml.Value;
+        public Guid Id => _record.Id;
         public string Name => _record.GetAttributeValue<string>(Fields.Name);
         public string ObjectTypeCode => _record.GetAttributeValue<string>(Fields.ObjectTypeCode);
 
@@ -64,6 +65,12 @@ namespace Vermaat.Crm.Specflow.Entities
             }).Entities.FirstOrDefault();
 
             return result != null ? new SystemForm(result) : null;
+        }
+
+        internal static SystemForm GetById(CrmService service, Guid formId)
+        {
+            return new SystemForm(service.Retrieve("systemform", formId,
+                new ColumnSet(Fields.FormXml, Fields.Name, Fields.ObjectTypeCode)));
         }
     }
 }

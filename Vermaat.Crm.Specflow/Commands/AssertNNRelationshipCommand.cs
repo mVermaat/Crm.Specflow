@@ -26,7 +26,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public override void Execute()
         {
-            var record = _crmContext.RecordCache.Get(_alias);
+            var record = _crmContext.RecordCache.Get(_alias, true);
             var md = GlobalTestingContext.Metadata.GetEntityMetadata(record.LogicalName, EntityFilters.Relationships);
 
             var relationship = md.ManyToManyRelationships.FirstOrDefault(r => (r.Entity1LogicalName == record.LogicalName && r.Entity2LogicalName == _relatedEntityName) ||
@@ -37,25 +37,33 @@ namespace Vermaat.Crm.Specflow.Commands
 
             Logger.WriteLine($"Using relationship {relationship.SchemaName}");
 
-            EntityReferenceCollection records = new EntityReferenceCollection();
+            EntityReferenceCollection expectedRecords = new EntityReferenceCollection();
             foreach (var row in _expectedRecords.Rows)
             {
                 var lookupValue = ObjectConverter.GetLookupValue(_crmContext, row[Constants.SpecFlow.TABLE_VALUE], _relatedEntityName);
                 if (lookupValue == null)
                     throw new TestExecutionException(Constants.ErrorCodes.RECORD_NOT_FOUND, row[Constants.SpecFlow.TABLE_VALUE], _relatedEntityName);
-                records.Add(lookupValue);
+                expectedRecords.Add(lookupValue);
             }
 
             var currentRecordFieldName = relationship.Entity1LogicalName == record.LogicalName ? relationship.Entity1IntersectAttribute : relationship.Entity2IntersectAttribute;
             var relatedFieldName = relationship.Entity1LogicalName == _relatedEntityName ? relationship.Entity1IntersectAttribute : relationship.Entity2IntersectAttribute;
 
+            var nnRecords = GetRelatedRecords(relationship, relatedFieldName, currentRecordFieldName, relatedFieldName, record, expectedRecords);
+
+            Assert.AreEqual(expectedRecords.Count, nnRecords.Entities.Count, $"Different records: {string.Join(", ", expectedRecords.Where(r => !nnRecords.Entities.Select(e => e.GetAttributeValue<Guid>(relatedFieldName)).Contains(r.Id)).Select(r => r.Name))}");
+        }
+
+        private EntityCollection GetRelatedRecords(ManyToManyRelationshipMetadata relationship, string relatedFieldName, string currentRecordFieldName, string relatedFieldName1, EntityReference record, EntityReferenceCollection records)
+        {
+            if (records.Count == 0)
+                return new EntityCollection();
+
             var query = new QueryExpression(relationship.IntersectEntityName);
             query.ColumnSet.AddColumn(relatedFieldName);
             query.Criteria.AddCondition(currentRecordFieldName, ConditionOperator.Equal, record.Id);
             query.Criteria.AddCondition(relatedFieldName, ConditionOperator.In, records.Select(r => (object)r.Id).ToArray());
-            var result = GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(query);
-
-            Assert.AreEqual(records.Count, result.Entities.Count, $"Different records: {string.Join(", ", records.Where(r => !result.Entities.Select(e => e.GetAttributeValue<Guid>(relatedFieldName)).Contains(r.Id)).Select(r => r.Name))}");
+            return GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(query);
         }
     }
 }

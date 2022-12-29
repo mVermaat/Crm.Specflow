@@ -73,6 +73,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.ROLE_COUNT_ASSERT_FAILED, "Assertion failed for checking roles on {0}. {1} missing roles: {2} and {3} extra roles: {4}");
             AddError(Constants.ErrorCodes.ENVIRONMENT_VARIABLE_NOT_FOUND, "Environment variable {0} doesn't exist");
             AddError(Constants.ErrorCodes.ENVIRONMENT_VARIABLE_TYPE_NOT_SUPPORTED, "Environment variable {0} with type {1} isn't supported by this step");
+            AddError(Constants.ErrorCodes.FORMID_NOT_FOUND, "Current form can't be determined");
         }
 
         public void AddError(int errorCode, string message)
