@@ -15,6 +15,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Dialog_ErrorDialog, "//div[@data-id='errorDialogdialog']" },
             { SeleniumSelectorItems.DuplicateDetection_Grid, "//div[@data-id='manage_duplicates_grid.fieldControl.ManageDuplicatesGrid_container']"},
             { SeleniumSelectorItems.DuplicateDetection_SelectedItems, ".//div[@aria-checked='true']/.."},
+            { SeleniumSelectorItems.Entity_CompositeControls, "//div[starts-with(@data-control-name,'[NAME]_compositionLinkControl_')]" },
             { SeleniumSelectorItems.Entity_FormId, "//div[@id='navigationcontextprovider']" },
             { SeleniumSelectorItems.Entity_FormNotifcation_NotificationBar, "//div[@data-id='notificationWrapper']" },
             { SeleniumSelectorItems.Entity_FormNotifcation_ExpandButton, ".//span[@id='notificationExpandIcon']" },

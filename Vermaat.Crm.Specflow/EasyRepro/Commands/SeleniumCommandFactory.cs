@@ -11,6 +11,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual ClickRibbonItemCommand CreateClickRibbonItemCommand(string name)
             => new ClickRibbonItemCommand(name);
 
+        public virtual GetCompositeControlFieldsCommand CreateGetCompositeControlFieldsCommand(string compositeControlAttributeName)
+           => new GetCompositeControlFieldsCommand(compositeControlAttributeName);
+
         internal virtual GetCurrentFormCommand CreateGetCurrentFormCommand()
             => new GetCurrentFormCommand();
 

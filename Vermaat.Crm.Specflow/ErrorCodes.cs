@@ -74,6 +74,8 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.ENVIRONMENT_VARIABLE_NOT_FOUND, "Environment variable {0} doesn't exist");
             AddError(Constants.ErrorCodes.ENVIRONMENT_VARIABLE_TYPE_NOT_SUPPORTED, "Environment variable {0} with type {1} isn't supported by this step");
             AddError(Constants.ErrorCodes.FORMID_NOT_FOUND, "Current form can't be determined");
+            AddError(Constants.ErrorCodes.COMPOSITE_CONTROL_NOT_FOUND, "Composite Control {0} wasn't found");
+
         }
 
         public void AddError(int errorCode, string message)

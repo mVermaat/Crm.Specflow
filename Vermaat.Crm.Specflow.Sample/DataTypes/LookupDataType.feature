@@ -51,12 +51,12 @@ Then TestLookup has the following values
 @API @Cleanup @Set1
 Scenario: Assigning alias to a lookup value
 Given an account named TestAccount with the following values
-	| Property     | Value                  |
-	| Account Name | Multiple Notifications |
-	| Credit Limit | 10000                  |
-	| Industry     | Brokers                |
+    | Property     | Value                  |
+    | Account Name | Multiple Notifications |
+    | Credit Limit | 10000                  |
+    | Industry     | Brokers                |
 When all asynchronous processes for TestAccount are finished
 Then TestAccount's Auto Generated is named AutoGenRecord
 And AutoGenRecord has the following values
-	| Property     | Value |
-	| Credit Limit | 10000 |
+    | Property     | Value |
+    | Credit Limit | 10000 |

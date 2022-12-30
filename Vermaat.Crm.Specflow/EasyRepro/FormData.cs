@@ -31,7 +31,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             _entityMetadata = entityMetadata;
             CommandBar = new CommandBarActions(_app);
 
-            _formFields = InitializeFormData(currentForm);
+            _formFields = FormXmlParser.ParseForm(app, currentForm, entityMetadata);
         }
 
         public void ClickSubgridButton(string subgridName, string subgridButton)
@@ -83,94 +83,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
                 field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }
-        }
-
-        private Dictionary<string, FormFieldSet> InitializeFormData(SystemForm currentForm)
-        {
-            var definition = currentForm.FormXml;
-            dynamic attributeCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.data.entity.attributes.getAll().map(function(a) { return { name: a.getName(), controls: a.controls.getAll().map(function(c) { return c.getName() }) } })");
-
-            var formFields = new Dictionary<string, FormFieldSet>();
-            var metadataDic = _entityMetadata.Attributes.ToDictionary(a => a.LogicalName);
-
-
-            int tabNr = 0;
-            foreach(var tab in definition.Tabs)
-            {
-                tabNr++;
-                int columnNr = 0;
-                foreach (var column in tab.Columns)
-                {
-                    columnNr++;
-                    int sectionNr = 0;
-                    foreach (var section in column.Sections)
-                    {
-                        sectionNr++;
-                        int rowNr = 0;
-                        foreach (var row in section.Rows)
-                        {
-                            rowNr++;
-                            ProcessFormRow(formFields, metadataDic, row);
-                        }
-                    }
-                }
-            }
-
-            int headerRowNr = 0;
-            foreach(var row in definition.Header.Rows)
-            {
-                headerRowNr++;
-                ProcessFormRow(formFields, metadataDic, row);
-            }
-
-
-            //foreach (var attribute in attributeCollection)
-            //{
-            //    var controls = new string[attribute["controls"].Count];
-
-            //    for (int i = 0; i < attribute["controls"].Count; i++)
-            //    {
-            //        controls[i] = attribute["controls"][i];
-            //    }
-
-            //    FormField field = CreateFormField(metadataDic[attribute["name"]], controls);
-            //    if (field != null)
-            //        formFields.Add(attribute["name"], field);
-                
-            //}
-
-            return formFields;
-        }
-
-        private void ProcessFormRow(Dictionary<string, FormFieldSet> formFields, Dictionary<string, AttributeMetadata> metadataDic, FormRow row)
-        {
-            if (row.Cells == null)
-                return;
-
-            foreach (var cell in row.Cells)
-            {
-                // mapcontrol and alike will be skipped)
-                if (cell.IsSpacer || string.IsNullOrEmpty(cell.Control.AttributeName))
-                    continue;
-
-                var formField = CreateFormField(metadataDic[cell.Control.AttributeName], cell.Control);
-                if (!formFields.TryGetValue(cell.Control.AttributeName, out var formFieldSet))
-                {
-                    formFieldSet = new FormFieldSet();
-                    formFields.Add(cell.Control.AttributeName, formFieldSet);
-                }
-                formFieldSet.Add(formField);
-            }
-        }
-
-        private FormField CreateFormField(AttributeMetadata metadata, FormControl cell)
-        { 
-            if(!cell.ControlName.StartsWith("header"))
-            {
-                return new BodyFormField(_app, metadata, cell);
-            }
-            
-            return new HeaderFormField(_app, metadata, cell);
         }
     }
 }

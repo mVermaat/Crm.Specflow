@@ -18,6 +18,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_ScriptErrorDialog,
 
+        Entity_CompositeControls,
+
         Entity_DateContainer,
         Entity_DateTime_Time_Input,
 
