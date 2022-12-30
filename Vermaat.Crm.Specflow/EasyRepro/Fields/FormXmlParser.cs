@@ -61,8 +61,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
             foreach (var cell in row.Cells)
             {
-                // mapcontrol and alike will be skipped)
-                if (cell.IsSpacer || string.IsNullOrEmpty(cell.Control.AttributeName))
+                // mapcontrol, subgrids and alike will be skipped
+                // empty column will be a cell without control
+                if (cell == null || cell.IsSpacer || string.IsNullOrEmpty(cell.Control?.AttributeName))
                     continue;
 
                 context.Cell = cell;
