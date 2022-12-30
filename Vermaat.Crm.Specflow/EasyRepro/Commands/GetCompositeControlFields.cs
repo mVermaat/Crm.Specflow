@@ -26,7 +26,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 return CommandResult<IEnumerable<string>>.Fail(true, Constants.ErrorCodes.COMPOSITE_CONTROL_NOT_FOUND, _compositeControlAttributeName);
 
             var elements = browserInteraction.Driver.FindElements(xPathSelector)
-                .Select(e => e.GetAttribute("data-control-name").Substring(32));
+                .Select(e => e.GetAttribute("data-control-name").Substring(_compositeControlAttributeName.Length + 24));
 
             return CommandResult<IEnumerable<string>>.Success(elements);
 
