@@ -102,9 +102,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         private static FormCellParser GetFormCellParser(EntityMetadata metadata, FormCell cell)
         {
-
-
-            
+            if (_compositeFields.TryGetValue(metadata.LogicalName, out var compositeSet) && compositeSet.Contains(cell.Control.AttributeName))
+                return new CompositeFormCellParser();            
 
             return new DefaultFormCellParser();
         }
