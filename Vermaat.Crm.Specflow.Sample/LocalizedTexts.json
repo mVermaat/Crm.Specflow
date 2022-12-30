@@ -7,9 +7,9 @@
     "DeleteButton": "Verwijderen",
     "ReviseQuoteButton": "Herzien",
     "SaveButton": "Opslaan",
-    "SaveStatusSaved": "Opgeslagen",
-    "SaveStatusSaving": "Bezig met opslaan",
-    "SaveStatusUnsaved": "Niet-opgeslagen",
+    "SaveStatusSaved": "Saved",
+    "SaveStatusSaving": "Saving",
+    "SaveStatusUnsaved": "Unsaved",
     "QuickCreateViewRecord": "Record bekijken",
 
     // Below are localizations specific to the sample project. No need to copy these:
