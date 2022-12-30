@@ -10,9 +10,37 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
     internal class FormXmlParser
     {
-        public FormXmlParser()
-        {
+        private static readonly Dictionary<string, HashSet<string>> _compositeFields;
 
+        static FormXmlParser()
+        {
+            _compositeFields = new Dictionary<string, HashSet<string>>();
+
+            AddCompositeField("account", "address1_composite");
+            AddCompositeField("account", "address2_composite");
+            AddCompositeField("account", "address3_composite");
+
+            AddCompositeField("contact", "address1_composite");
+            AddCompositeField("contact", "address2_composite");
+            AddCompositeField("contact", "address3_composite");
+            AddCompositeField("contact", "fullname");
+
+            AddCompositeField("lead", "address1_composite");
+            AddCompositeField("lead", "address2_composite");
+            AddCompositeField("lead", "address3_composite");
+            AddCompositeField("lead", "fullname");
+
+
+        }
+
+        public static void AddCompositeField(string entityName, string compositeFieldName)
+        {
+            if(!_compositeFields.TryGetValue(entityName, out var fieldList))
+            {
+                fieldList = new HashSet<string>();
+                _compositeFields.Add(entityName, fieldList);
+            }
+            fieldList.Add(compositeFieldName);
         }
 
         public static Dictionary<string, FormFieldSet> ParseForm(UCIApp app, SystemForm form, EntityMetadata metadata)
@@ -74,8 +102,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         private static FormCellParser GetFormCellParser(EntityMetadata metadata, FormCell cell)
         {
-            if (metadata.LogicalName.Equals("contact") && cell.Control.AttributeName.Equals("fullname"))
-                return new CompositeFormCellParser();
+
+
+            
 
             return new DefaultFormCellParser();
         }
