@@ -20,7 +20,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 var control = new FormControl()
                 {
                     AttributeName = field,
-                    ControlName = $"{controlPrefix}{field}",
+                    ControlName = $"{controlPrefix}{context.Cell.Control.ControlName}_compositionLinkControl_{field}",
                 };
                 var formField = CreateFormField(context, context.MetadataDic[field], control);
                 if (!formFields.TryGetValue(field, out var formFieldSet))
