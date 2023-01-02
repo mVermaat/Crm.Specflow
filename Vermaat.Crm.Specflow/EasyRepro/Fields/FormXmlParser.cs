@@ -70,12 +70,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 }
             }
 
-            foreach (var row in definition.Header.Rows)
+            // Null if there is no header
+            if (definition.Header?.Rows != null)
             {
-                context.IsHeader = true;
-                context.TabName = null;
-                context.SectionName = null;
-                ProcessFormRow(row, metadata, formFields, context);
+                foreach (var row in definition.Header.Rows)
+                {
+                    context.IsHeader = true;
+                    context.TabName = null;
+                    context.SectionName = null;
+                    ProcessFormRow(row, metadata, formFields, context);
+                }
             }
 
             return formFields;
