@@ -17,6 +17,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             if (context.IsHeader)
                 return new HeaderFormField(context.App, metadata, cell);
 
+            if(context.FormType == SystemFormType.QuickCreate)
+                return new QuickCreateBodyFormField(context.App, metadata, cell);
+
             return new BodyFormField(context.App, metadata, cell, context.TabName, context.SectionName);
         }
     }

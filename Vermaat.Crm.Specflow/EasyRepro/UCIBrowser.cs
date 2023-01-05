@@ -102,7 +102,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public FormData GetFormData(EntityMetadata entityMetadata)
         {
-            var currentForm = SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateGetCurrentFormCommand());
+            var currentForm = SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateGetCurrentFormCommand(false));
             var currentFormId = currentForm.Id.ToString();
 
             if (!_forms.TryGetValue(entityMetadata.LogicalName + currentFormId, out FormData formData))
@@ -117,11 +117,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public QuickFormData GetQuickFormData(EntityMetadata entityMetadata)
         {
-            var currentFormId = App.WebDriver.ExecuteScript("return Xrm.Page.ui.formSelector._formId.guid")?.ToString();
+            var currentForm = SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateGetCurrentFormCommand(true));
+            var currentFormId = currentForm.Id.ToString();
 
             if (!_quickForms.TryGetValue(entityMetadata.LogicalName + currentFormId, out QuickFormData formData))
             {
-                formData = new QuickFormData(App, entityMetadata);
+                formData = new QuickFormData(App, entityMetadata, currentForm);
                 _quickForms.Add(entityMetadata.LogicalName + currentFormId, formData);
             }
             return formData;

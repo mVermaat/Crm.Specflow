@@ -21,6 +21,7 @@ namespace Vermaat.Crm.Specflow.Entities
             internal const string FormXml = "formxml";
             internal const string Name = "name";
             internal const string ObjectTypeCode = "objecttypecode";
+            internal const string Type = "type";
         }
 
         private const string EntityLogicalName = "systemform";
@@ -32,6 +33,7 @@ namespace Vermaat.Crm.Specflow.Entities
         public Guid Id => _record.Id;
         public string Name => _record.GetAttributeValue<string>(Fields.Name);
         public string ObjectTypeCode => _record.GetAttributeValue<string>(Fields.ObjectTypeCode);
+        public SystemFormType Type => (SystemFormType)_record.GetAttributeValue<OptionSetValue>(Fields.Type).Value;
 
         public SystemForm(Entity record)
         {
@@ -70,7 +72,7 @@ namespace Vermaat.Crm.Specflow.Entities
         internal static SystemForm GetById(CrmService service, Guid formId)
         {
             return new SystemForm(service.Retrieve("systemform", formId,
-                new ColumnSet(Fields.FormXml, Fields.Name, Fields.ObjectTypeCode)));
+                new ColumnSet(Fields.FormXml, Fields.Name, Fields.ObjectTypeCode, Fields.Type))); 
         }
     }
 }

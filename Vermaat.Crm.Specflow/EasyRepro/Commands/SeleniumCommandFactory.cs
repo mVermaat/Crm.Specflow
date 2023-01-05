@@ -14,8 +14,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual GetCompositeControlFieldsCommand CreateGetCompositeControlFieldsCommand(string compositeControlAttributeName)
            => new GetCompositeControlFieldsCommand(compositeControlAttributeName);
 
-        internal virtual GetCurrentFormCommand CreateGetCurrentFormCommand()
-            => new GetCurrentFormCommand();
+        internal virtual GetCurrentFormCommand CreateGetCurrentFormCommand(bool isQuickCreate)
+            => new GetCurrentFormCommand(isQuickCreate);
 
         public virtual GetFormNotificationsCommand CreateGetFormNotificationsCommand()
             => new GetFormNotificationsCommand();

@@ -51,7 +51,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             var context = new FormCellParsingContext()
             {
                 App = app,
-                MetadataDic = metadataDic
+                MetadataDic = metadataDic,
+                FormType = form.Type                
             };
 
             foreach (var tab in definition.Tabs)
