@@ -75,6 +75,6 @@ Scenario: Check tab/section of fields
 	Then TestContact's form has the following form state
 		| Property                       | Tab     | Section             |
 		| First Name                     | Summary | CONTACT INFORMATION |
-		| Last Name                      | Summary | CONTACT INFORMATIONa |
+		| Last Name                      | Summary | CONTACT INFORMATION |
 		| Job Title                      | Summary | CONTACT INFORMATION |
-		| Last Date Included in Campaign | Detailss | MARKETING           |
+		| Last Date Included in Campaign | Details | MARKETING           |
