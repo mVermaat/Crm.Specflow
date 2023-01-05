@@ -18,7 +18,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 formFieldSet = new FormFieldSet();
                 formFields.Add(context.Cell.Control.AttributeName, formFieldSet);
             }
-            formFieldSet.Add(formField);
+            formFieldSet.Add(formField, context.TabName, context.SectionName);
         }
     }
 }

@@ -75,6 +75,8 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.ENVIRONMENT_VARIABLE_TYPE_NOT_SUPPORTED, "Environment variable {0} with type {1} isn't supported by this step");
             AddError(Constants.ErrorCodes.FORMID_NOT_FOUND, "Current form can't be determined");
             AddError(Constants.ErrorCodes.COMPOSITE_CONTROL_NOT_FOUND, "Composite Control {0} wasn't found");
+            AddError(Constants.ErrorCodes.FIELD_NOT_IN_SECTION, "Field not found in section {0}");
+            AddError(Constants.ErrorCodes.FIELD_NOT_IN_TAB, "Field not found in tab {0}");
 
         }
 

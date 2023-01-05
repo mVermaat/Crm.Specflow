@@ -46,6 +46,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             return containsField;
         }
 
+        public FormField GetByTab(string attributeName, string tabName)
+        {
+            return _formFields[attributeName].Get(tabName, true);
+        }
+
+        public FormField GetBySection(string attributeName, string tabName, string sectionName)
+        {
+            return _formFields[attributeName].Get(tabName, sectionName, true);
+        }
+
         public string GetErrorDialogMessage()
         {
             Logger.WriteLine("Getting error dialog message");
