@@ -34,9 +34,6 @@ namespace Vermaat.Crm.Specflow.Commands
                 else
                     throw new TestExecutionException(Constants.ErrorCodes.FORM_NOT_FOUND, _name, _entityTypeCode);
             }
-
-            var xml = form.FormXml;
-
             var actualRoles = GetRoles(form.FormXml.DisplayConditions?.Select(r => Guid.Parse(r.Id))?.ToArray());
 
             var extraRoles = actualRoles.Except(_expectedRoles).ToArray();

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
@@ -53,6 +54,17 @@ namespace Vermaat.Crm.Specflow
                 Assert.AreEqual(expectedValue, actualValue, $"Field {attributeName} is different");
         }
 
+        public static void MatchesRegex(string regex, object expectedValue, string attributeName)
+        {
+            Assert.IsNotNull(expectedValue, $"Expected {attributeName} to have data, but it's empty");
+
+            var type = expectedValue.GetType();
+            if (type != typeof(string))
+                Assert.Fail("Can only do regex comparisons for text fields.");
+
+            Assert.IsTrue(Regex.IsMatch((string)expectedValue, regex), $"Expected {attributeName} to match regex {regex}. {expectedValue} doesn't match it");
+        }
+
         private static Guid[] ParseEntityCollection(EntityCollection col)
         {
             if (col == null || col.Entities == null || col.Entities.Count == 0)
@@ -82,11 +94,22 @@ namespace Vermaat.Crm.Specflow
             foreach (var row in criteria.Rows)
             {
                 var actualValue = record.Contains(row[Constants.SpecFlow.TABLE_KEY]) ? record[row[Constants.SpecFlow.TABLE_KEY]] : null;
-                var expectedValue = ObjectConverter.ToCrmObject(record.LogicalName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], context);
+                var expectedValue = row[Constants.SpecFlow.TABLE_VALUE];
+
+                var condition = criteria.ContainsColumn(Constants.SpecFlow.TABLE_CONDITION)
+                    ? (row[Constants.SpecFlow.TABLE_CONDITION] ?? "Equal")
+                    : "Equal";
 
                 try
                 {
-                    AreEqual(actualValue, expectedValue, row[Constants.SpecFlow.TABLE_KEY]);
+                    switch(condition.ToLowerInvariant())
+                    {
+                        case "equal": AreEqual(actualValue, ObjectConverter.ToCrmObject(record.LogicalName, row[Constants.SpecFlow.TABLE_KEY], expectedValue, context), row[Constants.SpecFlow.TABLE_KEY]); break;
+                        case "notnull": Assert.IsNotNull(actualValue, $"Expected {row[Constants.SpecFlow.TABLE_KEY]} to have data, but it's empty"); break;
+                        case "regex": MatchesRegex(expectedValue, actualValue, row[Constants.SpecFlow.TABLE_KEY]); break;
+                    }
+
+                    
                 }
                 catch(AssertFailedException ex)
                 {
@@ -100,5 +123,7 @@ namespace Vermaat.Crm.Specflow
                 Assert.Fail($"At least one error occured when asseting fields. Errors: {string.Join(Environment.NewLine, errors)}");
             }
         }
+
+        
     }
 }

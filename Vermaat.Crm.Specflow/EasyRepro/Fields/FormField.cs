@@ -8,15 +8,16 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenQA.Selenium.Interactions;
 using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
     public abstract class FormField : Field
     {
 
-        protected string Control { get; private set; }
+        protected FormControl Control { get; private set; }
 
-        public FormField(UCIApp app, AttributeMetadata attributeMetadata, string control)
+        public FormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control)
             : base(app, attributeMetadata)
         {
             Control = control;
@@ -49,7 +50,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
         public virtual bool IsVisible(FormState formState)
         {
             return App.WebDriver.WaitUntilVisible(
-                SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FieldContainer, Control),
+                SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FieldContainer, Control.ControlName),
                 TimeSpan.FromSeconds(5)) != null;
         }
 

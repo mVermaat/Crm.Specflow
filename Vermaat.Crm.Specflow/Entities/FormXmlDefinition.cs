@@ -1,62 +1,153 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Vermaat.Crm.Specflow.Entities
 {
-
-    // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute("form", Namespace = "", IsNullable = false)]
-    public partial class FormXmlDefinition
+    public static class FormXmlDefinitionExtensions
     {
-
-        private formRole[] displayConditionsField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("Role", IsNullable = false)]
-        public formRole[] DisplayConditions
-        {
-            get
-            {
-                return this.displayConditionsField;
-            }
-            set
-            {
-                this.displayConditionsField = value;
-            }
-        }
+        public static string GetLabelInLanguage(this FormLabel[] labels, int languageCode, int fallbackLanguage)
+            => labels.FirstOrDefault(l => l.LanguageCode == languageCode     && !string.IsNullOrEmpty(l.Label))?.Label 
+            ?? labels.FirstOrDefault(l => l.LanguageCode == fallbackLanguage && !string.IsNullOrEmpty(l.Label))?.Label;
     }
 
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class formRole
+
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    [XmlRoot("form", Namespace = "", IsNullable = false)]
+    public class FormXmlDefinition
     {
 
-        private string idField;
+        [XmlArrayItem("Role", IsNullable = false)]
+        public FormRole[] DisplayConditions { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
+        [XmlArray("tabs")]
+        [XmlArrayItem("tab", IsNullable = false)]
+        public FormTab[] Tabs { get; set; }
+
+        [XmlElement("header")]
+        public FormHeader Header { get; set; }
+
+}
+
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class FormHeader
+    {
+
+        [XmlArray("rows")]
+        [XmlArrayItem("row", IsNullable = false)]
+        public FormRow[] Rows { get; set; }
     }
+
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class FormRole
+    {
+        [XmlAttribute()]
+        public string Id { get; set; }
+    }
+
+
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class FormTab
+    {
+        [XmlAttribute("name")]
+        public string Name { get; set; }
+
+        [XmlArray("labels")]
+        [XmlArrayItem("label", IsNullable = false)]
+        public FormLabel[] Labels { get; set; }
+
+        [XmlArray("columns")]
+        [XmlArrayItem("column", IsNullable = false)]
+        public FormColumn[] Columns { get; set; }
+    }
+
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class FormColumn
+    {
+       
+        [XmlArray("sections")]
+        [XmlArrayItem("section", IsNullable = false)]
+        public FormSection[] Sections { get; set; }
+    }
+
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class FormSection
+    {
+
+        [XmlArray("rows")]
+        [XmlArrayItem("row", IsNullable = false)]
+        public FormRow[] Rows { get; set; }
+
+        [XmlArray("labels")]
+        [XmlArrayItem("label", IsNullable = false)]
+        public FormLabel[] Labels { get; set; }
+    }
+
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class FormRow
+    {
+        [XmlElement("cell", IsNullable = false)]
+        public FormCell[] Cells { get; set; }
+    }
+
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class FormCell
+    {
+
+        [XmlArray("labels")]
+        [XmlArrayItem("label", IsNullable = false)]
+        public FormLabel[] Labels { get; set; }
+
+        [XmlElement("control")]
+        public FormControl Control { get; set; }
+
+        [XmlAttribute("userspacer")]
+        public bool IsSpacer { get; set; }
+    }
+
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class FormControl
+    {
+        [XmlAttribute("id")]
+        public string ControlName { get; set; }
+
+        [XmlAttribute("datafieldname")]
+        public string AttributeName { get; set; }
+
+    }
+
+    [Serializable()]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class FormLabel
+    {
+        [XmlAttribute("description")]
+        public string Label { get; set; }
+
+        [XmlAttribute("languagecode")]
+        public int LanguageCode { get; set; }
+
+    }
+
 
 
 }

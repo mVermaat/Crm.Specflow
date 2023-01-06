@@ -10,44 +10,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro.FieldTypes;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
     public class BodyFormField : FormField
     {
-        private string _tabLabel;
+        private readonly string _tabLabel;
+        private readonly string _sectionLabel;
 
-        public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, string control) 
+        public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control, string tabLabel, string sectionLabel) 
             : base(app, attributeMetadata, control)
         {
+            _tabLabel = tabLabel;
+            _sectionLabel = sectionLabel;
         }
 
         public override bool IsVisible(FormState formState)
         {
-            formState.ExpandTab(GetTabLabel());
+            formState.ExpandTab(_tabLabel);
             return base.IsVisible(formState);
         }
 
         public override RequiredState GetRequiredState(FormState formState)
         {
-            formState.ExpandTab(GetTabLabel());
+            formState.ExpandTab(_tabLabel);
             return base.GetRequiredState(formState);
         }
 
         public override bool IsLocked(FormState formState)
         {
-            formState.ExpandTab(GetTabLabel());
+            formState.ExpandTab(_tabLabel);
             return base.IsLocked(formState);
         }
 
-        private string GetTabLabel()
-        {
-            if (string.IsNullOrEmpty(_tabLabel))
-            {
-                _tabLabel = App.WebDriver.ExecuteScript($"return Xrm.Page.getControl('{Control}').getParent().getParent().getLabel()")?.ToString();
-            }
-            return _tabLabel;
-        }
 
         protected override void SetMultiSelectOptionSetField(MultiSelectOptionSetValue value)
         {

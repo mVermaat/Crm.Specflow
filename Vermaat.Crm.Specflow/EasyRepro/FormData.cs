@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.EasyRepro.Fields;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -19,18 +20,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro
     {
         private readonly UCIApp _app;
         private readonly EntityMetadata _entityMetadata;
-        private readonly Dictionary<string, FormField> _formFields;
+        private readonly Dictionary<string, FormFieldSet> _formFields;
 
-        public FormField this[string attributeName] => _formFields[attributeName];
+        public FormField this[string attributeName] => _formFields[attributeName].Get();
         public CommandBarActions CommandBar { get; }
 
-        public FormData(UCIApp app, EntityMetadata entityMetadata)
+        internal FormData(UCIApp app, EntityMetadata entityMetadata, SystemForm currentForm)
         {
             _app = app;
             _entityMetadata = entityMetadata;
             CommandBar = new CommandBarActions(_app);
 
-            _formFields = InitializeFormData();
+            _formFields = FormXmlParser.ParseForm(app, currentForm, entityMetadata);
         }
 
         public void ClickSubgridButton(string subgridName, string subgridButton)
@@ -43,6 +44,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             var containsField = _formFields.ContainsKey(fieldLogicalName);
             Logger.WriteLine($"Field {fieldLogicalName} is on Form: {containsField}");
             return containsField;
+        }
+
+        public FormField GetByTab(string attributeName, string tabName)
+        {
+            return _formFields[attributeName].Get(tabName, true);
+        }
+
+        public FormField GetBySection(string attributeName, string tabName, string sectionName)
+        {
+            return _formFields[attributeName].Get(tabName, sectionName, true);
         }
 
         public string GetErrorDialogMessage()
@@ -76,53 +87,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             foreach (var row in formData.Rows)
             {
                 Assert.IsTrue(ContainsField(row[Constants.SpecFlow.TABLE_KEY]), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
-                var field = _formFields[row[Constants.SpecFlow.TABLE_KEY]];
+                var field = this[row[Constants.SpecFlow.TABLE_KEY]];
                 Assert.IsTrue(field.IsVisible(formState), $"Field {row[Constants.SpecFlow.TABLE_KEY]} isn't visible");
                 Assert.IsFalse(field.IsLocked(formState), $"Field {row[Constants.SpecFlow.TABLE_KEY]} is read-only");
 
                 field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }
-        }
-
-        private Dictionary<string, FormField> InitializeFormData()
-        {
-            dynamic attributeCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.data.entity.attributes.getAll().map(function(a) { return { name: a.getName(), controls: a.controls.getAll().map(function(c) { return c.getName() }) } })");
-
-            var formFields = new Dictionary<string, FormField>();
-            var metadataDic = _entityMetadata.Attributes.ToDictionary(a => a.LogicalName);
-            foreach (var attribute in attributeCollection)
-            {
-                var controls = new string[attribute["controls"].Count];
-
-                for (int i = 0; i < attribute["controls"].Count; i++)
-                {
-                    controls[i] = attribute["controls"][i];
-                }
-
-                FormField field = CreateFormField(metadataDic[attribute["name"]], controls);
-                if (field != null)
-                    formFields.Add(attribute["name"], field);
-                
-            }
-
-            return formFields;
-        }
-
-        private FormField CreateFormField(AttributeMetadata metadata, string[] controls)
-        {
-            if (controls.Length == 0)
-                return null;
-
-            // Take the first control that isn't in the header
-            for(int i = 0; i < controls.Length; i++)
-            {
-                if(!controls[i].StartsWith("header"))
-                {
-                    return new BodyFormField(_app, metadata, controls[i]);
-                }
-            }
-            // If all are in the header, take the first header control
-            return new HeaderFormField(_app, metadata, controls[0]);
         }
     }
 }

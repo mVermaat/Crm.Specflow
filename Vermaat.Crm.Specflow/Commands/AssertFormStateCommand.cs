@@ -34,12 +34,17 @@ namespace Vermaat.Crm.Specflow.Commands
 
             foreach (TableRow row in _visibilityCriteria.Rows)
             {
-                var expectedFormState = GetExpectedFormState(row[Constants.SpecFlow.TABLE_FORMSTATE]);
+                row.TryGetValue(Constants.SpecFlow.TABLE_FORMSTATE, out var formStateTableValue);
+                row.TryGetValue(Constants.SpecFlow.TABLE_TAB, out var tabTableValue);
+                row.TryGetValue(Constants.SpecFlow.TABLE_SECTION, out var sectionTableValue);
+
+                var expectedFormState = GetExpectedFormState(formStateTableValue);
                 var isOnForm = formData.ContainsField(row[Constants.SpecFlow.TABLE_KEY]);
 
                 if (isOnForm || (!expectedFormState.Locked.HasValue && !expectedFormState.Required.HasValue))
                 {
                     // Assert
+                    AssertTabSection(formData, formState, row[Constants.SpecFlow.TABLE_KEY], tabTableValue, sectionTableValue, errors, isOnForm);
                     AssertVisibility(formData, formState, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Visible, errors, isOnForm);
                     AssertReadOnly(formData, formState, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Locked, errors);
                     AssertRequirement(formData, formState, row[Constants.SpecFlow.TABLE_KEY], expectedFormState.Required, errors);
@@ -48,19 +53,38 @@ namespace Vermaat.Crm.Specflow.Commands
                 {
                     errors.Add($"{row[Constants.SpecFlow.TABLE_KEY]} isn't on the form");
                 }
-               
+
             }
             Assert.AreEqual(0, errors.Count, string.Join(", ", errors));
         }
 
+        private void AssertTabSection(FormData formData, FormState formState, string fieldName, string tabName, string sectionName, List<string> errors, bool isOnForm)
+        {
+            if (!isOnForm)
+                return;
+
+            if (!string.IsNullOrEmpty(sectionName))
+            {
+                var field = formData.GetBySection(fieldName, tabName, sectionName);
+                if (field == null)
+                    errors.Add($"{fieldName} can't be found in section {sectionName} within tab {tabName}");
+            }
+            else if (!string.IsNullOrEmpty(tabName))
+            {
+                var field = formData.GetByTab(fieldName, tabName);
+                if (field == null)
+                    errors.Add($"{fieldName} can't be found in tab {tabName}");
+            }
+        }
+
         private ExpectedFormState GetExpectedFormState(string formStateString)
         {
-            var splitted = formStateString.Split(',');
+            var splitted = formStateString?.Split(',') ?? Array.Empty<string>();
 
             ExpectedFormState result = new ExpectedFormState();
-            foreach(string state in splitted)
+            foreach (string state in splitted)
             {
-                switch(state.Trim().ToLower())
+                switch (state.Trim().ToLower())
                 {
                     case "required": result.Required = RequiredState.Required; break;
                     case "optional": result.Required = RequiredState.Optional; break;
@@ -81,23 +105,23 @@ namespace Vermaat.Crm.Specflow.Commands
             if (!expected.HasValue)
                 return;
 
-            if(isOnForm)
+            if (isOnForm)
             {
                 var isVisible = formData[fieldName].IsVisible(formState);
                 if (expected == FormVisibility.Visible && !isVisible)
                 {
                     errors.Add($"{fieldName} was expected to be visible but it is invisible");
                 }
-                else if(expected == FormVisibility.Invisible && isVisible)
+                else if (expected == FormVisibility.Invisible && isVisible)
                 {
                     errors.Add($"{fieldName} was expected to be invisible but it is visible");
                 }
-                else if(expected == FormVisibility.NotOnForm)
+                else if (expected == FormVisibility.NotOnForm)
                 {
                     errors.Add($"{fieldName} was shouldn't be on the form");
                 }
             }
-            else if(expected != FormVisibility.NotOnForm)
+            else if (expected != FormVisibility.NotOnForm)
             {
                 errors.Add($"Field {fieldName} isn't on the form");
             }

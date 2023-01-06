@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro.FieldTypes;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
@@ -15,7 +16,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
     {
 
 
-        public HeaderFormField(UCIApp app, AttributeMetadata attributeMetadata, string control) 
+        public HeaderFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control) 
             : base(app, attributeMetadata, control)
         {
         }

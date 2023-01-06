@@ -13,6 +13,8 @@ namespace Vermaat.Crm.Specflow
             public const string TABLE_KEY = "Property";
             public const string TABLE_CONDITION = "Condition";
             public const string TABLE_VALUE = "Value";
+            public const string TABLE_TAB = "Tab";
+            public const string TABLE_SECTION = "Section";
             public const string TABLE_FORMSTATE = "State";
             public const string TABLE_FORMNOTIFICATION_MESSAGE = "Message";
             public const string TABLE_FORMNOTIFICATION_LEVEL = "Level";
@@ -90,6 +92,9 @@ namespace Vermaat.Crm.Specflow
             public const int ENVIRONMENT_VARIABLE_NOT_FOUND = 56;
             public const int ENVIRONMENT_VARIABLE_TYPE_NOT_SUPPORTED = 57;
             public const int FORMID_NOT_FOUND = 58;
+            public const int COMPOSITE_CONTROL_NOT_FOUND = 59;
+            public const int FIELD_NOT_IN_TAB = 60;
+            public const int FIELD_NOT_IN_SECTION = 61;
         }
 
         public class LocalizedTexts
