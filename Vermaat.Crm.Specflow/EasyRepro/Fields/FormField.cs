@@ -49,9 +49,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         public virtual bool IsVisible(FormState formState)
         {
-            return App.WebDriver.WaitUntilVisible(
-                SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FieldContainer, Control.ControlName),
-                TimeSpan.FromSeconds(5)) != null;
+            return SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateCheckFieldVisibilityCommand(Control.ControlName));
         }
 
         public virtual bool IsLocked(FormState formState)

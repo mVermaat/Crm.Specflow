@@ -18,6 +18,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_ScriptErrorDialog,
 
+        Entity_BusinessProcessFlow_StageElement,
+
         Entity_CompositeControls,
 
         Entity_DateContainer,
@@ -55,6 +57,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_MoreTabs,
 
+        Entity_BPFFieldContainer,
         Entity_FieldContainer,
 
         FlyoutRoot,

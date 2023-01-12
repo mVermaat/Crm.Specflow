@@ -77,6 +77,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.COMPOSITE_CONTROL_NOT_FOUND, "Composite Control {0} wasn't found");
             AddError(Constants.ErrorCodes.FIELD_NOT_IN_SECTION, "Field not found in section {0}");
             AddError(Constants.ErrorCodes.FIELD_NOT_IN_TAB, "Field not found in tab {0}");
+            AddError(Constants.ErrorCodes.BUSINESS_PROCESS_FLOW_STAGE_ID_CANT_BE_FOUND, "Failed to retrieve stage id from '{0}'. Fix in framework needed due to Microsoft update.");
 
         }
 
