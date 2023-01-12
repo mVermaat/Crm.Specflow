@@ -73,17 +73,16 @@ Scenario: Clearing BPF Fields
 		| BPF OptionSet Field |       |
 		| BPF Text Field      |       |
 	Then TestOpp has the following values
-		| Property            | Value            |
-		| Topic               | Test Opp BPF     |
-		| BPF Boolean Field   | Yes              |
-		| BPF Currency Field  | 1000.78          |
-		| BPF DateTime Field  | 10-10-2023 15:00 |
-		| BPF Decimal Field   | 1234.86          |
-		| BPF Float Field     | 43.67            |
-		| BPF Integer Field   | 855              |
-		| BPF Lookup Field    | TestAccount      |
-		| BPF OptionSet Field | Donald Duck      |
-		| BPF Text Field      | Oh Snap          |
+		| Property            | Value |
+		| BPF Boolean Field   | No    |
+		| BPF Currency Field  |       |
+		| BPF DateTime Field  |       |
+		| BPF Decimal Field   |       |
+		| BPF Float Field     |       |
+		| BPF Integer Field   |       |
+		| BPF Lookup Field    |       |
+		| BPF OptionSet Field |       |
+		| BPF Text Field      |       |
 
 
 

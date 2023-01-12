@@ -40,8 +40,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             string logicalName, DateTime? value, bool dateOnly, string formatDate, string formatTime)
             => new SetBusinessProcessFlowDateTimeFieldValueCommand(logicalName, value, dateOnly, formatDate, formatTime);
 
+        public virtual SetBusinessProcessFlowTextFieldValueCommand CreateSetBusinessProcessFlowTextFieldValueCommand(string logicalName, string value)
+            => new SetBusinessProcessFlowTextFieldValueCommand(logicalName, value);
+
         public virtual SetDateTimeFieldValueCommand CreateSetDateTimeFieldValueCommand(
             string logicalName, DateTime? value, bool dateOnly, string formatDate, string formatTime)
             => new SetDateTimeFieldValueCommand(logicalName, value, dateOnly, formatDate, formatTime);
+
+
+
+        
     }
 }

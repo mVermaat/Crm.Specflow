@@ -56,10 +56,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected override void SetOptionSetField(OptionSetValue value)
         {
-            if (value.Value.HasValue)
-                App.App.BusinessProcessFlow.SetValue(value.ToOptionSet(LogicalName));
-            //else
-                //App.App.BusinessProcessFlow.ClearValue(value.ToOptionSet(LogicalName));
+            App.App.BusinessProcessFlow.SetValue(value.ToOptionSet(LogicalName));
         }
 
         protected override void SetMoneyField(DecimalValue value)
@@ -69,21 +66,20 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected override void SetTextField(string fieldValue)
         {
-            App.App.BusinessProcessFlow.SelectStage(_stageName);
-            App.App.BusinessProcessFlow.SetValue(LogicalName, fieldValue);
+            SeleniumCommandProcessor.ExecuteCommand(App,
+               App.SeleniumCommandFactory.CreateSetBusinessProcessFlowTextFieldValueCommand(LogicalName, fieldValue));
         }
 
         protected override void SetLookupValue(LookupValue value)
         {
             if (value.Value != null)
-            {
                 App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue([ {{ id: '{value.Value.Id}', name: '{value.Value.Name?.Replace("'", @"\'")}', entityType: '{value.Value.LogicalName}' }} ])");
-                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
-            }
             else
-            {
-                App.App.Entity.ClearValue(value.ToLookupItem(Metadata));
-            }
+                App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').setValue(null)");
+
+
+            App.WebDriver.ExecuteScript($"Xrm.Page.getAttribute('{LogicalName}').fireOnChange()");
+
         }
 
         protected override void SetLookupValues(LookupValue[] values)
