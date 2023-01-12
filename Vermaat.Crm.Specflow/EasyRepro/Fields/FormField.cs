@@ -56,11 +56,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
         {
             return App.Client.Execute(BrowserOptionHelper.GetOptions($"Check field locked state"), driver =>
             {
-                IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", LogicalName)));
+                IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", Control.ControlName)));
                 if (fieldContainer == null)
-                    throw new TestExecutionException(Constants.ErrorCodes.FIELD_NOT_ON_FORM, LogicalName);
+                    throw new TestExecutionException(Constants.ErrorCodes.FIELD_NOT_ON_FORM, Control.ControlName);
 
-                return fieldContainer.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormState_LockedIcon, LogicalName), out IWebElement requiredElement);
+                return fieldContainer.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormState_LockedIcon, Control.ControlName), out IWebElement requiredElement);
             }).Value;
         }
     }
