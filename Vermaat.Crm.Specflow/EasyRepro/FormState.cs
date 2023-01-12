@@ -27,8 +27,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public void ExpandHeader()
         {
             Logger.WriteLine("Expanding headers");
-            var header = SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty);
-            _app.WebDriver.ClickWhenAvailable(header);
+            var header = _app.WebDriver.WaitUntilClickable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty));
+
+            if (header == null)
+                throw new InvalidOperationException("Form header unavailable");
+
+            if (!bool.TryParse(header.GetAttribute("aria-expanded", out var expanded) || !expanded))
+                header.Click();
+            
+
+           
         }
 
         public void ExpandTab(string tabLabel)
