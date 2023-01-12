@@ -32,11 +32,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (header == null)
                 throw new InvalidOperationException("Form header unavailable");
 
-            if (!bool.TryParse(header.GetAttribute("aria-expanded", out var expanded) || !expanded))
-                header.Click();
-            
-
-           
+            if (!bool.TryParse(header.GetAttribute("aria-expanded"), out var expanded) || !expanded)
+                header.Click();           
         }
 
         public void ExpandTab(string tabLabel)
