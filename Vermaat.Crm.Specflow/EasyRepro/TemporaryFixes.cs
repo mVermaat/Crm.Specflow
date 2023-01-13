@@ -62,7 +62,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 // date only fields don't have a time control
                 // clearing the date part of a datetime field is enough to clear both
                 if (dateOnly || !value.HasValue)
+                {
+                    driver.ClearFocus();
                     return true;
+                }
 
                 // Time field becomes visible after focus is lost.
                 // Clearfocus will have unwanted side effects like popups or redirects for some reason.
@@ -99,7 +102,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (field.GetAttribute("value").Length > 0)
             {
                 field.SendKeys(Keys.Control + "a");
-                field.SendKeys(Keys.Backspace);
             }
             browser.ThinkTime(2000);
         }
