@@ -36,7 +36,7 @@ namespace Vermaat.Crm.Specflow
         public void FixXPaths()
         {
             AppElements.Xpath[AppReference.Entity.TabList] = "//ul[contains(@id, \"tablist\")]";
-            AppElements.Xpath[AppReference.Entity.Tab] = ".li[@data-id='tabList-[NAME]']";
+            AppElements.Xpath[AppReference.Entity.Tab] = ".//li[@data-id='tabList-[NAME]']";
         }
 
         [BeforeScenario("API")]
