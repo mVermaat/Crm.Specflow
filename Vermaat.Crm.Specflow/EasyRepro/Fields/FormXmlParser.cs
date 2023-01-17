@@ -57,7 +57,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
             foreach (var tab in definition.Tabs)
             {
-                context.TabName = tab.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
+                context.TabName = tab.Name;
+                context.TabLabel = tab.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
                 foreach (var column in tab.Columns)
                 {
                     foreach (var section in column.Sections)
@@ -74,11 +75,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             // Null if there is no header
             if (definition.Header?.Rows != null)
             {
+                context.IsHeader = true;
+                context.TabLabel = null;
+                context.TabName = null;
+                context.SectionName = null;
                 foreach (var row in definition.Header.Rows)
                 {
-                    context.IsHeader = true;
-                    context.TabName = null;
-                    context.SectionName = null;
                     ProcessFormRow(row, metadata, formFields, context);
                 }
             }

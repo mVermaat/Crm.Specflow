@@ -16,31 +16,31 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
     public class BodyFormField : FormField
     {
-        private readonly string _tabLabel;
+        private readonly string _tabName;
         private readonly string _sectionLabel;
 
-        public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control, string tabLabel, string sectionLabel) 
+        public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control, string tabName, string sectionLabel) 
             : base(app, attributeMetadata, control)
         {
-            _tabLabel = tabLabel;
+            _tabName = tabName;
             _sectionLabel = sectionLabel;
         }
 
         public override bool IsVisible(FormState formState)
         {
-            formState.ExpandTab(_tabLabel);
+            formState.ExpandTab(_tabName);
             return base.IsVisible(formState);
         }
 
         public override RequiredState GetRequiredState(FormState formState)
         {
-            formState.ExpandTab(_tabLabel);
+            formState.ExpandTab(_tabName);
             return base.GetRequiredState(formState);
         }
 
         public override bool IsLocked(FormState formState)
         {
-            formState.ExpandTab(_tabLabel);
+            formState.ExpandTab(_tabName);
             return base.IsLocked(formState);
         }
 
