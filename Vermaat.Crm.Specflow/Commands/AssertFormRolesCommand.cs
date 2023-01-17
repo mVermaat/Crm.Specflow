@@ -26,7 +26,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
         public override void Execute()
         {
-            var form = SystemForm.GetSystemForm(GlobalTestingContext.ConnectionManager.AdminConnection, _name, _entityTypeCode);
+            var form = SystemForm.GetSystemForm(GlobalTestingContext.ConnectionManager.CurrentConnection, _name, _entityTypeCode);
             if(form == null)
             {
                 if (!string.IsNullOrEmpty(_entityTypeCode) && _entityTypeCode.Equals("none", StringComparison.OrdinalIgnoreCase))
