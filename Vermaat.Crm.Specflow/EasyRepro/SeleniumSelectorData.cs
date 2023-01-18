@@ -45,6 +45,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Dialog_Container, "//div[starts-with(@id, 'dialogContentContainer_')]" },
             { SeleniumSelectorItems.Entity_BPFFieldContainer, "//div[@id='[NAME]-[NAME]-FieldSectionItemContainer']" }, 
             { SeleniumSelectorItems.Entity_FieldContainer, "//div[@data-id='[NAME]']" },
+            { SeleniumSelectorItems.Entity_PCFControl_Container, ".//div[@data-id='[NAME].fieldControl_container']" },
             { SeleniumSelectorItems.Dialog_OK, "//button[@data-id='ok_id']" },
             { SeleniumSelectorItems.Entity_Header, "//button[@data-id='header_overflowButton']" },
             { SeleniumSelectorItems.Popup_TeachingBubble_CloseButton, "//button[contains(@class, 'ms-TeachingBubble-closebutton')]/span" }

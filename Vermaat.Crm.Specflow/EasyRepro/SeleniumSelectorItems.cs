@@ -59,6 +59,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_BPFFieldContainer,
         Entity_FieldContainer,
+        Entity_PCFControl_Container,
 
         FlyoutRoot,
 

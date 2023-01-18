@@ -78,7 +78,8 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.FIELD_NOT_IN_SECTION, "Field not found in section {0}");
             AddError(Constants.ErrorCodes.FIELD_NOT_IN_TAB, "Field not found in tab {0}");
             AddError(Constants.ErrorCodes.BUSINESS_PROCESS_FLOW_STAGE_ID_CANT_BE_FOUND, "Failed to retrieve stage id from '{0}'. Fix in framework needed due to Microsoft update.");
-
+            AddError(Constants.ErrorCodes.ELEMENT_NOT_FOUND, "Element {0} not found");
+            AddError(Constants.ErrorCodes.PCF_CONTROL_NOT_IMPLEMENTED, "No PCF control implementation for control {0} on attribute {1}.");
         }
 
         public void AddError(int errorCode, string message)
