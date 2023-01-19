@@ -26,17 +26,27 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             CurrentTab = null;
         }
 
+        public void CollapseHeader()
+        {
+            ExpandCollapseHeader(false);
+        }
+
 
         public void ExpandHeader()
         {
-            Logger.WriteLine("Expanding headers");
+            ExpandCollapseHeader(true);
+        }
+
+        private void ExpandCollapseHeader(bool expand)
+        {
+            Logger.WriteLine($"Expanding header: {expand}");
             var header = _app.WebDriver.WaitUntilClickable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty));
 
             if (header == null)
                 throw new InvalidOperationException("Form header unavailable");
 
-            if (!bool.TryParse(header.GetAttribute("aria-expanded"), out var expanded) || !expanded)
-                header.Click();           
+            if (!bool.TryParse(header.GetAttribute("aria-expanded"), out var expanded) || expanded != expand)
+                header.Click();
         }
 
         public void ExpandTab(string tabLabel)
