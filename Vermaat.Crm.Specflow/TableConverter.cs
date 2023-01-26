@@ -48,7 +48,9 @@ namespace Vermaat.Crm.Specflow
             {
                 if(row.ContainsKey(column) && !string.IsNullOrWhiteSpace(row[column]))
                 {
+                    var original = row[column];
                     row[column] = GlobalTestingContext.LocalizedTexts[row[column], languageCode] ?? row[column];
+                    Logger.WriteLine($"Localized {original} to {row[column]}");
                 }
             }
         }
