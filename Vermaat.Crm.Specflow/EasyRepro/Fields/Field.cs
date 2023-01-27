@@ -43,6 +43,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                     SetLookupValue(new LookupValue((EntityReference)fieldValue));
                     break;
                 case AttributeTypeCode.Picklist:
+                case AttributeTypeCode.Status:
                     SetOptionSetField(ToOptionSetObject(((Microsoft.Xrm.Sdk.OptionSetValue)fieldValue)?.Value, fieldValueText));
                     break;
                 case AttributeTypeCode.Money:
