@@ -41,6 +41,13 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssertFormNotificationsCommand(_crmContext, _seleniumContext, alias, formNotifications));
         }
 
+        [Then(@"(.*) has the following localized form notifications")]
+        public void ThenLocalizedFormNotificationExist(string alias, Table formNotifications)
+        {
+            _crmContext.TableConverter.LocalizeColumn(formNotifications, Constants.SpecFlow.TABLE_FORMNOTIFICATION_MESSAGE, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage);
+            _crmContext.CommandProcessor.Execute(new AssertFormNotificationsCommand(_crmContext, _seleniumContext, alias, formNotifications));
+        }
+
         [Then(@"the following form notifications are on the current form")]
         public void ThenCurrentFormNotificationExist(Table formNotifications)
         {
