@@ -98,7 +98,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
         public override bool IsVisible(FormState formState)
         {
             formState.CollapseHeader();
-            App.App.BusinessProcessFlow.SelectStage(_stageName);
+            SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateExpandBusinessProcessStageCommand(_stageName));
             return base.IsVisible(formState);
         }
     }

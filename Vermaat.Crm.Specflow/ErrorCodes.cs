@@ -80,6 +80,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.BUSINESS_PROCESS_FLOW_STAGE_ID_CANT_BE_FOUND, "Failed to retrieve stage id from '{0}'. Fix in framework needed due to Microsoft update.");
             AddError(Constants.ErrorCodes.ELEMENT_NOT_FOUND, "Element {0} not found");
             AddError(Constants.ErrorCodes.PCF_CONTROL_NOT_IMPLEMENTED, "No PCF control implementation for control {0} on attribute {1}.");
+            AddError(Constants.ErrorCodes.BPF_STAGE_NOT_FOUND, "Stage {0} wasn't found");
         }
 
         public void AddError(int errorCode, string message)

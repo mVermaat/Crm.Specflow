@@ -15,6 +15,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual ClickRibbonItemCommand CreateClickRibbonItemCommand(string name)
             => new ClickRibbonItemCommand(name);
 
+        public virtual ExpandBusinessProcessStageCommand CreateExpandBusinessProcessStageCommand(string stageName)
+            => new ExpandBusinessProcessStageCommand(stageName);
+
         public virtual GetBusinessProcessFlowDefinitionCommand CreateGetGetBusinessProcessFlowDefinitionCommand()
             => new GetBusinessProcessFlowDefinitionCommand();
 
@@ -46,9 +49,5 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual SetDateTimeFieldValueCommand CreateSetDateTimeFieldValueCommand(
             string logicalName, DateTime? value, bool dateOnly, string formatDate, string formatTime)
             => new SetDateTimeFieldValueCommand(logicalName, value, dateOnly, formatDate, formatTime);
-
-
-
-        
     }
 }

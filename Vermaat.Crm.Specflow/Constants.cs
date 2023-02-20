@@ -99,6 +99,7 @@ namespace Vermaat.Crm.Specflow
             public const int BUSINESS_PROCESS_FLOW_STAGE_ID_CANT_BE_FOUND = 62;
             public const int ELEMENT_NOT_FOUND = 63;
             public const int PCF_CONTROL_NOT_IMPLEMENTED = 64;
+            public const int BPF_STAGE_NOT_FOUND = 65;
         }
 
         public class LocalizedTexts
