@@ -80,6 +80,7 @@ namespace Vermaat.Crm.Specflow
                 case AttributeTypeCode.DateTime:
                     return ParseDateTime(metadata, value);
 
+                case AttributeTypeCode.EntityName:
                 case AttributeTypeCode.Memo:
                 case AttributeTypeCode.String: return value;
 
@@ -115,8 +116,23 @@ namespace Vermaat.Crm.Specflow
                 case AttributeTypeCode.PartyList:
                     return ParsePartyList(context, metadata, value);
 
+                //case AttributeTypeCode.EntityName:
+                //    return ParseEntityName(context, metadata, value);
+
                 default: throw new NotImplementedException(string.Format("Type {0} not implemented", metadata.AttributeType));
             }
+        }
+
+        private static object ParseEntityName(CrmTestingContext context, AttributeMetadata metadata, string value)
+        {
+            var data = GlobalTestingContext.ConnectionManager.CurrentConnection.RetrieveMultiple(new QueryExpression(metadata.EntityLogicalName)
+            {
+                ColumnSet = new ColumnSet(true),
+                TopCount = 100,
+                
+            });
+
+            throw new NotImplementedException();
         }
 
         private static object ParsePartyList(CrmTestingContext context, AttributeMetadata metadata, string value)
