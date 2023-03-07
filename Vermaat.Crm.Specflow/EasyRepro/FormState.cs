@@ -54,6 +54,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (string.IsNullOrEmpty(CurrentTab) || !CurrentTab.Equals(tabLabel, StringComparison.OrdinalIgnoreCase))
             {
                 Logger.WriteLine($"Expanding tab {tabLabel}");
+                
+                // if you want to expand a tab, it's possible the header is open and overlaps the tab you want to select, so collapse the header just in case.
+                CollapseHeader();
                 _app.App.Entity.SelectTab(tabLabel);
                 CurrentTab = tabLabel;
             }
