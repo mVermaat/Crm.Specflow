@@ -1,4 +1,5 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
+using Microsoft.Xrm.Sdk.Query;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -24,16 +25,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
             foreach (var processStage in processStages)
             {
-                var divs = processStage.FindElements(By.TagName("div"));
+                var idAttribute = processStage.GetAttribute("id");
+                var stageId = Guid.Parse(idAttribute.Substring(62));
+                var name = GlobalTestingContext.ConnectionManager.AdminConnection.Retrieve("processstage", stageId,
+                    new ColumnSet("stagename")).GetAttributeValue<string>("stagename");
 
-                //Click the Label of the Process Stage if found
-                foreach (var div in divs)
+                if (name.Equals(_stageName, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (div.Text.Equals(_stageName, StringComparison.OrdinalIgnoreCase))
-                    {
-                        div.Click();
-                        return CommandResult.Success();
-                    }
+                    processStage.Click();
+                    return CommandResult.Success();
                 }
             }
             return CommandResult.Fail(true, Constants.ErrorCodes.BPF_STAGE_NOT_FOUND, _stageName);
