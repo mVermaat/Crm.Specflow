@@ -40,10 +40,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private void ExpandCollapseHeader(bool expand)
         {
             Logger.WriteLine($"Expanding header: {expand}");
-            var header = _app.WebDriver.WaitUntilClickable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty));
+            var header = _app.WebDriver.WaitUntilClickable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Header, string.Empty), TimeSpan.FromSeconds(1));
 
             if (header == null)
-                throw new InvalidOperationException("Form header unavailable");
+            {
+                if (expand)
+                    throw new InvalidOperationException("Form header unavailable");
+                else // If a form doesn't have any header fields, then the header will be null.
+                     // Trying to collapse a header that doesn't exist is no problem
+                    return;
+            }
 
             if (!bool.TryParse(header.GetAttribute("aria-expanded"), out var expanded) || expanded != expand)
                 header.Click();
