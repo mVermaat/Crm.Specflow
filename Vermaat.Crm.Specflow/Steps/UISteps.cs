@@ -1,4 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
+using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -69,9 +70,10 @@ namespace Vermaat.Crm.Specflow.Steps
         }
 
         [Then("(.*)'s form has the following ribbon state")]
-        public void ThenFormHasRibbonItems(string alias, Table table)
+        public void ThenFormHasRibbonItems(string alias, Table ribbonState)
         {
-            _crmContext.CommandProcessor.Execute(new AssertRibbonStateCommand(_crmContext, _seleniumContext, alias, table));
+            _crmContext.TableConverter.LocalizeColumn(ribbonState, Constants.SpecFlow.TABLE_KEY, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage);
+            _crmContext.CommandProcessor.Execute(new AssertRibbonStateCommand(_crmContext, _seleniumContext, alias, ribbonState));
         }
     }
 }
