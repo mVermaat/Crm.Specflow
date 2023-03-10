@@ -17,13 +17,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
     public class BodyFormField : FormField
     {
         private readonly string _tabName;
-        private readonly string _sectionLabel;
+        private readonly string _sectionName;
 
-        public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control, string tabName, string sectionLabel) 
+        public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control, string tabName, string sectionName) 
             : base(app, attributeMetadata, control)
         {
             _tabName = tabName;
-            _sectionLabel = sectionLabel;
+            _sectionName = sectionName;
         }
 
         public override bool IsVisible(FormState formState)

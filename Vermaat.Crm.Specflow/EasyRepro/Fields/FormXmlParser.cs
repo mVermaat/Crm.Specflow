@@ -63,7 +63,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 {
                     foreach (var section in column.Sections)
                     {
-                        context.SectionName = section.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
+                        context.SectionName = section.Name;
+                        context.SectionLabel = section.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
                         foreach (var row in section.Rows)
                         {
                             ProcessFormRow(row, metadata, formFields, context);

@@ -19,6 +19,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public SystemFormType FormType { get; set; }
 
         public string SectionName { get; set; }
+        public string SectionLabel { get; set; }
         public string TabName { get; set; }
         public string TabLabel { get; set; }
 

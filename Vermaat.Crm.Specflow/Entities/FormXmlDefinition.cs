@@ -86,6 +86,8 @@ namespace Vermaat.Crm.Specflow.Entities
     [XmlType(AnonymousType = true)]
     public class FormSection
     {
+        [XmlAttribute("name")]
+        public string Name { get; set; }
 
         [XmlArray("rows")]
         [XmlArrayItem("row", IsNullable = false)]
