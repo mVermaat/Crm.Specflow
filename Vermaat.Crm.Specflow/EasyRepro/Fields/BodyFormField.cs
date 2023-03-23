@@ -28,7 +28,17 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         public override bool IsVisible(FormState formState)
         {
-            formState.ExpandTab(_tabName);
+            try
+            {
+                formState.ExpandTab(_tabName);
+            }
+            catch(Exception ex)
+            { // Unfortunately easyrepro throws an exception of type system.exception. Can't make this more specific
+                Logger.WriteLine("Error expanding tab. Field invisible");
+                Logger.WriteLine(ex.Message);
+                return false;
+            }
+
             return base.IsVisible(formState);
         }
 
