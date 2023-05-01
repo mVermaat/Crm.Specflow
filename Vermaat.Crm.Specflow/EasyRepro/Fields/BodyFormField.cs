@@ -16,31 +16,41 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
     public class BodyFormField : FormField
     {
-        private readonly string _tabLabel;
-        private readonly string _sectionLabel;
+        private readonly string _tabName;
+        private readonly string _sectionName;
 
-        public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control, string tabLabel, string sectionLabel) 
+        public BodyFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control, string tabName, string sectionName) 
             : base(app, attributeMetadata, control)
         {
-            _tabLabel = tabLabel;
-            _sectionLabel = sectionLabel;
+            _tabName = tabName;
+            _sectionName = sectionName;
         }
 
         public override bool IsVisible(FormState formState)
         {
-            formState.ExpandTab(_tabLabel);
+            try
+            {
+                formState.ExpandTab(_tabName);
+            }
+            catch(Exception ex)
+            { // Unfortunately easyrepro throws an exception of type system.exception. Can't make this more specific
+                Logger.WriteLine("Error expanding tab. Field invisible");
+                Logger.WriteLine(ex.Message);
+                return false;
+            }
+
             return base.IsVisible(formState);
         }
 
         public override RequiredState GetRequiredState(FormState formState)
         {
-            formState.ExpandTab(_tabLabel);
+            formState.ExpandTab(_tabName);
             return base.GetRequiredState(formState);
         }
 
         public override bool IsLocked(FormState formState)
         {
-            formState.ExpandTab(_tabLabel);
+            formState.ExpandTab(_tabName);
             return base.IsLocked(formState);
         }
 
@@ -77,9 +87,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected override void SetDateTimeField(DateTimeValue value)
         {
-            App.Client.SetValueFix(LogicalName, value.Value, value.DateOnly,
+            SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateSetDateTimeFieldValueCommand(
+                LogicalName, value.Value, value.DateOnly,
                  GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
-                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat));
         }
 
         protected override void SetOptionSetField(OptionSetValue value)

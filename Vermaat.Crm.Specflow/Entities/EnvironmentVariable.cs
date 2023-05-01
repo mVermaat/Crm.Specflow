@@ -74,10 +74,10 @@ namespace Vermaat.Crm.Specflow.Entities
             var variable = new EnvironmentVariable()
             {
                 DefintionId = result[0].Id,
-                Id = result[0].GetAliasedValue<Guid?>("ev", "environmentvariablevalueid"),
+                Id = result[0].GetAliasedValue<Guid?>("environmentvariablevalueid", "ev"),
                 Name = name,
                 Type = (EnvironmentVariableType)result[0].GetAttributeValue<OptionSetValue>("type").Value,
-                Value = result[0].GetAliasedValue("ev", "value"),
+                Value = result[0].GetAliasedValue("value", "ev"),
             };
 
             Logger.WriteLine($"Found Environment Variable {variable.Id}");

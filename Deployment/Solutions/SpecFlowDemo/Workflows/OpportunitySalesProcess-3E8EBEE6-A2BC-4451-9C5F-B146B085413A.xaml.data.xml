@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{3e8ebee6-a2bc-4451-9c5f-b146b085413a}" Name="Opportunity Sales Process" Description="This is the default process flow for working on an opportunity." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <XamlFileName>/Workflows/OpportunitySalesProcess-3E8EBEE6-A2BC-4451-9C5F-B146B085413A.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>4</Category>
+  <Mode>0</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>1</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <processorder>1</processorder>
+  <RunAs>1</RunAs>
+  <UniqueName>opportunitysalesprocess</UniqueName>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>6.0.0.0</IntroducedVersion>
+  <BusinessProcessType>0</BusinessProcessType>
+  <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+  <ProcessTriggerScope>1</ProcessTriggerScope>
+  <PrimaryEntity>Opportunity</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Opportunity Sales Process" />
+    <LocalizedName languagecode="1043" description="Verkoopproces verkoopkans" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="This is the default process flow for working on an opportunity." />
+    <Description languagecode="1043" description="Dit is de standaardprocesstroom voor werken aan een verkoopkans." />
+  </Descriptions>
+  <labels>
+    <steplabels id="{6b9ce798-221a-4260-90b2-2a95ed51a5bc}">
+      <label languagecode="1033" description="Qualify" />
+      <label languagecode="1043" description="Kwalificeren" />
+    </steplabels>
+    <steplabels id="{1abebfee-48e1-4868-9bdb-6726e8cdb37c}">
+      <label languagecode="1033" description="BPF Boolean Field" />
+    </steplabels>
+    <steplabels id="{858b9f54-fb4f-4331-a993-1f8d7a910e2f}">
+      <label languagecode="1033" description="BPF Currency Field" />
+    </steplabels>
+    <steplabels id="{ab7f2dd4-f856-49e0-939a-5b8d7ae8f851}">
+      <label languagecode="1033" description="BPF DateTime Field" />
+    </steplabels>
+    <steplabels id="{373faecb-5694-4e12-995a-2b158d9cf544}">
+      <label languagecode="1033" description="BPF Decimal Field" />
+    </steplabels>
+    <steplabels id="{895e56d3-6e4a-40a5-af58-8dc0a830359b}">
+      <label languagecode="1033" description="BPF Float Field" />
+    </steplabels>
+    <steplabels id="{3e45f3e3-6f64-466c-a090-d37a3bbd3ccf}">
+      <label languagecode="1033" description="BPF Integer Field" />
+    </steplabels>
+    <steplabels id="{089a9c6c-2eaf-4ee0-852e-e3174c5f74cd}">
+      <label languagecode="1033" description="BPF Lookup Field" />
+    </steplabels>
+    <steplabels id="{93751881-b357-4ebe-bd00-57cbf306cd43}">
+      <label languagecode="1033" description="BPF OptionSet Field" />
+    </steplabels>
+    <steplabels id="{329e3cf1-7017-4d33-9453-3101db1b31e5}">
+      <label languagecode="1033" description="BPF Text Field" />
+    </steplabels>
+    <steplabels id="{650e06b4-789b-46c1-822b-0da76bedb1ed}">
+      <label languagecode="1033" description="Develop" />
+      <label languagecode="1043" description="Ontwikkelen" />
+    </steplabels>
+    <steplabels id="{2eb53db2-d179-448d-a9ce-17192a45ec07}">
+      <label languagecode="1033" description="Customer Need" />
+      <label languagecode="1043" description="Klantbehoefte" />
+    </steplabels>
+    <steplabels id="{84741cf0-35ca-4b2e-b474-b8a7699b4e5d}">
+      <label languagecode="1033" description="Proposed Solution" />
+      <label languagecode="1043" description="Voorgestelde oplossing" />
+    </steplabels>
+    <steplabels id="{db4248b2-6b43-4a06-9c03-46c7760443a2}">
+      <label languagecode="1033" description="Identify Stakeholders" />
+      <label languagecode="1043" description="Belanghebbenden identificeren" />
+    </steplabels>
+    <steplabels id="{bc666740-b46f-4c65-80e5-2848b6d6c382}">
+      <label languagecode="1033" description="Identify Competitors" />
+      <label languagecode="1043" description="Concurrenten identificeren" />
+    </steplabels>
+    <steplabels id="{d3ca8878-8d7b-47b9-852d-fcd838790cfd}">
+      <label languagecode="1033" description="Propose" />
+      <label languagecode="1043" description="Voorstel" />
+    </steplabels>
+    <steplabels id="{0d82da09-5708-4ca6-8a28-cc1e86946e1a}">
+      <label languagecode="1033" description="Identify Sales Team" />
+      <label languagecode="1043" description="Verkoopteam identificeren" />
+    </steplabels>
+    <steplabels id="{0c4d4c32-e063-448a-b2a1-3cacdaccfc7e}">
+      <label languagecode="1033" description="Develop Proposal" />
+      <label languagecode="1043" description="Voorstel opstellen" />
+    </steplabels>
+    <steplabels id="{478133c6-4710-4c4b-8f0c-7e9738b284fb}">
+      <label languagecode="1033" description="Complete Internal Review" />
+      <label languagecode="1043" description="Interne beoordeling voltooien" />
+    </steplabels>
+    <steplabels id="{22630029-125d-4cc4-8c05-eca344b88a2f}">
+      <label languagecode="1033" description="Present Proposal" />
+      <label languagecode="1043" description="Voorstel presenteren" />
+    </steplabels>
+    <steplabels id="{bb7e830a-61bd-441b-b1fd-6bb104ffa027}">
+      <label languagecode="1033" description="Close" />
+      <label languagecode="1043" description="Sluiten" />
+    </steplabels>
+    <steplabels id="{13b4f0ae-07dc-46da-b318-7b72b59955f4}">
+      <label languagecode="1033" description="Complete Final Proposal" />
+      <label languagecode="1043" description="Definitief voorstel voltooien" />
+    </steplabels>
+    <steplabels id="{6ae856ba-3e2a-4ff9-8ba8-eda0897f6149}">
+      <label languagecode="1033" description="Present Final Proposal" />
+      <label languagecode="1043" description="Definitief voorstel presenteren" />
+    </steplabels>
+    <steplabels id="{e2a645c3-f407-4a1b-bbbd-df13ea74eb71}">
+      <label languagecode="1033" description="Confirm Decision Date" />
+      <label languagecode="1043" description="Beslissingsdatum bevestigen" />
+    </steplabels>
+    <steplabels id="{34597dec-dd2b-4643-a872-3335132c5c06}">
+      <label languagecode="1033" description="Send Thank You" />
+      <label languagecode="1043" description="Dankbericht verzenden" />
+    </steplabels>
+    <steplabels id="{8a5df397-3d76-4a14-9218-8ec9979a8669}">
+      <label languagecode="1033" description="File De-brief" />
+      <label languagecode="1043" description="Nabespreking opslaan" />
+    </steplabels>
+  </labels>
+</Workflow>

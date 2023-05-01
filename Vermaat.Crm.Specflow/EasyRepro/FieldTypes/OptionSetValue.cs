@@ -18,7 +18,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.FieldTypes
 
         public OptionSet ToOptionSet(string logicalName)
         {
-            return new OptionSet { Name = logicalName, Value = Label };
+            return new OptionSet { Name = logicalName, Value = Value.HasValue ? Label : "-1" };
         }
 
         public int? Value { get; }

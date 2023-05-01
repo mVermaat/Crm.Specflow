@@ -42,7 +42,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 formId = Guid.Parse(route.Substring(route.LastIndexOf('/') + 1));
             }
 
-            return CommandResult<SystemForm>.Success(SystemForm.GetById(GlobalTestingContext.ConnectionManager.AdminConnection, formId));
+            return CommandResult<SystemForm>.Success(SystemForm.GetById(GlobalTestingContext.ConnectionManager.CurrentConnection, formId));
         }
     }
 }

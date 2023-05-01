@@ -80,6 +80,7 @@ namespace Vermaat.Crm.Specflow
                 case AttributeTypeCode.DateTime:
                     return ParseDateTime(metadata, value);
 
+                case AttributeTypeCode.EntityName:
                 case AttributeTypeCode.Memo:
                 case AttributeTypeCode.String: return value;
 
@@ -118,7 +119,6 @@ namespace Vermaat.Crm.Specflow
                 default: throw new NotImplementedException(string.Format("Type {0} not implemented", metadata.AttributeType));
             }
         }
-
         private static object ParsePartyList(CrmTestingContext context, AttributeMetadata metadata, string value)
         {
             var splitted = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);

@@ -49,20 +49,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         public virtual bool IsVisible(FormState formState)
         {
-            return App.WebDriver.WaitUntilVisible(
-                SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FieldContainer, Control.ControlName),
-                TimeSpan.FromSeconds(5)) != null;
+            return SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateCheckFieldVisibilityCommand(Control.ControlName));
         }
 
         public virtual bool IsLocked(FormState formState)
         {
             return App.Client.Execute(BrowserOptionHelper.GetOptions($"Check field locked state"), driver =>
             {
-                IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", LogicalName)));
+                IWebElement fieldContainer = driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", Control.ControlName)));
                 if (fieldContainer == null)
-                    throw new TestExecutionException(Constants.ErrorCodes.FIELD_NOT_ON_FORM, LogicalName);
+                    throw new TestExecutionException(Constants.ErrorCodes.FIELD_NOT_ON_FORM, Control.ControlName);
 
-                return fieldContainer.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormState_LockedIcon, LogicalName), out IWebElement requiredElement);
+                return fieldContainer.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormState_LockedIcon, Control.ControlName), out IWebElement requiredElement);
             }).Value;
         }
     }

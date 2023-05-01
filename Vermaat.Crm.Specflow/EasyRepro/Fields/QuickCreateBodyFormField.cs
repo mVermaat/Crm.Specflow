@@ -46,9 +46,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected override void SetDateTimeField(DateTimeValue value)
         {
-            App.Client.SetValueFix(LogicalName, value.Value, value.DateOnly,
+            SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateSetDateTimeFieldValueCommand(
+                LogicalName, value.Value, value.DateOnly,
                  GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
-                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat);
+                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat));
         }
 
         protected override void SetOptionSetField(OptionSetValue value)

@@ -1,4 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Browser;
+﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
+using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,13 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new AssertFormNotificationsCommand(_crmContext, _seleniumContext, alias, formNotifications));
         }
 
+        [Then(@"(.*) has the following localized form notifications")]
+        public void ThenLocalizedFormNotificationExist(string alias, Table formNotifications)
+        {
+            _crmContext.TableConverter.LocalizeColumn(formNotifications, Constants.SpecFlow.TABLE_FORMNOTIFICATION_MESSAGE, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage);
+            _crmContext.CommandProcessor.Execute(new AssertFormNotificationsCommand(_crmContext, _seleniumContext, alias, formNotifications));
+        }
+
         [Then(@"the following form notifications are on the current form")]
         public void ThenCurrentFormNotificationExist(Table formNotifications)
         {
@@ -62,9 +70,10 @@ namespace Vermaat.Crm.Specflow.Steps
         }
 
         [Then("(.*)'s form has the following ribbon state")]
-        public void ThenFormHasRibbonItems(string alias, Table table)
+        public void ThenFormHasRibbonItems(string alias, Table ribbonState)
         {
-            _crmContext.CommandProcessor.Execute(new AssertRibbonStateCommand(_crmContext, _seleniumContext, alias, table));
+            _crmContext.TableConverter.LocalizeColumn(ribbonState, Constants.SpecFlow.TABLE_KEY, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage);
+            _crmContext.CommandProcessor.Execute(new AssertRibbonStateCommand(_crmContext, _seleniumContext, alias, ribbonState));
         }
     }
 }

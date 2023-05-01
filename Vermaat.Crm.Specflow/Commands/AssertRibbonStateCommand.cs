@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,7 @@ namespace Vermaat.Crm.Specflow.Commands
                         expected ? "in" : ""));
                 }
             }
+            Assert.AreEqual(0, errors.Count, string.Join(", ", errors));
         }
 
         private bool GetExpected(string expectedText)

@@ -1,11 +1,11 @@
 [
   {
     "Profile": "Salesperson",
-    "MFA": true,
-    "Username": "TestUser1@vermaat11.onmicrosoft.com"
+    "MFA": false,
+    "Username": "TestUser1@vermaat16.onmicrosoft.com"
   },
   {
     "Profile": "Manager",
-    "Username": "TestUser2@vermaat11.onmicrosoft.com"
+    "Username": "TestUser2@vermaat16.onmicrosoft.com"
   }
 ]

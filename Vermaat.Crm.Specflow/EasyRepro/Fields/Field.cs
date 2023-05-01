@@ -43,6 +43,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                     SetLookupValue(new LookupValue((EntityReference)fieldValue));
                     break;
                 case AttributeTypeCode.Picklist:
+                case AttributeTypeCode.Status:
                     SetOptionSetField(ToOptionSetObject(((Microsoft.Xrm.Sdk.OptionSetValue)fieldValue)?.Value, fieldValueText));
                     break;
                 case AttributeTypeCode.Money:
@@ -76,7 +77,15 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
         protected virtual void SetVirtualField(string fieldValueText)
         {
             if (Metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
-                SetMultiSelectOptionSetField(ToMultiSelectOptionSetObject(fieldValueText.Split(',').Select(v => v.Trim()).ToArray()));
+            {
+                if(string.IsNullOrEmpty(fieldValueText)) {
+                    SetMultiSelectOptionSetField(new MultiSelectOptionSetValue(new string[0]));
+                }
+                else
+                {
+                    SetMultiSelectOptionSetField(ToMultiSelectOptionSetObject(fieldValueText.Split(',').Select(v => v.Trim()).ToArray()));
+                }
+            }
             else
                 throw new NotImplementedException(string.Format("Virtual type {0} not implemented", Metadata.AttributeTypeName.Value));
         }

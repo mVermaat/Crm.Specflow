@@ -52,17 +52,19 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             {
                 App = app,
                 MetadataDic = metadataDic,
-                FormType = form.Type                
+                FormType = form.Type
             };
 
             foreach (var tab in definition.Tabs)
             {
-                context.TabName = tab.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
+                context.TabName = tab.Name;
+                context.TabLabel = tab.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
                 foreach (var column in tab.Columns)
                 {
                     foreach (var section in column.Sections)
                     {
-                        context.SectionName = section.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
+                        context.SectionName = section.Name;
+                        context.SectionLabel = section.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
                         foreach (var row in section.Rows)
                         {
                             ProcessFormRow(row, metadata, formFields, context);
@@ -74,16 +76,52 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             // Null if there is no header
             if (definition.Header?.Rows != null)
             {
+                context.IsHeader = true;
+                context.TabLabel = null;
+                context.TabName = null;
+                context.SectionName = null;
                 foreach (var row in definition.Header.Rows)
                 {
-                    context.IsHeader = true;
-                    context.TabName = null;
-                    context.SectionName = null;
                     ProcessFormRow(row, metadata, formFields, context);
                 }
             }
 
+            ParseBusinessProcessFlow(app, metadata, formFields, metadataDic);
+
             return formFields;
+        }
+
+        private static void ParseBusinessProcessFlow(UCIApp app, EntityMetadata metadata, Dictionary<string, FormFieldSet> formFields, Dictionary<string, AttributeMetadata> metadataDic)
+        {
+            var bpfDefinition = SeleniumCommandProcessor.ExecuteCommand(app, app.SeleniumCommandFactory.CreateGetGetBusinessProcessFlowDefinitionCommand());
+            if (bpfDefinition != null)
+            {
+                foreach (var entity in bpfDefinition.Entities)
+                {
+                    // in case of multi entity BPF
+                    if (entity.EntityLogicalName != metadata.LogicalName)
+                        continue;
+
+                    foreach (var step in entity.Stage.Steps)
+                    {
+                        if (step.StepType != BusinessProcessFlowStepType.Field)
+                            continue;
+
+                        var formField = new BusinessProcessFlowFormField(app, metadataDic[step.Name], new FormControl()
+                        {
+                            AttributeName = step.Name,
+                            ControlName = $"{Constants.CRM.BUSINESS_PROCESS_FLOW_CONTROL_PREFIX}{step.StepControlId}"
+                        }, entity.Stage.StageDisplayName);
+
+                        if (!formFields.TryGetValue(step.Name, out var formFieldSet))
+                        {
+                            formFieldSet = new FormFieldSet();
+                            formFields.Add(step.Name, formFieldSet);
+                        }
+                        formFieldSet.Add(formField, "Business Process Flow", entity.Stage.StageDisplayName);
+                    }
+                }
+            }
         }
 
         private static void ProcessFormRow(FormRow row, EntityMetadata metadata, Dictionary<string, FormFieldSet> formFields,
