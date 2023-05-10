@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
@@ -127,8 +128,18 @@ namespace Vermaat.Crm.Specflow
             partyList.EntityName = "activityparty";
             foreach (var item in splitted)
             {
-                var entityRef = GetLookupValue(context, metadata, item.Trim());
-                partyList.Entities.Add(ToActivityParty(entityRef, metadata));
+                var trimmed = item.Trim();
+                if (Regex.IsMatch(trimmed, "[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}", RegexOptions.IgnoreCase))
+                {
+                    Logger.WriteLine($"Party {trimmed} is an emailaddress. Resolving as address.");
+                    partyList.Entities.Add(ToActivityParty(trimmed, metadata));
+                }
+                else
+                {
+                    Logger.WriteLine($"Party {trimmed} isn't an emailaddress. Resolving as lookup.");
+                    var entityRef = GetLookupValue(context, metadata, trimmed);
+                    partyList.Entities.Add(ToActivityParty(entityRef, metadata));
+                }
             }
 
             return partyList;
@@ -141,6 +152,16 @@ namespace Vermaat.Crm.Specflow
 
             party["participationtypemask"] = GetTypeMask(metadata);
             party["partyid"] = entityRef;
+
+            return party;
+        }
+
+        private static Entity ToActivityParty(string emailAddress, AttributeMetadata metadata)
+        {
+            var party = new Entity("activityparty");
+
+            party["participationtypemask"] = GetTypeMask(metadata);
+            party["addressused"] = emailAddress;
 
             return party;
         }
