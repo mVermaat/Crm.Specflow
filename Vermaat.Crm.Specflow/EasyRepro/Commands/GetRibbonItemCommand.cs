@@ -7,16 +7,29 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TechTalk.SpecFlow.CommonModels;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
     public class GetRibbonItemCommand : ISeleniumCommandFunc<IWebElement>
     {
-        private readonly string _buttonName;
+        private readonly string _subButtonName;
+        private readonly string _mainItemName;
 
         public GetRibbonItemCommand(string buttonName)
         {
-            _buttonName = buttonName;
+            if(string.IsNullOrEmpty(buttonName))
+                throw new ArgumentNullException(nameof(buttonName));
+
+            if (buttonName.Contains('.'))
+            {
+                _mainItemName = buttonName.Substring(0, buttonName.IndexOf('.'));
+                _subButtonName = buttonName.Substring(buttonName.IndexOf('.') + 1);
+            }
+            else
+            {
+                _mainItemName = buttonName;
+            }
         }
 
         public virtual CommandResult<IWebElement> Execute(BrowserInteraction browserInteraction)
@@ -33,29 +46,54 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                     return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND, "main");
             }
 
-            // Find in regular buttons, return if found
-            if (ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _buttonName), out var item))
-                return CommandResult<IWebElement>.Success(item);
 
-            // Not found, look for more commands button
-            if(ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_More_Commands), out var moreCommands))
+            if (ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _mainItemName), out var mainBarItem))
             {
-                moreCommands.Click();
-                
-                // Find the ribbon in the flyout
-                ribbon = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Flyout_Container), TimeSpan.FromSeconds(5));
-                if (ribbon == null)
-                    return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND, "more commands");
+                if (string.IsNullOrEmpty(_subButtonName))
+                    return CommandResult<IWebElement>.Success(mainBarItem);
+                else
+                    return GetFlyoutSubButton(browserInteraction, mainBarItem);
 
-
-                // Find in more commands list
-                if (ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _buttonName), out item))
-                    return CommandResult<IWebElement>.Success(item);
             }
+            else
+            {
+                // Not found, look for more commands button
+                if (ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_More_Commands), out var moreCommands))
+                {
+                    moreCommands.Click();
 
-            // Item isn't in the ribbon
-            return CommandResult<IWebElement>.Success(null);
+                    // Find the ribbon in the flyout
+                    var flyout = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Flyout_Container), TimeSpan.FromSeconds(5));
+                    if (flyout == null)
+                        return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND, "more commands");
 
-        }        
+                    // Find in more commands list
+                    if (flyout.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _mainItemName), out var moreCommandsItem))
+                    {
+                        if (string.IsNullOrEmpty(_subButtonName))
+                            return CommandResult<IWebElement>.Success(moreCommandsItem);
+                        else
+                            return GetFlyoutSubButton(browserInteraction, moreCommandsItem);
+                    }
+                }
+
+                // Item isn't in the ribbon
+                return CommandResult<IWebElement>.Success(null);
+            }
+        }
+
+        private CommandResult<IWebElement> GetFlyoutSubButton(BrowserInteraction browserInteraction, IWebElement mainButtonItem)
+        {
+            mainButtonItem.Click();
+            var flyout = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.FlyoutRoot), TimeSpan.FromSeconds(5));
+            if (flyout == null)
+                return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND, $"flyout from {_mainItemName}");
+
+            if (flyout.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _subButtonName), out var subCommand))
+                return CommandResult<IWebElement>.Success(subCommand);
+            else
+                return CommandResult<IWebElement>.Success(null);
+        }
+
     }
 }

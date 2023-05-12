@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro.FieldTypes;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 {
@@ -65,13 +66,35 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                     SetDecimalField(new DecimalValue((decimal?)fieldValue));
                     break;
                 case AttributeTypeCode.PartyList:
-                    SetLookupValues(((EntityCollection)fieldValue).Entities.Select(e => new LookupValue(e.GetAttributeValue<EntityReference>("partyid"))).ToArray());
+                    SetLookupValues(ToLookupValues((EntityCollection)fieldValue).ToArray());
                     break;
                 default:
                     SetTextField((string)fieldValue);
                     break;
             }
             
+        }
+
+        private IEnumerable<LookupValue> ToLookupValues(EntityCollection entityCollection)
+        {
+            var parties = Party.FromEntityCollection(entityCollection);
+
+            foreach(var party in parties)
+            {
+                if(!string.IsNullOrEmpty(party.EmailAddress))
+                {
+                    yield return new LookupValue(new EntityReference()
+                    {
+                        Id = Guid.Empty,
+                        LogicalName = "unresolvedaddress",
+                        Name = party.EmailAddress,
+                    });
+                }
+                else
+                {
+                    yield return new LookupValue(party.ConnectedParty);
+                }
+            }
         }
 
         protected virtual void SetVirtualField(string fieldValueText)

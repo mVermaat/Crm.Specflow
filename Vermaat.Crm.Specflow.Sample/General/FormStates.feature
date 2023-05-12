@@ -59,10 +59,11 @@ Scenario: Ribbon button availability
 		| Property     | Value        |
 		| Account Name | DynamicHands |
 	Then TestAccount's form has the following ribbon state
-		| Property   | State     |
-		| Activate   | Visible   |
-		| Deactivate | Invisible |
-		| Run Report | Visible   |
+		| Property                | State     |
+		| Activate                | Invisible |
+		| Deactivate              | Visible   |
+		| Run Report              | Visible   |
+		| Reports.Generate Report | Visible   |
 
 
 @Chrome @Firefox @Cleanup @Set2

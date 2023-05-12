@@ -11,12 +11,12 @@ Scenario: Create Phonecall record
 		| Last Name  | Record |
 	And the current logged in user named MyUser
 	When a phonecall named MyPhoneCall is created with the following values
-		| Property  | Value                     |
-		| Call From | MyUser                    |
-		| Call To   | TestAccount, ChildContact |
-		| Subject   | SpecFlow phonecall        |
+		| Property  | Value                                             |
+		| Call From | MyUser                                            |
+		| Call To   | TestAccount, ChildContact, doesntexist@domain.com |
+		| Subject   | SpecFlow phonecall                                |
 	Then MyPhoneCall has the following values
-		| Property  | Value                     |
-		| Call From | MyUser                    |
-		| Call To   | TestAccount, ChildContact |
-		| Subject   | SpecFlow phonecall        |
+		| Property  | Value                                             |
+		| Call From | MyUser                                            |
+		| Call To   | TestAccount, ChildContact, doesntexist@domain.com |
+		| Subject   | SpecFlow phonecall                                |
