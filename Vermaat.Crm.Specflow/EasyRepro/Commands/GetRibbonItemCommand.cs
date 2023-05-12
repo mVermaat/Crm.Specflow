@@ -14,7 +14,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
     public class GetRibbonItemCommand : ISeleniumCommandFunc<IWebElement>
     {
         private readonly string _subButtonName;
-        private readonly string _flyoutParentButtonName;
+        private readonly string _mainItemName;
 
         public GetRibbonItemCommand(string buttonName)
         {
@@ -23,12 +23,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
             if (buttonName.Contains('.'))
             {
-                _flyoutParentButtonName = buttonName.Substring(0, buttonName.IndexOf('.'));
+                _mainItemName = buttonName.Substring(0, buttonName.IndexOf('.'));
                 _subButtonName = buttonName.Substring(buttonName.IndexOf('.') + 1);
             }
             else
             {
-                _subButtonName = buttonName;
+                _mainItemName = buttonName;
             }
         }
 
@@ -46,48 +46,54 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                     return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND, "main");
             }
 
-            if(string.IsNullOrEmpty(_flyoutParentButtonName))
-            {
-                return GetRibbonButton(browserInteraction, _subButtonName, ribbon);
-            }
-            {
-                var result = GetRibbonButton(browserInteraction, _flyoutParentButtonName, ribbon);
-                if (!result.IsSuccessfull)
-                    return result;
 
-                if (result.Result.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _subButtonName), out var subItem))
-                    return CommandResult<IWebElement>.Success(subItem);
+            if (ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _mainItemName), out var mainBarItem))
+            {
+                if (string.IsNullOrEmpty(_subButtonName))
+                    return CommandResult<IWebElement>.Success(mainBarItem);
                 else
-                    return CommandResult<IWebElement>.Success(null);
+                    return GetFlyoutSubButton(browserInteraction, mainBarItem);
+
             }
-
-
-        }
-
-        private CommandResult<IWebElement> GetRibbonButton(BrowserInteraction browserInteraction, string buttonName, IWebElement ribbon)
-        {
-            // Find in regular buttons, return if found
-            if (ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, buttonName), out var item))
-                return CommandResult<IWebElement>.Success(item);
-
-            // Not found, look for more commands button
-            if(ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_More_Commands), out var moreCommands))
+            else
             {
-                moreCommands.Click();
-                
-                // Find the ribbon in the flyout
-                ribbon = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Flyout_Container), TimeSpan.FromSeconds(5));
-                if (ribbon == null)
-                    return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND, "more commands");
+                // Not found, look for more commands button
+                if (ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_More_Commands), out var moreCommands))
+                {
+                    moreCommands.Click();
 
+                    // Find the ribbon in the flyout
+                    var flyout = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Flyout_Container), TimeSpan.FromSeconds(5));
+                    if (flyout == null)
+                        return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND, "more commands");
 
-                // Find in more commands list
-                if (ribbon.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, buttonName), out item))
-                    return CommandResult<IWebElement>.Success(item);
+                    // Find in more commands list
+                    if (flyout.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _mainItemName), out var moreCommandsItem))
+                    {
+                        if (string.IsNullOrEmpty(_subButtonName))
+                            return CommandResult<IWebElement>.Success(moreCommandsItem);
+                        else
+                            return GetFlyoutSubButton(browserInteraction, moreCommandsItem);
+                    }
+                }
+
+                // Item isn't in the ribbon
+                return CommandResult<IWebElement>.Success(null);
             }
-
-            // Item isn't in the ribbon
-            return CommandResult<IWebElement>.Success(null);
         }
+
+        private CommandResult<IWebElement> GetFlyoutSubButton(BrowserInteraction browserInteraction, IWebElement mainButtonItem)
+        {
+            mainButtonItem.Click();
+            var flyout = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.FlyoutRoot), TimeSpan.FromSeconds(5));
+            if (flyout == null)
+                return CommandResult<IWebElement>.Fail(true, Constants.ErrorCodes.RIBBON_NOT_FOUND, $"flyout from {_mainItemName}");
+
+            if (flyout.TryFindElement(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_Ribbon_Button, _subButtonName), out var subCommand))
+                return CommandResult<IWebElement>.Success(subCommand);
+            else
+                return CommandResult<IWebElement>.Success(null);
+        }
+
     }
 }
