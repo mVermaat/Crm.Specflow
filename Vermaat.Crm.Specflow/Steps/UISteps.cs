@@ -3,6 +3,7 @@ using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,6 +68,12 @@ namespace Vermaat.Crm.Specflow.Steps
         public void ThenErrorAppears(string errorMessage)
         {
             _crmContext.CommandProcessor.Execute(new AssertErrorDialogCommand(_crmContext, _seleniumContext, errorMessage));
+        }
+
+        [Then(@"the following localized error message appears: '(.*)'")]
+        public void ThenLocalizedErrorAppears(string errorMessage)
+        {
+            ThenErrorAppears(GlobalTestingContext.LocalizedTexts[errorMessage, GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.UILanguage]);
         }
 
         [Then("(.*)'s form has the following ribbon state")]
