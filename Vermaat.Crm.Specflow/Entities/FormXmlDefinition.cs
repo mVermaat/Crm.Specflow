@@ -58,6 +58,9 @@ namespace Vermaat.Crm.Specflow.Entities
     [XmlType(AnonymousType = true)]
     public class FormTab
     {
+        [XmlAttribute("id")]
+        public string Id { get; set; }
+
         [XmlAttribute("name")]
         public string Name { get; set; }
 

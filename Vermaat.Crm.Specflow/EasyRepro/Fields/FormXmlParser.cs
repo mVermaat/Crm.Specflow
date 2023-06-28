@@ -57,7 +57,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
             foreach (var tab in definition.Tabs)
             {
-                context.TabName = tab.Name;
+                context.TabName = tab.Name ?? tab.Id;
                 context.TabLabel = tab.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
                 foreach (var column in tab.Columns)
                 {
