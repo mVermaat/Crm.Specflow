@@ -18,7 +18,9 @@ namespace Vermaat.Crm.Specflow
             public const string TABLE_FORMSTATE = "State";
             public const string TABLE_FORMNOTIFICATION_MESSAGE = "Message";
             public const string TABLE_FORMNOTIFICATION_LEVEL = "Level";
+            public const string TABLE_PERMISSIONS = "Permissions";
             public const string TABLE_ROLE = "Role";
+            public const string TABLE_USER = "User";
 
             public const string TARGET_API = "API";
             public const string TARGET_Chrome = "Chrome";
@@ -100,6 +102,11 @@ namespace Vermaat.Crm.Specflow
             public const int ELEMENT_NOT_FOUND = 63;
             public const int PCF_CONTROL_NOT_IMPLEMENTED = 64;
             public const int BPF_STAGE_NOT_FOUND = 65;
+            public const int CHECK_ACCESS_BUTTON_NOT_VISIBLE = 66;
+            public const int CHECK_ACCESS_DIALOG_NOT_FOUND = 67;
+            public const int CHECK_ACCESS_DIALOG_UNKNOWN_ICON = 68;
+            public const int CHECK_ACCESS_DIALOG_MISSING_PERMISSIONS = 69;
+            public const int CHECK_ACCESS_WRONG_ACCESS_EXPECTATION_TEXT = 70;
         }
 
         public class LocalizedTexts

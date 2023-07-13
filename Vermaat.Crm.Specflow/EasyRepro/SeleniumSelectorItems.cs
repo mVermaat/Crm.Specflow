@@ -18,6 +18,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_ScriptErrorDialog,
 
+        Entity_AccessDialog,
+        Entity_AccessDialogItems,
+
         Entity_BusinessProcessFlow_StageElement,
 
         Entity_CompositeControls,

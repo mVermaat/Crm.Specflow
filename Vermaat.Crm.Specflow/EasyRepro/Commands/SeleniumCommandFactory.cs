@@ -18,6 +18,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual ExpandBusinessProcessStageCommand CreateExpandBusinessProcessStageCommand(string stageName)
             => new ExpandBusinessProcessStageCommand(stageName);
 
+        public virtual GetAccessForUserCommand CreateGetAccessForUserCommand()
+            => new GetAccessForUserCommand();
+
         public virtual GetBusinessProcessFlowDefinitionCommand CreateGetGetBusinessProcessFlowDefinitionCommand()
             => new GetBusinessProcessFlowDefinitionCommand();
 

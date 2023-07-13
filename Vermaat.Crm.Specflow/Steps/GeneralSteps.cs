@@ -13,11 +13,13 @@ namespace Vermaat.Crm.Specflow.Steps
     {
         private readonly CrmTestingContext _crmContext;
         private readonly SeleniumTestingContext _seleniumContext;
+        private readonly UserProfileHandler _userProfileHandler;
 
-        public GeneralSteps(CrmTestingContext crmContext, SeleniumTestingContext seleniumContext)
+        public GeneralSteps(CrmTestingContext crmContext, SeleniumTestingContext seleniumContext, UserProfileHandler userProfileHandler)
         {
             _crmContext = crmContext;
             _seleniumContext = seleniumContext;
+            _userProfileHandler = userProfileHandler;
         }
 
 
@@ -190,6 +192,12 @@ namespace Vermaat.Crm.Specflow.Steps
         public void ThenAliasFieldIsAliased(string alias, string lookupField, string lookupAlias)
         {
             _crmContext.CommandProcessor.Execute(new SetLookupAsAliasCommand(_crmContext, alias, lookupField, lookupAlias));
+        }
+
+        [Then(@"([^\s]+) has the following user permissions")]
+        public void ThenUsersHavePermissions(string alias, Table userAccessCriteria)
+        {
+            _crmContext.CommandProcessor.Execute(new AssertUserAccessCommand(_crmContext, _seleniumContext, _userProfileHandler, alias, userAccessCriteria));
         }
 
         #endregion
