@@ -38,7 +38,7 @@ namespace Vermaat.Crm.Specflow.Commands
             var errors = new List<string>();
             foreach (var row in _userAccessData.Rows)
             {
-                var profile = _userProfileHandler.GetProfile(row[Constants.SpecFlow.TABLE_FORMSTATE]);
+                var profile = _userProfileHandler.GetProfile(row[Constants.SpecFlow.TABLE_USER]);
                 var expectedAccess = ParseTableRow(row[Constants.SpecFlow.TABLE_PERMISSIONS]);
                 var userConnection = CrmConnectionFactory.CreateNewConnection(profile);
 
