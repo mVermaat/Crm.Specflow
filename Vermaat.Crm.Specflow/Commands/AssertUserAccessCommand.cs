@@ -30,10 +30,6 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             var record = _crmContext.RecordCache.Get(_alias, true);
-            var browser = _seleniumContext.GetBrowser();
-            var formData = browser.OpenRecord(new OpenFormOptions(record));
-
-            formData.CommandBar.ClickButton(browser.App.LocalizedTexts["CheckAccessRibbonButton", browser.App.UILanguageCode]);
 
             var errors = new List<string>();
             foreach (var row in _userAccessData.Rows)
@@ -43,9 +39,13 @@ namespace Vermaat.Crm.Specflow.Commands
                 var userConnection = CrmConnectionFactory.CreateNewConnection(profile);
 
                 // get correct session
-                var userBrowser = GlobalTestingContext.BrowserManager.GetBrowser(_seleniumContext.BrowserOptions, 
+                var browser = GlobalTestingContext.BrowserManager.GetBrowser(_seleniumContext.BrowserOptions, 
                     userConnection.GetBrowserLoginInformation(), _seleniumContext.SeleniumCommandFactory);
-                var access = SeleniumCommandProcessor.ExecuteCommand(userBrowser.App, userBrowser.App.SeleniumCommandFactory.CreateGetAccessForUserCommand());
+                
+                var formData = browser.OpenRecord(new OpenFormOptions(record));
+                formData.CommandBar.ClickButton(browser.App.LocalizedTexts["CheckAccessRibbonButton", browser.App.UILanguageCode]);
+
+                var access = SeleniumCommandProcessor.ExecuteCommand(browser.App, browser.App.SeleniumCommandFactory.CreateGetAccessForUserCommand());
 
                 errors.AddRange(AssertAccess(expectedAccess, access));
             }
