@@ -107,6 +107,7 @@ namespace Vermaat.Crm.Specflow
             public const int CHECK_ACCESS_DIALOG_UNKNOWN_ICON = 68;
             public const int CHECK_ACCESS_DIALOG_MISSING_PERMISSIONS = 69;
             public const int CHECK_ACCESS_WRONG_ACCESS_EXPECTATION_TEXT = 70;
+            public const int CHECK_ACCESS_ERRORS_FOUND = 71;
         }
 
         public class LocalizedTexts
@@ -122,6 +123,15 @@ namespace Vermaat.Crm.Specflow
             public const string CloseAsWon = "CloseAsWon";
             public const string CloseAsLost = "CloseAsLost";
             public const string QuickCreateViewRecord = "QuickCreateViewRecord";
+            public const string CheckAccessRibbonButton = "CheckAccessRibbonButton";
+            public const string CheckAccessItemRead = "CheckAccessItemRead";
+            public const string CheckAccessItemCreate = "CheckAccessItemCreate";
+            public const string CheckAccessItemUpdate = "CheckAccessItemUpdate";
+            public const string CheckAccessItemDelete = "CheckAccessItemDelete";
+            public const string CheckAccessItemAppend = "CheckAccessItemAppend";
+            public const string CheckAccessItemAppendTo = "CheckAccessItemAppendToo";
+            public const string CheckAccessItemAssign = "CheckAccessItemAssign";
+            public const string CheckAccessItemShare = "CheckAccessItemShare";
         }
     }
 }

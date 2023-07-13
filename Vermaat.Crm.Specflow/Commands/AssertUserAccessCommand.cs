@@ -30,52 +30,60 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             var record = _crmContext.RecordCache.Get(_alias, true);
-
             var errors = new List<string>();
+
+            var oldConnection = GlobalTestingContext.ConnectionManager.CurrentConnectionObject;
+
             foreach (var row in _userAccessData.Rows)
             {
                 var profile = _userProfileHandler.GetProfile(row[Constants.SpecFlow.TABLE_USER]);
                 var expectedAccess = ParseTableRow(row[Constants.SpecFlow.TABLE_PERMISSIONS]);
-                var userConnection = CrmConnectionFactory.CreateNewConnection(profile);
+
+                _crmContext.CommandProcessor.Execute(new LoginWithUserCommand(_crmContext, profile));
 
                 // get correct session
                 var browser = GlobalTestingContext.BrowserManager.GetBrowser(_seleniumContext.BrowserOptions, 
-                    userConnection.GetBrowserLoginInformation(), _seleniumContext.SeleniumCommandFactory);
+                    GlobalTestingContext.ConnectionManager.CurrentBrowserLoginDetails, _seleniumContext.SeleniumCommandFactory);
                 
                 var formData = browser.OpenRecord(new OpenFormOptions(record));
                 formData.CommandBar.ClickButton(browser.App.LocalizedTexts["CheckAccessRibbonButton", browser.App.UILanguageCode]);
 
-                var access = SeleniumCommandProcessor.ExecuteCommand(browser.App, browser.App.SeleniumCommandFactory.CreateGetAccessForUserCommand());
+                var actualAccess = SeleniumCommandProcessor.ExecuteCommand(browser.App, browser.App.SeleniumCommandFactory.CreateGetAccessForUserCommand());
 
-                errors.AddRange(AssertAccess(expectedAccess, access));
+                errors.AddRange(AssertAccess(actualAccess, expectedAccess, profile.Profile));
             }
+
+            if (errors.Count > 0)
+                throw new TestExecutionException(Constants.ErrorCodes.CHECK_ACCESS_ERRORS_FOUND, errors.Count, string.Join(", ", errors));
+
+            GlobalTestingContext.ConnectionManager.SetCurrentConnection(oldConnection);
         }
 
-        private IEnumerable<string> AssertAccess(UserAccessData actualAccessData, UserAccessData expectedAccessData)
+        private IEnumerable<string> AssertAccess(UserAccessData actualAccessData, UserAccessData expectedAccessData, string profile)
         {
             if (actualAccessData.HasAppendAccess != expectedAccessData.HasAppendAccess)
-                yield return $"Expected append access {expectedAccessData.HasAppendAccess} | Actual: {actualAccessData.HasAppendAccess}";
+                yield return $"Expected append access {expectedAccessData.HasAppendAccess} | Actual: {actualAccessData.HasAppendAccess} for user {profile}";
 
             if (actualAccessData.HasAssignAccess != expectedAccessData.HasAssignAccess)
-                yield return $"Expected assign access {expectedAccessData.HasAssignAccess} | Actual: {actualAccessData.HasAssignAccess}";
+                yield return $"Expected assign access {expectedAccessData.HasAssignAccess} | Actual: {actualAccessData.HasAssignAccess} for user {profile}";
 
             if (actualAccessData.HasAppendToAccess != expectedAccessData.HasAppendToAccess)
-                yield return $"Expected append to access {expectedAccessData.HasAppendToAccess} | Actual: {actualAccessData.HasAppendToAccess}";
+                yield return $"Expected append to access {expectedAccessData.HasAppendToAccess} | Actual: {actualAccessData.HasAppendToAccess} for user {profile}";
 
             if (actualAccessData.HasDeleteAccess != expectedAccessData.HasDeleteAccess)
-                yield return $"Expected delete access {expectedAccessData.HasDeleteAccess} | Actual: {actualAccessData.HasDeleteAccess}";
+                yield return $"Expected delete access {expectedAccessData.HasDeleteAccess} | Actual: {actualAccessData.HasDeleteAccess} for user {profile}";
 
             if (actualAccessData.HasCreateAccess != expectedAccessData.HasCreateAccess)
-                yield return $"Expected create access {expectedAccessData.HasCreateAccess} | Actual: {actualAccessData.HasCreateAccess}";
+                yield return $"Expected create access {expectedAccessData.HasCreateAccess} | Actual: {actualAccessData.HasCreateAccess} for user {profile}";
 
             if (actualAccessData.HasReadAccess != expectedAccessData.HasReadAccess)
-                yield return $"Expected read access {expectedAccessData.HasReadAccess} | Actual: {actualAccessData.HasReadAccess}";
+                yield return $"Expected read access {expectedAccessData.HasReadAccess} | Actual: {actualAccessData.HasReadAccess} for user {profile}";
 
             if (actualAccessData.HasShareAccess != expectedAccessData.HasShareAccess)
-                yield return $"Expected share access {expectedAccessData.HasShareAccess} | Actual: {actualAccessData.HasShareAccess}";
+                yield return $"Expected share access {expectedAccessData.HasShareAccess} | Actual: {actualAccessData.HasShareAccess} for user {profile}";
 
             if (actualAccessData.HasWriteAccess != expectedAccessData.HasWriteAccess)
-                yield return $"Expected write access {expectedAccessData.HasWriteAccess} | Actual: {actualAccessData.HasWriteAccess}";
+                yield return $"Expected write access {expectedAccessData.HasWriteAccess} | Actual: {actualAccessData.HasWriteAccess} for user {profile}";
         }
 
         private UserAccessData ParseTableRow(string rowData)
@@ -92,7 +100,7 @@ namespace Vermaat.Crm.Specflow.Commands
                     case "write": result.HasWriteAccess = true; break;
                     case "delete": result.HasDeleteAccess = true; break;
                     case "append": result.HasAppendAccess = true; break;
-                    case "appendto": result.HasAppendToAccess = true; break;    
+                    case "append to": result.HasAppendToAccess = true; break;    
                     case "share": result.HasShareAccess = true; break;
                     case "assign": result.HasAssignAccess = true; break;
                     default: throw new TestExecutionException(Constants.ErrorCodes.CHECK_ACCESS_WRONG_ACCESS_EXPECTATION_TEXT, permissionString, "read, create, write, delete, append, append to, share, assign");

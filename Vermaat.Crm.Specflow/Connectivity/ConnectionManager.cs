@@ -14,8 +14,9 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         public CrmService AdminConnection => _adminConnection.Service;
         public CrmService CurrentConnection => _currentConnection.Service;
+
         public BrowserLoginDetails CurrentBrowserLoginDetails => _currentConnection.GetBrowserLoginInformation();
-        public BrowserLoginDetails CurrentLoginDetails { get; private set; }
+        internal CrmConnection CurrentConnectionObject => _currentConnection;
 
         public ConnectionManager()
         {
