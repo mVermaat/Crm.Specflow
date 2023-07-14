@@ -26,6 +26,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_FormNotifcation_NotificationTypeIcon, ".//span[contains(@id,'notification_icon_')]" },
             { SeleniumSelectorItems.Entity_FormNotification_NotificationMessage, ".//span[@data-id='warningNotification']" },
             { SeleniumSelectorItems.Entity_MissingPermisions_DialogRoot, "//div[@role='alertdialog']" },
+            { SeleniumSelectorItems.Entity_MissingPermisions_MoreItemFlyout, "//div[contains(@class, 'ms-ContextualMenu-container')]" },
             { SeleniumSelectorItems.Entity_Ribbon_Button, ".//button[starts-with(@aria-label,'[NAME]') and span/span/text() = '[NAME]']" },
             { SeleniumSelectorItems.Entity_Ribbon_Flyout_Container, "//ul[@data-id='OverflowFlyout']" },
             { SeleniumSelectorItems.Entity_Ribbon_More_Commands, ".//button[@data-id='OverflowButton']" },

@@ -23,5 +23,5 @@ Scenario: Verifying permissions of users
 		| Potential Customer | QuoteTesting         |
 	Then TestQuote has the following user permissions
 		| User        | Permissions                    |
-		| Manager     |                                |
 		| Salesperson | Read, Write, Append, Append To |
+		| Manager     |                                |
