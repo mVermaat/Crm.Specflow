@@ -44,11 +44,23 @@ namespace Vermaat.Crm.Specflow.Commands
                 // get correct session
                 var browser = GlobalTestingContext.BrowserManager.GetBrowser(_seleniumContext.BrowserOptions, 
                     GlobalTestingContext.ConnectionManager.CurrentBrowserLoginDetails, _seleniumContext.SeleniumCommandFactory);
-                
-                var formData = browser.OpenRecord(new OpenFormOptions(record));
-                formData.CommandBar.ClickButton(browser.App.LocalizedTexts["CheckAccessRibbonButton", browser.App.UILanguageCode]);
 
-                var actualAccess = SeleniumCommandProcessor.ExecuteCommand(browser.App, browser.App.SeleniumCommandFactory.CreateGetAccessForUserCommand());
+                UserAccessData actualAccess;
+                try
+                {
+                    var formData = browser.OpenRecord(new OpenFormOptions(record));
+                    formData.CommandBar.ClickButton(browser.App.LocalizedTexts[Constants.LocalizedTexts.CheckAccessRibbonButton, browser.App.UILanguageCode]);
+
+                    actualAccess = SeleniumCommandProcessor.ExecuteCommand(browser.App, browser.App.SeleniumCommandFactory.CreateGetAccessForUserCommand());
+                }
+                catch(TestExecutionException ex)
+                {
+                    if (ex.ErrorCode != Constants.ErrorCodes.MISSING_PERMISSIONS_TO_VIEW_RECORD)
+                        throw;
+
+                    // if you can't view the record, you don't have any permissions on it.
+                    actualAccess = new UserAccessData();
+                }
 
                 errors.AddRange(AssertAccess(actualAccess, expectedAccess, profile.Profile));
             }
@@ -93,6 +105,8 @@ namespace Vermaat.Crm.Specflow.Commands
 
             foreach(var permissionString in permissions)
             {
+                if(string.IsNullOrEmpty(permissionString)) continue;
+
                 switch(permissionString)
                 {
                     case "read": result.HasReadAccess = true; break;

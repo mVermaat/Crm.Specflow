@@ -100,7 +100,7 @@ namespace Vermaat.Crm.Specflow
                 { Constants.LocalizedTexts.CheckAccessRibbonButton, "Check Access" },
                 { Constants.LocalizedTexts.CheckAccessItemRead, "Read" },
                 { Constants.LocalizedTexts.CheckAccessItemCreate, "Create" },
-                { Constants.LocalizedTexts.CheckAccessItemUpdate, "Update" },
+                { Constants.LocalizedTexts.CheckAccessItemUpdate, "Write" },
                 { Constants.LocalizedTexts.CheckAccessItemDelete, "Delete" },
                 { Constants.LocalizedTexts.CheckAccessItemAppend, "Append" },
                 { Constants.LocalizedTexts.CheckAccessItemAppendTo, "Append To" },

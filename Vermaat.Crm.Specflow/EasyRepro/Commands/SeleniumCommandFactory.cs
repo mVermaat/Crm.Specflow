@@ -36,6 +36,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual GetRibbonItemCommand CreateGetRibbonItemCommand(string name)
             => new GetRibbonItemCommand(name);
 
+        public virtual OpenRecordCommand CreateOpenRecordCommand(OpenFormOptions formOptions, Guid? currentAppId)
+            => new OpenRecordCommand(formOptions, currentAppId);
+
         public virtual SaveRecordCommand CreateSaveRecordCommand(bool saveIfDuplicate)
             => new SaveRecordCommand(saveIfDuplicate);
 

@@ -42,6 +42,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Entity_FormState_LockedIcon,
         Entity_FormState_RequiredOrRecommended,
 
+        Entity_MissingPermisions_DialogRoot,
+
         Entity_QuickCreate_DialogRoot,
         Entity_QuickCreate_Notification_Window,
         Entity_QuickCreate_OpenChildButton,

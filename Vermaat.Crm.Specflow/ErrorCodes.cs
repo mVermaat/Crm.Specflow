@@ -84,9 +84,10 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.CHECK_ACCESS_BUTTON_NOT_VISIBLE, "Check Access button isn't available");
             AddError(Constants.ErrorCodes.CHECK_ACCESS_DIALOG_NOT_FOUND, "Check Access dialog not found");
             AddError(Constants.ErrorCodes.CHECK_ACCESS_DIALOG_UNKNOWN_ICON, "Unknown Check Access permission icon: '{0}'");
-            AddError(Constants.ErrorCodes.CHECK_ACCESS_DIALOG_MISSING_PERMISSIONS, "Check Access permission missing. Available permissions: {1}");
+            AddError(Constants.ErrorCodes.CHECK_ACCESS_DIALOG_MISSING_PERMISSIONS, "Check Access permission missing. Available permissions: {0}");
             AddError(Constants.ErrorCodes.CHECK_ACCESS_WRONG_ACCESS_EXPECTATION_TEXT, "Error parsing expected access data. Input was {0}. Allowed possibilities: {1}");
             AddError(Constants.ErrorCodes.CHECK_ACCESS_ERRORS_FOUND, "{0} Permission errors found: {1}");
+            AddError(Constants.ErrorCodes.MISSING_PERMISSIONS_TO_VIEW_RECORD, "User doesn't have permission to open {0} with id {1}");
         }
 
         public void AddError(int errorCode, string message)

@@ -62,42 +62,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public FormData OpenRecord(OpenFormOptions formOptions)
         {
-            Logger.WriteLine($"Opening record {formOptions.EntityName} with ID {formOptions.EntityId}");
-            App.Client.Execute(BrowserOptionHelper.GetOptions($"Open: {formOptions.EntityName}"), driver =>
-            {
-
-                driver.Navigate().GoToUrl(formOptions.GetUrl(driver, _currentAppId));
-                CheckAlert(driver);
-                HelperMethods.WaitForFormLoad(driver);
-                CheckForWavePopup(driver);
-
-                if (App.Client.ScriptErrorExists())
-                    throw new TestExecutionException(Constants.ErrorCodes.FORMLOAD_SCRIPT_ERROR_ON_FORM);
-
-                return true;
-            });
-
+            SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateOpenRecordCommand(formOptions, _currentAppId));
             return GetFormData(GlobalTestingContext.Metadata.GetEntityMetadata(formOptions.EntityName));
-        }
-
-        private void CheckForWavePopup(IWebDriver driver)
-        {
-            if (driver.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Popup_TeachingBubble_CloseButton), out var closeButton))
-            {
-                closeButton.Click();
-            }
-        }
-
-        private void CheckAlert(IWebDriver driver)
-        {
-            try
-            {
-                var alert = driver.SwitchTo().Alert();
-                alert.Accept();
-            }
-            catch (NoAlertPresentException)
-            {
-            }
         }
 
         public FormData GetFormData(EntityMetadata entityMetadata)
