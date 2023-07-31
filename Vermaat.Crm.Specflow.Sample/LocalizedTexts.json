@@ -11,6 +11,15 @@
     "SaveStatusSaving": "Bezig met opslaan",
     "SaveStatusUnsaved": "Niet-opgeslagen",
     "QuickCreateViewRecord": "Record bekijken",
+    "CheckAccessRibbonButton": "Toegang controleren",
+    "CheckAccessItemRead": "Lezen",
+    "CheckAccessItemCreate": "Maken",
+    "CheckAccessItemUpdate": "Schrijven",
+    "CheckAccessItemDelete": "Verwijderen",
+    "CheckAccessItemAppend": "Toevoegen",
+    "CheckAccessItemAppendToo": "Toevoegen aan",
+    "CheckAccessItemAssign": "Toewijzen",
+    "CheckAccessItemShare": "Delen",
 
     // Below are localizations specific to the sample project. No need to copy these:
     "AccountSummaryTab": "Samenvatting",
