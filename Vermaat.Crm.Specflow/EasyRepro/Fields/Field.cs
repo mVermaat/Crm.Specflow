@@ -41,6 +41,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                     break;
                 case AttributeTypeCode.Customer:
                 case AttributeTypeCode.Lookup:
+                case AttributeTypeCode.Owner:
                     SetLookupValue(new LookupValue((EntityReference)fieldValue));
                     break;
                 case AttributeTypeCode.Picklist:
