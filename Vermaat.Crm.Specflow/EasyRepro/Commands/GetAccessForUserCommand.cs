@@ -105,8 +105,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
             try
             {
-                result.HasAppendAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemRead, browserInteraction.UiLanguageCode]];
-                result.HasAppendToAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemAppend, browserInteraction.UiLanguageCode]];
+                result.HasAppendAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemAppend, browserInteraction.UiLanguageCode]];
+                result.HasAppendToAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemAppendTo, browserInteraction.UiLanguageCode]];
                 result.HasAssignAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemAssign, browserInteraction.UiLanguageCode]];
                 result.HasCreateAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemCreate, browserInteraction.UiLanguageCode]];
                 result.HasDeleteAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemDelete, browserInteraction.UiLanguageCode]];
