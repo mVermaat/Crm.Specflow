@@ -88,6 +88,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.CHECK_ACCESS_WRONG_ACCESS_EXPECTATION_TEXT, "Error parsing expected access data. Input was {0}. Allowed possibilities: {1}");
             AddError(Constants.ErrorCodes.CHECK_ACCESS_ERRORS_FOUND, "{0} Permission errors found: {1}");
             AddError(Constants.ErrorCodes.MISSING_PERMISSIONS_TO_VIEW_RECORD, "User doesn't have permission to open {0} with id {1}");
+            AddError(Constants.ErrorCodes.SELENIUM_COMMAND_STALE_ELEMENT, "Selenium command failed with stale element: {0}");
         }
 
         public void AddError(int errorCode, string message)

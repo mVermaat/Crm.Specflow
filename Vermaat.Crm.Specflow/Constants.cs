@@ -109,6 +109,7 @@ namespace Vermaat.Crm.Specflow
             public const int CHECK_ACCESS_WRONG_ACCESS_EXPECTATION_TEXT = 70;
             public const int CHECK_ACCESS_ERRORS_FOUND = 71;
             public const int MISSING_PERMISSIONS_TO_VIEW_RECORD = 72;
+            public const int SELENIUM_COMMAND_STALE_ELEMENT = 73;
         }
 
         public class LocalizedTexts
