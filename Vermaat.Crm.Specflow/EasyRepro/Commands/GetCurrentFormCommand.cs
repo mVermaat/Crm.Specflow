@@ -27,6 +27,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 var formIdElement = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_DialogRoot), TimeSpan.FromSeconds(2));
                 if (formIdElement == null)
                     CommandResult.Fail(true, Constants.ErrorCodes.FORMID_NOT_FOUND);
+                Logger.WriteLine("Quick create form available");
 
                 formId = Guid.Parse(formIdElement.GetAttribute("data-preview-id"));
             }
@@ -35,6 +36,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 var formIdElement = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormId), TimeSpan.FromSeconds(2));
                 if (formIdElement == null)
                     CommandResult.Fail(true, Constants.ErrorCodes.FORMID_NOT_FOUND);
+                Logger.WriteLine("Form available");
+
 
                 var route = formIdElement.GetAttribute("route");
                 Logger.WriteLine($"Determining form: {route}");
