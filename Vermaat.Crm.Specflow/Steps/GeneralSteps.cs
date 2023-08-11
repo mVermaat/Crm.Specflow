@@ -181,7 +181,7 @@ namespace Vermaat.Crm.Specflow.Steps
         }
 
 
-        [Then(@"(.*) has the following connected records of type ([^\s]+)")]
+        [Then(@"([^\s]+) has the following connected records of type ([^\s]+)")]
         public void ThenRecordsAreConnectedViaNN(string alias, string relatedEntityName, Table records)
         {
             _crmContext.CommandProcessor.Execute(new AssertNNRelationshipCommand(_crmContext, alias, relatedEntityName, records));

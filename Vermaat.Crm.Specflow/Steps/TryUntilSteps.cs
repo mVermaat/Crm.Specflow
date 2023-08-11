@@ -77,6 +77,12 @@ namespace Vermaat.Crm.Specflow.Steps
                 r => $"When looking for records for {entityName}, expected {amount}, but found {r.Count} records");
         }
 
+        [Then(@"within ([0-9]+) seconds ([^\s]+) has the following connected records of type ([^\s]+)")]
+        public void ThenRecordsAreConnectedViaNN(int seconds, string alias, string relatedEntityName, Table records)
+        {
+            TryUntil(new AssertNNRelationshipCommand(_crmContext, alias, relatedEntityName, records), seconds);
+        }
+
         #endregion
 
         private void TryUntil<TCommand>(TCommand command, int seconds) where TCommand : ICommand
