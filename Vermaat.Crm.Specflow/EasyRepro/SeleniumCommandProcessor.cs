@@ -53,8 +53,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             {
                 result = CommandResult.Fail(true, Constants.ErrorCodes.SELENIUM_COMMAND_STALE_ELEMENT, ex.Message);
             }
+            catch (ElementClickInterceptedException ex)
+            {
+                result = CommandResult.Fail(true, Constants.ErrorCodes.SELENIUM_COMMAND_ELEMENT_CLICK_INTERCEPTED, ex.Message);
+            }
 
-            if(result == null)
+            if (result == null)
                 throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, command.GetType().Name);
 
 
@@ -83,6 +87,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             catch (StaleElementReferenceException ex)
             {
                 result = CommandResult<T>.Fail(true, Constants.ErrorCodes.SELENIUM_COMMAND_STALE_ELEMENT, ex.Message);
+            }
+            catch (ElementClickInterceptedException ex)
+            {
+                result = CommandResult<T>.Fail(true, Constants.ErrorCodes.SELENIUM_COMMAND_ELEMENT_CLICK_INTERCEPTED, ex.Message);
             }
 
             if (result == null)
