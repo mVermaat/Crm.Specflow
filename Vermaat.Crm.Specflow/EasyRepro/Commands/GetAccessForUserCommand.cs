@@ -29,7 +29,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             var unstructuredAccessData = new Dictionary<string, bool>();
             foreach (var accessItem in accessItems)
             {
-                var name = accessItem.GetAttribute("name");
+                var name = accessItem.GetAttribute("name")?.ToLower();
                 var iconElement = accessItem.FindElement(By.TagName("i"));
 
                 var iconName = iconElement.GetAttribute("data-icon-name");
@@ -105,14 +105,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
             try
             {
-                result.HasAppendAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemAppend, browserInteraction.UiLanguageCode]];
-                result.HasAppendToAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemAppendTo, browserInteraction.UiLanguageCode]];
-                result.HasAssignAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemAssign, browserInteraction.UiLanguageCode]];
-                result.HasCreateAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemCreate, browserInteraction.UiLanguageCode]];
-                result.HasDeleteAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemDelete, browserInteraction.UiLanguageCode]];
-                result.HasReadAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemRead, browserInteraction.UiLanguageCode]];
-                result.HasShareAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemShare, browserInteraction.UiLanguageCode]];
-                result.HasWriteAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemUpdate, browserInteraction.UiLanguageCode]];
+                result.HasAppendAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemAppend, browserInteraction.UiLanguageCode]?.ToLower()];
+                result.HasAppendToAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemAppendTo, browserInteraction.UiLanguageCode].ToLower()];
+                result.HasAssignAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemAssign, browserInteraction.UiLanguageCode].ToLower()];
+                result.HasCreateAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemCreate, browserInteraction.UiLanguageCode].ToLower()];
+                result.HasDeleteAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemDelete, browserInteraction.UiLanguageCode].ToLower()];
+                result.HasReadAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemRead, browserInteraction.UiLanguageCode].ToLower()];
+                result.HasShareAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemShare, browserInteraction.UiLanguageCode]?.ToLower()];
+                result.HasWriteAccess = unstructuredAccessData[browserInteraction.LocalizedTexts[Constants.LocalizedTexts.CheckAccessItemUpdate, browserInteraction.UiLanguageCode]?.ToLower()];
 
                 return CommandResult<UserAccessData>.Success(result);
             }
