@@ -43,7 +43,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public string GetErrorDialogMessage()
         {
             Logger.WriteLine("Getting error dialog message");
-            return _app.Client.GetErrorDialogMessage();
+            return SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateGetErrorDialogMessageCommand(true));
         }
 
         public IReadOnlyCollection<FormNotification> GetFormNotifications()

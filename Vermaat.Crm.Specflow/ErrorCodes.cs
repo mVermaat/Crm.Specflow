@@ -90,6 +90,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.MISSING_PERMISSIONS_TO_VIEW_RECORD, "User doesn't have permission to open {0} with id {1}");
             AddError(Constants.ErrorCodes.SELENIUM_COMMAND_STALE_ELEMENT, "Selenium command failed with stale element: {0}");
             AddError(Constants.ErrorCodes.SELENIUM_COMMAND_ELEMENT_CLICK_INTERCEPTED, "Selenium command failed with element click interception: {0}");
+            AddError(Constants.ErrorCodes.ERROR_DIALOG_NOT_FOUND, "Error dialog not found");
         }
 
         public void AddError(int errorCode, string message)

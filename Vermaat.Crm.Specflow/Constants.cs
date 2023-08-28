@@ -111,6 +111,7 @@ namespace Vermaat.Crm.Specflow
             public const int MISSING_PERMISSIONS_TO_VIEW_RECORD = 72;
             public const int SELENIUM_COMMAND_STALE_ELEMENT = 73;
             public const int SELENIUM_COMMAND_ELEMENT_CLICK_INTERCEPTED = 74;
+            public const int ERROR_DIALOG_NOT_FOUND = 75;
         }
 
         public class LocalizedTexts

@@ -24,7 +24,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
             if (_isQuickCreate)
             {
-                var formIdElement = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_DialogRoot), TimeSpan.FromSeconds(2));
+                var formIdElement = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_DialogRoot), TimeSpan.FromSeconds(5));
                 if (formIdElement == null)
                     return CommandResult<SystemForm>.Fail(true, Constants.ErrorCodes.FORMID_NOT_FOUND);
                 Logger.WriteLine("Quick create form available");
@@ -33,7 +33,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             }
             else
             {
-                var formIdElement = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormId), TimeSpan.FromSeconds(2));
+                var formIdElement = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormId), TimeSpan.FromSeconds(5));
                 if (formIdElement == null)
                     return CommandResult<SystemForm>.Fail(true, Constants.ErrorCodes.FORMID_NOT_FOUND);
                 Logger.WriteLine("Form available");
