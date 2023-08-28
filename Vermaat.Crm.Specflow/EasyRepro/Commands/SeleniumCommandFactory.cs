@@ -18,6 +18,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual ExpandBusinessProcessStageCommand CreateExpandBusinessProcessStageCommand(string stageName)
             => new ExpandBusinessProcessStageCommand(stageName);
 
+        public virtual GetAccessForUserCommand CreateGetAccessForUserCommand()
+            => new GetAccessForUserCommand();
+
         public virtual GetBusinessProcessFlowDefinitionCommand CreateGetGetBusinessProcessFlowDefinitionCommand()
             => new GetBusinessProcessFlowDefinitionCommand();
 
@@ -27,11 +30,17 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         internal virtual GetCurrentFormCommand CreateGetCurrentFormCommand(bool isQuickCreate)
             => new GetCurrentFormCommand(isQuickCreate);
 
+        public virtual GetErrorDialogMessageCommand CreateGetErrorDialogMessageCommand(bool dialogMandatory)
+            => new GetErrorDialogMessageCommand(dialogMandatory);
+
         public virtual GetFormNotificationsCommand CreateGetFormNotificationsCommand()
             => new GetFormNotificationsCommand();
 
         public virtual GetRibbonItemCommand CreateGetRibbonItemCommand(string name)
             => new GetRibbonItemCommand(name);
+
+        public virtual OpenRecordCommand CreateOpenRecordCommand(OpenFormOptions formOptions, Guid? currentAppId)
+            => new OpenRecordCommand(formOptions, currentAppId);
 
         public virtual SaveRecordCommand CreateSaveRecordCommand(bool saveIfDuplicate)
             => new SaveRecordCommand(saveIfDuplicate);

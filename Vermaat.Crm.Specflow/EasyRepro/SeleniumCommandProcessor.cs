@@ -43,9 +43,22 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private static void ExecuteCommand(BrowserInteraction browserInteraction, ISeleniumCommand command, int retries)
         {
             Logger.WriteLine($"Executing Selenium Command {command.GetType().Name}. Retries left: {retries}");
-            var result = command.Execute(browserInteraction);
 
-            if(result == null)
+            CommandResult result;
+            try
+            {
+                result = command.Execute(browserInteraction);
+            }
+            catch (StaleElementReferenceException ex)
+            {
+                result = CommandResult.Fail(true, Constants.ErrorCodes.SELENIUM_COMMAND_STALE_ELEMENT, ex.Message);
+            }
+            catch (ElementClickInterceptedException ex)
+            {
+                result = CommandResult.Fail(true, Constants.ErrorCodes.SELENIUM_COMMAND_ELEMENT_CLICK_INTERCEPTED, ex.Message);
+            }
+
+            if (result == null)
                 throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, command.GetType().Name);
 
 
@@ -65,7 +78,20 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private static T ExecuteCommand<T>(BrowserInteraction browserInteraction, ISeleniumCommandFunc<T> command, int retries)
         {
             Logger.WriteLine($"Executing Selenium Command {command.GetType().Name}. Retries left: {retries}");
-            var result = command.Execute(browserInteraction);
+
+            CommandResult<T> result;
+            try
+            {
+                result = command.Execute(browserInteraction);
+            }
+            catch (StaleElementReferenceException ex)
+            {
+                result = CommandResult<T>.Fail(true, Constants.ErrorCodes.SELENIUM_COMMAND_STALE_ELEMENT, ex.Message);
+            }
+            catch (ElementClickInterceptedException ex)
+            {
+                result = CommandResult<T>.Fail(true, Constants.ErrorCodes.SELENIUM_COMMAND_ELEMENT_CLICK_INTERCEPTED, ex.Message);
+            }
 
             if (result == null)
                 throw new TestExecutionException(Constants.ErrorCodes.SELENIUM_COMMAND_NO_RESULT, command.GetType().Name);

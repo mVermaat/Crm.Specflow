@@ -97,6 +97,15 @@ namespace Vermaat.Crm.Specflow
                 { Constants.LocalizedTexts.SaveStatusSaving, "saving" },
                 { Constants.LocalizedTexts.SaveStatusUnsaved, "unsaved" },
                 { Constants.LocalizedTexts.QuickCreateViewRecord, "View Record" },
+                { Constants.LocalizedTexts.CheckAccessRibbonButton, "Check Access" },
+                { Constants.LocalizedTexts.CheckAccessItemRead, "Read" },
+                { Constants.LocalizedTexts.CheckAccessItemCreate, "Create" },
+                { Constants.LocalizedTexts.CheckAccessItemUpdate, "Write" },
+                { Constants.LocalizedTexts.CheckAccessItemDelete, "Delete" },
+                { Constants.LocalizedTexts.CheckAccessItemAppend, "Append" },
+                { Constants.LocalizedTexts.CheckAccessItemAppendTo, "Append To" },
+                { Constants.LocalizedTexts.CheckAccessItemAssign, "Assign" },
+                { Constants.LocalizedTexts.CheckAccessItemShare, "Share" }
             };
     }
 }

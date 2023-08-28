@@ -42,17 +42,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             });
         }
 
-        public static string GetErrorDialogMessage(this WebClient client)
-        {
-            return client.Execute(BrowserOptionHelper.GetOptions($"Get error dialog message"), driver =>
-            {
-                return GetErrorDialogMessage(driver);
-            }).Value;
-        }
-
         public static string GetErrorDialogMessage(IWebDriver driver)
         {
-            if (driver.TryFindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_ErrorDialog), out var errorDialog))
+            var errorDialog = driver.WaitUntilAvailable(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_ErrorDialog), TimeSpan.FromSeconds(5));
+            if (errorDialog != null)
             {
                 var errorDetails = errorDialog.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Subtitle));
                 return errorDetails.Text;
