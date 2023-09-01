@@ -42,6 +42,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_FormLoad, "//ul[contains(@id, 'tablist_')]" },
             { SeleniumSelectorItems.Entity_MoreTabs, ".//button[@data-id='more_button']" },
             { SeleniumSelectorItems.Entity_DateContainer, "//div[contains(@data-id,'[NAME].fieldControl._datecontrol-date-container')]" },
+            { SeleniumSelectorItems.Entity_TimeContainer, "//div[contains(@data-id,'[NAME].fieldControl._timecontrol-datetime-container')]" }, 
             { SeleniumSelectorItems.Entity_Footer_Status, "//span[@data-id='edit-form-status-message']" },
             { SeleniumSelectorItems.Entity_FormState_LockedIcon, "//div[@data-id='[NAME]-locked-icon']" },
             { SeleniumSelectorItems.Entity_FormState_RequiredOrRecommended, "//div[contains(@id, '[NAME]-required-icon')]" },

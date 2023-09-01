@@ -26,6 +26,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         Entity_CompositeControls,
 
         Entity_DateContainer,
+        Entity_TimeContainer,
+
         Entity_Footer_Status,
 
         Entity_FormId,

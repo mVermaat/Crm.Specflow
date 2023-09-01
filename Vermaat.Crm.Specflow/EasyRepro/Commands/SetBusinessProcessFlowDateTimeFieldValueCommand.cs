@@ -17,7 +17,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         {
         }
 
-        protected override IWebElement GetFieldContainer(BrowserInteraction browserInteraction, string logicalName)
+        protected override IWebElement GetDateContainer(BrowserInteraction browserInteraction, string logicalName)
         {
             return browserInteraction.Driver.WaitUntilAvailable(
                             SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_BPFFieldContainer, $"{Constants.CRM.BUSINESS_PROCESS_FLOW_CONTROL_PREFIX}{logicalName}"),

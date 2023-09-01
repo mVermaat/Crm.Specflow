@@ -30,7 +30,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public CommandResult Execute(BrowserInteraction browserInteraction)
         {
             browserInteraction.Driver.WaitForTransaction();
-            IWebElement container = GetFieldContainer(browserInteraction, _logicalName);
+            IWebElement container = GetDateContainer(browserInteraction, _logicalName);
 
             var dateField = container.FindElement(By.TagName("input"));
             try
@@ -60,8 +60,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             dateField.SendKeys(Keys.Tab);
             browserInteraction.Driver.WaitForTransaction();
 
-            var timeFieldXPath = By.XPath($"//div[contains(@data-id,'{_logicalName}.fieldControl._timecontrol-datetime-container')]/div/div/input");
-            var timeField = browserInteraction.Driver.WaitUntilAvailable(timeFieldXPath, TimeSpan.FromSeconds(5), "Time control of datetime field not available");
+            var timeContainer = GetTimeContainer(browserInteraction, _logicalName);
+            var timeField = timeContainer.WaitUntilAvailable(By.TagName("input"), TimeSpan.FromSeconds(5), "Time control of datetime field not available");
             try
             {
                 var time = _value.HasValue ? _formatTime == null ? _value.Value.ToShortTimeString() : _value.Value.ToString(_formatTime) : string.Empty;
@@ -94,11 +94,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             Thread.Sleep(2000);
         }
 
-        protected virtual IWebElement GetFieldContainer(BrowserInteraction browserInteraction, string logicalName)
+        protected virtual IWebElement GetDateContainer(BrowserInteraction browserInteraction, string logicalName)
         {
             return browserInteraction.Driver.WaitUntilAvailable(
                     SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_DateContainer, logicalName),
-                    $"Field: {logicalName} does not exist");
+                    $"Date Container for {logicalName} does not exist");
+        }
+
+        protected virtual IWebElement GetTimeContainer(BrowserInteraction browserInteraction, string logicalName)
+        {
+            return browserInteraction.Driver.WaitUntilAvailable(
+                    SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_TimeContainer, logicalName),
+                    $"Time container for {logicalName} does not exist");
         }
     }
 }
