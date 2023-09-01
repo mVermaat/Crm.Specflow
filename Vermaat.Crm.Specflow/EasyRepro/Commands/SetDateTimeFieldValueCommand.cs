@@ -32,9 +32,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             browserInteraction.Driver.WaitForTransaction();
             IWebElement container = GetFieldContainer(browserInteraction, _logicalName);
 
-            var dateField = container.WaitUntilAvailable(
-                SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_DateTime_Time_Input),
-                $"Input for {_logicalName} does not exist");
+            var dateField = container.FindElement(By.TagName("input"));
             try
             {
                 var date = _value.HasValue ? _formatDate == null ? _value.Value.ToShortDateString() : _value.Value.ToString(_formatDate) : string.Empty;
