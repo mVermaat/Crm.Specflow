@@ -37,6 +37,7 @@ namespace Vermaat.Crm.Specflow
         {
             AppElements.Xpath[AppReference.Entity.TabList] = "//ul[contains(@id, \"tablist\")]";
             AppElements.Xpath[AppReference.Entity.Tab] = ".//li[@data-id='tablist-{0}']";
+            AppElements.Xpath[AppReference.Entity.MoreTabsMenu] = "//div[@data-id='__flyoutRootNode']";
         }
 
         [BeforeScenario("API")]
