@@ -77,7 +77,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             if (definition.Header?.Rows != null)
             {
                 context.IsHeader = true;
-                context.TabLabel = null;
+                context.TabLabel = "Header";
                 context.TabName = "Header";
                 context.SectionName = null;
                 context.SectionLabel = null;
