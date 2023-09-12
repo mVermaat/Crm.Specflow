@@ -45,7 +45,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_TimeContainer, "//div[contains(@data-id,'[NAME].fieldControl._timecontrol-datetime-container')]" }, 
             { SeleniumSelectorItems.Entity_Footer_Status, "//span[@data-id='edit-form-status-message']" },
             { SeleniumSelectorItems.Entity_FormState_LockedIcon, "//div[@data-id='[NAME]-locked-icon']" },
-            { SeleniumSelectorItems.Entity_FormState_RequiredOrRecommended, "//div[contains(@data-id, '[NAME]-required-icon')]" },
+            { SeleniumSelectorItems.Entity_FormState_RequiredOrRecommended, "//div[contains(@data-id, '[NAME]-required-icon')] | //span[contains(@data-id, '[NAME]-required-icon')]" },
             { SeleniumSelectorItems.Dialog_Container, "//div[starts-with(@id, 'dialogContentContainer_')]" },
             { SeleniumSelectorItems.Entity_BPFFieldContainer, "//div[@id='[NAME]-[NAME]-FieldSectionItemContainer']" }, 
             { SeleniumSelectorItems.Entity_FieldContainer, "//div[@data-id='[NAME]']" },
