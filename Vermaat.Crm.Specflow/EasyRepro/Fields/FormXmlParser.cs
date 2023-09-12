@@ -58,13 +58,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             foreach (var tab in definition.Tabs)
             {
                 context.TabName = tab.Name ?? tab.Id;
-                context.TabLabel = tab.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
+                context.TabLabel = tab.Labels.GetLabelInLanguage(GlobalTestingContext.LanguageCode, app.UILanguageCode);
                 foreach (var column in tab.Columns)
                 {
                     foreach (var section in column.Sections)
                     {
                         context.SectionName = section.Name;
-                        context.SectionLabel = section.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
+                        context.SectionLabel = section.Labels.GetLabelInLanguage(GlobalTestingContext.LanguageCode, app.UILanguageCode);
                         foreach (var row in section.Rows)
                         {
                             ProcessFormRow(row, metadata, formFields, context);
@@ -80,6 +80,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 context.TabLabel = null;
                 context.TabName = "Header";
                 context.SectionName = null;
+                context.SectionLabel = null;
                 foreach (var row in definition.Header.Rows)
                 {
                     ProcessFormRow(row, metadata, formFields, context);
