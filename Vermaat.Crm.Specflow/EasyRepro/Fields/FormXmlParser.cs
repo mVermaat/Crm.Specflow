@@ -58,13 +58,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             foreach (var tab in definition.Tabs)
             {
                 context.TabName = tab.Name ?? tab.Id;
-                context.TabLabel = tab.Labels.GetLabelInLanguage(GlobalTestingContext.LanguageCode, app.UILanguageCode);
+                context.TabLabel = tab.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
                 foreach (var column in tab.Columns)
                 {
                     foreach (var section in column.Sections)
                     {
                         context.SectionName = section.Name;
-                        context.SectionLabel = section.Labels.GetLabelInLanguage(GlobalTestingContext.LanguageCode, app.UILanguageCode);
+                        context.SectionLabel = section.Labels.GetLabelInLanguage(app.UILanguageCode, GlobalTestingContext.LanguageCode);
                         foreach (var row in section.Rows)
                         {
                             ProcessFormRow(row, metadata, formFields, context);
