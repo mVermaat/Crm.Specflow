@@ -53,7 +53,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         public override CrmService CreateCrmServiceInstance()
         {
-            var service = new CrmService($"AuthType=ClientSecret;Url='{_loginInfo.Url}';ClientId='{_clientId}';ClientSecret='{_clientSecret}';RequireNewInstance=True");
+            var service = new CrmService($"AuthType=ClientSecret;Url='{_loginInfo.Url}';ClientId='{_clientId}';ClientSecret='{_clientSecret.Replace("'", "''")}';RequireNewInstance=True");
             service.CallerId = GetImpersonatingUser(service);
             return service;
         }
