@@ -9,11 +9,12 @@ using Vermaat.Crm.Specflow.FormLoadConditions;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
-    internal class ReviseQuoteCommand : ISeleniumCommandFunc<EntityReference>
+    public class ReviseQuoteCommand : ISeleniumCommandFunc<EntityReference>
     {
 
         public CommandResult<EntityReference> Execute(BrowserInteraction browserInteraction)
         {
+            Logger.WriteLine("Revising Quote");
             var currentRecord = new EntityReference("quote", SeleniumCommandProcessor.ExecuteCommand(browserInteraction, browserInteraction.SeleniumCommandFactory.CreateGetCurrentRecordIdCommand()));
 
             SeleniumCommandProcessor.ExecuteCommand(browserInteraction, browserInteraction.SeleniumCommandFactory

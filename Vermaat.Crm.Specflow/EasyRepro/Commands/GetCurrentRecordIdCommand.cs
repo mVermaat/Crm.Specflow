@@ -13,6 +13,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
     {
         public CommandResult<Guid> Execute(BrowserInteraction browserInteraction)
         {
+            Logger.WriteLine("Getting Record Id");
             var queryParams = HttpUtility.ParseQueryString(new Uri(browserInteraction.Driver.Url).Query);
 
             if (Guid.TryParse(queryParams["id"], out var id))

@@ -45,6 +45,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual OpenRecordCommand CreateOpenRecordCommand(OpenFormOptions formOptions, Guid? currentAppId)
             => new OpenRecordCommand(formOptions, currentAppId);
 
+        public virtual ReviseQuoteCommand CreateReviseQuoteCommand()
+            => new ReviseQuoteCommand();
+
         public virtual SaveRecordCommand CreateSaveRecordCommand(bool saveIfDuplicate)
             => new SaveRecordCommand(saveIfDuplicate);
 

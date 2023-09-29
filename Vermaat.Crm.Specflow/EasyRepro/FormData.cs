@@ -69,10 +69,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public Guid GetRecordId()
         {
-            Logger.WriteLine("Getting Record Id");
-            var id = _app.App.Entity.GetObjectId();
-            Logger.WriteLine($"Record ID of current opened record: {id}");
-            return id;
+            return SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateGetCurrentRecordIdCommand());
         }
 
         public void Save(bool saveIfDuplicate)

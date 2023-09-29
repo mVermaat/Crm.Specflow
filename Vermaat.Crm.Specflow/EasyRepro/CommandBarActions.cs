@@ -59,15 +59,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public EntityReference ReviseQuote()
         {
             Logger.WriteLine("Revising Quote");
-            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Revise Quote"), driver =>
-            {
-                ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.ReviseQuoteButton, _app.UILanguageCode]);
-
-                _app.Client.Browser.ThinkTime(1000);
-                HelperMethods.WaitForFormLoad(driver);
-
-                return new EntityReference("quote", _app.App.Entity.GetObjectId());
-            }).Value;            
+            return SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateReviseQuoteCommand());  
         }
 
         private void CreateOrderDialog()
