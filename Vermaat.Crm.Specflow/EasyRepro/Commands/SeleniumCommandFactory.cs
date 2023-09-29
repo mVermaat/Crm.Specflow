@@ -30,6 +30,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         internal virtual GetCurrentFormCommand CreateGetCurrentFormCommand(bool isQuickCreate)
             => new GetCurrentFormCommand(isQuickCreate);
 
+        public virtual GetCurrentRecordIdCommand CreateGetCurrentRecordIdCommand()
+            => new GetCurrentRecordIdCommand();
+
         public virtual GetErrorDialogMessageCommand CreateGetErrorDialogMessageCommand(bool dialogMandatory)
             => new GetErrorDialogMessageCommand(dialogMandatory);
 
