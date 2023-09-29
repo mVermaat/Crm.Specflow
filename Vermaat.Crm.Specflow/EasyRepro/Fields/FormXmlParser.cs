@@ -77,9 +77,10 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             if (definition.Header?.Rows != null)
             {
                 context.IsHeader = true;
-                context.TabLabel = null;
-                context.TabName = null;
+                context.TabLabel = "Header";
+                context.TabName = "Header";
                 context.SectionName = null;
+                context.SectionLabel = null;
                 foreach (var row in definition.Header.Rows)
                 {
                     ProcessFormRow(row, metadata, formFields, context);
