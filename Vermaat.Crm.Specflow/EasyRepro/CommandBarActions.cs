@@ -58,7 +58,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public EntityReference ReviseQuote()
         {
-            Logger.WriteLine("Revising Quote");
             return SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateReviseQuoteCommand());  
         }
 
