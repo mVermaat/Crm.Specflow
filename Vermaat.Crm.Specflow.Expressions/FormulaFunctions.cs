@@ -8,6 +8,11 @@ namespace Vermaat.Crm.Specflow.Expressions
 {
     public class FormulaFunctions
     {
+        public static DateTime Now()
+        {
+            return DateTime.Now;
+        }
+
         public static DateTime Today()
         {
             return DateTime.Today;
