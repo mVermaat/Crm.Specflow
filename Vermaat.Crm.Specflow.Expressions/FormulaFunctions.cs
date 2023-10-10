@@ -28,6 +28,11 @@ namespace Vermaat.Crm.Specflow.Expressions
             return DateTime.Today.Month;
         }
 
+        public static int CurrentQuarter()
+        {
+            return (CurrentMonth() + 2) / 3;
+        }
+
         public static int CurrentYear()
         {
             return DateTime.Today.Year;
