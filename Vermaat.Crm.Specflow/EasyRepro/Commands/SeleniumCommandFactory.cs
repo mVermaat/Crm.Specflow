@@ -9,6 +9,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
     public class SeleniumCommandFactory
     {
+        public virtual CheckFieldLockedStateCommand CreateCheckFieldLockedStateCommand(string controlName)
+            => new CheckFieldLockedStateCommand(controlName);
+
+        public virtual CheckFieldRequiredStateCommand CreateCheckFieldRequiredStateCommand(string logicalName)
+            => new CheckFieldRequiredStateCommand(logicalName);
+
         public virtual CheckFieldVisibilityCommand CreateCheckFieldVisibilityCommand(string controlName)
             => new CheckFieldVisibilityCommand(controlName);
 

@@ -23,7 +23,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         {
             var element = browserInteraction.Driver.WaitUntilVisible(
                 SeleniumFunctions.Selectors.GetXPathSeleniumSelector(_selector, _controlName),
-                TimeSpan.FromSeconds(5));
+                TimeSpan.FromSeconds(2));
 
             return CommandResult<bool>.Success(element != null);
         }
