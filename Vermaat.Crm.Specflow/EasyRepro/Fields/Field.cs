@@ -52,7 +52,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                     SetMoneyField(new DecimalValue(((Money)fieldValue)?.Value));
                     break;
                 case AttributeTypeCode.Virtual:
-                    SetVirtualField(fieldValueText);
+                    SetVirtualField(crmContext, fieldValueText);
                     break;
                 case AttributeTypeCode.Integer:
                     SetIntegerField(new IntegerValue((int?)fieldValue));
@@ -98,7 +98,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             }
         }
 
-        protected virtual void SetVirtualField(string fieldValueText)
+        protected virtual void SetVirtualField(CrmTestingContext crmContext, string fieldValueText)
         {
             if (Metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
             {
@@ -107,7 +107,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 }
                 else
                 {
-                    SetMultiSelectOptionSetField(ToMultiSelectOptionSetObject(fieldValueText.Split(',').Select(v => v.Trim()).ToArray()));
+                    SetMultiSelectOptionSetField(ToMultiSelectOptionSetObject(fieldValueText.Split(crmContext.Delimiter).Select(v => v.Trim()).ToArray()));
                 }
             }
             else

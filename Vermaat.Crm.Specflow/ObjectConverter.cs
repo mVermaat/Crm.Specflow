@@ -122,7 +122,7 @@ namespace Vermaat.Crm.Specflow
         }
         private static object ParsePartyList(CrmTestingContext context, AttributeMetadata metadata, string value)
         {
-            var splitted = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var splitted = value.Split(new char[] { context.Delimiter }, StringSplitOptions.RemoveEmptyEntries);
 
             EntityCollection partyList = new EntityCollection();
             partyList.EntityName = "activityparty";
@@ -207,7 +207,7 @@ namespace Vermaat.Crm.Specflow
 
             if (metadata.AttributeTypeName == AttributeTypeDisplayName.MultiSelectPicklistType)
             {
-                return new OptionSetValueCollection(value.Split(',').Select(v => GetOptionSetValue(metadata, v.Trim(), context)).ToList());
+                return new OptionSetValueCollection(value.Split(context.Delimiter).Select(v => GetOptionSetValue(metadata, v.Trim(), context)).ToList());
             }
             else
             {

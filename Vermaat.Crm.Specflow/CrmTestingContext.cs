@@ -21,7 +21,10 @@ namespace Vermaat.Crm.Specflow
 
         public AliasedRecordCache RecordCache { get; }
 
+        public char Delimiter { get; }
+
         private readonly string[] _targets;
+        
 
         public CrmTestingContext(ScenarioContext scenarioContext)
         {
@@ -35,6 +38,28 @@ namespace Vermaat.Crm.Specflow
                 .Split('_')
                 .Select(splitted => splitted.Trim())
                 .ToArray();
+            Delimiter = GetDelimiter(scenarioContext);
+        }
+
+        private char GetDelimiter(ScenarioContext scenarioContext)
+        {
+            var delimiterTag = scenarioContext.ScenarioInfo.Tags.FirstOrDefault(t => t.StartsWith("Delimiter:"));
+
+            if(delimiterTag != null)
+            {
+                if (delimiterTag.Length != 11)
+                {
+                    Logger.WriteLine("Unexpected length for custom delimiter. It must be exactly 1 character after the 'Delimiter:'");
+                }
+                else
+                {
+                    Logger.WriteLine($"Using custom delimiter: {delimiterTag[delimiterTag.Length - 1]}");
+                    return delimiterTag[delimiterTag.Length - 1];
+                }
+            }
+
+            Logger.WriteLine("Using default delimiter: ,");
+            return ',';            
         }
 
         public bool IsTarget(string target)
