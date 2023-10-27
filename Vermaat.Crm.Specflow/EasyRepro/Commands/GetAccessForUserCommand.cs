@@ -25,6 +25,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 return CommandResult<UserAccessData>.Fail(true, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_NOT_FOUND);
 
             var accessItems = GetAccessItems(browserInteraction, dialogRoot);
+            Logger.WriteLine($"Found {accessItems.Count} access items");
 
             var unstructuredAccessData = new Dictionary<string, bool>();
             foreach (var accessItem in accessItems)
@@ -33,6 +34,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 var iconElement = accessItem.FindElement(By.TagName("i"));
 
                 var iconName = iconElement.GetAttribute("data-icon-name");
+                Logger.WriteLine($"Found access item {name} with icon {iconName}");
                 if (string.IsNullOrEmpty(iconName))
                     return CommandResult<UserAccessData>.Fail(false, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_UNKNOWN_ICON, "NULL");
                 else if (iconName.Equals("CompletedSolid", StringComparison.InvariantCultureIgnoreCase))
@@ -51,37 +53,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
              return ParseAccessData(browserInteraction, unstructuredAccessData);
         }
 
-        //private void GetMoreAccessData(Dictionary<string, bool> unstructuredAccessData, BrowserInteraction browserInteraction, IWebElement moreItemsElement)
-        //{
-        //    if (!moreItemsElement.IsClickable())
-        //        return;
-
-        //    moreItemsElement.Click();
-
-        //    var dialog = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(
-        //        SeleniumSelectorItems.Entity_MissingPermisions_MoreItemFlyout), TimeSpan.FromSeconds(5));
-        //    if (dialog == null)
-        //        throw new TestExecutionException(Constants.ErrorCodes.CHECK_ACCESS_DIALOG_NOT_FOUND);
-
-        //    var accessItems = dialog.FindElements(By.TagName("button"));
-
-        //    foreach (var accessItem in accessItems)
-        //    {
-        //        var name = accessItem.GetAttribute("name");
-        //        var iconElement = accessItem.FindElement(By.TagName("i"));
-
-        //        var iconName = iconElement.GetAttribute("data-icon-name");
-        //        if (string.IsNullOrEmpty(iconName))
-        //            continue;
-        //        else if (iconName.Equals("CompletedSolid", StringComparison.InvariantCultureIgnoreCase))
-        //            unstructuredAccessData.Add(name, true);
-        //        else if (iconName.Equals("Blocked", StringComparison.InvariantCultureIgnoreCase))
-        //            unstructuredAccessData.Add(name, false);
-        //        else
-        //            continue;
-        //    }
-        //}
-
         private IList<IWebElement> GetAccessItems(BrowserInteraction browserInteraction, IWebElement dialogRoot)
         {
             var timeout = DateTime.Now.AddSeconds(10);
@@ -90,7 +61,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             {
                 var accessItems = dialogRoot.FindElements(browserInteraction.Selectors
                 .GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_AccessDialogItems));
-                if (accessItems.Count > 0)
+                if (accessItems.Count > 1) // needs at least 2 (1 + more items)
                     return accessItems;
                 else
                     Thread.Sleep(100);
@@ -118,7 +89,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             }
             catch (KeyNotFoundException)
             {
-                return CommandResult<UserAccessData>.Fail(false, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_MISSING_PERMISSIONS, string.Join(", ", unstructuredAccessData.Keys));
+                return CommandResult<UserAccessData>.Fail(true, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_MISSING_PERMISSIONS, string.Join(", ", unstructuredAccessData.Keys));
             }
         }
     }
