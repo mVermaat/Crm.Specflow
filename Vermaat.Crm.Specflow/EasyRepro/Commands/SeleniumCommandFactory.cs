@@ -21,6 +21,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual ClickRibbonItemCommand CreateClickRibbonItemCommand(string name)
             => new ClickRibbonItemCommand(name);
 
+        public virtual ConvertActiveQuoteToSalesOrderCommand CreateConvertActiveQuoteToSalesOrderCommand()
+            => new ConvertActiveQuoteToSalesOrderCommand();
+
         public virtual ExpandBusinessProcessStageCommand CreateExpandBusinessProcessStageCommand(string stageName)
             => new ExpandBusinessProcessStageCommand(stageName);
 
@@ -47,6 +50,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
         public virtual GetRibbonItemCommand CreateGetRibbonItemCommand(string name)
             => new GetRibbonItemCommand(name);
+
+        public virtual OpenQuickCreatedRecordCommand CreateOpenQuickCreatedRecordCommand(string childEntityName)
+            => new OpenQuickCreatedRecordCommand(childEntityName);
 
         public virtual OpenRecordCommand CreateOpenRecordCommand(OpenFormOptions formOptions, Guid? currentAppId)
             => new OpenRecordCommand(formOptions, currentAppId);

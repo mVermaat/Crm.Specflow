@@ -63,17 +63,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void CreateOrderDialog()
         {
-            _app.Client.Execute(BrowserOptionHelper.GetOptions($"Create Sales Order"), driver =>
-            {
-                
-                var container = driver.WaitUntilAvailable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Container));
-                var button = container.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_OK));
-
-                button.Click();
-                HelperMethods.WaitForFormLoad(driver, new FormIsOfEntity("salesorder"));
-
-                return true;
-            });
+            SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateConvertActiveQuoteToSalesOrderCommand());
         }
     }
 }

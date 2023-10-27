@@ -53,18 +53,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public FormData OpenCreatedRecord(UCIBrowser browser, string childEntityName)
         {
-            _app.Client.Execute(BrowserOptionHelper.GetOptions("Open Quick Create Child"), (driver) =>
-                {
-                    var window = driver.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_Notification_Window));
-                    window.WaitUntilClickable(
-                        SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_OpenChildButton, _app.LocalizedTexts[Constants.LocalizedTexts.QuickCreateViewRecord, _app.UILanguageCode]),
-                        TimeSpan.FromSeconds(5),
-                        null,
-                        () => throw new TestExecutionException(Constants.ErrorCodes.QUICK_CREATE_CHILD_NOT_AVAILABLE)).Click();
-
-                    HelperMethods.WaitForFormLoad(driver, new FormIsOfEntity(childEntityName));
-                    return true;
-                });
+            SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateOpenQuickCreatedRecordCommand(childEntityName));
             return browser.GetFormData(GlobalTestingContext.Metadata.GetEntityMetadata(childEntityName));
         }
 
