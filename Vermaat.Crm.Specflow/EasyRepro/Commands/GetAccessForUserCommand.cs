@@ -64,10 +64,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 if (accessItems.Count > 1) // needs at least 2 (1 + more items)
                     return accessItems;
                 else
+                {
+                    Logger.WriteLine("Waiting for access dialog items to appear..");
                     Thread.Sleep(100);
+                }
             }
 
-           return new List<IWebElement>();
+            Logger.WriteLine("Timeout reached for accide dialog items");
+            return new List<IWebElement>();
         }
 
         private CommandResult<UserAccessData> ParseAccessData(BrowserInteraction browserInteraction, Dictionary<string, bool> unstructuredAccessData)
