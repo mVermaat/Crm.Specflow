@@ -29,7 +29,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 if (formIdElement == null)
                 {
                     Logger.WriteLine("Getting quick create form via script");
-                    var formIdScripted = browserInteraction.Driver.ExecuteScript("return Xrm.Page.data.entity.getId();") as string;
+                    var formIdScripted = browserInteraction.Driver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId();") as string;
                     if (string.IsNullOrEmpty(formIdScripted))
                     {
                         return CommandResult<SystemForm>.Fail(true, Constants.ErrorCodes.FORMID_NOT_FOUND);
@@ -48,7 +48,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 if (formIdElement == null)
                 {
                     Logger.WriteLine("Getting form via script");
-                    var formIdScripted = browserInteraction.Driver.ExecuteScript("return Xrm.Page.data.entity.getId();") as string;
+                    var formIdScripted = browserInteraction.Driver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId();") as string;
                     if (string.IsNullOrEmpty(formIdScripted))
                     {
                         return CommandResult<SystemForm>.Fail(true, Constants.ErrorCodes.FORMID_NOT_FOUND);
