@@ -55,14 +55,21 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
         private IList<IWebElement> GetAccessItems(BrowserInteraction browserInteraction, IWebElement dialogRoot)
         {
-            var timeout = DateTime.Now.AddSeconds(10);
+            // First do a wait until visible until at least 1 item is visible.
+            dialogRoot.WaitUntilVisible(browserInteraction.Selectors
+                .GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_AccessDialogItems), TimeSpan.FromSeconds(10));
 
+            var timeout = DateTime.Now.AddSeconds(10);
             while(DateTime.Now < timeout)
             {
+                Logger.WriteLine("Looking for access items");
                 var accessItems = dialogRoot.FindElements(browserInteraction.Selectors
                 .GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_AccessDialogItems));
                 if (accessItems.Count > 1) // needs at least 2 (1 + more items)
+                { 
+                    Logger.WriteLine($"Returning {accessItems.Count} access items")
                     return accessItems;
+                }
                 else
                 {
                     Logger.WriteLine("Waiting for access dialog items to appear..");
