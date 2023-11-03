@@ -20,42 +20,27 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
         public CommandResult Execute(BrowserInteraction browserInteraction)
         {
-            var controlName = _lookupItem.Name;
-
-            var fieldContainer = browserInteraction.Driver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldLookupFieldContainer].Replace("[NAME]", controlName)));
-            fieldContainer.Hover(browserInteraction.Driver);
-
-            var xpathDeleteExistingValues = By.XPath(AppElements.Xpath[AppReference.Entity.LookupFieldDeleteExistingValue].Replace("[NAME]", controlName));
-            var existingValues = fieldContainer.FindElements(xpathDeleteExistingValues);
-
-            var xpathToExpandButton = By.XPath(AppElements.Xpath[AppReference.Entity.LookupFieldExpandCollapseButton].Replace("[NAME]", controlName));
-            bool success = fieldContainer.TryFindElement(xpathToExpandButton, out var expandButton);
-            if (success)
+            var lookupItemContainer = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_LookupItemContainer, _lookupItem.Name), TimeSpan.FromSeconds(2));
+            
+            if(!lookupItemContainer.TryFindElement(By.TagName("ul"), out var lookupItemList)) 
             {
-                expandButton.Click(true);
-
-                var count = existingValues.Count;
-                fieldContainer.WaitUntil(x => x.FindElements(xpathDeleteExistingValues).Count > count);
-            }
-
-            fieldContainer.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.TextFieldLookupSearchButton].Replace("[NAME]", controlName)));
-
-            existingValues = fieldContainer.FindElements(xpathDeleteExistingValues);
-            if (existingValues.Count == 0)
+                Logger.WriteLine("Lookup is already empty");
                 return CommandResult.Success();
-
-
-            // Removes all selected items
-            while (existingValues.Count > 0)
+            }
+            var listItems = lookupItemList.FindElements(By.TagName("li"));
+            Logger.WriteLine($"Lookup has {listItems.Count} values");
+            foreach(var item in listItems)
             {
-                foreach (var v in existingValues)
-                    v.Click(true);
+                item.Hover(browserInteraction.Driver);
+                var deleteButton = item.WaitUntilClickable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_LookupDeleteItem, _lookupItem.Name), TimeSpan.FromSeconds(2));
 
-                existingValues = fieldContainer.FindElements(xpathDeleteExistingValues);
+                if (deleteButton == null)
+                    return CommandResult.Fail(true, Constants.ErrorCodes.LOOKUP_MISSING_DELETE_BUTTON, _lookupItem.Name);
+
+                deleteButton.Click();
             }
 
             return CommandResult.Success();
-            
         }
     }
 }

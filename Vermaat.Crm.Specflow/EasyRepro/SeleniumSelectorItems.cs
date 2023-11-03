@@ -22,6 +22,9 @@
         Entity_DateContainer,
         Entity_TimeContainer,
 
+        Entity_LookupDeleteItem,
+        Entity_LookupItemContainer,
+
         Entity_Footer_Status,
 
         Entity_FormId,

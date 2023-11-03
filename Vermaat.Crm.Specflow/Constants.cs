@@ -107,6 +107,7 @@
             public const int SELENIUM_COMMAND_ELEMENT_CLICK_INTERCEPTED = 74;
             public const int ERROR_DIALOG_NOT_FOUND = 75;
             public const int ENTITY_ID_NOT_FOUND = 76;
+            public const int LOOKUP_MISSING_DELETE_BUTTON = 77;
         }
 
         public class LocalizedTexts
