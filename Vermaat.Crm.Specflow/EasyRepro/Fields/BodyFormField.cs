@@ -114,7 +114,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             }
             else
             {
-                App.App.Entity.ClearValue(value.ToLookupItem(Metadata));
+                SeleniumCommandProcessor.ExecuteCommand(App, App.SeleniumCommandFactory.CreateClearLookupValueCommand(value.ToLookupItem(Metadata)));
             }
         }
 

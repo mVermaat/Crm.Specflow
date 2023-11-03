@@ -14,6 +14,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual CheckFieldVisibilityCommand CreateCheckFieldVisibilityCommand(string controlName)
             => new CheckFieldVisibilityCommand(controlName);
 
+        public virtual ClearLookupValueCommand CreateClearLookupValueCommand(LookupItem lookupItem)
+            => new ClearLookupValueCommand(lookupItem); 
+
         public virtual ClickRibbonItemCommand CreateClickRibbonItemCommand(string name)
             => new ClickRibbonItemCommand(name);
 
