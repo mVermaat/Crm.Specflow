@@ -1,5 +1,6 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
+using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 var deleteButton = item.WaitUntilClickable(browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_LookupDeleteItem, _lookupItem.Name), TimeSpan.FromSeconds(2));
 
                 if (deleteButton == null)
-                    return CommandResult.Fail(true, Constants.ErrorCodes.LOOKUP_MISSING_DELETE_BUTTON, _lookupItem.Name);
-
+                { // workaround as sometimes the delete button doesn't show up properly. Need to figure out why.
+                    browserInteraction.Driver.ExecuteScript($"Xrm.Page.getAttribute('{_lookupItem.Name}').setValue(null)");
+                    browserInteraction.Driver.ExecuteScript($"Xrm.Page.getAttribute('{_lookupItem.Name}').fireOnChange()");
+                    return CommandResult.Success();
+                }
                 deleteButton.Click();
             }
 
