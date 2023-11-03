@@ -1,14 +1,6 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vermaat.Crm.Specflow.EasyRepro.FieldTypes;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
@@ -31,7 +23,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             var select = new SelectElement(root.FindElement(By.TagName("select")));
             var isSelected = select.SelectedOption.GetAttribute("value").Equals("1");
 
-            if(isSelected != _value.Value)
+            if (isSelected != _value.Value)
             {
                 select.SelectByValue(_value.Value ? "1" : "0");
             }

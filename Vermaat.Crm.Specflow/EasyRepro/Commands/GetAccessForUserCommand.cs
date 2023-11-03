@@ -2,11 +2,7 @@
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
@@ -47,7 +43,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                     return CommandResult<UserAccessData>.Fail(false, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_UNKNOWN_ICON, iconName);
             }
 
-             return ParseAccessData(browserInteraction, unstructuredAccessData);
+            return ParseAccessData(browserInteraction, unstructuredAccessData);
         }
 
         private IList<IWebElement> GetAccessItems(BrowserInteraction browserInteraction, IWebElement dialogRoot)
@@ -57,7 +53,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 .GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_AccessDialogItems), TimeSpan.FromSeconds(10));
 
             var timeout = DateTime.Now.AddSeconds(10);
-            while(DateTime.Now < timeout)
+            while (DateTime.Now < timeout)
             {
                 Logger.WriteLine("Looking for access items");
                 var accessItems = dialogRoot.FindElements(browserInteraction.Selectors

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Xrm.Sdk;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
-using OpenQA.Selenium;
 
 namespace Vermaat.Crm.Specflow.Entities
 {
@@ -21,7 +15,7 @@ namespace Vermaat.Crm.Specflow.Entities
             public const string DateSeparator = "dateseparator";
             public const string TimeSeparator = "timeseparator";
             public const string DecimalSymbol = "decimalsymbol";
-            public const string UILanguage = "uilanguageid"; 
+            public const string UILanguage = "uilanguageid";
         }
 
         public UserSettings(Entity userSettingsEntity, TimeZoneInfo timeZoneInfo)

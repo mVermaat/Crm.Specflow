@@ -1,15 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
-using Microsoft.Dynamics365.UIAutomation.Browser;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.Commands;
-using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Steps
 {
@@ -32,7 +22,7 @@ namespace Vermaat.Crm.Specflow.Steps
         {
             var aliasRef = _crmContext.RecordCache[alias];
             _crmContext.TableConverter.ConvertTable(aliasRef.LogicalName, table);
-           
+
             _crmContext.CommandProcessor.Execute(new AssertFormStateCommand(_crmContext, _seleniumContext, aliasRef, table));
 
         }

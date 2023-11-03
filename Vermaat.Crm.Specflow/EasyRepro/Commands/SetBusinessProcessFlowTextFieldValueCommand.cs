@@ -1,12 +1,6 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
-using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
@@ -30,7 +24,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             else if (fieldContainer.TryFindElement(By.TagName("textarea"), out var textarea))
                 SetValue(textarea);
             else
-               return CommandResult.Fail(false, Constants.ErrorCodes.FIELD_NOT_ON_FORM, _logicalName);
+                return CommandResult.Fail(false, Constants.ErrorCodes.FIELD_NOT_ON_FORM, _logicalName);
 
             return CommandResult.Success();
         }

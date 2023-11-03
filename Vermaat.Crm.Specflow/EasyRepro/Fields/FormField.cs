@@ -1,13 +1,4 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-using Microsoft.Dynamics365.UIAutomation.Browser;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Metadata;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using OpenQA.Selenium.Interactions;
-using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
+﻿using Microsoft.Xrm.Sdk.Metadata;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields

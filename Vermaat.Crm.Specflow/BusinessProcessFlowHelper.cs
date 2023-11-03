@@ -1,11 +1,7 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -16,7 +12,7 @@ namespace Vermaat.Crm.Specflow
             var process = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(
                 instance.GetAttributeValue<EntityReference>("processid"), new ColumnSet("uniquename"));
 
-          return GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve($"{process.GetAttributeValue<string>("uniquename")}", instance.Id, new ColumnSet("activestageid"));
+            return GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve($"{process.GetAttributeValue<string>("uniquename")}", instance.Id, new ColumnSet("activestageid"));
         }
 
         public static Entity[] GetActivePath(CrmTestingContext crmContext, Entity instance)

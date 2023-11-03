@@ -1,13 +1,7 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vermaat.Crm.Specflow.EasyRepro;
 using Microsoft.Xrm.Sdk;
-using Vermaat.Crm.Specflow.FormLoadConditions;
 using TechTalk.SpecFlow;
+using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -28,7 +22,7 @@ namespace Vermaat.Crm.Specflow.Commands
             var record = _crmContext.RecordCache.Get(_alias, true);
             var close = OpportunityCloseHelper.Create(_crmContext, _closeData, record);
 
-            var request = close.Win ? new WinOpportunityRequest() as OrganizationRequest 
+            var request = close.Win ? new WinOpportunityRequest() as OrganizationRequest
                                       : new LoseOpportunityRequest();
             request.Parameters["OpportunityClose"] = close.Entity;
             request.Parameters["Status"] = new OptionSetValue(close.StatusReasonNumber);
@@ -65,7 +59,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 result.Entity.Attributes["opportunityid"] = opportunity;
                 foreach (var row in table.Rows)
                 {
-                    if(row[Constants.SpecFlow.TABLE_KEY] == "opportunitystatuscode")
+                    if (row[Constants.SpecFlow.TABLE_KEY] == "opportunitystatuscode")
                     {
                         result.StatusReasonText = row[Constants.SpecFlow.TABLE_VALUE];
                         var setStateRequest = ObjectConverter.ToSetStateRequest(opportunity, result.StatusReasonText, crmContext);

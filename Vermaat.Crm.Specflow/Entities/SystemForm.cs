@@ -1,16 +1,10 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Serialization;
 using Vermaat.Crm.Specflow.Connectivity;
-using Vermaat.Crm.Specflow.Xml;
 
 namespace Vermaat.Crm.Specflow.Entities
 {
@@ -72,7 +66,7 @@ namespace Vermaat.Crm.Specflow.Entities
         internal static SystemForm GetById(CrmService service, Guid formId)
         {
             return new SystemForm(service.Retrieve("systemform", formId,
-                new ColumnSet(Fields.FormXml, Fields.Name, Fields.ObjectTypeCode, Fields.Type))); 
+                new ColumnSet(Fields.FormXml, Fields.Name, Fields.ObjectTypeCode, Fields.Type)));
         }
     }
 }

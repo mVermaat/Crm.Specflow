@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.Commands;
 
@@ -12,7 +8,7 @@ namespace Vermaat.Crm.Specflow
     public class CommandProcessor
     {
         private readonly ScenarioContext _scenarioContext;
-        
+
 
         public TestExecutionException LastError { get; private set; }
         public CommandAction DefaultCommandAction { get; set; }
@@ -35,7 +31,7 @@ namespace Vermaat.Crm.Specflow
                 Logger.WriteLine($"Executing Command: {command?.GetType().FullName}");
                 command.Execute(commandAction);
             }
-            catch(TestExecutionException ex)
+            catch (TestExecutionException ex)
             {
                 if (!HandleException(ex))
                     throw;
@@ -54,7 +50,7 @@ namespace Vermaat.Crm.Specflow
                 Logger.WriteLine($"Executing Command: {command?.GetType().FullName}");
                 return command.Execute(commandAction);
             }
-            catch(TestExecutionException ex)
+            catch (TestExecutionException ex)
             {
                 if (!HandleException(ex))
                     throw;
@@ -66,13 +62,13 @@ namespace Vermaat.Crm.Specflow
         private bool HandleException(TestExecutionException ex)
         {
             LastError = ex;
-            if(_scenarioContext.CurrentScenarioBlock != ScenarioBlock.When ||
+            if (_scenarioContext.CurrentScenarioBlock != ScenarioBlock.When ||
                !_scenarioContext.ScenarioInfo.Tags.Contains("ExpectedError"))
             {
                 return false;
             }
 
-            switch(ex.ErrorCode)
+            switch (ex.ErrorCode)
             {
                 case Constants.ErrorCodes.FORM_SAVE_FAILED:
                     return true;

@@ -4,9 +4,6 @@ using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vermaat.Crm.Specflow.Connectivity;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -35,7 +32,7 @@ namespace Vermaat.Crm.Specflow
         /// <param name="reference">EntityReference of the record</param>
         public void Add(string alias, EntityReference reference, bool deleteRecordOnCleanup = true)
         {
-            if(string.IsNullOrEmpty(reference.Name))
+            if (string.IsNullOrEmpty(reference.Name))
             {
                 var md = _metadataCache.GetEntityMetadata(reference.LogicalName);
                 if (!string.IsNullOrWhiteSpace(md.PrimaryNameAttribute))
@@ -71,7 +68,7 @@ namespace Vermaat.Crm.Specflow
         /// <returns></returns>
         public EntityReference Get(string alias, bool mustExist = false)
         {
-            if(!_aliasedRecords.TryGetValue(alias, out AliasedRecord value) && mustExist)
+            if (!_aliasedRecords.TryGetValue(alias, out AliasedRecord value) && mustExist)
                 Assert.Fail("alias {0} doesn't exist", alias);
 
             Logger.WriteLine($"Getting Alias {alias} from cache. Result: {value?.Record?.Id}");
@@ -135,7 +132,7 @@ namespace Vermaat.Crm.Specflow
                     GlobalTestingContext.ConnectionManager.AdminConnection.Delete(aliasedRecord.Record);
                 }
                 // Some records can't be deleted due to cascading behavior
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Logger.WriteLine($"Delete failed: Error: {ex.Message}");
                 }

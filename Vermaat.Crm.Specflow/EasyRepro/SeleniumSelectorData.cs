@@ -1,9 +1,5 @@
 ﻿using OpenQA.Selenium;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -42,12 +38,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             { SeleniumSelectorItems.Entity_FormLoad, "//ul[contains(@id, 'tablist_')]" },
             { SeleniumSelectorItems.Entity_MoreTabs, ".//button[@data-id='more_button']" },
             { SeleniumSelectorItems.Entity_DateContainer, "//div[contains(@data-id,'[NAME].fieldControl._datecontrol-date-container')]" },
-            { SeleniumSelectorItems.Entity_TimeContainer, "//div[contains(@data-id,'[NAME].fieldControl._timecontrol-datetime-container')]" }, 
+            { SeleniumSelectorItems.Entity_TimeContainer, "//div[contains(@data-id,'[NAME].fieldControl._timecontrol-datetime-container')]" },
             { SeleniumSelectorItems.Entity_Footer_Status, "//span[@data-id='edit-form-status-message']" },
             { SeleniumSelectorItems.Entity_FormState_LockedIcon, "//div[@data-id='[NAME]-locked-icon']" },
             { SeleniumSelectorItems.Entity_FormState_RequiredOrRecommended, "//div[contains(@id, '[NAME]-required-icon')] | //span[contains(@data-id, '[NAME]-required-icon')]" },
             { SeleniumSelectorItems.Dialog_Container, "//div[starts-with(@id, 'dialogContentContainer_')]" },
-            { SeleniumSelectorItems.Entity_BPFFieldContainer, "//div[@id='[NAME]-[NAME]-FieldSectionItemContainer']" }, 
+            { SeleniumSelectorItems.Entity_BPFFieldContainer, "//div[@id='[NAME]-[NAME]-FieldSectionItemContainer']" },
             { SeleniumSelectorItems.Entity_FieldContainer, "//div[@data-id='[NAME]']" },
             { SeleniumSelectorItems.Entity_PCFControl_Container, ".//div[@data-id='[NAME].fieldControl_container']" },
             { SeleniumSelectorItems.Dialog_OK, "//button[@data-id='ok_id']" },

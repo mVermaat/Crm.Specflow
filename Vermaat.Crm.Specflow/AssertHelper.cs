@@ -3,10 +3,7 @@ using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.Entities;
 
@@ -35,7 +32,7 @@ namespace Vermaat.Crm.Specflow
                 Assert.AreEqual(((OptionSetValue)expectedValue)?.Value, ((OptionSetValue)actualValue)?.Value, $"Field {attributeName} is different");
             else if (type == typeof(Money))
                 Assert.AreEqual(((Money)expectedValue)?.Value, ((Money)actualValue)?.Value, $"Field {attributeName} is different");
-            else if(type == typeof(OptionSetValueCollection))
+            else if (type == typeof(OptionSetValueCollection))
             {
                 var expected = ((OptionSetValueCollection)expectedValue).Select(e => e.Value).ToArray();
                 var actual = ((OptionSetValueCollection)actualValue).Select(a => a.Value).ToArray();
@@ -43,7 +40,7 @@ namespace Vermaat.Crm.Specflow
                 Assert.AreEqual(expected.Except(actual).Count(), 0, $"Expected Values: {string.Join(", ", expected)} | Actual Values: {string.Join(", ", actual)}");
                 Assert.AreEqual(actual.Except(expected).Count(), 0, $"Expected Values: {string.Join(", ", expected)} | Actual Values: {string.Join(", ", actual)}");
             }
-            else if(type == typeof(EntityCollection))
+            else if (type == typeof(EntityCollection))
             {
                 var expected = Party.FromEntityCollection((EntityCollection)expectedValue);
                 var actual = Party.FromEntityCollection((EntityCollection)actualValue);
@@ -56,9 +53,9 @@ namespace Vermaat.Crm.Specflow
 
         private static void MatchesParties(string attributeName, Party[] expected, Party[] actual)
         {
-            var actualList = actual.ToList();  
+            var actualList = actual.ToList();
             List<string> errors = new List<string>();
-            foreach(var expectedParty in expected)
+            foreach (var expectedParty in expected)
             {
                 Party actualMatch = null;
                 if (!string.IsNullOrWhiteSpace(expectedParty.EmailAddress))
@@ -73,7 +70,7 @@ namespace Vermaat.Crm.Specflow
                     errors.Add($"Expected value missing: " + expectedParty.ToString());
             }
 
-            foreach(var extraItem in actualList)
+            foreach (var extraItem in actualList)
             {
                 errors.Add($"Extra value: " + extraItem.ToString());
             }
@@ -112,28 +109,28 @@ namespace Vermaat.Crm.Specflow
 
                 try
                 {
-                    switch(condition.ToLowerInvariant())
+                    switch (condition.ToLowerInvariant())
                     {
                         case "equal": AreEqual(actualValue, ObjectConverter.ToCrmObject(record.LogicalName, row[Constants.SpecFlow.TABLE_KEY], expectedValue, context), row[Constants.SpecFlow.TABLE_KEY]); break;
                         case "notnull": Assert.IsNotNull(actualValue, $"Expected {row[Constants.SpecFlow.TABLE_KEY]} to have data, but it's empty"); break;
                         case "regex": MatchesRegex(expectedValue, actualValue, row[Constants.SpecFlow.TABLE_KEY]); break;
                     }
 
-                    
+
                 }
-                catch(AssertFailedException ex)
+                catch (AssertFailedException ex)
                 {
                     Logger.WriteLine(ex.Message);
                     errors.Add(ex.Message);
                 }
             }
 
-            if(errors.Count > 0)
+            if (errors.Count > 0)
             {
                 Assert.Fail($"At least one error occured when asseting fields. Errors: {string.Join(Environment.NewLine, errors)}");
             }
         }
 
-        
+
     }
 }

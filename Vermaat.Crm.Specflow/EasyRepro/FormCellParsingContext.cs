@@ -1,16 +1,12 @@
 ﻿using Microsoft.Xrm.Sdk.Metadata;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
     internal class FormCellParsingContext
     {
-        
+
 
         public Dictionary<string, AttributeMetadata> MetadataDic { get; set; }
         public UCIApp App { get; set; }

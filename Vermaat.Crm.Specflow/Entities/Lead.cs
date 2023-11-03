@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Crm.Sdk.Messages;
+﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
+using System;
 
 namespace Vermaat.Crm.Specflow.Entities
 {
@@ -197,7 +193,7 @@ namespace Vermaat.Crm.Specflow.Entities
 
     }
 
-    
+
     public enum Lead_StatusCode
     {
         Canceled = 7,

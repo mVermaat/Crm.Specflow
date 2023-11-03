@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Vermaat.Crm.Specflow.Commands
+﻿namespace Vermaat.Crm.Specflow.Commands
 {
     public abstract class BrowserOnlyCommandFunc<TResult> : ICommandFunc<TResult>
     {

@@ -1,12 +1,6 @@
-﻿using Vermaat.Crm.Specflow.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xrm.Sdk;
 using TechTalk.SpecFlow;
-using Vermaat.Crm.Specflow.EasyRepro;
-using Microsoft.Xrm.Sdk;
+using Vermaat.Crm.Specflow.Commands;
 using Vermaat.Crm.Specflow.FormLoadConditions;
 
 namespace Vermaat.Crm.Specflow.Sample.UnitTests

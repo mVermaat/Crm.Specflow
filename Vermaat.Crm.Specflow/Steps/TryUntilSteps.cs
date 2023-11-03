@@ -1,11 +1,5 @@
-﻿using Azure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.Commands;
 
@@ -72,7 +66,7 @@ namespace Vermaat.Crm.Specflow.Steps
         {
             _crmContext.TableConverter.ConvertTable(entityName, criteria);
 
-            return TryUntil<GetRecordsCommand, DataCollection<Entity>>(new GetRecordsCommand(_crmContext, entityName, criteria), seconds, 
+            return TryUntil<GetRecordsCommand, DataCollection<Entity>>(new GetRecordsCommand(_crmContext, entityName, criteria), seconds,
                 r => r.Count == amount,
                 r => $"When looking for records for {entityName}, expected {amount}, but found {r.Count} records");
         }
@@ -90,9 +84,9 @@ namespace Vermaat.Crm.Specflow.Steps
             _crmContext.CommandProcessor.Execute(new TryUntilCommand<TCommand>(_crmContext, command, TimeSpan.FromSeconds(seconds), TimeSpan.FromSeconds(5)));
         }
 
-        private TResult TryUntil<TCommand, TResult>(TCommand command, int seconds, Func<TResult, bool> assertFunc, Func<TResult,string> timeoutMessageFunc) where TCommand : ICommandFunc<TResult>
+        private TResult TryUntil<TCommand, TResult>(TCommand command, int seconds, Func<TResult, bool> assertFunc, Func<TResult, string> timeoutMessageFunc) where TCommand : ICommandFunc<TResult>
         {
-            return _crmContext.CommandProcessor.Execute(new TryUntilCommandFunc<TCommand, TResult>(_crmContext, command, 
+            return _crmContext.CommandProcessor.Execute(new TryUntilCommandFunc<TCommand, TResult>(_crmContext, command,
                 TimeSpan.FromSeconds(seconds), TimeSpan.FromSeconds(5), assertFunc, timeoutMessageFunc));
         }
     }

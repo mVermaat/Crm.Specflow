@@ -8,7 +8,7 @@
         }
 
         public bool AllowRetry { get; set; }
-       
+
         public int ErrorCode { get; set; }
 
         public object[] ErrorMessageFormatArgs { get; set; }

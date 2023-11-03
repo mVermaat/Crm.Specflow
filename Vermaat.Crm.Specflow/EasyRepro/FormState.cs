@@ -1,12 +1,5 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-using Microsoft.Dynamics365.UIAutomation.Browser;
-using OpenQA.Selenium;
+﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -60,13 +53,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             if (string.IsNullOrEmpty(CurrentTab) || !CurrentTab.Equals(tabLabel, StringComparison.OrdinalIgnoreCase))
             {
                 Logger.WriteLine($"Expanding tab {tabLabel}");
-                
+
                 // if you want to expand a tab, it's possible the header is open and overlaps the tab you want to select, so collapse the header just in case.
                 CollapseHeader();
                 _app.App.Entity.SelectTab(tabLabel);
                 CurrentTab = tabLabel;
             }
-            
+
         }
     }
 }

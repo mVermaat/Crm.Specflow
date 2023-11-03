@@ -1,15 +1,9 @@
-﻿using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk;
-using System;
+﻿using Microsoft.Xrm.Sdk;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.EasyRepro;
 using Vermaat.Crm.Specflow.Entities;
-using TechTalk.SpecFlow;
-using Vermaat.Crm.Specflow.EasyRepro.Commands;
-using Vermaat.Crm.Specflow.Connectivity;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -42,11 +36,11 @@ namespace Vermaat.Crm.Specflow.Commands
                 _crmContext.CommandProcessor.Execute(new LoginWithUserCommand(_crmContext, profile));
 
                 // get correct session
-                var browser = GlobalTestingContext.BrowserManager.GetBrowser(_seleniumContext.BrowserOptions, 
+                var browser = GlobalTestingContext.BrowserManager.GetBrowser(_seleniumContext.BrowserOptions,
                     GlobalTestingContext.ConnectionManager.CurrentBrowserLoginDetails, _seleniumContext.SeleniumCommandFactory);
 
                 var actualAccess = GetUserAccessData(browser, record, 3);
-               
+
 
                 errors.AddRange(AssertAccess(actualAccess, expectedAccess, profile.Profile));
             }

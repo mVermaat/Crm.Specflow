@@ -2,10 +2,7 @@
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -18,13 +15,13 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             client.Execute(BrowserOptionHelper.GetOptions($"Set Value"), driver =>
             {
                 var subGrid = driver.WaitUntilAvailable(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid, subgridName), $"Unable to find subgrid: {subgridName}");
-                
+
                 var menuBar = subGrid.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_SubGrid_ButtonList));
 
                 var buttons = menuBar.FindElements(By.TagName("button"));
 
                 var button = buttons.FirstOrDefault(b => b.GetAttribute("data-id").Contains(subgridButtonId));
-                if(button != null)
+                if (button != null)
                 {
                     button.Click();
                     return true;
@@ -55,18 +52,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         }
 
         public static bool TryFindElement(this IWebDriver driver, By by, out IWebElement element)
+        {
+            try
             {
-                try
-                {
-                    element = driver.FindElement(by);
-                    return true;
-                }
-                catch (NoSuchElementException)
-                {
-                    element = null;
-                    return false;
-                }
+                element = driver.FindElement(by);
+                return true;
             }
+            catch (NoSuchElementException)
+            {
+                element = null;
+                return false;
+            }
+        }
 
         public static bool HasClass(this IWebElement element, string className)
         {
@@ -94,7 +91,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                         var duplicateDetectionGrid = driver.FindElement(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.DuplicateDetection_Grid));
                         var selectedItems = duplicateDetectionGrid.FindElements(Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.DuplicateDetection_SelectedItems));
 
-                        foreach(var item in selectedItems)
+                        foreach (var item in selectedItems)
                         {
                             item.Click();
                         }
@@ -110,7 +107,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 return true;
             });
 
-           
+
         }
 
 

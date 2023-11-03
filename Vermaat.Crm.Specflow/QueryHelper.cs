@@ -1,11 +1,5 @@
-﻿using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
+﻿using Microsoft.Xrm.Sdk.Query;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow
@@ -50,7 +44,7 @@ namespace Vermaat.Crm.Specflow
 
             expression.AttributeName = row[Constants.SpecFlow.TABLE_KEY];
             expression.Operator = GetOperator(row, hasConditionColumn, crmValue);
-            if(crmValue != null)
+            if (crmValue != null)
                 expression.Values.Add(crmValue);
 
             Logger.WriteLine($"Adding condition {expression.AttributeName} {expression.Operator} {(crmValue != null ? HelperMethods.CrmObjectToPrimitive(crmValue) : "")}");
@@ -61,10 +55,11 @@ namespace Vermaat.Crm.Specflow
         private static ConditionOperator GetOperator(TableRow row, bool hasConditionColumn, object crmValue)
         {
             if (hasConditionColumn && !string.IsNullOrEmpty(row[Constants.SpecFlow.TABLE_CONDITION]))
-                try {
+                try
+                {
                     return (ConditionOperator)Enum.Parse(typeof(ConditionOperator), row[Constants.SpecFlow.TABLE_CONDITION]);
                 }
-                catch(ArgumentException ex)
+                catch (ArgumentException ex)
                 {
                     throw new TestExecutionException(Constants.ErrorCodes.FAILED_TO_PARSE_CONDITION_OPERATOR, ex,
                         row[Constants.SpecFlow.TABLE_CONDITION], ex.Message);

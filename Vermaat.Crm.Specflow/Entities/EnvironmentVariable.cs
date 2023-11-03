@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Connectivity;
 
 namespace Vermaat.Crm.Specflow.Entities
@@ -30,7 +25,7 @@ namespace Vermaat.Crm.Specflow.Entities
             record["value"] = newValue;
             Value = record["value"];
 
-            if(Id != null && Id != Guid.Empty)
+            if (Id != null && Id != Guid.Empty)
             {
                 record.Id = Id.Value;
                 svc.Update(record);
@@ -40,7 +35,7 @@ namespace Vermaat.Crm.Specflow.Entities
                 record["environmentvariabledefinitionid"] = new EntityReference("environmentvariabledefinition", DefintionId);
                 svc.CreateRecord(record);
             }
-        } 
+        }
 
         public static EnvironmentVariable GetEnvironmentVariable(CrmService svc, string name)
         {

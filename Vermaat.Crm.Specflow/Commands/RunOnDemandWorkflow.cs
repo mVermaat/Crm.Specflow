@@ -1,11 +1,6 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -54,7 +49,7 @@ namespace Vermaat.Crm.Specflow.Commands
             if (workflows.Count != 1)
                 throw new TestExecutionException(Constants.ErrorCodes.UNEXPECTED_PROCESS_COUNT, _workflowName, workflows.Count);
 
-            return workflows[0];        
+            return workflows[0];
         }
     }
 }

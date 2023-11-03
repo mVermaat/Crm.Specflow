@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xrm.Sdk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -11,7 +6,7 @@ namespace Vermaat.Crm.Specflow.Commands
     {
         private readonly string _userAlias;
 
-        public GetCurrentUserCommand(CrmTestingContext crmContext, string userAlias) 
+        public GetCurrentUserCommand(CrmTestingContext crmContext, string userAlias)
             : base(crmContext)
         {
             _userAlias = userAlias;

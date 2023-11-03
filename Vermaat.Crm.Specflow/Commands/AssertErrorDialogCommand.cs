@@ -1,9 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -11,7 +6,7 @@ namespace Vermaat.Crm.Specflow.Commands
     {
         private readonly string _expectedError;
 
-        public AssertErrorDialogCommand(CrmTestingContext crmContext, SeleniumTestingContext seleniumContext, string expectedError) 
+        public AssertErrorDialogCommand(CrmTestingContext crmContext, SeleniumTestingContext seleniumContext, string expectedError)
             : base(crmContext, seleniumContext)
         {
             _expectedError = expectedError;

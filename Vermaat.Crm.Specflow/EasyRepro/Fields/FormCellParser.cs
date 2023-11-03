@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk.Metadata;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields
@@ -17,7 +13,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             if (context.IsHeader)
                 return new HeaderFormField(context.App, metadata, cell);
 
-            if(context.FormType == SystemFormType.QuickCreate)
+            if (context.FormType == SystemFormType.QuickCreate)
                 return new QuickCreateBodyFormField(context.App, metadata, cell);
 
             return new BodyFormField(context.App, metadata, cell, context.TabName, context.SectionName);

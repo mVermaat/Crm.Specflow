@@ -1,11 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Xrm.Sdk;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow
@@ -24,7 +19,7 @@ namespace Vermaat.Crm.Specflow
         public char Delimiter { get; }
 
         private readonly string[] _targets;
-        
+
 
         public CrmTestingContext(ScenarioContext scenarioContext)
         {
@@ -45,7 +40,7 @@ namespace Vermaat.Crm.Specflow
         {
             var delimiterTag = scenarioContext.ScenarioInfo.Tags.FirstOrDefault(t => t.StartsWith("Delimiter:"));
 
-            if(delimiterTag != null)
+            if (delimiterTag != null)
             {
                 if (delimiterTag.Length != 11)
                 {
@@ -59,7 +54,7 @@ namespace Vermaat.Crm.Specflow
             }
 
             Logger.WriteLine("Using default delimiter: ,");
-            return ',';            
+            return ',';
         }
 
         public bool IsTarget(string target)
@@ -69,6 +64,6 @@ namespace Vermaat.Crm.Specflow
 
             return _targets.Contains(target.ToLower());
         }
-        
+
     }
 }

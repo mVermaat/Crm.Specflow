@@ -1,9 +1,5 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Connectivity;
 using Vermaat.Crm.Specflow.EasyRepro;
 

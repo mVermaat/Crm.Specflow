@@ -2,10 +2,6 @@
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro.Commands;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -29,7 +25,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public IWebDriver WebDriver => Client?.Browser.Driver;
 
         #region IDisposable Support
-        private bool _disposedValue = false; 
+        private bool _disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {

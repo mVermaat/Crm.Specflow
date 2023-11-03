@@ -1,9 +1,6 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Metadata;
-using Microsoft.Xrm.Sdk.Query;
 using Vermaat.Crm.Specflow.EasyRepro;
-using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -11,7 +8,7 @@ namespace Vermaat.Crm.Specflow.Commands
     {
         private readonly string _alias;
 
-        public ActivateQuoteCommand(CrmTestingContext crmContext, SeleniumTestingContext selenumContext, string alias) 
+        public ActivateQuoteCommand(CrmTestingContext crmContext, SeleniumTestingContext selenumContext, string alias)
             : base(crmContext, selenumContext)
         {
             _alias = alias;

@@ -30,7 +30,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public static string GetCompositeParentField(string entityName, string fieldName)
         {
-            if (_compositeData.TryGetValue(entityName, out Dictionary<string, string> fieldDic) && 
+            if (_compositeData.TryGetValue(entityName, out Dictionary<string, string> fieldDic) &&
                 fieldDic.TryGetValue(fieldName, out string parentField))
                 return parentField;
             else

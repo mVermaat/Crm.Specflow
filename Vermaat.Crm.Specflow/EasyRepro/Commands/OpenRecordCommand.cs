@@ -1,11 +1,6 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
@@ -25,7 +20,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             Logger.WriteLine($"Opening record {_formOptions.EntityName} with ID {_formOptions.EntityId}");
 
             browserInteraction.Driver.Navigate().GoToUrl(_formOptions.GetUrl(browserInteraction.Driver, _currentAppId));
-            
+
             CheckAlert(browserInteraction.Driver);
 
             if (HasMissingPermissionDialog(browserInteraction))

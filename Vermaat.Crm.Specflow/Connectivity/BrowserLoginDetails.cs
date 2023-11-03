@@ -1,5 +1,4 @@
 ﻿using System.Security;
-using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Connectivity
 {

@@ -1,9 +1,6 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
@@ -19,7 +16,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public CommandResult<IEnumerable<string>> Execute(BrowserInteraction browserInteraction)
         {
             var xPathSelector = browserInteraction.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_CompositeControls, _compositeControlAttributeName);
-            
+
             // First wait in case the form isn't loaded yet
             var found = browserInteraction.Driver.WaitUntilAvailable(xPathSelector);
             if (found == null)

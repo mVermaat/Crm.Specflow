@@ -1,12 +1,7 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk.Metadata;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro.FieldTypes;
 using Vermaat.Crm.Specflow.Entities;
 
@@ -16,7 +11,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
     {
 
 
-        public HeaderFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control) 
+        public HeaderFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control)
             : base(app, attributeMetadata, control)
         {
         }

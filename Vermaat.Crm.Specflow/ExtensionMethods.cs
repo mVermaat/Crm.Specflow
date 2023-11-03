@@ -1,13 +1,8 @@
 ﻿using Microsoft.Xrm.Sdk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow
 {
-    static class ExtensionMethods 
+    static class ExtensionMethods
     {
         public static EntityReference ToEntityReference(this Entity entity, string primaryFieldAttribute)
         {

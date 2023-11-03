@@ -2,10 +2,6 @@
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
@@ -22,7 +18,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         {
             var fieldContainer = browserInteraction.Driver.WaitUntilAvailable(By.XPath(
                 AppElements.Xpath[AppReference.Entity.TextFieldContainer].Replace("[NAME]", _controlName)), TimeSpan.FromSeconds(2));
-            
+
             return fieldContainer != null
                 ? CommandResult<bool>.Success(fieldContainer.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_FormState_LockedIcon, _controlName), out _))
                 : throw new TestExecutionException(Constants.ErrorCodes.FIELD_NOT_ON_FORM, _controlName);
