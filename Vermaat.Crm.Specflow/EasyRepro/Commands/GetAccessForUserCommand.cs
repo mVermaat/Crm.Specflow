@@ -43,9 +43,6 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                     unstructuredAccessData.Add(name, false);
                 else if (iconName.Equals("More"))
                     continue;
-                    // Seems to be that no matter if there are extra items in the 'more' part, all those items are also in the main dialog, even though they are not visible.
-                    // Leaving in this code at least until September 2023 to see if we really don't need this.
-                    //GetMoreAccessData(unstructuredAccessData, browserInteraction, iconElement);
                 else
                     return CommandResult<UserAccessData>.Fail(false, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_UNKNOWN_ICON, iconName);
             }
@@ -66,8 +63,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 var accessItems = dialogRoot.FindElements(browserInteraction.Selectors
                 .GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_AccessDialogItems));
                 if (accessItems.Count > 1) // needs at least 2 (1 + more items)
-                { 
-                    Logger.WriteLine($"Returning {accessItems.Count} access items")
+                {
+                    Logger.WriteLine($"Returning {accessItems.Count} access items");
                     return accessItems;
                 }
                 else
@@ -100,7 +97,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             }
             catch (KeyNotFoundException)
             {
-                return CommandResult<UserAccessData>.Fail(true, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_MISSING_PERMISSIONS, string.Join(", ", unstructuredAccessData.Keys));
+                return CommandResult<UserAccessData>.Fail(false, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_MISSING_PERMISSIONS, string.Join(", ", unstructuredAccessData.Keys));
             }
         }
     }
