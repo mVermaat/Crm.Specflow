@@ -37,13 +37,6 @@ namespace Vermaat.Crm.Specflow.Connectivity
             }
         }
 
-        public CrmService(Func<CrmServiceClient> clientCreationFunc)
-        {
-            _service = new Lazy<CrmServiceClient>(clientCreationFunc);
-            _userSettings = new Lazy<UserSettings>(GetUserSettings);
-            _userId = new Lazy<Guid>(GetUserId);
-        }
-
         public CrmService(string connectionString)
         {
             _connectionString = connectionString;
