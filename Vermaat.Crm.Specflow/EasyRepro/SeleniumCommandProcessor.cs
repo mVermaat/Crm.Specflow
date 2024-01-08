@@ -1,13 +1,6 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Activities.Statements;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro.Commands;
-using static Vermaat.Crm.Specflow.Constants;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {

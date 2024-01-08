@@ -1,9 +1,5 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
@@ -23,7 +19,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         {
             var element = browserInteraction.Driver.WaitUntilVisible(
                 SeleniumFunctions.Selectors.GetXPathSeleniumSelector(_selector, _controlName),
-                TimeSpan.FromSeconds(5));
+                TimeSpan.FromSeconds(2));
 
             return CommandResult<bool>.Success(element != null);
         }

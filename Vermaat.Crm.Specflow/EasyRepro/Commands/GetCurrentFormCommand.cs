@@ -1,11 +1,5 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
-using Microsoft.Xrm.Sdk.Query;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TechTalk.SpecFlow.CommonModels;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
@@ -29,7 +23,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 if (formIdElement == null)
                 {
                     Logger.WriteLine("Getting quick create form via script");
-                    var formIdScripted = browserInteraction.Driver.ExecuteScript("return Xrm.Page.data.entity.getId();") as string;
+                    var formIdScripted = browserInteraction.Driver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId();") as string;
                     if (string.IsNullOrEmpty(formIdScripted))
                     {
                         return CommandResult<SystemForm>.Fail(true, Constants.ErrorCodes.FORMID_NOT_FOUND);
@@ -48,7 +42,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 if (formIdElement == null)
                 {
                     Logger.WriteLine("Getting form via script");
-                    var formIdScripted = browserInteraction.Driver.ExecuteScript("return Xrm.Page.data.entity.getId();") as string;
+                    var formIdScripted = browserInteraction.Driver.ExecuteScript("return Xrm.Page.ui.formSelector.getCurrentItem().getId();") as string;
                     if (string.IsNullOrEmpty(formIdScripted))
                     {
                         return CommandResult<SystemForm>.Fail(true, Constants.ErrorCodes.FORMID_NOT_FOUND);

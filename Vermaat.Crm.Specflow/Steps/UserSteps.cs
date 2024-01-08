@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.Commands;
 
 namespace Vermaat.Crm.Specflow.Steps
@@ -38,7 +33,7 @@ namespace Vermaat.Crm.Specflow.Steps
         [Given(@"the current logged in user named (.*)")]
         public void GetLoggedInUser(string alias)
         {
-           _crmContext.CommandProcessor.Execute(new GetCurrentUserCommand(_crmContext, alias));
+            _crmContext.CommandProcessor.Execute(new GetCurrentUserCommand(_crmContext, alias));
         }
 
 

@@ -1,14 +1,8 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-using Microsoft.Dynamics365.UIAutomation.Api.UCI.DTO;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
@@ -27,7 +21,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public CommandResult Execute(BrowserInteraction browserInteraction)
         {
             Logger.WriteLine($"Checking save status");
-            
+
 
             DateTime timeout = DateTime.Now.AddSeconds(3);
             var status = GetSaveStatus(browserInteraction);
@@ -85,12 +79,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                         if (!string.IsNullOrEmpty(errorDetails.Text))
                             return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, errorDetails.Text);
                     }
-                    else if(DateTime.Now > unsavedTimeout)
+                    else if (DateTime.Now > unsavedTimeout)
                     {
                         var formNotifications = SeleniumCommandProcessor.ExecuteCommand(browserInteraction, browserInteraction.SeleniumCommandFactory.CreateGetFormNotificationsCommand());
                         return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
                     }
-                } 
+                }
             }
 
             if (!saveCompleted)
@@ -102,7 +96,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
         private bool HasDuplicateDetection(BrowserInteraction browserInteraction)
         {
-            return browserInteraction.Driver.HasElement(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionWindowMarker])) 
+            return browserInteraction.Driver.HasElement(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionWindowMarker]))
                 && browserInteraction.Driver.HasElement(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionGridRows]));
         }
 

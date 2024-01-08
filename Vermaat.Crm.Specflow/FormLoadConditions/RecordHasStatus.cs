@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Dynamics365.UIAutomation.Browser;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using OpenQA.Selenium;
-using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.FormLoadConditions
 {
@@ -28,7 +21,7 @@ namespace Vermaat.Crm.Specflow.FormLoadConditions
 
             var record = GlobalTestingContext.ConnectionManager.AdminConnection.Retrieve(_record, new ColumnSet("statecode"));
             return _statecode.Equals(record.GetAttributeValue<OptionSetValue>("statecode")?.Value);
-            
+
         }
     }
 }

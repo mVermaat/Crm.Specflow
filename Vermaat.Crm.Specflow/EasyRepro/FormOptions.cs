@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -42,17 +39,17 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 builder.Append($"&appid={appId:D}");
 
             StringBuilder extraQueryParameters = new StringBuilder();
-            if(Parent != null)
+            if (Parent != null)
             {
                 AppendQueryParameter(extraQueryParameters, "parentrecordid", Parent.Id);
                 AppendQueryParameter(extraQueryParameters, "parentrecordname", Parent.Name);
                 AppendQueryParameter(extraQueryParameters, "parentrecordtype", Parent.LogicalName);
             }
-            if(FormId != null)
+            if (FormId != null)
             {
                 AppendQueryParameter(extraQueryParameters, "formid", FormId);
             }
-            if(extraQueryParameters.Length > 0)
+            if (extraQueryParameters.Length > 0)
             {
                 builder.Append("&extraqs=");
                 builder.Append(HttpUtility.UrlEncode(extraQueryParameters.ToString()));
@@ -62,7 +59,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         private void AppendQueryParameter(StringBuilder builder, string key, object value)
         {
-            if(builder.Length > 0)
+            if (builder.Length > 0)
             {
                 builder.Append("&");
             }

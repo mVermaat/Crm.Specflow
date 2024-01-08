@@ -1,10 +1,6 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.FormLoadConditions
 {
@@ -26,7 +22,7 @@ namespace Vermaat.Crm.Specflow.FormLoadConditions
                 Logger.WriteLine($"Evaluating form load - Is current record ID {_recordId}");
                 var actualId = driver.ExecuteScript("return Xrm.Page.data.entity.getId();") as string;
 
-                return  Guid.TryParse(actualId, out Guid parsedId) && 
+                return Guid.TryParse(actualId, out Guid parsedId) &&
                         _recordId == parsedId != _invert;
             }
             catch (WebDriverException)
@@ -35,5 +31,5 @@ namespace Vermaat.Crm.Specflow.FormLoadConditions
             }
         }
     }
-    
+
 }

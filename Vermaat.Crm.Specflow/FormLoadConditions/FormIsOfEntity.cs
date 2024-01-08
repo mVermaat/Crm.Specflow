@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Dynamics365.UIAutomation.Browser;
+﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
+using System;
 
 namespace Vermaat.Crm.Specflow.FormLoadConditions
 {
@@ -25,7 +21,7 @@ namespace Vermaat.Crm.Specflow.FormLoadConditions
                 var actualEntityName = driver.ExecuteScript("return Xrm.Page.data.entity.getEntityName();") as string;
                 return !string.IsNullOrEmpty(actualEntityName) && actualEntityName.Equals(_entityName, StringComparison.CurrentCultureIgnoreCase);
             }
-            catch(WebDriverException)
+            catch (WebDriverException)
             {
                 return false;
             }

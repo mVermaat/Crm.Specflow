@@ -1,10 +1,6 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk.Metadata;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro.FieldTypes;
 using Vermaat.Crm.Specflow.Entities;
 
@@ -14,7 +10,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
     {
         private readonly string _stageName;
 
-        public BusinessProcessFlowFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control, string stageName) 
+        public BusinessProcessFlowFormField(UCIApp app, AttributeMetadata attributeMetadata, FormControl control, string stageName)
             : base(app, attributeMetadata, control)
         {
             _stageName = stageName;
@@ -42,16 +38,16 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected override void SetTwoOptionField(BooleanValue value)
         {
-           SeleniumCommandProcessor.ExecuteCommand(App,
-               App.SeleniumCommandFactory.CreateSetBusinessProcessFlowBooleanFieldValueCommand(value.ToBooleanItem(Metadata.LogicalName)));
+            SeleniumCommandProcessor.ExecuteCommand(App,
+                App.SeleniumCommandFactory.CreateSetBusinessProcessFlowBooleanFieldValueCommand(value.ToBooleanItem(Metadata.LogicalName)));
         }
 
         protected override void SetDateTimeField(DateTimeValue value)
         {
-           SeleniumCommandProcessor.ExecuteCommand(App,
-               App.SeleniumCommandFactory.CreateSetBusinessProcessFlowDateTimeFieldValueCommand(LogicalName, value.Value, value.DateOnly,
-                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
-                 GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat));
+            SeleniumCommandProcessor.ExecuteCommand(App,
+                App.SeleniumCommandFactory.CreateSetBusinessProcessFlowDateTimeFieldValueCommand(LogicalName, value.Value, value.DateOnly,
+                  GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.DateFormat,
+                  GlobalTestingContext.ConnectionManager.CurrentConnection.UserSettings.TimeFormat));
         }
 
         protected override void SetOptionSetField(OptionSetValue value)
@@ -84,7 +80,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         protected override void SetLookupValues(LookupValue[] values)
         {
-           foreach(var value in values)
+            foreach (var value in values)
             {
                 SetLookupValue(value);
             }

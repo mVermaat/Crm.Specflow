@@ -2,11 +2,7 @@
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
@@ -25,6 +21,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 return CommandResult<UserAccessData>.Fail(true, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_NOT_FOUND);
 
             var accessItems = GetAccessItems(browserInteraction, dialogRoot);
+            Logger.WriteLine($"Found {accessItems.Count} access items");
 
             var unstructuredAccessData = new Dictionary<string, bool>();
             foreach (var accessItem in accessItems)
@@ -33,6 +30,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                 var iconElement = accessItem.FindElement(By.TagName("i"));
 
                 var iconName = iconElement.GetAttribute("data-icon-name");
+                Logger.WriteLine($"Found access item {name} with icon {iconName}");
                 if (string.IsNullOrEmpty(iconName))
                     return CommandResult<UserAccessData>.Fail(false, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_UNKNOWN_ICON, "NULL");
                 else if (iconName.Equals("CompletedSolid", StringComparison.InvariantCultureIgnoreCase))
@@ -41,62 +39,39 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                     unstructuredAccessData.Add(name, false);
                 else if (iconName.Equals("More"))
                     continue;
-                    // Seems to be that no matter if there are extra items in the 'more' part, all those items are also in the main dialog, even though they are not visible.
-                    // Leaving in this code at least until September 2023 to see if we really don't need this.
-                    //GetMoreAccessData(unstructuredAccessData, browserInteraction, iconElement);
                 else
                     return CommandResult<UserAccessData>.Fail(false, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_UNKNOWN_ICON, iconName);
             }
 
-             return ParseAccessData(browserInteraction, unstructuredAccessData);
+            return ParseAccessData(browserInteraction, unstructuredAccessData);
         }
-
-        //private void GetMoreAccessData(Dictionary<string, bool> unstructuredAccessData, BrowserInteraction browserInteraction, IWebElement moreItemsElement)
-        //{
-        //    if (!moreItemsElement.IsClickable())
-        //        return;
-
-        //    moreItemsElement.Click();
-
-        //    var dialog = browserInteraction.Driver.WaitUntilAvailable(browserInteraction.Selectors.GetXPathSeleniumSelector(
-        //        SeleniumSelectorItems.Entity_MissingPermisions_MoreItemFlyout), TimeSpan.FromSeconds(5));
-        //    if (dialog == null)
-        //        throw new TestExecutionException(Constants.ErrorCodes.CHECK_ACCESS_DIALOG_NOT_FOUND);
-
-        //    var accessItems = dialog.FindElements(By.TagName("button"));
-
-        //    foreach (var accessItem in accessItems)
-        //    {
-        //        var name = accessItem.GetAttribute("name");
-        //        var iconElement = accessItem.FindElement(By.TagName("i"));
-
-        //        var iconName = iconElement.GetAttribute("data-icon-name");
-        //        if (string.IsNullOrEmpty(iconName))
-        //            continue;
-        //        else if (iconName.Equals("CompletedSolid", StringComparison.InvariantCultureIgnoreCase))
-        //            unstructuredAccessData.Add(name, true);
-        //        else if (iconName.Equals("Blocked", StringComparison.InvariantCultureIgnoreCase))
-        //            unstructuredAccessData.Add(name, false);
-        //        else
-        //            continue;
-        //    }
-        //}
 
         private IList<IWebElement> GetAccessItems(BrowserInteraction browserInteraction, IWebElement dialogRoot)
         {
-            var timeout = DateTime.Now.AddSeconds(10);
+            // First do a wait until visible until at least 1 item is visible.
+            dialogRoot.WaitUntilVisible(browserInteraction.Selectors
+                .GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_AccessDialogItems), TimeSpan.FromSeconds(10));
 
-            while(DateTime.Now < timeout)
+            var timeout = DateTime.Now.AddSeconds(10);
+            while (DateTime.Now < timeout)
             {
+                Logger.WriteLine("Looking for access items");
                 var accessItems = dialogRoot.FindElements(browserInteraction.Selectors
                 .GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_AccessDialogItems));
-                if (accessItems.Count > 0)
+                if (accessItems.Count > 1) // needs at least 2 (1 + more items)
+                {
+                    Logger.WriteLine($"Returning {accessItems.Count} access items");
                     return accessItems;
+                }
                 else
+                {
+                    Logger.WriteLine("Waiting for access dialog items to appear..");
                     Thread.Sleep(100);
+                }
             }
 
-           return new List<IWebElement>();
+            Logger.WriteLine("Timeout reached for accide dialog items");
+            return new List<IWebElement>();
         }
 
         private CommandResult<UserAccessData> ParseAccessData(BrowserInteraction browserInteraction, Dictionary<string, bool> unstructuredAccessData)

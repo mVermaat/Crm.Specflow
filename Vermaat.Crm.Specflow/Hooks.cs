@@ -2,11 +2,8 @@
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.Connectivity;
 
@@ -134,7 +131,7 @@ namespace Vermaat.Crm.Specflow
                     adminConnection = HybridCrmConnection.CreateAdminConnectionFromAppConfig();
                     break;
                 // Implementations can add their own 'LoginType'. If this is done, then this method shouldn't do anything
-                default: 
+                default:
                     return;
 
             }

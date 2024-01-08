@@ -1,13 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Xrm.Sdk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Configuration;
+﻿using Microsoft.Xrm.Sdk;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -37,7 +30,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 else
                     throw new TestExecutionException(Constants.ErrorCodes.ASYNC_TIMEOUT);
             }
-            
+
             timer.Stop();
             Logger.WriteLine("System jobs are finished");
         }

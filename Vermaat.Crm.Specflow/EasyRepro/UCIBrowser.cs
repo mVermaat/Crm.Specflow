@@ -1,7 +1,6 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.Xrm.Sdk.Metadata;
-using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using Vermaat.Crm.Specflow.Connectivity;

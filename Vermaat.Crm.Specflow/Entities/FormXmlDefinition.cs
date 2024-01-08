@@ -8,7 +8,7 @@ namespace Vermaat.Crm.Specflow.Entities
     public static class FormXmlDefinitionExtensions
     {
         public static string GetLabelInLanguage(this FormLabel[] labels, int languageCode, int fallbackLanguage)
-            => labels.FirstOrDefault(l => l.LanguageCode == languageCode     && !string.IsNullOrEmpty(l.Label))?.Label 
+            => labels.FirstOrDefault(l => l.LanguageCode == languageCode && !string.IsNullOrEmpty(l.Label))?.Label
             ?? labels.FirstOrDefault(l => l.LanguageCode == fallbackLanguage && !string.IsNullOrEmpty(l.Label))?.Label;
     }
 
@@ -30,7 +30,7 @@ namespace Vermaat.Crm.Specflow.Entities
         [XmlElement("header")]
         public FormHeader Header { get; set; }
 
-}
+    }
 
     [Serializable()]
     [DesignerCategory("code")]
@@ -78,7 +78,7 @@ namespace Vermaat.Crm.Specflow.Entities
     [XmlType(AnonymousType = true)]
     public class FormColumn
     {
-       
+
         [XmlArray("sections")]
         [XmlArrayItem("section", IsNullable = false)]
         public FormSection[] Sections { get; set; }

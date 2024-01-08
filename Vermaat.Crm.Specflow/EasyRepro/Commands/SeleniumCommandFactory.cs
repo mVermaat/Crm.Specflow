@@ -1,19 +1,27 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 {
     public class SeleniumCommandFactory
     {
+        public virtual CheckFieldLockedStateCommand CreateCheckFieldLockedStateCommand(string controlName)
+            => new CheckFieldLockedStateCommand(controlName);
+
+        public virtual CheckFieldRequiredStateCommand CreateCheckFieldRequiredStateCommand(string logicalName)
+            => new CheckFieldRequiredStateCommand(logicalName);
+
         public virtual CheckFieldVisibilityCommand CreateCheckFieldVisibilityCommand(string controlName)
             => new CheckFieldVisibilityCommand(controlName);
 
+        public virtual ClearLookupValueCommand CreateClearLookupValueCommand(LookupItem lookupItem)
+            => new ClearLookupValueCommand(lookupItem); 
+
         public virtual ClickRibbonItemCommand CreateClickRibbonItemCommand(string name)
             => new ClickRibbonItemCommand(name);
+
+        public virtual ConvertActiveQuoteToSalesOrderCommand CreateConvertActiveQuoteToSalesOrderCommand()
+            => new ConvertActiveQuoteToSalesOrderCommand();
 
         public virtual ExpandBusinessProcessStageCommand CreateExpandBusinessProcessStageCommand(string stageName)
             => new ExpandBusinessProcessStageCommand(stageName);
@@ -30,6 +38,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         internal virtual GetCurrentFormCommand CreateGetCurrentFormCommand(bool isQuickCreate)
             => new GetCurrentFormCommand(isQuickCreate);
 
+        public virtual GetCurrentRecordIdCommand CreateGetCurrentRecordIdCommand()
+            => new GetCurrentRecordIdCommand();
+
         public virtual GetErrorDialogMessageCommand CreateGetErrorDialogMessageCommand(bool dialogMandatory)
             => new GetErrorDialogMessageCommand(dialogMandatory);
 
@@ -39,8 +50,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual GetRibbonItemCommand CreateGetRibbonItemCommand(string name)
             => new GetRibbonItemCommand(name);
 
+        public virtual OpenQuickCreatedRecordCommand CreateOpenQuickCreatedRecordCommand(string childEntityName)
+            => new OpenQuickCreatedRecordCommand(childEntityName);
+
         public virtual OpenRecordCommand CreateOpenRecordCommand(OpenFormOptions formOptions, Guid? currentAppId)
             => new OpenRecordCommand(formOptions, currentAppId);
+
+        public virtual ReviseQuoteCommand CreateReviseQuoteCommand()
+            => new ReviseQuoteCommand();
 
         public virtual SaveRecordCommand CreateSaveRecordCommand(bool saveIfDuplicate)
             => new SaveRecordCommand(saveIfDuplicate);

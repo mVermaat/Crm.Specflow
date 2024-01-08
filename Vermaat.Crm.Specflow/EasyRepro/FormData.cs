@@ -1,16 +1,8 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-using Microsoft.Dynamics365.UIAutomation.Browser;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk.Metadata;
-using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
-using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.EasyRepro.Fields;
 using Vermaat.Crm.Specflow.Entities;
 
@@ -69,10 +61,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public Guid GetRecordId()
         {
-            Logger.WriteLine("Getting Record Id");
-            var id = _app.App.Entity.GetObjectId();
-            Logger.WriteLine($"Record ID of current opened record: {id}");
-            return id;
+            return SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateGetCurrentRecordIdCommand());
         }
 
         public void Save(bool saveIfDuplicate)

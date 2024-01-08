@@ -1,12 +1,4 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Browser;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vermaat.Crm.Specflow.EasyRepro;
-
-namespace Vermaat.Crm.Specflow.Connectivity
+﻿namespace Vermaat.Crm.Specflow.Connectivity
 {
     public class ClientSecretCrmConnection : CrmConnection
     {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Connectivity
 {
@@ -10,7 +9,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         private CrmConnection _adminConnection;
         private CrmConnection _currentConnection;
-        
+
 
         public CrmService AdminConnection => _adminConnection.Service;
         public CrmService CurrentConnection => _currentConnection.Service;
@@ -30,7 +29,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
             _adminConnection = connection;
         }
 
-        
+
         public void SetCurrentConnection(CrmConnection connection)
         {
             Logger.WriteLine($"Changing current connection to {connection.Identifier}");

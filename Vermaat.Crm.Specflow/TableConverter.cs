@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xrm.Sdk.Metadata;
 using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow
@@ -33,7 +28,7 @@ namespace Vermaat.Crm.Specflow
 
                 var attribute = GlobalTestingContext.Metadata.GetAttributeMetadata(entityName, row[Constants.SpecFlow.TABLE_KEY], GlobalTestingContext.LanguageCode);
 
-                if(row.ContainsKey(Constants.SpecFlow.TABLE_KEY))
+                if (row.ContainsKey(Constants.SpecFlow.TABLE_KEY))
                     row[Constants.SpecFlow.TABLE_KEY] = attribute.LogicalName;
 
                 OnRowProcessed?.Invoke(this, new TableRowEventArgs(entityName, row));
@@ -46,7 +41,7 @@ namespace Vermaat.Crm.Specflow
         {
             foreach (var row in table.Rows)
             {
-                if(row.ContainsKey(column) && !string.IsNullOrWhiteSpace(row[column]))
+                if (row.ContainsKey(column) && !string.IsNullOrWhiteSpace(row[column]))
                 {
                     var original = row[column];
                     row[column] = GlobalTestingContext.LocalizedTexts[row[column], languageCode] ?? row[column];

@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk.Metadata;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields
@@ -35,7 +32,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
         public static void AddCompositeField(string entityName, string compositeFieldName)
         {
-            if(!_compositeFields.TryGetValue(entityName, out var fieldList))
+            if (!_compositeFields.TryGetValue(entityName, out var fieldList))
             {
                 fieldList = new HashSet<string>();
                 _compositeFields.Add(entityName, fieldList);
@@ -140,14 +137,14 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
 
                 context.Cell = cell;
                 GetFormCellParser(metadata, cell).AddToDictionary(formFields, context);
-               
+
             }
         }
 
         private static FormCellParser GetFormCellParser(EntityMetadata metadata, FormCell cell)
         {
             if (_compositeFields.TryGetValue(metadata.LogicalName, out var compositeSet) && compositeSet.Contains(cell.Control.AttributeName))
-                return new CompositeFormCellParser();            
+                return new CompositeFormCellParser();
 
             return new DefaultFormCellParser();
         }

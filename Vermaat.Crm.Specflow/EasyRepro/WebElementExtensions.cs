@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
 {
@@ -16,7 +11,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 foundElement = element.FindElement(by);
                 return foundElement != null;
             }
-            catch(NoSuchElementException)
+            catch (NoSuchElementException)
             {
                 foundElement = null;
                 return false;

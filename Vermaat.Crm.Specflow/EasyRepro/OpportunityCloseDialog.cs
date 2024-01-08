@@ -4,10 +4,7 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.EasyRepro.Fields;
 using Vermaat.Crm.Specflow.FormLoadConditions;
@@ -20,7 +17,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private readonly EntityMetadata _entityMetadata;
         private readonly bool _closeAsWon;
 
-        private OpportunityCloseDialog(UCIApp app, EntityMetadata entityMetadata, bool closeAsWon) 
+        private OpportunityCloseDialog(UCIApp app, EntityMetadata entityMetadata, bool closeAsWon)
         {
             _app = app;
             _entityMetadata = entityMetadata;
@@ -38,7 +35,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void EnterData(CrmTestingContext crmContext, Table closeData)
         {
-            foreach(var row in closeData.Rows)
+            foreach (var row in closeData.Rows)
             {
                 var attribute = _entityMetadata.Attributes.FirstOrDefault(a => a.LogicalName == row[Constants.SpecFlow.TABLE_KEY]);
                 if (attribute == null)
@@ -53,19 +50,19 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         {
             _app.Client.Execute(BrowserOptionHelper.GetOptions($"Opening opportunity close dialog"), driver =>
             {
-                    driver.WaitUntilClickable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok]),
-                               new TimeSpan(0, 0, 5),
-                               d => { driver.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok])); },
-                               () => { throw new InvalidOperationException("The Close Opportunity dialog is not available."); });
+                driver.WaitUntilClickable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok]),
+                           new TimeSpan(0, 0, 5),
+                           d => { driver.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Dialogs.CloseOpportunity.Ok])); },
+                           () => { throw new InvalidOperationException("The Close Opportunity dialog is not available."); });
 
-                    HelperMethods.WaitForFormLoad(_app.WebDriver, new NoBusinessProcessError(), new RecordHasStatus(opportunity, _closeAsWon ? 1 : 2));
-                
+                HelperMethods.WaitForFormLoad(_app.WebDriver, new NoBusinessProcessError(), new RecordHasStatus(opportunity, _closeAsWon ? 1 : 2));
+
                 return true;
             });
         }
         private static bool OpenOpportunityCloseDialog(UCIApp app, FormData formData, bool closeAsWon)
         {
-            if(closeAsWon)
+            if (closeAsWon)
                 formData.CommandBar.ClickButton(app.LocalizedTexts[Constants.LocalizedTexts.CloseAsWon, app.UILanguageCode]);
             else
                 formData.CommandBar.ClickButton(app.LocalizedTexts[Constants.LocalizedTexts.CloseAsLost, app.UILanguageCode]);

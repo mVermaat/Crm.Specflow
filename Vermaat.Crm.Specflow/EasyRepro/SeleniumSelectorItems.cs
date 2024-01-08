@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vermaat.Crm.Specflow.EasyRepro
+﻿namespace Vermaat.Crm.Specflow.EasyRepro
 {
     public enum SeleniumSelectorItems
     {
@@ -27,6 +21,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         Entity_DateContainer,
         Entity_TimeContainer,
+
+        Entity_LookupDeleteItem,
+        Entity_LookupItemContainer,
 
         Entity_Footer_Status,
 

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Metadata;
+﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -30,11 +23,11 @@ namespace Vermaat.Crm.Specflow.Commands
             Entity record = GlobalTestingContext.ConnectionManager.CurrentConnection.Retrieve(aliasRef, new ColumnSet(attribute.LogicalName));
             var value = record.Contains(attribute.LogicalName) ? record[attribute.LogicalName] : null;
 
-            if(value == null )
+            if (value == null)
             {
                 throw new TestExecutionException(Constants.ErrorCodes.VALUE_NULL, attribute.LogicalName);
             }
-            else if(value.GetType() != typeof(EntityReference))
+            else if (value.GetType() != typeof(EntityReference))
             {
                 throw new TestExecutionException(Constants.ErrorCodes.INVALID_DATATYPE, attribute.LogicalName, "lookup");
             }

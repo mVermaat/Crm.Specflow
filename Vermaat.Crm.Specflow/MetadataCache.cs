@@ -6,15 +6,12 @@ using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vermaat.Crm.Specflow.Connectivity;
 
 namespace Vermaat.Crm.Specflow
 {
     public class MetadataCache
     {
-                 
+
         private readonly Dictionary<string, Dictionary<EntityFilters, EntityMetadata>> _entityMetadataCache;
         private readonly Dictionary<string, DataCollection<Entity>> _attributeMapCache;
         private readonly Dictionary<string, Guid> _formCache;
@@ -31,7 +28,7 @@ namespace Vermaat.Crm.Specflow
             var entityData = GetEntityMetadata(entityName);
 
             var md = entityData.Attributes.Where(a => a.LogicalName.Equals(logicalName)).FirstOrDefault();
-            
+
             Assert.IsNotNull(md, string.Format("Can't find attribute {0} on entity {1}", logicalName, entityName));
 
             return md;
@@ -69,8 +66,8 @@ namespace Vermaat.Crm.Specflow
                 _entityMetadataCache.Add(entityName, metadataDic);
             }
 
-            if(!metadataDic.TryGetValue(filters, out EntityMetadata result))
-            { 
+            if (!metadataDic.TryGetValue(filters, out EntityMetadata result))
+            {
                 var req = new RetrieveEntityRequest()
                 {
                     EntityFilters = filters,
@@ -87,7 +84,7 @@ namespace Vermaat.Crm.Specflow
         public DataCollection<Entity> GetAttributeMaps(string parentEntity, string childEntity)
         {
             Logger.WriteLine($"Getting attribute maps between {parentEntity} and {childEntity}");
-            if(!_attributeMapCache.TryGetValue(parentEntity+childEntity, out DataCollection<Entity> result)) 
+            if (!_attributeMapCache.TryGetValue(parentEntity + childEntity, out DataCollection<Entity> result))
             {
                 Logger.WriteLine("Not cached yet. Retrieving from CRM");
                 var query = new QueryExpression("attributemap");
@@ -105,7 +102,7 @@ namespace Vermaat.Crm.Specflow
 
         public Guid GetFormId(string entityName, string formName)
         {
-            if(!_formCache.TryGetValue($"{entityName}_{formName}", out Guid formId))
+            if (!_formCache.TryGetValue($"{entityName}_{formName}", out Guid formId))
             {
                 var query = new QueryExpression("systemform")
                 {

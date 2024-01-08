@@ -1,14 +1,4 @@
-﻿using Azure.Core;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
-using Microsoft.Dynamics365.UIAutomation.Browser;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Vermaat.Crm.Specflow.Connectivity;
+﻿using Vermaat.Crm.Specflow.Connectivity;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -29,8 +19,8 @@ namespace Vermaat.Crm.Specflow.Commands
             Logger.WriteLine($"Successfully logged in with {_userProfile.Profile}");
         }
 
-        
 
-       
+
+
     }
 }

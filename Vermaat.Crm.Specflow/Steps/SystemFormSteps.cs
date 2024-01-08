@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.Commands;
 
@@ -50,7 +48,7 @@ namespace Vermaat.Crm.Specflow.Steps
 
         private IEnumerable<string> ParseRoles(string roles)
         {
-           if(string.IsNullOrWhiteSpace(roles))
+            if (string.IsNullOrWhiteSpace(roles))
                 return Array.Empty<string>();
 
             return roles.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s?.Trim());

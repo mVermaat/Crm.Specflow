@@ -1,7 +1,4 @@
-﻿using System;
-using TechTalk.SpecFlow;
-
-namespace Vermaat.Crm.Specflow.Commands
+﻿namespace Vermaat.Crm.Specflow.Commands
 {
     public abstract class BrowserCommandFunc<TResult> : ICommandFunc<TResult>
     {
@@ -19,7 +16,7 @@ namespace Vermaat.Crm.Specflow.Commands
             var actionToUse = commandAction == CommandAction.Default ?
                 HelperMethods.GetPreferredCommandActionFromTarget(_crmContext) : commandAction;
 
-            switch(actionToUse)
+            switch (actionToUse)
             {
                 case CommandAction.ForceApi:
                 case CommandAction.PreferApi:

@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.Expressions
 {
     public class FormulaFunctions
     {
+        public static DateTime Now()
+        {
+            return DateTime.Now;
+        }
+
         public static DateTime Today()
         {
             return DateTime.Today;
@@ -21,6 +22,11 @@ namespace Vermaat.Crm.Specflow.Expressions
         public static int CurrentMonth()
         {
             return DateTime.Today.Month;
+        }
+
+        public static int CurrentQuarter()
+        {
+            return (CurrentMonth() + 2) / 3;
         }
 
         public static int CurrentYear()

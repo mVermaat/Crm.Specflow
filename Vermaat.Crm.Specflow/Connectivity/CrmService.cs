@@ -1,15 +1,10 @@
-﻿using Microsoft.Xrm.Sdk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using Vermaat.Crm.Specflow.Entities;
-using OpenQA.Selenium;
-using System.Net;
 using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Crm.Sdk.Messages;
+using System;
+using System.Net;
+using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Connectivity
 {
@@ -166,7 +161,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
                 throw new TestExecutionException(Constants.ErrorCodes.UNABLE_TO_LOGIN, client.LastCrmException, client.LastCrmError);
 
             return client;
-            
+
         }
     }
 }

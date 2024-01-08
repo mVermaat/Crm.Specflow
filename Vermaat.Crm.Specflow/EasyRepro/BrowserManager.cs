@@ -1,12 +1,8 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-using Microsoft.Dynamics365.UIAutomation.Browser;
+﻿using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Connectivity;
 using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.Entities;
@@ -19,7 +15,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         private readonly Dictionary<BrowserType, Dictionary<string, UCIBrowser>> _browserCache;
         private readonly Lazy<CrmModelApps> _appCache;
 
-        
+
         public BrowserManager(LocalizedTexts buttonTexts)
         {
             _browserCache = new Dictionary<BrowserType, Dictionary<string, UCIBrowser>>();
@@ -47,22 +43,22 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         public UCIBrowser GetBrowser(BrowserOptions options, BrowserLoginDetails browserLoginDetails, SeleniumCommandFactory seleniumCommandFactory)
         {
             Logger.WriteLine("Getting Browser");
-            if(!_browserCache.TryGetValue(options.BrowserType, out var dic))
+            if (!_browserCache.TryGetValue(options.BrowserType, out var dic))
             {
                 Logger.WriteLine($"No browser for {options.BrowserType} doesn't exist. Creating new list");
                 dic = new Dictionary<string, UCIBrowser>();
                 _browserCache.Add(options.BrowserType, dic);
             }
 
-            if(!dic.TryGetValue(browserLoginDetails.Username, out UCIBrowser browser))
+            if (!dic.TryGetValue(browserLoginDetails.Username, out UCIBrowser browser))
             {
                 Logger.WriteLine($"Browser for {browserLoginDetails.Username} doesn't exist. Creating new browser session");
 
-                if(string.IsNullOrEmpty(options.DriversPath))
+                if (string.IsNullOrEmpty(options.DriversPath))
                 {
                     options.DriversPath = GetDriverPath(options);
                 }
-                
+
                 browser = new UCIBrowser(options, _localizedTexts, _appCache.Value, seleniumCommandFactory, GlobalTestingContext.RedirectAction);
                 dic.Add(browserLoginDetails.Username, browser);
                 browser.Login(browserLoginDetails);
@@ -111,7 +107,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
         }
 
         #region IDisposable Support
-        private bool _disposedValue = false; 
+        private bool _disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -120,9 +116,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 Logger.WriteLine("Cleaning up Browser sessions");
                 if (disposing)
                 {
-                    foreach(var list in _browserCache.Values)
+                    foreach (var list in _browserCache.Values)
                     {
-                        foreach(var item in list.Values)
+                        foreach (var item in list.Values)
                         {
                             item.Dispose();
                         }
@@ -143,7 +139,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
             Dispose(true);
         }
 
-        
+
         #endregion
     }
 }

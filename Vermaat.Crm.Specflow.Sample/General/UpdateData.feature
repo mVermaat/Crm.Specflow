@@ -42,18 +42,25 @@ Then TestContact has the following values
 
 @API @Chrome @Firefox @Cleanup @Set1
 Scenario: Clearing values of Account
-Given an account named TestAccount with the following values
+Given an account named ParentAccount with the following values
     | Property     | Value                   |
-    | Account Name | DynamicHands            |
-    | Main Phone   | 0612345678              |
-    | Website      | https://dynamichands.nl |
-    | Industry     | Consulting              |
-    | Description  | Test multi line         |
+    | Account Name | ParentAccount            |
+Given an account named TestAccount with the following values
+    | Property       | Value                   |
+    | Account Name   | DynamicHands            |
+    | Main Phone     | 0612345678              |
+    | Website        | https://dynamichands.nl |
+    | Industry       | Consulting              |
+    | Description    | Test multi line         |
+    | Parent Account | ParentAccount           |
+
 When TestAccount is updated with the following values
-    | Property    | Value |
-    | Industry    |       |
-    | Website     |       |
-    | Description |       |
+    | Property        | Value |
+    | Industry        |       |
+    | Website         |       |
+    | Description     |       |
+    | Parent Account  |       |
+    | Primary Contact |       |
 Then TestAccount has the following values
     | Property     | Value        |
     | Account Name | DynamicHands |

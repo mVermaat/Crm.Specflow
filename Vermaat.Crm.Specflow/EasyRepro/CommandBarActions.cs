@@ -1,13 +1,4 @@
-﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-using Microsoft.Dynamics365.UIAutomation.Browser;
-using Microsoft.Xrm.Sdk;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vermaat.Crm.Specflow.EasyRepro.Commands;
+﻿using Microsoft.Xrm.Sdk;
 using Vermaat.Crm.Specflow.FormLoadConditions;
 
 namespace Vermaat.Crm.Specflow.EasyRepro
@@ -29,7 +20,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public bool IsButtonAvailable(string name)
             => SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateGetRibbonItemCommand(name)) != null;
-        
+
 
         public void ActivateQuote()
         {
@@ -58,31 +49,12 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public EntityReference ReviseQuote()
         {
-            Logger.WriteLine("Revising Quote");
-            return _app.Client.Execute(BrowserOptionHelper.GetOptions($"Revise Quote"), driver =>
-            {
-                ClickButton(_app.LocalizedTexts[Constants.LocalizedTexts.ReviseQuoteButton, _app.UILanguageCode]);
-
-                _app.Client.Browser.ThinkTime(1000);
-                HelperMethods.WaitForFormLoad(driver);
-
-                return new EntityReference("quote", _app.App.Entity.GetObjectId());
-            }).Value;            
+            return SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateReviseQuoteCommand());
         }
 
         private void CreateOrderDialog()
         {
-            _app.Client.Execute(BrowserOptionHelper.GetOptions($"Create Sales Order"), driver =>
-            {
-                
-                var container = driver.WaitUntilAvailable(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_Container));
-                var button = container.FindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_OK));
-
-                button.Click();
-                HelperMethods.WaitForFormLoad(driver, new FormIsOfEntity("salesorder"));
-
-                return true;
-            });
+            SeleniumCommandProcessor.ExecuteCommand(_app, _app.SeleniumCommandFactory.CreateConvertActiveQuoteToSalesOrderCommand());
         }
     }
 }

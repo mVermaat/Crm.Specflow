@@ -1,9 +1,4 @@
-﻿using Microsoft.Xrm.Sdk.Metadata;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.EasyRepro.Fields
@@ -15,7 +10,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
             var fields = SeleniumCommandProcessor.ExecuteCommand(context.App, context.App.SeleniumCommandFactory.CreateGetCompositeControlFieldsCommand(context.Cell.Control.AttributeName));
             var controlPrefix = context.IsHeader ? "header_" : string.Empty;
 
-            foreach(var field in fields)
+            foreach (var field in fields)
             {
                 var control = new FormControl()
                 {
@@ -31,7 +26,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Fields
                 formFieldSet.Add(formField, context.TabName, context.SectionName);
             }
 
-           
+
         }
     }
 }

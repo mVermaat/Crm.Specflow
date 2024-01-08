@@ -39,7 +39,7 @@ namespace Vermaat.Crm.Specflow
             {
                 DefaultData data = ser.Deserialize(reader) as DefaultData;
 
-                if(data == null || data.Entities == null || data.Entities.Length == 0)
+                if (data == null || data.Entities == null || data.Entities.Length == 0)
                 {
                     Logger.WriteLine("DefaultData is empty");
                     return new Dictionary<string, DefaultDataField[]>();
@@ -111,7 +111,7 @@ namespace Vermaat.Crm.Specflow
                 {
                     var sourceAttribute = map.GetAttributeValue<string>("sourceattributename");
 
-                    if(parentMetadata[sourceAttribute].IsPrimaryId.GetValueOrDefault())
+                    if (parentMetadata[sourceAttribute].IsPrimaryId.GetValueOrDefault())
                     {
                         toCreate[map.GetAttributeValue<string>("targetattributename")] = parentEntity;
                     }

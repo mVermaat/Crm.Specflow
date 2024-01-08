@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -91,6 +87,8 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.SELENIUM_COMMAND_STALE_ELEMENT, "Selenium command failed with stale element: {0}");
             AddError(Constants.ErrorCodes.SELENIUM_COMMAND_ELEMENT_CLICK_INTERCEPTED, "Selenium command failed with element click interception: {0}");
             AddError(Constants.ErrorCodes.ERROR_DIALOG_NOT_FOUND, "Error dialog not found");
+            AddError(Constants.ErrorCodes.ENTITY_ID_NOT_FOUND, "Unable to retrieve object Id for this entity");
+            AddError(Constants.ErrorCodes.LOOKUP_MISSING_DELETE_BUTTON, "Missing delete button for lookup value for {0}");
         }
 
         public void AddError(int errorCode, string message)

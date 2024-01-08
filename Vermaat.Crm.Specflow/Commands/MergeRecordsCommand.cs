@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using Microsoft.Crm.Sdk.Messages;
+﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -56,7 +56,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
             var attributeMetadata = GlobalTestingContext.Metadata.GetEntityMetadata(_subordinateRecord.LogicalName).Attributes.ToDictionary(a => a.LogicalName);
             var deleteQuery = result.Attributes.Where(a =>
-                attributeMetadata[a.Key].IsPrimaryId.GetValueOrDefault() || 
+                attributeMetadata[a.Key].IsPrimaryId.GetValueOrDefault() ||
                 !attributeMetadata[a.Key].IsValidForUpdate.GetValueOrDefault() ||
                 _unsupportedAttributes.Contains(a.Key) ||
                 (_mergeAll && a.Value == null));
@@ -67,7 +67,7 @@ namespace Vermaat.Crm.Specflow.Commands
             }
 
             // Need to clear name from entityreference, as merge creates an error if an entityreference has its name filled.
-            foreach(var remainingAttribute in result.Attributes)
+            foreach (var remainingAttribute in result.Attributes)
             {
                 var value = remainingAttribute.Value as EntityReference;
                 if (value != null)

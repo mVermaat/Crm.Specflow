@@ -2,11 +2,6 @@
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -36,7 +31,7 @@ namespace Vermaat.Crm.Specflow.Commands
             GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<CloseQuoteResponse>(new CloseQuoteRequest()
             {
                 Status = new OptionSetValue(-1),
-                QuoteClose = quoteClose                
+                QuoteClose = quoteClose
             });
 
             var response = GlobalTestingContext.ConnectionManager.CurrentConnection.Execute<ReviseQuoteResponse>(new ReviseQuoteRequest()

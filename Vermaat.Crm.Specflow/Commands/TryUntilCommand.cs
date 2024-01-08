@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Vermaat.Crm.Specflow.Commands
 {
@@ -26,7 +22,7 @@ namespace Vermaat.Crm.Specflow.Commands
         {
             DateTime timeoutDateTime = DateTime.Now.Add(_timeout);
             ExecuteUntil(timeoutDateTime, commandAction);
-            
+
         }
 
         private void ExecuteUntil(DateTime timeoutDateTime, CommandAction commandAction)

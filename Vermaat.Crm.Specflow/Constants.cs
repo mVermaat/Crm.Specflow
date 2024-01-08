@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vermaat.Crm.Specflow
+﻿namespace Vermaat.Crm.Specflow
 {
     public static class Constants
     {
@@ -112,6 +106,8 @@ namespace Vermaat.Crm.Specflow
             public const int SELENIUM_COMMAND_STALE_ELEMENT = 73;
             public const int SELENIUM_COMMAND_ELEMENT_CLICK_INTERCEPTED = 74;
             public const int ERROR_DIALOG_NOT_FOUND = 75;
+            public const int ENTITY_ID_NOT_FOUND = 76;
+            public const int LOOKUP_MISSING_DELETE_BUTTON = 77;
         }
 
         public class LocalizedTexts

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xrm.Sdk;
-using System;
 using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -10,7 +9,7 @@ namespace Vermaat.Crm.Specflow.Commands
         private readonly string _alias;
 
         public DeleteRecordCommand(CrmTestingContext crmContext, SeleniumTestingContext seleniumContext, string alias)
-            :base(crmContext, seleniumContext)
+            : base(crmContext, seleniumContext)
         {
             _toDelete = crmContext.RecordCache.Get(alias, true);
             _alias = alias;

@@ -1,11 +1,7 @@
-﻿using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
+﻿using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -16,7 +12,7 @@ namespace Vermaat.Crm.Specflow.Commands
         private readonly string _name;
         private readonly string[] _expectedRoles;
 
-        public AssertFormRolesCommand(CrmTestingContext crmContext, string entityTypeCode, string name, IEnumerable<string> roles) 
+        public AssertFormRolesCommand(CrmTestingContext crmContext, string entityTypeCode, string name, IEnumerable<string> roles)
             : base(crmContext)
         {
             _entityTypeCode = entityTypeCode;
@@ -27,7 +23,7 @@ namespace Vermaat.Crm.Specflow.Commands
         public override void Execute()
         {
             var form = SystemForm.GetSystemForm(GlobalTestingContext.ConnectionManager.CurrentConnection, _name, _entityTypeCode);
-            if(form == null)
+            if (form == null)
             {
                 if (!string.IsNullOrEmpty(_entityTypeCode) && _entityTypeCode.Equals("none", StringComparison.OrdinalIgnoreCase))
                     throw new TestExecutionException(Constants.ErrorCodes.DASHBOARD_NOT_FOUND, _name);
@@ -39,9 +35,9 @@ namespace Vermaat.Crm.Specflow.Commands
             var extraRoles = actualRoles.Except(_expectedRoles).ToArray();
             var missingRoles = _expectedRoles.Except(actualRoles).ToArray();
 
-            if(extraRoles.Length > 0 || missingRoles.Length > 0)
+            if (extraRoles.Length > 0 || missingRoles.Length > 0)
             {
-                throw new TestExecutionException(Constants.ErrorCodes.ROLE_COUNT_ASSERT_FAILED, _name, 
+                throw new TestExecutionException(Constants.ErrorCodes.ROLE_COUNT_ASSERT_FAILED, _name,
                     missingRoles.Length, string.Join(", ", missingRoles),
                     extraRoles.Length, string.Join(", ", extraRoles));
             }
@@ -49,7 +45,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
         private string[] GetRoles(Guid[] roleIds)
         {
-            if(roleIds == null || roleIds.Length == 0)
+            if (roleIds == null || roleIds.Length == 0)
                 return Array.Empty<string>();
 
             return GlobalTestingContext.ConnectionManager.AdminConnection.RetrieveMultiple(new QueryExpression("role")
