@@ -66,12 +66,11 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
                     saveCompleted = true;
                 else if (saveStatus == SaveStatus.Unsaved)
                 {
-                    if (HasDuplicateDetection(browserInteraction))
+                    var duplicateDetectionResult = SeleniumCommandProcessor.ExecuteCommand(browserInteraction, browserInteraction.SeleniumCommandFactory.CreateCheckForDuplicateDetection(_saveIfDuplicate));
+
+                    if(duplicateDetectionResult == DuplicateDetectionResult.DuplicateDetectionRejected)
                     {
-                        if (_saveIfDuplicate)
-                            AcceptDuplicateDetection(browserInteraction.Driver);
-                        else
-                            return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, $"Duplicate detected and saving with duplicate is not allowed");
+                        return CommandResult.Fail(false, Constants.ErrorCodes.FORM_SAVE_FAILED, $"Duplicate detected and saving with duplicate is not allowed");
                     }
                     else if (browserInteraction.Driver.TryFindElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Dialog_ErrorDialog), out var errorDialog))
                     {

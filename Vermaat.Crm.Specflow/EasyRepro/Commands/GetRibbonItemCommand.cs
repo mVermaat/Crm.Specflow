@@ -11,15 +11,18 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         private readonly string _subButtonName;
         private readonly string _mainItemName;
 
-        public GetRibbonItemCommand(string buttonName)
+        public GetRibbonItemCommand(string buttonName, string buttonDelimiter)
         {
             if (string.IsNullOrEmpty(buttonName))
                 throw new ArgumentNullException(nameof(buttonName));
 
-            if (buttonName.Contains('.'))
+            if(string.IsNullOrEmpty(buttonDelimiter))
+                throw new ArgumentNullException(nameof(buttonDelimiter));
+
+            if (buttonName.Contains(buttonDelimiter))
             {
-                _mainItemName = buttonName.Substring(0, buttonName.IndexOf('.'));
-                _subButtonName = buttonName.Substring(buttonName.IndexOf('.') + 1);
+                _mainItemName = buttonName.Substring(0, buttonName.IndexOf(buttonDelimiter));
+                _subButtonName = buttonName.Substring(buttonName.IndexOf(buttonDelimiter) + buttonDelimiter.Length);
             }
             else
             {

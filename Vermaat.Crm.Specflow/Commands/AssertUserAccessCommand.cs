@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 using Vermaat.Crm.Specflow.EasyRepro;
+using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.Entities;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -39,7 +40,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 var browser = GlobalTestingContext.BrowserManager.GetBrowser(_seleniumContext.BrowserOptions,
                     GlobalTestingContext.ConnectionManager.CurrentBrowserLoginDetails, _seleniumContext.SeleniumCommandFactory);
 
-                var actualAccess = GetUserAccessData(browser, record, 3);
+                var actualAccess = GetUserAccessData(browser, record, 3, true);
 
 
                 errors.AddRange(AssertAccess(actualAccess, expectedAccess, profile.Profile));
@@ -51,29 +52,41 @@ namespace Vermaat.Crm.Specflow.Commands
             GlobalTestingContext.ConnectionManager.SetCurrentConnection(oldConnection);
         }
 
-        private UserAccessData GetUserAccessData(UCIBrowser browser, EntityReference record, int retryCount)
+        private UserAccessData GetUserAccessData(UCIBrowser browser, EntityReference record, int retryCount, bool firstTry)
         {
-            UserAccessData actualAccess;
             try
             {
-                var formData = browser.OpenRecord(new OpenFormOptions(record));
-                formData.CommandBar.ClickButton(browser.App.LocalizedTexts[Constants.LocalizedTexts.CheckAccessRibbonButton, browser.App.UILanguageCode]);
+                if (firstTry)
+                {
+                    var formData = browser.OpenRecord(new OpenFormOptions(record));
+                    formData.CommandBar.ClickButton(browser.App.LocalizedTexts[Constants.LocalizedTexts.CheckAccessRibbonButton, browser.App.UILanguageCode]);
+                }
 
-                actualAccess = SeleniumCommandProcessor.ExecuteCommand(browser.App, browser.App.SeleniumCommandFactory.CreateGetAccessForUserCommand());
             }
-            catch (TestExecutionException ex)
+            catch(TestExecutionException ex)
             {
                 if (ex.ErrorCode == Constants.ErrorCodes.MISSING_PERMISSIONS_TO_VIEW_RECORD)
                 {
                     // if you can't view the record, you don't have any permissions on it.
-                    actualAccess = new UserAccessData();
+                    return new UserAccessData();
                 }
-                else if (retryCount > 0)
-                    return GetUserAccessData(browser, record, retryCount - 1);
+                else
+                {
+                    throw;
+                }
+            }
+
+            try
+            {
+                return SeleniumCommandProcessor.ExecuteCommand(browser.App, browser.App.SeleniumCommandFactory.CreateGetAccessForUserCommand());
+            }
+            catch (TestExecutionException)
+            {
+                if (retryCount > 0)
+                    return GetUserAccessData(browser, record, retryCount - 1, false);
                 else
                     throw;
             }
-            return actualAccess;
         }
 
         private IEnumerable<string> AssertAccess(UserAccessData actualAccessData, UserAccessData expectedAccessData, string profile)

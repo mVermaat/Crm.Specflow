@@ -2,17 +2,17 @@
 {
     public abstract class CrmConnection
     {
-        private CrmService _service;
+        private CrmServiceBase _service;
 
         public CrmConnection(string identifier)
         {
             Identifier = $"{GetType().Name}_{identifier}";
         }
 
-        public abstract CrmService CreateCrmServiceInstance();
+        public abstract CrmServiceBase CreateCrmServiceInstance();
         public abstract BrowserLoginDetails GetBrowserLoginInformation();
 
-        public CrmService Service
+        public CrmServiceBase Service
         {
             get
             {

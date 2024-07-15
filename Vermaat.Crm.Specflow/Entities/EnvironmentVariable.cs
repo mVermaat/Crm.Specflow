@@ -18,7 +18,7 @@ namespace Vermaat.Crm.Specflow.Entities
 
         }
 
-        public void UpdateValue(CrmService svc, string newValue)
+        public void UpdateValue(CrmServiceBase svc, string newValue)
         {
             Logger.WriteLine($"Updating Environment Variable {Name} to {newValue}");
             var record = new Entity("environmentvariablevalue");
@@ -37,7 +37,7 @@ namespace Vermaat.Crm.Specflow.Entities
             }
         }
 
-        public static EnvironmentVariable GetEnvironmentVariable(CrmService svc, string name)
+        public static EnvironmentVariable GetEnvironmentVariable(CrmServiceBase svc, string name)
         {
             Logger.WriteLine($"Getting Environment Variable {name}");
             var result = svc.RetrieveMultiple(

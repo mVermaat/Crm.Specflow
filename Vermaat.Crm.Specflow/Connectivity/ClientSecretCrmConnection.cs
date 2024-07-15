@@ -28,7 +28,7 @@
             return new ClientSecretCrmConnection(username, password);
         }
 
-        public override CrmService CreateCrmServiceInstance()
+        public override CrmServiceBase CreateCrmServiceInstance()
         {
             return new CrmService($"AuthType=ClientSecret;Url='{_url}';ClientId='{_clientId}';ClientSecret='{_clientSecret.Replace("'", "''")}';RequireNewInstance=True");
         }

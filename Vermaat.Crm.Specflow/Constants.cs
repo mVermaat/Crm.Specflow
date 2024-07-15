@@ -108,6 +108,7 @@
             public const int ERROR_DIALOG_NOT_FOUND = 75;
             public const int ENTITY_ID_NOT_FOUND = 76;
             public const int LOOKUP_MISSING_DELETE_BUTTON = 77;
+            public const int QUICK_CREATE_SAVE_BUTTON_DOESNT_EXIST = 78;
         }
 
         public class LocalizedTexts

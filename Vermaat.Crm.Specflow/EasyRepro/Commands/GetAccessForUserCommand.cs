@@ -20,6 +20,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             if (dialogRoot == null)
                 return CommandResult<UserAccessData>.Fail(true, Constants.ErrorCodes.CHECK_ACCESS_DIALOG_NOT_FOUND);
 
+            Thread.Sleep(2000);
             var accessItems = GetAccessItems(browserInteraction, dialogRoot);
             Logger.WriteLine($"Found {accessItems.Count} access items");
 
@@ -27,6 +28,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
             foreach (var accessItem in accessItems)
             {
                 var name = accessItem.GetAttribute("name")?.ToLower();
+                if (string.IsNullOrEmpty(name))
+                    continue;
+
                 var iconElement = accessItem.FindElement(By.TagName("i"));
 
                 var iconName = iconElement.GetAttribute("data-icon-name");

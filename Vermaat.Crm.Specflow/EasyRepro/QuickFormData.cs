@@ -57,17 +57,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
         public void Save(bool saveIfDuplicate)
         {
-            Logger.WriteLine($"Saving Record");
-            try
-            {
-                _app.App.QuickCreate.Save();
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, ex, ex.Message);
-            }
-            ConfirmDuplicate(saveIfDuplicate);
-            WaitUntilSaveCompleted();
+            SeleniumCommandProcessor.ExecuteCommand(_app,_app.SeleniumCommandFactory.CreateSaveQuickCreateRecord(saveIfDuplicate));
         }
 
         public void FillForm(CrmTestingContext crmContext, Table formData)
@@ -84,36 +74,7 @@ namespace Vermaat.Crm.Specflow.EasyRepro
                 field.SetValue(crmContext, row[Constants.SpecFlow.TABLE_VALUE]);
             }
         }
-
-        private void WaitUntilSaveCompleted()
-        {
-            _app.Client.Execute(BrowserOptionHelper.GetOptions("Open Quick Create Child"), (driver) =>
-            {
-                var timeout = DateTime.Now.AddSeconds(20);
-                var saveCompleted = false;
-                while (!saveCompleted && DateTime.Now < timeout)
-                {
-                    if (driver.HasElement(SeleniumFunctions.Selectors.GetXPathSeleniumSelector(SeleniumSelectorItems.Entity_QuickCreate_Notification_Window)))
-                        saveCompleted = true;
-                    else
-                    {
-                        var formNotifications = GetFormNotifications();
-                        if (formNotifications.Any())
-                        {
-                            throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_FAILED, $"Detected Unsaved changes. Form Notifications: {string.Join(", ", formNotifications)}");
-                        }
-                        Logger.WriteLine("Save not yet completed. Waiting..");
-                        Thread.Sleep(250);
-                    }
-                }
-
-                if (!saveCompleted)
-                    throw new TestExecutionException(Constants.ErrorCodes.FORM_SAVE_TIMEOUT, 20);
-
-                return true;
-            });
-        }
-
+        
         public bool IsItQuickCreate()
         {
             var driver = _app.WebDriver;
@@ -135,52 +96,5 @@ namespace Vermaat.Crm.Specflow.EasyRepro
 
             return headerText.Contains("Quick Create");
         }
-
-        private void ConfirmDuplicate(bool saveIfDuplicate)
-        {
-            var element = _app.WebDriver.WaitUntilAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionIgnoreAndSaveButton]), new TimeSpan(0, 0, 5));
-
-            if (element != null)
-            {
-                if (saveIfDuplicate)
-                {
-                    _app.WebDriver.ClickWhenAvailable(By.XPath(AppElements.Xpath[AppReference.Entity.DuplicateDetectionIgnoreAndSaveButton]));
-                }
-                else
-                {
-                    throw new TestExecutionException(Constants.ErrorCodes.DUPLICATE_RECORD_DETECTED);
-                }
-            }
-        }
-
-        private Dictionary<string, FormFieldSet> InitializeFormData()
-        {
-            throw new NotImplementedException();
-            //dynamic attributeCollection = _app.WebDriver.ExecuteScript("return Xrm.Page.data.entity.attributes.getAll().map(function(a) { return { name: a.getName(), controls: a.controls.getAll().map(function(c) { return c.getName() }) } })");
-
-            //var formFields = new Dictionary<string, QuickCreateBodyFormField>();
-            //var metadataDic = _entityMetadata.Attributes.ToDictionary(a => a.LogicalName);
-            //foreach (var attribute in attributeCollection)
-            //{
-            //    var controls = new string[attribute["controls"].Count];
-
-            //    for (int i = 0; i < attribute["controls"].Count; i++)
-            //    {
-            //        controls[i] = attribute["controls"][i];
-            //    }
-
-            //    QuickCreateBodyFormField field = CreateFormField(metadataDic[attribute["name"]], controls);
-            //    if (field != null)
-            //        formFields.Add(attribute["name"], field);
-
-            //}
-
-            //return formFields;
-        }
-
-        //private QuickCreateBodyFormField CreateFormField(AttributeMetadata metadata, string[] controls)
-        //{
-        //    return controls.Length == 0 ? null : new QuickCreateBodyFormField(_app, metadata, controls[0]);
-        //}
     }
 }

@@ -89,6 +89,7 @@ namespace Vermaat.Crm.Specflow
             AddError(Constants.ErrorCodes.ERROR_DIALOG_NOT_FOUND, "Error dialog not found");
             AddError(Constants.ErrorCodes.ENTITY_ID_NOT_FOUND, "Unable to retrieve object Id for this entity");
             AddError(Constants.ErrorCodes.LOOKUP_MISSING_DELETE_BUTTON, "Missing delete button for lookup value for {0}");
+            AddError(Constants.ErrorCodes.QUICK_CREATE_SAVE_BUTTON_DOESNT_EXIST, "Quick Create Save Button is not available");
         }
 
         public void AddError(int errorCode, string message)

@@ -45,6 +45,7 @@
         Entity_QuickCreate_DialogRoot,
         Entity_QuickCreate_Notification_Window,
         Entity_QuickCreate_OpenChildButton,
+        Entity_QuickCreate_SaveAndCloseButton,
 
         Entity_Ribbon_Button,
         Entity_Ribbon_More_Commands,

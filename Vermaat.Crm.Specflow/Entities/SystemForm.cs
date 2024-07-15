@@ -44,7 +44,7 @@ namespace Vermaat.Crm.Specflow.Entities
             }
         }
 
-        public static SystemForm GetSystemForm(CrmService service, string name, string objectTypeCode)
+        public static SystemForm GetSystemForm(CrmServiceBase service, string name, string objectTypeCode)
         {
             var result = service.RetrieveMultiple(new QueryExpression(EntityLogicalName)
             {
@@ -63,7 +63,7 @@ namespace Vermaat.Crm.Specflow.Entities
             return result != null ? new SystemForm(result) : null;
         }
 
-        internal static SystemForm GetById(CrmService service, Guid formId)
+        internal static SystemForm GetById(CrmServiceBase service, Guid formId)
         {
             return new SystemForm(service.Retrieve("systemform", formId,
                 new ColumnSet(Fields.FormXml, Fields.Name, Fields.ObjectTypeCode, Fields.Type)));

@@ -46,7 +46,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
             return new HybridCrmConnection(clientId, clientSecret, username, password, mfaKey);
         }
 
-        public override CrmService CreateCrmServiceInstance()
+        public override CrmServiceBase CreateCrmServiceInstance()
         {
             var service = new CrmService($"AuthType=ClientSecret;Url='{_loginInfo.Url}';ClientId='{_clientId}';ClientSecret='{_clientSecret.Replace("'", "''")}';RequireNewInstance=True");
             service.CallerId = GetImpersonatingUser(service);

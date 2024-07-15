@@ -14,6 +14,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual CheckFieldVisibilityCommand CreateCheckFieldVisibilityCommand(string controlName)
             => new CheckFieldVisibilityCommand(controlName);
 
+        public virtual CheckForDuplicateDetection CreateCheckForDuplicateDetection(bool saveIfDuplicate)
+            => new CheckForDuplicateDetection(saveIfDuplicate);
+
         public virtual ClearLookupValueCommand CreateClearLookupValueCommand(LookupItem lookupItem)
             => new ClearLookupValueCommand(lookupItem); 
 
@@ -47,8 +50,8 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
         public virtual GetFormNotificationsCommand CreateGetFormNotificationsCommand()
             => new GetFormNotificationsCommand();
 
-        public virtual GetRibbonItemCommand CreateGetRibbonItemCommand(string name)
-            => new GetRibbonItemCommand(name);
+        public virtual GetRibbonItemCommand CreateGetRibbonItemCommand(string name, string buttonDelimiter = ".")
+            => new GetRibbonItemCommand(name, buttonDelimiter);
 
         public virtual OpenQuickCreatedRecordCommand CreateOpenQuickCreatedRecordCommand(string childEntityName)
             => new OpenQuickCreatedRecordCommand(childEntityName);
@@ -58,6 +61,9 @@ namespace Vermaat.Crm.Specflow.EasyRepro.Commands
 
         public virtual ReviseQuoteCommand CreateReviseQuoteCommand()
             => new ReviseQuoteCommand();
+
+        public virtual SaveQuickCreateRecord CreateSaveQuickCreateRecord(bool saveIfDuplicate)
+            => new SaveQuickCreateRecord(saveIfDuplicate);
 
         public virtual SaveRecordCommand CreateSaveRecordCommand(bool saveIfDuplicate)
             => new SaveRecordCommand(saveIfDuplicate);

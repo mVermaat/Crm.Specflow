@@ -5,21 +5,21 @@ namespace Vermaat.Crm.Specflow.Connectivity
 {
     public class ConnectionManager : IDisposable
     {
-        private readonly Dictionary<string, CrmService> _connectionCache;
+        private readonly Dictionary<string, CrmServiceBase> _connectionCache;
 
         private CrmConnection _adminConnection;
         private CrmConnection _currentConnection;
 
 
-        public CrmService AdminConnection => _adminConnection.Service;
-        public CrmService CurrentConnection => _currentConnection.Service;
+        public CrmServiceBase AdminConnection => _adminConnection.Service;
+        public CrmServiceBase CurrentConnection => _currentConnection.Service;
 
         public BrowserLoginDetails CurrentBrowserLoginDetails => _currentConnection.GetBrowserLoginInformation();
         internal CrmConnection CurrentConnectionObject => _currentConnection;
 
         public ConnectionManager()
         {
-            _connectionCache = new Dictionary<string, CrmService>();
+            _connectionCache = new Dictionary<string, CrmServiceBase>();
         }
 
         public void SetAdminConnection(CrmConnection connection)
@@ -39,7 +39,7 @@ namespace Vermaat.Crm.Specflow.Connectivity
 
         private void TryGetServiceFromCache(CrmConnection connection)
         {
-            if (_connectionCache.TryGetValue(connection.Identifier, out CrmService service))
+            if (_connectionCache.TryGetValue(connection.Identifier, out CrmServiceBase service))
             {
                 Logger.WriteLine($"{connection.Identifier} is already connected. Getting service from cache");
                 connection.Service = service;
