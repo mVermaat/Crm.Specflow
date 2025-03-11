@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Vermaat.Crm.Specflow.EasyRepro.Fields;
 using Vermaat.Crm.Specflow.Entities;
 

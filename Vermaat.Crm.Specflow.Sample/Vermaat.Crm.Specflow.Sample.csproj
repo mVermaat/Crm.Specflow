@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
+    <PackageReference Include="Reqnroll.NUnit" Version="2.0.0" />
+    <PackageReference Include="Reqnroll.Tools.MsBuild.Generation" Version="2.0.0" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="121.0.6167.8500" />
     <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.34.0" />
-    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.74" />
-    <PackageReference Include="SpecRun.SpecFlow" Version="3.9.31" />
   </ItemGroup>
 
   <ItemGroup>

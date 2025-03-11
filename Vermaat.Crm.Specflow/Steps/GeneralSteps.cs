@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Vermaat.Crm.Specflow.Commands;
 
 namespace Vermaat.Crm.Specflow.Steps

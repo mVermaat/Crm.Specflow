@@ -5,7 +5,7 @@ using Microsoft.Xrm.Sdk.Metadata;
 using OpenQA.Selenium;
 using System;
 using System.Linq;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Vermaat.Crm.Specflow.EasyRepro.Fields;
 using Vermaat.Crm.Specflow.FormLoadConditions;
 

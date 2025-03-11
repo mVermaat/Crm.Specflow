@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace Vermaat.Crm.Specflow.Commands
 {

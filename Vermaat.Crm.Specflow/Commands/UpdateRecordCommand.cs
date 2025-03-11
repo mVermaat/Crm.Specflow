@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System.Linq;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -27,7 +27,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 Id = _toUpdate.Id
             };
 
-            foreach (TableRow row in _criteria.Rows)
+            foreach (DataTableRow row in _criteria.Rows)
             {
                 toUpdate[row[Constants.SpecFlow.TABLE_KEY]] = ObjectConverter.ToCrmObject(_toUpdate.LogicalName,
                     row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], _crmContext);

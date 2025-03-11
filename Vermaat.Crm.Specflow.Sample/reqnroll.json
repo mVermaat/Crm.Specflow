@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
+
+  "bindingAssemblies": [
+    {
+      "assembly": "Vermaat.Crm.SpecFlow"
+
+    },
+    {
+      "assembly": "Vermaat.Crm.SpecFlow.Expressions"
+    }
+  ]
+}

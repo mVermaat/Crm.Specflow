@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk.Query;
 using System;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace Vermaat.Crm.Specflow
 {
@@ -38,7 +38,7 @@ namespace Vermaat.Crm.Specflow
             return qe;
         }
 
-        private static ConditionExpression CreateConditionExpression(TableRow row, object crmValue, bool hasConditionColumn)
+        private static ConditionExpression CreateConditionExpression(DataTableRow row, object crmValue, bool hasConditionColumn)
         {
             var expression = new ConditionExpression();
 
@@ -52,7 +52,7 @@ namespace Vermaat.Crm.Specflow
             return expression;
         }
 
-        private static ConditionOperator GetOperator(TableRow row, bool hasConditionColumn, object crmValue)
+        private static ConditionOperator GetOperator(DataTableRow row, bool hasConditionColumn, object crmValue)
         {
             if (hasConditionColumn && !string.IsNullOrEmpty(row[Constants.SpecFlow.TABLE_CONDITION]))
                 try

@@ -1,4 +1,4 @@
-﻿using TechTalk.SpecFlow;
+﻿using Reqnroll;
 using Vermaat.Crm.Specflow.Commands;
 
 namespace Vermaat.Crm.Specflow.Steps
@@ -16,7 +16,7 @@ namespace Vermaat.Crm.Specflow.Steps
         [When(@"(.*) is qualified to a")]
         public void QualifyLead(string alias, Table table)
         {
-            TableRow row = table.Rows[0];
+            DataTableRow row = table.Rows[0];
             _crmContext.CommandProcessor.Execute(new QualifyLeadCommand(_crmContext, alias,
                 bool.Parse(row["Account"]), bool.Parse(row["Contact"]), bool.Parse(row["Opportunity"])));
         }

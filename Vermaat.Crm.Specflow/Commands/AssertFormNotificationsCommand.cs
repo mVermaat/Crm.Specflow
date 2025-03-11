@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Vermaat.Crm.Specflow.EasyRepro;
 
 namespace Vermaat.Crm.Specflow.Commands
@@ -34,7 +34,7 @@ namespace Vermaat.Crm.Specflow.Commands
 
             foreach (var notification in notifications)
             {
-                Assert.IsTrue(expectedNotifications.TryGetValue(notification.Message.ToLower(), out TableRow row), $"Notification {notification.Message} wasn't expected");
+                Assert.IsTrue(expectedNotifications.TryGetValue(notification.Message.ToLower(), out DataTableRow row), $"Notification {notification.Message} wasn't expected");
                 Assert.AreEqual(notification.Type.ToString().ToLower(), row[Constants.SpecFlow.TABLE_FORMNOTIFICATION_LEVEL]?.ToLower(), $"Notification {notification.Message} has a wrong level");
             }
 

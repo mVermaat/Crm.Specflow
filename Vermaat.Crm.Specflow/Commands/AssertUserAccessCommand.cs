@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System.Collections.Generic;
 using System.Linq;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Vermaat.Crm.Specflow.EasyRepro;
 using Vermaat.Crm.Specflow.EasyRepro.Commands;
 using Vermaat.Crm.Specflow.Entities;
@@ -32,7 +32,7 @@ namespace Vermaat.Crm.Specflow.Commands
             foreach (var row in _userAccessData.Rows)
             {
                 var profile = _userProfileHandler.GetProfile(row[Constants.SpecFlow.TABLE_USER]);
-                var expectedAccess = ParseTableRow(row[Constants.SpecFlow.TABLE_PERMISSIONS]);
+                var expectedAccess = ParseDataTableRow(row[Constants.SpecFlow.TABLE_PERMISSIONS]);
 
                 _crmContext.CommandProcessor.Execute(new LoginWithUserCommand(_crmContext, profile));
 
@@ -116,7 +116,7 @@ namespace Vermaat.Crm.Specflow.Commands
                 yield return $"Expected write access {expectedAccessData.HasWriteAccess} | Actual: {actualAccessData.HasWriteAccess} for user {profile}";
         }
 
-        private UserAccessData ParseTableRow(string rowData)
+        private UserAccessData ParseDataTableRow(string rowData)
         {
             var permissions = rowData.Split(',').Select(s => s.Trim().ToLower());
             var result = new UserAccessData();

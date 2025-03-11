@@ -1,4 +1,4 @@
-﻿using TechTalk.SpecFlow;
+﻿using Reqnroll;
 using static Vermaat.Crm.Specflow.TableConverter;
 
 namespace Vermaat.Crm.Specflow.Expressions
@@ -21,7 +21,7 @@ namespace Vermaat.Crm.Specflow.Expressions
             _crmContext.TableConverter.OnRowProcessed += ParseRow;
         }
 
-        private void ParseRow(object sender, TableRowEventArgs e)
+        private void ParseRow(object sender, DataTableRowEventArgs e)
         {
             if (!e.Row.ContainsKey(Constants.SpecFlow.TABLE_VALUE))
                 return;

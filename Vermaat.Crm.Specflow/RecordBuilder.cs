@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Vermaat.Crm.Specflow.Xml;
 
 namespace Vermaat.Crm.Specflow
@@ -54,7 +54,7 @@ namespace Vermaat.Crm.Specflow
         {
             Table result = new Table(customFields.Header.ToArray());
 
-            Dictionary<string, TableRow> rows = new Dictionary<string, TableRow>();
+            Dictionary<string, DataTableRow> rows = new Dictionary<string, DataTableRow>();
 
             if (_defaultData.ContainsKey(entityName))
             {
@@ -65,9 +65,9 @@ namespace Vermaat.Crm.Specflow
                 }
             }
 
-            foreach (TableRow row in customFields.Rows)
+            foreach (DataTableRow row in customFields.Rows)
             {
-                if (rows.TryGetValue(row[Constants.SpecFlow.TABLE_KEY], out TableRow rowToUpdate))
+                if (rows.TryGetValue(row[Constants.SpecFlow.TABLE_KEY], out DataTableRow rowToUpdate))
                 {
                     rowToUpdate[Constants.SpecFlow.TABLE_VALUE] = row[Constants.SpecFlow.TABLE_VALUE];
                 }
@@ -150,7 +150,7 @@ namespace Vermaat.Crm.Specflow
 
         private void AddDefaultsFromTable(Entity toCreate, Table customFields)
         {
-            foreach (TableRow row in customFields.Rows)
+            foreach (DataTableRow row in customFields.Rows)
             {
                 toCreate[row[Constants.SpecFlow.TABLE_KEY]] = ObjectConverter.ToCrmObject(toCreate.LogicalName, row[Constants.SpecFlow.TABLE_KEY], row[Constants.SpecFlow.TABLE_VALUE], _crmContext);
             }

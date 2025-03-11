@@ -2,7 +2,7 @@
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Vermaat.Crm.Specflow.EasyRepro;
 using Vermaat.Crm.Specflow.EasyRepro.Fields;
 
@@ -33,7 +33,7 @@ namespace Vermaat.Crm.Specflow.Commands
             var formState = new FormState(_seleniumContext.GetBrowser().App);
             List<string> errors = new List<string>();
 
-            foreach (TableRow row in _visibilityCriteria.Rows)
+            foreach (DataTableRow row in _visibilityCriteria.Rows)
             {
                 row.TryGetValue(Constants.SpecFlow.TABLE_FORMSTATE, out var formStateTableValue);
                 row.TryGetValue(Constants.SpecFlow.TABLE_TAB, out var tabTableValue);

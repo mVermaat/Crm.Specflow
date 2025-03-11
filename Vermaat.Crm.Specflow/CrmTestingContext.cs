@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace Vermaat.Crm.Specflow
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
 using System.Linq;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace Vermaat.Crm.Specflow.Commands
 {

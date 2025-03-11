@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using System;
 using System.IO;
 using System.Text;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Vermaat.Crm.Specflow.Connectivity;
 
 namespace Vermaat.Crm.Specflow
